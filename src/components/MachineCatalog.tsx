@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Search, Wrench, Droplets, Sun, Cpu, Wind, ExternalLink, DollarSign, Layers, Bot, Compass, Box } from 'lucide-react';
+import { Search, Wrench, DollarSign, ExternalLink } from 'lucide-react';
 
 export interface OpenMachine {
   id: string;
