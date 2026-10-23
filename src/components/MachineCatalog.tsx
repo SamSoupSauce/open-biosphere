@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Search, Wrench, DollarSign, ExternalLink } from 'lucide-react';
+import { Search, Wrench, DollarSign, ExternalLink, ChevronDown, ChevronUp } from 'lucide-react';
 
 export interface OpenMachine {
   id: string;
@@ -12,6 +12,11 @@ export interface OpenMachine {
   difficulty: 'Beginner' | 'Intermediate' | 'Advanced';
   primaryCOTS: string[];
   docSlug: string;
+  controls: {
+    manual: string;
+    buttons: string;
+    ai: string;
+  };
 }
 
 export const MACHINES_DATA: OpenMachine[] = [
@@ -26,6 +31,11 @@ export const MACHINES_DATA: OpenMachine[] = [
     difficulty: 'Intermediate',
     primaryCOTS: ['316L Wedge-Wire Screen', '24V Brushless Mag-Pump', 'NEMA 23 Auger', 'ESP32'],
     docSlug: 'fluidic-skimmer-loop',
+    controls: {
+      manual: 'Counterweighted hand lever raises/lowers weir gate; removable hand crank presses dewatering auger; bypass ball valve.',
+      buttons: 'Waterproof IP67 toggle for pump speed (Low/Med/High); momentary push-button for auger forward/reverse jog.',
+      ai: 'Overhead optical line-scanner measures frond mat thickness (>8 mm); edge AI dynamically modulates pump GPM and auger speed.',
+    },
   },
   {
     id: 'sprout-bioreactor',
@@ -38,6 +48,11 @@ export const MACHINES_DATA: OpenMachine[] = [
     difficulty: 'Beginner',
     primaryCOTS: ['2020 Aluminum Extrusion', 'Perforated Stainless Mesh', 'NEMA 17 Stepper', '12V Ozone Generator', 'ESP32-S3'],
     docSlug: 'revolving-sprout-bioreactor',
+    controls: {
+      manual: 'Removable hand-crank handle with ratchet pawl turns drum twice daily; manual brass valve drains rinse water by gravity.',
+      buttons: 'Green tactile panel button jogs drum rotation; rotary mechanical countdown timer dials in misting intervals (0–60 min).',
+      ai: 'ESP32-S3 executes precise 96-hour growth schedule, tracking humidity and triggering ozone washes; signals AGV when ripe.',
+    },
   },
   {
     id: 'mantis-crawler',
@@ -50,6 +65,11 @@ export const MACHINES_DATA: OpenMachine[] = [
     difficulty: 'Advanced',
     primaryCOTS: ['Shore 40A Cast Silicone Rollers', 'NEMA 14 Pancake Steppers', 'Raspberry Pi 5 + AI HAT', 'Micro Rotary Shear'],
     docSlug: 'mantis-branch-crawler',
+    controls: {
+      manual: 'Bowden cable hand-squeeze lever clamps rollers onto wire/branch; spring-loaded snips on extension pole trim pedicels.',
+      buttons: 'Handheld 2.4 GHz RC transmitter with dual thumbsticks for driving and clamping; tactile index trigger fires shear & vacuum.',
+      ai: 'On-device YOLOv8 on Raspberry Pi 5 / Jetson Orin detects ripe berries, controls clamping torque to 8.5 N, and auto-shears pedicels.',
+    },
   },
   {
     id: 'ground-agv',
@@ -62,6 +82,11 @@ export const MACHINES_DATA: OpenMachine[] = [
     difficulty: 'Intermediate',
     primaryCOTS: ['Tracked Tank Drive Chassis', 'Dual DC Motor Driver', '24V LiFePO4 Battery', 'Magnetic Line Sensor', 'ESP32-S3'],
     docSlug: 'ground-track-agv',
+    controls: {
+      manual: 'Fold-out steel push tiller handle with gearbox neutral lever; mechanical foot pedal unlatches cargo canister clamp.',
+      buttons: 'Heavy-duty 3-button wired pendant (Forward, Reverse, Stop) with speed dial potentiometer; toggle switch for docking latch.',
+      ai: 'Autonomous ROS2 stack navigates perimeter magnetic line tape and 2D LiDAR SLAM, shuttling canisters on scheduled cycles.',
+    },
   },
   {
     id: 'overhead-gantry',
@@ -74,6 +99,11 @@ export const MACHINES_DATA: OpenMachine[] = [
     difficulty: 'Intermediate',
     primaryCOTS: ['2040 V-Slot Extrusions', 'GT2 9mm Steel-Core Belts', 'NEMA 23 Closed-Loop Steppers', 'BTT SKR Mainboard (Klipper)'],
     docSlug: 'overhead-gantry-system',
+    controls: {
+      manual: 'Disengageable belt-clamp tensioners allow gliding carriages freely by hand; squeeze-cable hand trigger operates toolhead shears.',
+      buttons: 'Industrial 6-button directional CNC pendant (X+/-, Y+/-, Z+/-) with Fast/Slow toggle switch; manual toolhead fire button.',
+      ai: 'Klipper CAN bus receives Cartesian trajectories from macro vision models to extract saffron stigmas and shear microgreens.',
+    },
   },
   {
     id: 'aerial-drone',
@@ -86,6 +116,11 @@ export const MACHINES_DATA: OpenMachine[] = [
     difficulty: 'Advanced',
     primaryCOTS: ['85mm Whoop Ducted Frame', '1103 Brushless Motors', 'AIO STM32 Flight Controller', 'PMW3901 Optical Flow', 'AprilTag Tracker'],
     docSlug: 'aerial-pollination-drone',
+    controls: {
+      manual: 'Handheld telescopic extension wand with passive mechanical vibrating head for direct flower sweeping during inspections.',
+      buttons: 'Standard 2.4 GHz RC radio with dual gimbals and physical toggle switch for one-touch locked hover and buzz vibration.',
+      ai: 'Optical flow and AprilTag visual fiducial navigation autonomously flies waypoint grid, holding station over blossoms to vibrate pollen.',
+    },
   },
   {
     id: 'dosing-array',
@@ -98,6 +133,11 @@ export const MACHINES_DATA: OpenMachine[] = [
     difficulty: 'Beginner',
     primaryCOTS: ['12V Peristaltic Pumps (6x)', 'Isolated pH & EC Probes', 'Sensirion SCD41 CO2 Sensor', 'ESP32 / Pi CM4', 'MeanWell 24V PSU'],
     docSlug: 'microclimate-dosing-array',
+    controls: {
+      manual: 'Manual 3-way L-port ball valves gravity-drain measured stock from wall burettes; manual brass needle valve on CO2 tank.',
+      buttons: '6 tactile momentary push-buttons for manual pump priming; analog potentiometer dials set dosing volume directly.',
+      ai: 'Closed-loop 1 Hz PID algorithm reads isolated pH, EC, temperature, and CO2 electrodes, dispensing micro-doses automatically.',
+    },
   },
   {
     id: 'tps-chamber',
@@ -110,6 +150,11 @@ export const MACHINES_DATA: OpenMachine[] = [
     difficulty: 'Beginner',
     primaryCOTS: ['Heavy-Duty HDPE Tub', 'Dual-Labyrinth EPDM Light Seals', '120 PSI Booster Pump', 'Brass Misting Nozzles', 'ESP32 Relay'],
     docSlug: 'tps-root-chamber',
+    controls: {
+      manual: 'External hand-pump garden sprayer connects to silicone misting port; light-baffled inspection hatch opens for hand picking.',
+      buttons: 'Rocker switch for continuous pump power; spring-wound mechanical dial timer runs 15-minute misting sessions without code.',
+      ai: 'ESP32-C3 cycles 50 µm ultrasonic mist every 180 seconds based on transpiration; signals overhead gantry to pick ripe tubers.',
+    },
   },
 ];
 
@@ -117,6 +162,7 @@ export default function MachineCatalog() {
   const [search, setSearch] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('ALL');
   const [sortBy, setSortBy] = useState<'cost_asc' | 'cost_desc' | 'name'>('cost_asc');
+  const [expandedControlId, setExpandedControlId] = useState<string | null>(null);
 
   const categories = ['ALL', 'Harvesters & Separators', 'Mobile & Flying Robotics', 'Grow Chambers & Bioreactors', 'Automation & Dosing'];
 
@@ -125,6 +171,8 @@ export default function MachineCatalog() {
       const matchesSearch =
         m.name.toLowerCase().includes(search.toLowerCase()) ||
         m.standaloneUseCase.toLowerCase().includes(search.toLowerCase()) ||
+        m.controls.manual.toLowerCase().includes(search.toLowerCase()) ||
+        m.controls.buttons.toLowerCase().includes(search.toLowerCase()) ||
         m.primaryCOTS.some((c) => c.toLowerCase().includes(search.toLowerCase()));
 
       const matchesCategory = selectedCategory === 'ALL' || m.category === selectedCategory;
@@ -156,7 +204,7 @@ export default function MachineCatalog() {
               Open-Hardware Machine Registry
             </h3>
             <p className="text-xs text-slate-400 mt-0.5">
-              Modular agricultural machines built from accessible COTS parts. Build individually for homestead use, or combine into the master biosphere.
+              Built from accessible COTS parts. Operable via <strong>Manual Levers/Valves</strong>, <strong>Physical Buttons/Servos</strong>, or <strong>Autonomous AI</strong>.
             </p>
           </div>
 
@@ -164,7 +212,7 @@ export default function MachineCatalog() {
             <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
             <input
               type="text"
-              placeholder="Search parts, uses, machines..."
+              placeholder="Search parts, controls, uses..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="w-full pl-9 pr-3 py-1.5 bg-slate-950 border border-slate-700 rounded-lg text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-emerald-500"
@@ -207,85 +255,126 @@ export default function MachineCatalog() {
 
       {/* Machine Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {filteredMachines.map((machine) => (
-          <div
-            key={machine.id}
-            className="bg-slate-900/90 border border-slate-800 hover:border-slate-700 rounded-xl p-5 flex flex-col justify-between shadow-md transition-all hover:shadow-emerald-950/20"
-          >
-            <div>
-              {/* Header Badges */}
-              <div className="flex justify-between items-start gap-2 mb-2">
-                <span className="text-[11px] font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-800/40 px-2 py-0.5 rounded">
-                  {machine.category}
-                </span>
-                <div className="flex items-center gap-1.5">
-                  <span className={`text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded border ${getDifficultyBadge(machine.difficulty)}`}>
-                    {machine.difficulty}
+        {filteredMachines.map((machine) => {
+          const isControlsOpen = expandedControlId === machine.id;
+
+          return (
+            <div
+              key={machine.id}
+              className="bg-slate-900/90 border border-slate-800 hover:border-slate-700 rounded-xl p-5 flex flex-col justify-between shadow-md transition-all hover:shadow-emerald-950/20"
+            >
+              <div>
+                {/* Header Badges */}
+                <div className="flex justify-between items-start gap-2 mb-2">
+                  <span className="text-[11px] font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-800/40 px-2 py-0.5 rounded">
+                    {machine.category}
                   </span>
-                  <span className="text-xs font-bold text-slate-200 bg-slate-800 px-2 py-0.5 rounded border border-slate-700 flex items-center">
-                    <DollarSign className="w-3 h-3 text-emerald-400 -mr-0.5" />
-                    ~{machine.estCostUSD}
-                  </span>
-                </div>
-              </div>
-
-              {/* Title & Tagline */}
-              <h4 className="text-base font-bold text-slate-100 hover:text-emerald-300 transition-colors">
-                <a href={`${baseUrl}/hardware/${machine.docSlug}`}>
-                  {machine.name}
-                </a>
-              </h4>
-              <p className="text-xs text-slate-400 mt-1 mb-3">
-                {machine.tagline}
-              </p>
-
-              {/* Standalone Use Case Card */}
-              <div className="bg-slate-950/80 border border-slate-800/80 rounded-lg p-3 text-xs mb-3 space-y-1.5">
-                <div className="text-[10px] uppercase font-bold text-amber-400 flex items-center gap-1">
-                  <span>🏡 Standalone Homestead & Off-Grid Use</span>
-                </div>
-                <p className="text-slate-300 text-[11px] leading-relaxed">
-                  {machine.standaloneUseCase}
-                </p>
-              </div>
-
-              {/* Master Biosphere Role */}
-              <div className="text-[11px] text-slate-400 mb-3">
-                <strong className="text-slate-300">Biosphere Interlock: </strong>
-                {machine.biosphereRole}
-              </div>
-
-              {/* COTS Parts Pills */}
-              <div className="mb-4">
-                <span className="text-[10px] uppercase tracking-wider text-slate-500 font-semibold block mb-1.5">
-                  Core COTS / Standard Parts
-                </span>
-                <div className="flex flex-wrap gap-1">
-                  {machine.primaryCOTS.map((part, idx) => (
-                    <span
-                      key={idx}
-                      className="text-[10px] bg-slate-800/90 text-slate-300 border border-slate-700/60 px-2 py-0.5 rounded"
-                    >
-                      {part}
+                  <div className="flex items-center gap-1.5">
+                    <span className={`text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded border ${getDifficultyBadge(machine.difficulty)}`}>
+                      {machine.difficulty}
                     </span>
-                  ))}
+                    <span className="text-xs font-bold text-slate-200 bg-slate-800 px-2 py-0.5 rounded border border-slate-700 flex items-center">
+                      <DollarSign className="w-3 h-3 text-emerald-400 -mr-0.5" />
+                      ~{machine.estCostUSD}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Title & Tagline */}
+                <h4 className="text-base font-bold text-slate-100 hover:text-emerald-300 transition-colors">
+                  <a href={`${baseUrl}/hardware/${machine.docSlug}`}>
+                    {machine.name}
+                  </a>
+                </h4>
+                <p className="text-xs text-slate-400 mt-1 mb-3">
+                  {machine.tagline}
+                </p>
+
+                {/* Standalone Use Case Card */}
+                <div className="bg-slate-950/80 border border-slate-800/80 rounded-lg p-3 text-xs mb-3 space-y-1.5">
+                  <div className="text-[10px] uppercase font-bold text-amber-400 flex items-center gap-1">
+                    <span>🏡 Standalone Homestead & Off-Grid Use</span>
+                  </div>
+                  <p className="text-slate-300 text-[11px] leading-relaxed">
+                    {machine.standaloneUseCase}
+                  </p>
+                </div>
+
+                {/* Tri-Modal Controls Collapsible */}
+                <div className="bg-slate-950/60 border border-slate-800/90 rounded-lg p-2.5 mb-3">
+                  <button
+                    onClick={() => setExpandedControlId(isControlsOpen ? null : machine.id)}
+                    className="w-full flex justify-between items-center text-xs font-semibold text-slate-300 hover:text-emerald-300 transition-colors"
+                  >
+                    <span className="flex items-center gap-1.5">
+                      <span className="text-xs">🕹️</span>
+                      <span>Tri-Modal Controls (Manual / Buttons / AI)</span>
+                    </span>
+                    {isControlsOpen ? (
+                      <ChevronUp className="w-3.5 h-3.5 text-slate-400" />
+                    ) : (
+                      <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
+                    )}
+                  </button>
+
+                  {isControlsOpen && (
+                    <div className="mt-2.5 pt-2.5 border-t border-slate-800/80 space-y-2 text-[11px]">
+                      <div className="bg-amber-950/20 border border-amber-900/30 rounded p-2 text-amber-200">
+                        <strong className="text-amber-300 block mb-0.5">✋ Tier 1: 100% Manual (Zero Electricity)</strong>
+                        <p className="text-slate-300 text-[10.5px] leading-relaxed">{machine.controls.manual}</p>
+                      </div>
+
+                      <div className="bg-sky-950/20 border border-sky-900/30 rounded p-2 text-sky-200">
+                        <strong className="text-sky-300 block mb-0.5">🔘 Tier 2: Buttons & Dials (No Code)</strong>
+                        <p className="text-slate-300 text-[10.5px] leading-relaxed">{machine.controls.buttons}</p>
+                      </div>
+
+                      <div className="bg-purple-950/20 border border-purple-900/30 rounded p-2 text-purple-200">
+                        <strong className="text-purple-300 block mb-0.5">🤖 Tier 3: Autonomous AI & Sensor Loop</strong>
+                        <p className="text-slate-300 text-[10.5px] leading-relaxed">{machine.controls.ai}</p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Master Biosphere Role */}
+                <div className="text-[11px] text-slate-400 mb-3">
+                  <strong className="text-slate-300">Biosphere Interlock: </strong>
+                  {machine.biosphereRole}
+                </div>
+
+                {/* COTS Parts Pills */}
+                <div className="mb-4">
+                  <span className="text-[10px] uppercase tracking-wider text-slate-500 font-semibold block mb-1.5">
+                    Core COTS / Standard Parts
+                  </span>
+                  <div className="flex flex-wrap gap-1">
+                    {machine.primaryCOTS.map((part, idx) => (
+                      <span
+                        key={idx}
+                        className="text-[10px] bg-slate-800/90 text-slate-300 border border-slate-700/60 px-2 py-0.5 rounded"
+                      >
+                        {part}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
 
-            {/* Bottom Link Button */}
-            <div className="pt-3 border-t border-slate-800/80 flex justify-between items-center text-xs">
-              <span className="text-slate-500 text-[11px]">COTS BOM & Assembly Guide</span>
-              <a
-                href={`${baseUrl}/hardware/${machine.docSlug}`}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded text-xs font-medium transition-colors"
-              >
-                <span>Full Open-Hardware Spec</span>
-                <ExternalLink className="w-3.5 h-3.5" />
-              </a>
+              {/* Bottom Link Button */}
+              <div className="pt-3 border-t border-slate-800/80 flex justify-between items-center text-xs">
+                <span className="text-slate-500 text-[11px]">COTS BOM & Assembly Guide</span>
+                <a
+                  href={`${baseUrl}/hardware/${machine.docSlug}`}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded text-xs font-medium transition-colors"
+                >
+                  <span>Full Open-Hardware Spec</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

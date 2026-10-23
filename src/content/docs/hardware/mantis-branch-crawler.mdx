@@ -45,7 +45,19 @@ Delicate soft fruits such as mulberries, blackberries, and goldenberries bruise 
 
 ---
 
-## 3. Accessible Bill of Materials (BOM)
+## 3. Tri-Modal Control Architecture
+
+The crawler supports manual pole-mounted actuation, direct push-button/joystick steering, or full edge AI autonomy:
+
+| Control Mode | Actuation Mechanism | Operator / System Experience |
+| :--- | :--- | :--- |
+| **Tier 1: Manual (Zero Power)** | Mechanical Bowden cable + squeeze lever | Disengage stepper clutches and clip crawler onto trellis wire; squeeze hand lever on an extension pole to clamp silicone rollers and actuate mechanical spring shears. |
+| **Tier 2: Buttons & Joystick** | Handheld RC controller / wired button pendant | Dual analog thumbsticks control forward/reverse rolling and clamp tension; pulling the index trigger fires the micro-shear and vacuum suction for on-demand picking. |
+| **Tier 3: Autonomous AI** | On-device YOLOv8 vision + torque sensing | Raspberry Pi 5 / Jetson Orin processes stereo RGB-NIR feeds to identify ripe berries, calculates 3D pedicel coordinates, clamps limbs to 8.5 N max, and auto-harvests. |
+
+---
+
+## 4. Accessible Bill of Materials (BOM)
 
 Engineered from accessible open-source 3D printer parts, custom FDM-printed brackets, and cast silicone:
 
@@ -62,7 +74,7 @@ Engineered from accessible open-source 3D printer parts, custom FDM-printed brac
 
 ---
 
-## 4. Master Biosphere Assembly Interlock
+## 5. Master Biosphere Assembly Interlock
 
 In the integrated 20x10 ft Open Biosphere installation:
 

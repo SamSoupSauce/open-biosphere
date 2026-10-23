@@ -45,7 +45,19 @@ In greenhouses, hoop houses, and high tunnels, narrow aisles make traditional tr
 
 ---
 
-## 3. Accessible Bill of Materials (BOM)
+## 3. Tri-Modal Control Architecture
+
+The ground AGV operates via physical push-tiller, tethered push-button pendant, or autonomous ROS2 AI pathing:
+
+| Control Mode | Actuation Mechanism | Operator / System Experience |
+| :--- | :--- | :--- |
+| **Tier 1: Manual (Zero Power)** | Fold-out tiller handle + mechanical release pedal | Shift drive motor gearboxes into neutral with manual lever; pull or push the AGV like a cart; step on the mechanical latch pedal to eject or seat cargo canisters. |
+| **Tier 2: Buttons & Pendant** | Wired/wireless industrial 3-button pendant | Press physical green/yellow buttons to drive forward or reverse; turn potentiometer knob to regulate track speed; flip toggle switch to lock/unlock docking clamps. |
+| **Tier 3: Autonomous AI** | ROS2 navigation + LiDAR + magnetic guidance | Onboard computer navigates along perimeter magnetic track tape and LiDAR point clouds, docking into sprout canister bays and auto-transferring harvest totes. |
+
+---
+
+## 4. Accessible Bill of Materials (BOM)
 
 Built from standard tracked chassis kits, aluminum extrusions, and accessible maker motor drivers:
 
@@ -63,7 +75,7 @@ Built from standard tracked chassis kits, aluminum extrusions, and accessible ma
 
 ---
 
-## 4. Master Biosphere Assembly Interlock
+## 5. Master Biosphere Assembly Interlock
 
 In the integrated 20x10 ft Open Biosphere installation:
 

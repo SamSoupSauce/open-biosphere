@@ -44,7 +44,19 @@ Maintaining optimal pH, electrical conductivity (EC), and atmospheric conditions
 
 ---
 
-## 3. Accessible Bill of Materials (BOM)
+## 3. Tri-Modal Control Architecture
+
+The dosing and environmental array can be actuated by manual gravity valves, physical priming push-buttons, or closed-loop AI telemetry:
+
+| Control Mode | Actuation Mechanism | Operator / System Experience |
+| :--- | :--- | :--- |
+| **Tier 1: Manual (Zero Power)** | 3-way L-port ball valves + gravity burettes | Turn physical valve handles to draw nutrients from graduated wall burettes directly into the water stream; adjust brass needle valve on the CO2 regulator by hand. |
+| **Tier 2: Buttons & Dials** | 6 individual tactile push-buttons + rate dials | Press dedicated momentary green buttons to prime and dispense each pump channel manually; turn potentiometer knobs to dial in delivery volume without touching software. |
+| **Tier 3: Autonomous AI** | 1 Hz closed-loop PID microcontroller loop | Reads real-time pH, EC, temperature, and CO2 electrodes over isolated Modbus RS-485, executing micro-doses automatically with predictive drift compensation. |
+
+---
+
+## 4. Accessible Bill of Materials (BOM)
 
 Built from accessible open-source electronics, standard lab peristaltic pumps, and plumbing:
 
@@ -61,7 +73,7 @@ Built from accessible open-source electronics, standard lab peristaltic pumps, a
 
 ---
 
-## 4. Master Biosphere Assembly Interlock
+## 5. Master Biosphere Assembly Interlock
 
 In the integrated 20x10 ft Open Biosphere installation:
 

@@ -45,7 +45,19 @@ For homesteaders managing duckweed (*Lemna minor* / *Wolffia globosa*) or operat
 
 ---
 
-## 3. Accessible Bill of Materials (BOM)
+## 3. Tri-Modal Control Architecture
+
+The skimmer can be actuated completely by hand, operated with push-buttons and servos, or managed autonomously by edge AI:
+
+| Control Mode | Actuation Mechanism | Operator / System Experience |
+| :--- | :--- | :--- |
+| **Tier 1: Manual (Zero Power)** | Counterweighted hand lever + manual crank | Pull the external hand lever to lower the weir gate manually; insert a removable hand crank into the auger hex shaft to press and dewater harvested fronds by hand. |
+| **Tier 2: Buttons & Dials** | Waterproof IP67 push-buttons + servo linkage | Toggle switch powers pump on/off; rotary potentiometer dial commands linear servo to position the weir gate; momentary push-button runs dewatering auger. |
+| **Tier 3: Autonomous AI** | Optical edge CV + PID closed loop | Overhead optical camera runs on-device image segmentation to gauge frond mat thickness (>8 mm), commanding servos and variable-frequency pump via CAN bus. |
+
+---
+
+## 4. Accessible Bill of Materials (BOM)
 
 Built using common plumbing components, aluminum extrusions, and off-the-shelf wedge wire:
 
@@ -62,7 +74,7 @@ Built using common plumbing components, aluminum extrusions, and off-the-shelf w
 
 ---
 
-## 4. Master Biosphere Assembly Interlock
+## 5. Master Biosphere Assembly Interlock
 
 In the integrated 20x10 ft Open Biosphere installation:
 

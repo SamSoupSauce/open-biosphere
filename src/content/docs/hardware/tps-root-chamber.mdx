@@ -45,7 +45,19 @@ Traditional seed potatoes require disease-prone clonal tubers that degrade over 
 
 ---
 
-## 3. Accessible Bill of Materials (BOM)
+## 3. Tri-Modal Control Architecture
+
+The root-zone chamber supports manual pressure-wand hydration, mechanical dial timers, or automated ultrasonic misting:
+
+| Control Mode | Actuation Mechanism | Operator / System Experience |
+| :--- | :--- | :--- |
+| **Tier 1: Manual (Zero Power)** | Manual hand-pump sprayer + sliding inspection flap | Pressurize nutrient solution in an off-grid garden pump sprayer; insert wand through light-sealed silicone flap to mist roots by hand; reach into baffled hatch to pick tubers. |
+| **Tier 2: Buttons & Dials** | Heavy-duty toggle switch + mechanical dial timer | Flip rocker switch to run booster pump; twist spring-wound countdown timer to execute a 15-minute misting session without microcontrollers or code. |
+| **Tier 3: Autonomous AI** | Ultrasonic pulse sequencing + gantry coordination | ESP32-C3 pulses 50 µm mist every 180 seconds based on root transpiration sensors; signals overhead gantry to descend and harvest mature mini-tubers non-destructively. |
+
+---
+
+## 4. Accessible Bill of Materials (BOM)
 
 Built from standard food-grade storage totes, PVC piping, and off-the-shelf high-pressure misters:
 
@@ -62,7 +74,7 @@ Built from standard food-grade storage totes, PVC piping, and off-the-shelf high
 
 ---
 
-## 4. Master Biosphere Assembly Interlock
+## 5. Master Biosphere Assembly Interlock
 
 In the integrated 20x10 ft Open Biosphere installation:
 

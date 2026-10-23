@@ -27,6 +27,7 @@ export default defineConfig({
           label: 'Overview & Blueprint',
           items: [
             { label: 'System Architecture & Umbrella Philosophy', slug: 'overview/architecture' },
+            { label: 'Tri-Modal Control Standard (Manual, Buttons, AI)', slug: 'overview/tri-modal-control' },
             { label: 'Master Biosphere Assembly Guide', slug: 'overview/master-assembly' },
             { label: 'Spatial Envelope & Datum', slug: 'overview/spatial-datum' },
             { label: 'Audit & Ticket Pipeline', slug: 'overview/pipeline' },

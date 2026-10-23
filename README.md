@@ -17,7 +17,11 @@
 Rather than requiring builders to construct a single monolithic, multi-thousand-dollar apparatus, **Open Biosphere** is architected as an **interlocking ecosystem of smaller, autonomous, standalone machines**:
 
 1. **Build Individually**: Each machine can be fabricated and deployed as an independent homesteading, kitchen, or farm tool (e.g. an automated duckweed pond skimmer, an off-grid rotating sprout drum, or a narrow-aisle greenhouse utility rover).
-2. **Assemble Progressively**: When combined along standardized Cartesian mounting extrusions, a unified 24V DC bus, and recirculating plumbing, all machines interlock into the **Master Biosphere Assembly** within a standard **~20x10 ft footprint (~200 sq ft, 4.5 ft vertical clearance, ~6,000-gallon pool envelope)**.
+2. **Tri-Modal Control Standard**: Every machine is operable across three distinct tiers:
+   - ✋ **Tier 1 (Manual)**: 100% mechanical operation using hand levers, rotary cranks, bypass ball valves, and gravity/siphons (zero electricity / EMP-proof fallback).
+   - 🔘 **Tier 2 (Buttons & Dials)**: Local electromechanical control using tactile push-buttons, rotary countdown dials, toggle switches, and wired pendants (no software, cloud, or firmware needed).
+   - 🤖 **Tier 3 (Autonomous AI)**: Edge AI vision (YOLO segmentation on Raspberry Pi/Jetson), closed-loop sensor telemetry, and automated multi-agent orchestrations.
+3. **Assemble Progressively**: When combined along standardized Cartesian mounting extrusions, a unified 24V DC bus, and recirculating plumbing, all machines interlock into the **Master Biosphere Assembly** within a standard **~20x10 ft footprint (~200 sq ft, 4.5 ft vertical clearance, ~6,000-gallon pool envelope)**.
 
 ---
 

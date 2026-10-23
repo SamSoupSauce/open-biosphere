@@ -46,7 +46,19 @@ In off-grid and homestead scenarios, fresh bioavailable nutrients are often seas
 
 ---
 
-## 3. Accessible Bill of Materials (BOM)
+## 3. Tri-Modal Control Architecture
+
+The sprout bioreactor can be operated completely off-grid by hand, controlled with simple push-buttons, or driven autonomously by AI orchestration:
+
+| Control Mode | Actuation Mechanism | Operator / System Experience |
+| :--- | :--- | :--- |
+| **Tier 1: Manual (Zero Power)** | Hand crank + mechanical ratchet pawl + gravity drain valve | Rotate the drum manually 5 turns twice a day using the external hand crank; open the brass ball valve by hand to drain rinse water without any electrical connection. |
+| **Tier 2: Buttons & Dials** | Tactile push-button + analog dial timer | Press the green panel button to jog the drum to any position; turn the physical rotary timer dial to set misting frequency; flip a toggle switch to run an ozonated wash cycle. |
+| **Tier 3: Autonomous AI** | Edge microcontroller schedule + AGV telemetry | ESP32-S3 executes precise 96-hour growth program, dynamically modulating rotation and misting based on ambient humidity; signals Ground Track AGV when harvest is ready. |
+
+---
+
+## 4. Accessible Bill of Materials (BOM)
 
 Designed entirely from readily sourced, commercial off-the-shelf (COTS) components and standard 3D printed parts:
 
@@ -65,7 +77,7 @@ Designed entirely from readily sourced, commercial off-the-shelf (COTS) componen
 
 ---
 
-## 4. Master Biosphere Assembly Interlock
+## 5. Master Biosphere Assembly Interlock
 
 When deployed within the full Open Biosphere enclosure (~20x10 ft footprint):
 

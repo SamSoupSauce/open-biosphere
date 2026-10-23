@@ -44,7 +44,19 @@ For homesteaders managing raised beds, hydroponic NFT channels, or microgreen tr
 
 ---
 
-## 3. Accessible Bill of Materials (BOM)
+## 3. Tri-Modal Control Architecture
+
+The Cartesian gantry array transitions seamlessly between manual hand-positioning, tactile CNC pendant buttons, and computer-vision AI pathing:
+
+| Control Mode | Actuation Mechanism | Operator / System Experience |
+| :--- | :--- | :--- |
+| **Tier 1: Manual (Zero Power)** | Smooth V-wheel glide + manual toolhead cable | Release the stepper belt tension levers to slide the gantry and carriage freely by hand across the entire 20x10 ft area; squeeze a manual hand lever to trigger toolhead shears. |
+| **Tier 2: Buttons & CNC Pendant** | Industrial 6-button directional jog pendant | Press tactile directional buttons to jog X/Y/Z axes directly; flip the feed-rate toggle switch between rapid travel (150 mm/s) and fine positioning (5 mm/s); fire toolhead via trigger button. |
+| **Tier 3: Autonomous AI** | Klipper CAN bus + Macro Computer Vision | Down-facing 4K RGB camera maps canopy coordinates; AI pipeline segments saffron stigmas or weeds and executes sub-millimeter Cartesian trajectories automatically. |
+
+---
+
+## 4. Accessible Bill of Materials (BOM)
 
 Engineered exclusively from standard, globally accessible open-hardware CNC and 3D printer components:
 
@@ -62,7 +74,7 @@ Engineered exclusively from standard, globally accessible open-hardware CNC and 
 
 ---
 
-## 4. Interchangeable Toolheads & Biosphere Assembly Interlock
+## 5. Interchangeable Toolheads & Biosphere Assembly Interlock
 
 In the integrated 20x10 ft Open Biosphere installation:
 

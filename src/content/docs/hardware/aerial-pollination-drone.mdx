@@ -44,7 +44,19 @@ In enclosed greenhouses, high tunnels, or indoor grow tents, natural insect poll
 
 ---
 
-## 3. Accessible Bill of Materials (BOM)
+## 3. Tri-Modal Control Architecture
+
+The drone system supports manual wand fallback, standard physical radio push-button flight, or full AI autonomy:
+
+| Control Mode | Actuation Mechanism | Operator / System Experience |
+| :--- | :--- | :--- |
+| **Tier 1: Manual (Zero Power)** | Handheld extension wand with mechanical vibrating head | Clip a spare propeller/resonator onto a telescopic hand wand; manual sweeping vibrates pepper flowers directly without taking off or using drone flight power. |
+| **Tier 2: Buttons & RC Gimbals** | 2.4 GHz RC transmitter with tactile buttons | Fly manually using standard dual gimbals; press a dedicated physical toggle switch on the radio to activate locked altitude hold and burst-throttle buzz vibration. |
+| **Tier 3: Autonomous AI** | Optical flow + AprilTag visual indoor SLAM | Onboard flight stack localizes against perimeter extrusion AprilTags, flying scheduled waypoint missions to pollinate blossoms and stream multispectral health feeds. |
+
+---
+
+## 4. Accessible Bill of Materials (BOM)
 
 Built entirely from standard micro-FPV drone racing parts and open-source flight controllers:
 
@@ -61,7 +73,7 @@ Built entirely from standard micro-FPV drone racing parts and open-source flight
 
 ---
 
-## 4. Master Biosphere Assembly Interlock
+## 5. Master Biosphere Assembly Interlock
 
 In the integrated 20x10 ft Open Biosphere installation:
 
