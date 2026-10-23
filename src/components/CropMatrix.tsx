@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { CROPS_DATA, type BiosphereCrop } from '../data/cropsIndex';
-import { Search, Filter, ArrowUpDown, Bot, Sprout, Activity, Zap, ExternalLink } from 'lucide-react';
+import { Search, ArrowUpDown, Bot, Activity, ExternalLink } from 'lucide-react';
 
 export default function CropMatrix() {
   const [search, setSearch] = useState('');

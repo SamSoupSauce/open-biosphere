@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { GitPullRequest, Tag, Calendar, User, CheckCircle2, Clock, FileText } from 'lucide-react';
+import { GitPullRequest, User, CheckCircle2, Clock, FileText } from 'lucide-react';
 
 interface RFCItem {
   id: string;
