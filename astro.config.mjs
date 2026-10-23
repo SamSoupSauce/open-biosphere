@@ -4,7 +4,7 @@ import react from '@astrojs/react';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
-  site: 'https://open-biosphere.github.io',
+  site: 'https://samsoupsauce.github.io/open-biosphere',
   vite: {
     plugins: [tailwindcss()],
   },
@@ -19,7 +19,7 @@ export default defineConfig({
       },
       customCss: ['./src/styles/global.css'],
       social: {
-        github: 'https://github.com/open-biosphere/open-biosphere',
+        github: 'https://github.com/SamSoupSauce/open-biosphere',
       },
       sidebar: [
         {

@@ -1,6 +1,6 @@
 # Open Biosphere (Autonomous Closed Biosphere Agriculture Wiki)
 
-[![Biosphere CI & Candidate Audit](https://github.com/open-biosphere/open-biosphere/actions/workflows/ci.yml/badge.svg)](https://github.com/open-biosphere/open-biosphere/actions/workflows/ci.yml)
+[![Biosphere CI & Candidate Audit](https://github.com/SamSoupSauce/open-biosphere/actions/workflows/ci.yml/badge.svg)](https://github.com/SamSoupSauce/open-biosphere/actions/workflows/ci.yml)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Built with Astro](https://img.shields.io/badge/Built%20with-Astro%205-FF5D01.svg)](https://astro.build)
 [![Starlight](https://img.shields.io/badge/Documentation-Starlight-064e3b.svg)](https://starlight.astro.build)
@@ -55,7 +55,7 @@ An open-source technical specification and research platform for contained biosp
 ### Installation
 ```bash
 # Clone the repository
-git clone https://github.com/open-biosphere/open-biosphere.git
+git clone https://github.com/SamSoupSauce/open-biosphere.git
 cd open-biosphere
 
 # Install dependencies
