@@ -28,7 +28,8 @@ jobs:
           node-version: '24'
 
       - name: Install dependencies
-        run: npm install --legacy-peer-deps
+        run: |
+          npm install --legacy-peer-deps || (cat /home/runner/.npm/_logs/*-debug-0.log && exit 1)
 
       - name: Build Astro Starlight Wiki
         run: npm run build
