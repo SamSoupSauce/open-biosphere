@@ -258,7 +258,7 @@ export default function CropMatrix() {
                   {isExpanded ? 'Hide Specs ▲' : 'View Specs ▼'}
                 </button>
                 <a
-                  href={`/crops/${crop.slug}`}
+                  href={`${(import.meta.env.BASE_URL || '/').replace(/\/$/, '')}/crops/${crop.slug}`}
                   className="inline-flex items-center gap-1 px-2.5 py-1 bg-emerald-600 hover:bg-emerald-500 text-white rounded text-xs font-medium transition-colors"
                 >
                   <span>Full Guide</span>

@@ -188,7 +188,7 @@ export default function RfcKanban() {
                       </span>
                       {rfc.docSlug && (
                         <a
-                          href={rfc.docSlug}
+                          href={rfc.docSlug.startsWith('/') ? `${(import.meta.env.BASE_URL || '/').replace(/\/$/, '')}${rfc.docSlug}` : rfc.docSlug}
                           className="text-emerald-400 hover:text-emerald-300 font-medium"
                         >
                           Read Spec →

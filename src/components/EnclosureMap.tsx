@@ -306,7 +306,7 @@ export default function EnclosureMap() {
           <div className="pt-4 mt-4 border-t border-slate-800 flex justify-between items-center text-xs">
             <span className="text-slate-400">Area: <strong className="text-slate-200">{zone.area}</strong></span>
             <a
-              href={`/zones/${zone.id}`}
+              href={`${(import.meta.env.BASE_URL || '/').replace(/\/$/, '')}/zones/${zone.id}`}
               className="text-emerald-400 hover:text-emerald-300 font-medium transition-colors"
             >
               Full Zone Blueprint →

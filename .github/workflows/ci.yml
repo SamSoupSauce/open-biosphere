@@ -1,10 +1,18 @@
-name: Biosphere CI & Candidate Audit
+name: Biosphere CI, Audit & Pages Deployment
 
 on:
   push:
     branches: [main]
-  pull_request:
-    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: 'pages'
+  cancel-in-progress: false
 
 jobs:
   audit-and-build:
@@ -29,7 +37,27 @@ jobs:
 
       - name: Install dependencies
         run: |
-          npm install --legacy-peer-deps || (cat /home/runner/.npm/_logs/*-debug-0.log && exit 1)
+          npm install --legacy-peer-deps
 
       - name: Build Astro Starlight Wiki
         run: npm run build
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    needs: audit-and-build
+    runs-on: ubuntu-latest
+    name: Deploy to GitHub Pages
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
