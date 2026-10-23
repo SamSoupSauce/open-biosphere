@@ -3,6 +3,7 @@ import { Layers, Droplets, Bot, Thermometer, Sun, Compass } from 'lucide-react';
 
 interface ZoneDetail {
   id: string;
+  docSlug: string;
   name: string;
   elevation: string;
   area: string;
@@ -21,6 +22,7 @@ interface ZoneDetail {
 const ZONES: Record<string, ZoneDetail> = {
   basin: {
     id: 'basin',
+    docSlug: 'central-basin',
     name: 'Central Basin & Deep Water Sump',
     elevation: '0.0 - 4.5 ft liquid depth',
     area: '160 sq ft (80% of footprint)',
@@ -37,6 +39,7 @@ const ZONES: Record<string, ZoneDetail> = {
   },
   lower: {
     id: 'lower',
+    docSlug: 'perimeter-lower-tier',
     name: 'Perimeter Lower Tier & AGV Service Lane',
     elevation: '0.5 - 1.2 ft elevation',
     area: '40 sq ft perimeter ribbon',
@@ -53,6 +56,7 @@ const ZONES: Record<string, ZoneDetail> = {
   },
   mid: {
     id: 'mid',
+    docSlug: 'perimeter-mid-tier',
     name: 'Perimeter Mid Tier & Hydroponic NFT Gutters',
     elevation: '1.2 - 2.5 ft elevation',
     area: '40 sq ft perimeter ribbon',
@@ -69,6 +73,7 @@ const ZONES: Record<string, ZoneDetail> = {
   },
   espalier: {
     id: 'espalier',
+    docSlug: 'trellised-espalier',
     name: 'Trellised Vertical Espalier Guideframe',
     elevation: '2.5 - 4.0 ft vertical boundary wall',
     area: '40 sq ft vertical canopy wall',
@@ -306,7 +311,7 @@ export default function EnclosureMap() {
           <div className="pt-4 mt-4 border-t border-slate-800 flex justify-between items-center text-xs">
             <span className="text-slate-400">Area: <strong className="text-slate-200">{zone.area}</strong></span>
             <a
-              href={`${(import.meta.env.BASE_URL || '/').replace(/\/$/, '')}/zones/${zone.id}`}
+              href={`${(import.meta.env.BASE_URL || '/').replace(/\/$/, '')}/zones/${zone.docSlug}`}
               className="text-emerald-400 hover:text-emerald-300 font-medium transition-colors"
             >
               Full Zone Blueprint →
