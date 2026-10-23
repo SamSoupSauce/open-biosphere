@@ -1,0 +1,32 @@
+---
+title: Mantis Branch-Crawler Robot
+description: Dual-actuated soft silicone pinch roller robot navigating rigid espalier branches for soft fruit harvesting
+---
+
+## 1. Subsystem Architecture
+
+The **Mantis Branch-Crawler** is a specialized robotic climber designed to navigate the rigid horizontal wire guideframes of the Trellised Espalier wall ($Z = 2.5 \text{ to } 4.0 \text{ ft}$). It harvests delicate, soft-skinned fruits (dwarf mulberries, goldenberries) without damaging limbs or causing mechanical bruising.
+
+---
+
+## 2. Technical Specifications
+
+| Parameter | Specification |
+| :--- | :--- |
+| **Locomotion** | Dual-opposed silicone roller pinch drive (40A durometer Shore) |
+| **Limb Clamping Force** | Dynamic 2.0 – 8.5 N closed-loop torque control |
+| **End-Effector** | High-precision micro-rotary shear + pneumatic vacuum catch pod |
+| **Harvest Cycle Time** | 4.2 seconds per berry |
+| **Onboard Compute** | NVIDIA Jetson Orin Nano (40 TOPS) for real-time edge segmentation |
+| **Vision Modality** | Dual-stereo RGB + 850nm NIR structured light illuminator |
+| **Power Bus** | Tethered 24V DC bus along upper V-slot extrusion rail |
+| **Degrees of Freedom (DoF)**| 4-DoF articulated harvesting arm mounted to crawling chassis |
+
+---
+
+## 3. End-Effector Mechanics
+
+1. **Approach**: The crawler clamps onto the branch wire using opposed silicone rollers, indexing its position relative to AprilTags along the extrusion rail.
+2. **Detection**: Stereo RGB-NIR sensors segment ripe fruit based on anthocyanin pigmentation and moisture reflectance.
+3. **Vacuum Capture**: A silicone suction funnel aligns with the fruit, drawing it into a soft foam-lined chamber while micro-shears cleanly sever the pedicel 1 mm from the calyx.
+4. **Deposition**: Captured berries are shuttled via low-pressure pneumatic tubing directly into collection bins along the perimeter tier.

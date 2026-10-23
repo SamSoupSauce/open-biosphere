@@ -1,0 +1,104 @@
+{
+  "taxon": "Phaseolus vulgaris",
+  "common_name": "Dwarf Bush Bean (Snap Bean)",
+  "ml_score": 7.8,
+  "category": "High-Density Caloric/Protein",
+  "drone_interaction": {
+    "agent_type": "Ground Rover",
+    "vision_modality": "Stereo depth pod geometry mapping (distinguishing green bean pods from identical green foliage)",
+    "harvest_tool": "Soft silicone 2-finger clamp grabbing pod stem with counter-rotating pedicel blade"
+  },
+  "exhaustive_nutritional_profile_per_100g": {
+    "calories_kcal": 31.0,
+    "macronutrients_g": {
+      "protein_g": 1.83,
+      "carbohydrate_g": 6.97,
+      "fiber_g": 2.7,
+      "fat_total_g": 0.22,
+      "saturated_fat_g": 0.05,
+      "monounsaturated_fat_g": 0.01,
+      "polyunsaturated_fat_g": 0.11,
+      "ala_omega3_g": 0.06,
+      "epa_dha_g": 0.0
+    },
+    "essential_amino_acids_mg": {
+      "histidine_mg": 35.0,
+      "isoleucine_mg": 70.0,
+      "leucine_mg": 125.0,
+      "lysine_mg": 95.0,
+      "methionine_mg": 22.0,
+      "phenylalanine_mg": 75.0,
+      "threonine_mg": 68.0,
+      "tryptophan_mg": 20.0,
+      "valine_mg": 85.0
+    },
+    "vitamins": {
+      "vitamin_a_rae_ug": 35.0,
+      "vitamin_c_mg": 12.2,
+      "vitamin_d_iu": 0.0,
+      "vitamin_e_alpha_tocopherol_mg": 0.41,
+      "vitamin_k_phylloquinone_ug": 14.4,
+      "thiamin_b1_mg": 0.08,
+      "riboflavin_b2_mg": 0.1,
+      "niacin_b3_mg": 0.75,
+      "pantothenic_acid_b5_mg": 0.22,
+      "vitamin_b6_pyridoxine_mg": 0.14,
+      "biotin_b7_ug": 1.8,
+      "folate_b9_ug": 33.0,
+      "vitamin_b12_cobalamin_ug": 0.0,
+      "choline_mg": 15.3
+    },
+    "macrominerals_and_salts_mg": {
+      "potassium_mg": 211.0,
+      "sodium_salt_mg": 6.0,
+      "calcium_mg": 37.0,
+      "magnesium_mg": 25.0,
+      "phosphorus_mg": 38.0,
+      "sulfur_mg": 28.0,
+      "chloride_mg": 22.0
+    },
+    "microminerals_and_trace_elements": {
+      "iron_mg": 1.03,
+      "zinc_mg": 0.24,
+      "selenium_ug": 0.6,
+      "manganese_mg": 0.21,
+      "copper_mg": 0.07,
+      "iodine_ug": 1.8,
+      "boron_ug": 160.0,
+      "chromium_ug": 1.8,
+      "molybdenum_ug": 12.0,
+      "cobalt_ug": 0.4,
+      "silicon_mg": 8.5
+    }
+  },
+  "exhaustive_medicinal_and_bioactive_compounds": [
+    {
+      "compound_name": "Kaempferol-3-O-glucoside & Quercetin",
+      "chemical_class": "Flavonoid / Polyphenol",
+      "concentration_mg_per_100g_dw": 45.0,
+      "bioactive_mechanisms": "Direct scavenging of mitochondrial reactive oxygen species; endothelial nitric oxide synthase maintenance",
+      "human_therapeutic_efficacy": "Vascular antioxidant support and anti-inflammatory action",
+      "extraction_or_utilization": "Retained intact during gentle steam cooking"
+    },
+    {
+      "compound_name": "Silicon (Orthosilicic Acid Precursors)",
+      "chemical_class": "Organic Acid / Chelate",
+      "concentration_mg_per_100g_dw": 8.5,
+      "bioactive_mechanisms": "Bioavailable plant silicon essential for prolyl hydroxylase activity and collagen cross-linking",
+      "human_therapeutic_efficacy": "Bone mineral density improvement, connective tissue and hair/nail matrix strengthening",
+      "extraction_or_utilization": "Dietary consumption of steamed pods"
+    }
+  ],
+  "cycle_parameters": {
+    "turnaround_days": 50,
+    "par_light_range": "250-400 umol/m2/s",
+    "ec_target": 1.6,
+    "ph_target": 6.5,
+    "temp_range_c": "18-26C"
+  },
+  "penalties_and_risks": [
+    "Green-on-green optical occlusion makes pod detection challenging without stereo-depth imaging.",
+    "Must be cooked to inactivate trace raw phytohemagglutinin lectins before consumption."
+  ],
+  "human_culinary_use": "Classic crisp vegetable ration. Steamed with olive oil and sea salt, sauteed in camp skillets, or pickled in vinegar."
+}

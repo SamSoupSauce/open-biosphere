@@ -1,0 +1,54 @@
+---
+title: System Architecture & Envelope
+description: Blueprints and operational specifications for the contained ~6,000-gallon pool biosystem
+---
+
+This specification defines the physical enclosure blueprint, multi-agent drone routing, and automated command-line auditing pipelines for an enclosed **~6,000-gallon pool biosystem** (~20x10 ft footprint, 4.5 ft vertical clearance).
+
+All candidate plant species, nutritional breakdowns, and ML evaluations (-1.0 to 10.0 scale) remain completely isolated in dedicated database contracts to prevent clutter and enable machine parsing.
+
+---
+
+## 1. Physical Envelope & Enclosure Zoning (~200 sq ft Footprint)
+
+The enclosure occupies a standard swimming pool basin retrofitted with tiered vertical aeroponics and hydroponic gutters:
+
+| Zone Identifier | Spatial Boundary | Target Crops & Subsystems | Operational Mechanisms |
+| :--- | :--- | :--- | :--- |
+| **Central Basin** | 160 sq ft, 4.5 ft liquid depth | Non-vascular duckweed, *Wolffia*, True Potato Seed (TPS) mini-tubers | Primary skimming channel, 30–50μm aeroponic root misting, particulate dewatering, bio-filter loop |
+| **Perimeter Lower Tier** | 40 sq ft (0.5 – 1.2 ft elevation) | Sub-irrigated bush beans, unlit sprout bioreactors | Ground rover harvesting access, rotating dark hypocotyl canister docking bays |
+| **Perimeter Mid Tier** | 40 sq ft (1.2 – 2.5 ft elevation) | Basal rosettes (sorrel, purslane), dwarf sweet & chili peppers | Hydroponic NFT gutters, automated nutrient balance control |
+| **Trellised Espalier** | 40 sq ft (2.5 – 4.0 ft vertical wall) | Dwarf bush mulberries, goldenberry vines | Rigid vertical wire guideframes for branch-crawling robot indexing |
+
+---
+
+## 2. Multi-Agent Drone & Robotics Subsystems
+
+```
+[Main Basin Water System] <---> [Perimeter Aeroponic Racks] <---> [AGV / Drone Docking]
+          |                                  |                               |
+          +---------- [ML Control Unit / Micro-Doser] -----------------------+
+```
+
+### Aerial Spotter & Pollination Drones
+- Micro-quadcopters utilizing calibrated propeller wash (1.5–2.5 m/s) to deliver non-contact acoustic and airflow vibration pollination for fruiting peppers.
+- Downward-facing multi-spectral RGB/NIR sensors detect fruit ripeness indices and generate targeted harvest coordinates.
+
+### Branch-Crawling 'Mantis' Robot
+- Dual-actuated soft silicone pinch rollers engineered to navigate rigid horizontal and angled limbs without slippage.
+- High-precision micro-shears paired with vacuum-assisted collection pods enable soft fruit pedicel harvesting without mechanical bruising.
+
+### Ground Track AGVs (Automated Guided Vehicles)
+- Low-profile tracked units operating within designated perimeter service corridors.
+- Fitted with automated mechanical docking arms to exchange revolving unlit sprout canisters on a 4-to-6-day cycle.
+- Articulated 3-axis stereo-depth arms perform selective lateral pod severing for ground-level yields.
+
+---
+
+## 3. Closed-Loop Nutrient Recycling Kinetics
+
+The fluidic loop is designed around nitrogen cascading:
+1. **Bio-Digestion**: Organic waste and plant trimmings are anaerobically digested into bioavailable ammonium and nitrate ions.
+2. **High-EC Consumers**: The concentrated effluent is first routed to perimeter NFT channels (purslane, peppers, wasabi) requiring EC 1.8–2.4 mS/cm.
+3. **Runoff Filtration**: Drain water flows down into the central basin where floating mats of *Wolffia globosa* scavenge residual nitrates and phosphorus, operating as a biological polishing filter (target EC 1.2–1.5 mS/cm).
+4. **Aeroponic Sumps**: Polished water is pressurized through 30–50μm misters directly onto suspended True Potato Seed (TPS) root systems before returning to the main sump.

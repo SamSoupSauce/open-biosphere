@@ -1,0 +1,104 @@
+{
+  "taxon": "Vigna radiata",
+  "common_name": "Mung Bean (Dark Hypocotyl Bioreactor Drum)",
+  "ml_score": 9.1,
+  "category": "High-Density Caloric/Protein",
+  "drone_interaction": {
+    "agent_type": "Ground Rover",
+    "vision_modality": "Internal gas-phase CO2/ethylene monitoring with optical sprout elongation lidar",
+    "harvest_tool": "AGV docking arm exchanging revolving canister drum with automated cutter-separator station"
+  },
+  "exhaustive_nutritional_profile_per_100g": {
+    "calories_kcal": 30.0,
+    "macronutrients_g": {
+      "protein_g": 3.04,
+      "carbohydrate_g": 5.94,
+      "fiber_g": 1.8,
+      "fat_total_g": 0.18,
+      "saturated_fat_g": 0.04,
+      "monounsaturated_fat_g": 0.02,
+      "polyunsaturated_fat_g": 0.08,
+      "ala_omega3_g": 0.04,
+      "epa_dha_g": 0.0
+    },
+    "essential_amino_acids_mg": {
+      "histidine_mg": 82.0,
+      "isoleucine_mg": 145.0,
+      "leucine_mg": 235.0,
+      "lysine_mg": 185.0,
+      "methionine_mg": 42.0,
+      "phenylalanine_mg": 155.0,
+      "threonine_mg": 125.0,
+      "tryptophan_mg": 38.0,
+      "valine_mg": 165.0
+    },
+    "vitamins": {
+      "vitamin_a_rae_ug": 1.0,
+      "vitamin_c_mg": 13.2,
+      "vitamin_d_iu": 0.0,
+      "vitamin_e_alpha_tocopherol_mg": 0.1,
+      "vitamin_k_phylloquinone_ug": 33.0,
+      "thiamin_b1_mg": 0.084,
+      "riboflavin_b2_mg": 0.124,
+      "niacin_b3_mg": 0.75,
+      "pantothenic_acid_b5_mg": 0.38,
+      "vitamin_b6_pyridoxine_mg": 0.088,
+      "biotin_b7_ug": 2.2,
+      "folate_b9_ug": 61.0,
+      "vitamin_b12_cobalamin_ug": 0.0,
+      "choline_mg": 14.4
+    },
+    "macrominerals_and_salts_mg": {
+      "potassium_mg": 149.0,
+      "sodium_salt_mg": 6.0,
+      "calcium_mg": 13.0,
+      "magnesium_mg": 21.0,
+      "phosphorus_mg": 54.0,
+      "sulfur_mg": 24.0,
+      "chloride_mg": 18.0
+    },
+    "microminerals_and_trace_elements": {
+      "iron_mg": 0.91,
+      "zinc_mg": 0.41,
+      "selenium_ug": 0.6,
+      "manganese_mg": 0.19,
+      "copper_mg": 0.16,
+      "iodine_ug": 1.0,
+      "boron_ug": 140.0,
+      "chromium_ug": 1.2,
+      "molybdenum_ug": 8.0,
+      "cobalt_ug": 0.3,
+      "silicon_mg": 6.2
+    }
+  },
+  "exhaustive_medicinal_and_bioactive_compounds": [
+    {
+      "compound_name": "Vitexin & Isovitexin",
+      "chemical_class": "Flavonoid / Polyphenol",
+      "concentration_mg_per_100g_dw": 380.0,
+      "bioactive_mechanisms": "C-glycosylflavonoids inhibiting advanced glycation end-product (AGE) formation and hepatic gluconeogenesis",
+      "human_therapeutic_efficacy": "Metabolic and cardiovascular protection, antioxidant free radical clearance",
+      "extraction_or_utilization": "Direct dietary intake of raw or lightly blanched sprouts"
+    },
+    {
+      "compound_name": "Gamma-Aminobutyric Acid (GABA)",
+      "chemical_class": "Alkaloid",
+      "concentration_mg_per_100g_dw": 140.0,
+      "bioactive_mechanisms": "Central nervous system inhibitory neurotransmission via GABA-A receptor activation",
+      "human_therapeutic_efficacy": "Stress response mitigation, autonomic nervous system balance, and blood pressure reduction",
+      "extraction_or_utilization": "Synthesized abundantly during dark anaerobic germination cycles"
+    }
+  ],
+  "cycle_parameters": {
+    "turnaround_days": 4,
+    "par_light_range": "0 umol/m2/s (dark obligate)",
+    "ec_target": 0.8,
+    "ph_target": 6.8,
+    "temp_range_c": "22-26C"
+  },
+  "penalties_and_risks": [
+    "Warm, dark, high-humidity drum environment requires automated UV/ozonated water rinses to prevent microbial growth.",
+    "Requires scheduled mechanical canister inversions every 4 hours to prevent root tangling and uneven hypocotyl growth."
+  ],
+  "human_culinary_use": "Ultra-fast fresh vegetable supply. Exceptionally crisp, juicy, and sweet. Eaten raw, stir-fried, or tossed into hot savory broths."
+}

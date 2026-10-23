@@ -1,0 +1,104 @@
+{
+  "taxon": "Capsicum annuum",
+  "common_name": "Compact Bush Pepper (Chili / Sweet Mini-Bell)",
+  "ml_score": 8.2,
+  "category": "Drone-Autonomous",
+  "drone_interaction": {
+    "agent_type": "Aerial Spotter",
+    "vision_modality": "Multi-spectral RGB ripeness tracking with targeted acoustic resonance frequency triggering",
+    "harvest_tool": "Track-crawling dual-element gripper holding fruit body while micro-shear clips pedicel cleanly"
+  },
+  "exhaustive_nutritional_profile_per_100g": {
+    "calories_kcal": 40.0,
+    "macronutrients_g": {
+      "protein_g": 1.87,
+      "carbohydrate_g": 8.8,
+      "fiber_g": 1.5,
+      "fat_total_g": 0.44,
+      "saturated_fat_g": 0.04,
+      "monounsaturated_fat_g": 0.02,
+      "polyunsaturated_fat_g": 0.24,
+      "ala_omega3_g": 0.12,
+      "epa_dha_g": 0.0
+    },
+    "essential_amino_acids_mg": {
+      "histidine_mg": 30.0,
+      "isoleucine_mg": 52.0,
+      "leucine_mg": 88.0,
+      "lysine_mg": 72.0,
+      "methionine_mg": 16.0,
+      "phenylalanine_mg": 56.0,
+      "threonine_mg": 50.0,
+      "tryptophan_mg": 18.0,
+      "valine_mg": 62.0
+    },
+    "vitamins": {
+      "vitamin_a_rae_ug": 157.0,
+      "vitamin_c_mg": 143.7,
+      "vitamin_d_iu": 0.0,
+      "vitamin_e_alpha_tocopherol_mg": 1.58,
+      "vitamin_k_phylloquinone_ug": 4.9,
+      "thiamin_b1_mg": 0.05,
+      "riboflavin_b2_mg": 0.09,
+      "niacin_b3_mg": 1.24,
+      "pantothenic_acid_b5_mg": 0.32,
+      "vitamin_b6_pyridoxine_mg": 0.51,
+      "biotin_b7_ug": 2.4,
+      "folate_b9_ug": 46.0,
+      "vitamin_b12_cobalamin_ug": 0.0,
+      "choline_mg": 10.9
+    },
+    "macrominerals_and_salts_mg": {
+      "potassium_mg": 322.0,
+      "sodium_salt_mg": 7.0,
+      "calcium_mg": 14.0,
+      "magnesium_mg": 23.0,
+      "phosphorus_mg": 43.0,
+      "sulfur_mg": 22.0,
+      "chloride_mg": 14.0
+    },
+    "microminerals_and_trace_elements": {
+      "iron_mg": 1.03,
+      "zinc_mg": 0.26,
+      "selenium_ug": 0.5,
+      "manganese_mg": 0.19,
+      "copper_mg": 0.13,
+      "iodine_ug": 1.2,
+      "boron_ug": 150.0,
+      "chromium_ug": 2.1,
+      "molybdenum_ug": 4.5,
+      "cobalt_ug": 0.2,
+      "silicon_mg": 4.2
+    }
+  },
+  "exhaustive_medicinal_and_bioactive_compounds": [
+    {
+      "compound_name": "Capsaicin & Dihydrocapsaicin",
+      "chemical_class": "Alkaloid",
+      "concentration_mg_per_100g_dw": 350.0,
+      "bioactive_mechanisms": "TRPV1 vanilloid receptor activation causing intracellular calcium influx, substance P depletion, and uncoupling protein upregulation",
+      "human_therapeutic_efficacy": "Thermogenic metabolic enhancement, systemic analgesia, and antimicrobial gastrointestinal protection",
+      "extraction_or_utilization": "Direct culinary seasoning or lipophilic oil extraction"
+    },
+    {
+      "compound_name": "Capsanthin & Capsorubin",
+      "chemical_class": "Carotenoid",
+      "concentration_mg_per_100g_dw": 420.0,
+      "bioactive_mechanisms": "High-efficiency singlet molecular oxygen and lipid peroxyl radical quenching",
+      "human_therapeutic_efficacy": "Protects against UV photo-oxidation and promotes HDL cholesterol function",
+      "extraction_or_utilization": "Direct dietary consumption in fresh or dehydrated pods"
+    }
+  ],
+  "cycle_parameters": {
+    "turnaround_days": 65,
+    "par_light_range": "350-550 umol/m2/s",
+    "ec_target": 2.2,
+    "ph_target": 6.0,
+    "temp_range_c": "22-29C"
+  },
+  "penalties_and_risks": [
+    "Requires micro-quadcopter propeller-wash acoustic vibration for non-contact flower pollination.",
+    "Susceptible to Blossom End Rot if transpiration drops below critical rate in stagnant air."
+  ],
+  "human_culinary_use": "Vibrant sweet or pungent spicy flavor. Sliced into salads, charred over fire, sautéed with beans and potatoes, or milled into antioxidant chili powders."
+}

@@ -1,0 +1,33 @@
+---
+title: Aerial Spotter & Pollination Drone
+description: Micro-quadcopter utilizing propeller wash for non-contact acoustic buzz-pollination and multispectral ripeness mapping
+---
+
+## 1. Subsystem Architecture
+
+The **Aerial Spotter & Pollination Drone** is a lightweight (280g) micro-quadcopter engineered to operate within the 4.5 ft vertical clearance zone above the pool canopy. It delivers non-contact pollination to solanaceous fruiting crops (peppers, tomatoes) through calibrated acoustic and airflow wash while mapping crop maturity.
+
+---
+
+## 2. Technical Specifications
+
+| Parameter | Specification |
+| :--- | :--- |
+| **All-Up Weight (AUW)** | 280 g (including LiPo & camera payload) |
+| **Frame Dimension** | 120 mm diagonal wheelbase (carbon fiber unibody) |
+| **Power Supply** | 3S 850mAh LiFePO4 battery with inductive top-rail docking |
+| **Hover Endurance** | 14 minutes continuous flight per charge |
+| **Propeller Wash Velocity** | 1.8 – 2.5 m/s at 250 mm standoff distance |
+| **Onboard Compute** | ESP32-S3 + Raspberry Pi Zero 2W companion computer |
+| **Sensing Suite** | Downward-facing global-shutter RGB/NIR camera + VL53L8CX 8x8 ToF distance sensor |
+| **Communication** | Micro-ROS over 5.8 GHz Wi-Fi / ESP-NOW telemetry |
+
+---
+
+## 3. Operational Protocols
+
+### Acoustic Buzz-Pollination
+Solanaceous flowers (*Capsicum annuum*) require vibration (180–220 Hz) to release pollen from poricidal anthers. The drone hovers 200 mm above flowering clusters, modulating motor RPM to generate acoustic resonant frequencies via propeller blade-pass wash, achieving 94% fruit-set efficiency without mechanical touch.
+
+### Multispectral Ripeness Indexing
+During autonomous sweep patrols, the drone captures normalized difference vegetation index (NDVI) and green-red vegetative index (GRVI) imagery, streaming geo-referenced harvest coordinates to the overhead gantry and Mantis crawler.

@@ -1,0 +1,51 @@
+---
+title: Open Biosphere Technical Wiki
+description: Autonomous Closed Biosphere Agriculture, Multi-Agent Robotics & Continuous ML Crop Auditing
+template: splash
+hero:
+  tagline: Open-source engineering blueprints, autonomous robotics kinematics, and living candidate crop database for contained ~6,000-gallon pool biosystems.
+  image:
+    file: ../../assets/logo-dark.svg
+  actions:
+    - text: Explore Candidate Matrix
+      link: /crops/matrix/
+      icon: right-arrow
+      variant: primary
+    - text: Enclosure Spatial Map
+      link: /zones/map/
+      icon: external
+      variant: secondary
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+import CropMatrix from '../../components/CropMatrix';
+import EnclosureMap from '../../components/EnclosureMap';
+
+## Core Architecture Pillars
+
+<CardGrid stagger>
+  <Card title="Autonomous Closed Biosphere" icon="seti:graphql">
+    Engineered within a **~20x10 ft footprint (~200 sq ft)** with **4.5 ft vertical canopy clearance** and **~6,000 gallons** of recirculating nutrient liquid.
+  </Card>
+  <Card title="Multi-Agent Robotics" icon="setting">
+    **Aerial pollination drones**, **Mantis branch-crawling soft-roller robots**, and **ground-tracked AGVs** cooperating along absolute spatial datum $(0,0,0)$ V-slot tracks.
+  </Card>
+  <Card title="Machine Learning Crop Index (-1.0 to 10.0)" icon="open-book">
+    Rigorous ML suitability scoring assessing computer vision volume tracking, automated end-effector feasibility, and complete micronutrient/bioactive density.
+  </Card>
+  <Card title="Continuous Ticket Ingestion Daemon" icon="github">
+    Git-native auditing pipeline validating incoming species proposals against strict JSON schema contracts before insertion into the primary database.
+  </Card>
+</CardGrid>
+
+---
+
+## Interactive Biosphere Blueprint
+
+<EnclosureMap client:load />
+
+---
+
+## Live Candidate Crop Matrix
+
+<CropMatrix client:load />

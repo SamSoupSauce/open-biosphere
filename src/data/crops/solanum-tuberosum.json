@@ -1,0 +1,104 @@
+{
+  "taxon": "Solanum tuberosum",
+  "common_name": "True Potato Seed (TPS) Aeroponic Mini-Tuber",
+  "ml_score": 7.5,
+  "category": "High-Density Caloric/Protein",
+  "drone_interaction": {
+    "agent_type": "Ground Rover",
+    "vision_modality": "Sub-surface root acoustic & thermal imaging (30-45mm diameter target)",
+    "harvest_tool": "Soft pneumatic suction-cup harvester detaching mature tubers without stolon tearing"
+  },
+  "exhaustive_nutritional_profile_per_100g": {
+    "calories_kcal": 87.0,
+    "macronutrients_g": {
+      "protein_g": 2.5,
+      "carbohydrate_g": 20.1,
+      "fiber_g": 2.2,
+      "fat_total_g": 0.1,
+      "saturated_fat_g": 0.03,
+      "monounsaturated_fat_g": 0.01,
+      "polyunsaturated_fat_g": 0.05,
+      "ala_omega3_g": 0.01,
+      "epa_dha_g": 0.0
+    },
+    "essential_amino_acids_mg": {
+      "histidine_mg": 45.0,
+      "isoleucine_mg": 95.0,
+      "leucine_mg": 155.0,
+      "lysine_mg": 140.0,
+      "methionine_mg": 38.0,
+      "phenylalanine_mg": 110.0,
+      "threonine_mg": 90.0,
+      "tryptophan_mg": 30.0,
+      "valine_mg": 130.0
+    },
+    "vitamins": {
+      "vitamin_a_rae_ug": 1.0,
+      "vitamin_c_mg": 19.7,
+      "vitamin_d_iu": 0.0,
+      "vitamin_e_alpha_tocopherol_mg": 0.1,
+      "vitamin_k_phylloquinone_ug": 2.0,
+      "thiamin_b1_mg": 0.08,
+      "riboflavin_b2_mg": 0.03,
+      "niacin_b3_mg": 1.05,
+      "pantothenic_acid_b5_mg": 0.3,
+      "vitamin_b6_pyridoxine_mg": 0.3,
+      "biotin_b7_ug": 1.0,
+      "folate_b9_ug": 18.0,
+      "vitamin_b12_cobalamin_ug": 0.0,
+      "choline_mg": 12.0
+    },
+    "macrominerals_and_salts_mg": {
+      "potassium_mg": 421.0,
+      "sodium_salt_mg": 6.0,
+      "calcium_mg": 12.0,
+      "magnesium_mg": 23.0,
+      "phosphorus_mg": 57.0,
+      "sulfur_mg": 28.0,
+      "chloride_mg": 35.0
+    },
+    "microminerals_and_trace_elements": {
+      "iron_mg": 0.8,
+      "zinc_mg": 0.3,
+      "selenium_ug": 0.4,
+      "manganese_mg": 0.15,
+      "copper_mg": 0.11,
+      "iodine_ug": 2.0,
+      "boron_ug": 120.0,
+      "chromium_ug": 2.0,
+      "molybdenum_ug": 4.0,
+      "cobalt_ug": 0.5,
+      "silicon_mg": 6.0
+    }
+  },
+  "exhaustive_medicinal_and_bioactive_compounds": [
+    {
+      "compound_name": "Chlorogenic Acid",
+      "chemical_class": "Flavonoid / Polyphenol",
+      "concentration_mg_per_100g_dw": 25.0,
+      "bioactive_mechanisms": "Inhibition of hepatic glucose-6-phosphate translocase and antioxidant radical scavenging",
+      "human_therapeutic_efficacy": "Postprandial glycemic buffering and protection against lipid peroxidation",
+      "extraction_or_utilization": "Retained intact during steaming or roasting with skin"
+    },
+    {
+      "compound_name": "Resistant Starch (Type 3)",
+      "chemical_class": "Polysaccharide / Soluble Mucilage",
+      "concentration_mg_per_100g_dw": 3200.0,
+      "bioactive_mechanisms": "Prebiotic microbial fermentation into short-chain fatty acids (butyrate, propionate)",
+      "human_therapeutic_efficacy": "Colon epithelial barrier integrity, anti-inflammatory gut microbiome signaling",
+      "extraction_or_utilization": "Formed via retrogradation after steaming and cooling"
+    }
+  ],
+  "cycle_parameters": {
+    "turnaround_days": 75,
+    "par_light_range": "350-500 umol/m2/s",
+    "ec_target": 1.8,
+    "ph_target": 5.8,
+    "temp_range_c": "16-22C"
+  },
+  "penalties_and_risks": [
+    "High foliage-to-tuber ratio requires automated canopy pruning to respect 4.5 ft vertical clearance.",
+    "Root misting sumps require light-tight seals to prevent chlorophyll and toxic glycoalkaloid (solanine) synthesis."
+  ],
+  "human_culinary_use": "High-carbohydrate staple ration. Eaten steamed, baked, roasted whole, or dehydrated into dry mashed potato flakes."
+}

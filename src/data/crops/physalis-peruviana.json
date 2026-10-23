@@ -1,0 +1,104 @@
+{
+  "taxon": "Physalis peruviana",
+  "common_name": "Goldenberry / Cape Gooseberry",
+  "ml_score": 6.1,
+  "category": "Micro-Dosed Micronutrient",
+  "drone_interaction": {
+    "agent_type": "Static Gantry",
+    "vision_modality": "NIR backlighting through papery calyx & color maturation spectrum",
+    "harvest_tool": "Soft pneumatic micro-gripper with pedicel shear or passive funneled catchment trays"
+  },
+  "exhaustive_nutritional_profile_per_100g": {
+    "calories_kcal": 53.0,
+    "macronutrients_g": {
+      "protein_g": 1.9,
+      "carbohydrate_g": 11.2,
+      "fiber_g": 4.9,
+      "fat_total_g": 0.7,
+      "saturated_fat_g": 0.08,
+      "monounsaturated_fat_g": 0.12,
+      "polyunsaturated_fat_g": 0.35,
+      "ala_omega3_g": 0.18,
+      "epa_dha_g": 0.0
+    },
+    "essential_amino_acids_mg": {
+      "histidine_mg": 32.0,
+      "isoleucine_mg": 68.0,
+      "leucine_mg": 110.0,
+      "lysine_mg": 85.0,
+      "methionine_mg": 24.0,
+      "phenylalanine_mg": 72.0,
+      "threonine_mg": 65.0,
+      "tryptophan_mg": 20.0,
+      "valine_mg": 82.0
+    },
+    "vitamins": {
+      "vitamin_a_rae_ug": 36.0,
+      "vitamin_c_mg": 28.0,
+      "vitamin_d_iu": 0.0,
+      "vitamin_e_alpha_tocopherol_mg": 1.4,
+      "vitamin_k_phylloquinone_ug": 10.0,
+      "thiamin_b1_mg": 0.11,
+      "riboflavin_b2_mg": 0.04,
+      "niacin_b3_mg": 2.8,
+      "pantothenic_acid_b5_mg": 0.35,
+      "vitamin_b6_pyridoxine_mg": 0.15,
+      "biotin_b7_ug": 2.0,
+      "folate_b9_ug": 24.0,
+      "vitamin_b12_cobalamin_ug": 0.0,
+      "choline_mg": 14.0
+    },
+    "macrominerals_and_salts_mg": {
+      "potassium_mg": 292.0,
+      "sodium_salt_mg": 1.0,
+      "calcium_mg": 9.0,
+      "magnesium_mg": 19.0,
+      "phosphorus_mg": 40.0,
+      "sulfur_mg": 18.0,
+      "chloride_mg": 12.0
+    },
+    "microminerals_and_trace_elements": {
+      "iron_mg": 1.0,
+      "zinc_mg": 0.4,
+      "selenium_ug": 0.6,
+      "manganese_mg": 0.15,
+      "copper_mg": 0.09,
+      "iodine_ug": 1.5,
+      "boron_ug": 180.0,
+      "chromium_ug": 3.0,
+      "molybdenum_ug": 4.0,
+      "cobalt_ug": 0.4,
+      "silicon_mg": 4.0
+    }
+  },
+  "exhaustive_medicinal_and_bioactive_compounds": [
+    {
+      "compound_name": "Physalins (Withanolides)",
+      "chemical_class": "Steroidal Lactone / Withanolide",
+      "concentration_mg_per_100g_dw": 145.0,
+      "bioactive_mechanisms": "Direct down-regulation of NF-kB and suppression of pro-inflammatory cytokines (TNF-alpha, IL-6)",
+      "human_therapeutic_efficacy": "Potent systemic anti-inflammatory, cytoprotection, and immunomodulatory activity",
+      "extraction_or_utilization": "Direct consumption of whole fresh fruit"
+    },
+    {
+      "compound_name": "Beta-Carotene & Beta-Cryptoxanthin",
+      "chemical_class": "Carotenoid",
+      "concentration_mg_per_100g_dw": 12.0,
+      "bioactive_mechanisms": "Antioxidant lipid radical scavenging and enzymatic conversion to active retinol",
+      "human_therapeutic_efficacy": "Epithelial tissue repair, visual cycle support, and immune barrier maintenance",
+      "extraction_or_utilization": "Lipophilic absorption in culinary recipes containing fats"
+    }
+  ],
+  "cycle_parameters": {
+    "turnaround_days": 75,
+    "par_light_range": "300-450 umol/m2/s",
+    "ec_target": 2.0,
+    "ph_target": 6.2,
+    "temp_range_c": "20-27C"
+  },
+  "penalties_and_risks": [
+    "Papery husk visually conceals internal berry color from simple RGB cameras.",
+    "Indeterminate sprawling vines require weekly branch pruning along perimeter espalier guideframes."
+  ],
+  "human_culinary_use": "Sweet, zesty tropical flavor. Eaten fresh as a mood-boosting fruit ration, dehydrated into golden raisins, or stewed into tangy chutneys."
+}

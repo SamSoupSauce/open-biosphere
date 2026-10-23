@@ -1,0 +1,30 @@
+---
+title: Ground Track AGV Pod Carrier
+description: Tracked autonomous guided vehicle servicing dark hypocotyl canisters and harvesting bush crops
+---
+
+## 1. Subsystem Architecture
+
+The **Ground Track AGV** is a low-profile tracked robot that navigates the Perimeter Lower Tier ($Z = 0.5 \text{ to } 1.2 \text{ ft}$) maintenance lanes. It performs two core tasks:
+1. Automated exchange and transport of revolving dark-chamber sprout canisters.
+2. Stereo-depth pod harvesting for bush crops (*Phaseolus vulgaris*).
+
+---
+
+## 2. Technical Specifications
+
+| Parameter | Specification |
+| :--- | :--- |
+| **Chassis** | High-traction rubber continuous tracks with low center of gravity |
+| **Ground Clearance** | 45 mm (traverses floor sumps and drain grates) |
+| **Payload Capacity** | 25 kg (canister drum + harvest payload) |
+| **Docking Interface** | Pneumatic quick-connect latch for cylindrical revolving canisters |
+| **Harvest Arm** | 3-axis articulated arm with soft silicone 2-finger clamp & rotary blade |
+| **Navigation** | Magnetic floor tape tracking + LiDAR obstacle avoidance |
+| **Battery System** | 24V 20Ah LiFePO4 pack with automated magnetic floor charging dock |
+
+---
+
+## 3. Automated Canister Rotation & Servicing
+
+The AGV services 8 revolving dark-chamber hypocotyl canisters stacked beneath the perimeter deck. Every 4 hours, the AGV rotates each drum 180 degrees to prevent sprout root compaction, checks effluent drainage, and triggers ozonated rinse cycles.

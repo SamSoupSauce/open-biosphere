@@ -1,0 +1,104 @@
+{
+  "taxon": "Abelmoschus esculentus",
+  "common_name": "Dwarf Okra (Micro-Pod Architecture)",
+  "ml_score": 5.8,
+  "category": "High-Density Caloric/Protein",
+  "drone_interaction": {
+    "agent_type": "Static Gantry",
+    "vision_modality": "High-speed 2D optical edge detection calculating pod elongation curve derivative",
+    "harvest_tool": "Vision-guided high-speed micro-bypass shears severing pedicel 5 mm above pod cap (target length: 6.5-9.0 cm)"
+  },
+  "exhaustive_nutritional_profile_per_100g": {
+    "calories_kcal": 33.0,
+    "macronutrients_g": {
+      "protein_g": 1.93,
+      "carbohydrate_g": 7.45,
+      "fiber_g": 3.2,
+      "fat_total_g": 0.19,
+      "saturated_fat_g": 0.03,
+      "monounsaturated_fat_g": 0.02,
+      "polyunsaturated_fat_g": 0.06,
+      "ala_omega3_g": 0.04,
+      "epa_dha_g": 0.0
+    },
+    "essential_amino_acids_mg": {
+      "histidine_mg": 38.0,
+      "isoleucine_mg": 72.0,
+      "leucine_mg": 128.0,
+      "lysine_mg": 98.0,
+      "methionine_mg": 28.0,
+      "phenylalanine_mg": 78.0,
+      "threonine_mg": 70.0,
+      "tryptophan_mg": 22.0,
+      "valine_mg": 86.0
+    },
+    "vitamins": {
+      "vitamin_a_rae_ug": 36.0,
+      "vitamin_c_mg": 23.0,
+      "vitamin_d_iu": 0.0,
+      "vitamin_e_alpha_tocopherol_mg": 0.27,
+      "vitamin_k_phylloquinone_ug": 31.3,
+      "thiamin_b1_mg": 0.2,
+      "riboflavin_b2_mg": 0.06,
+      "niacin_b3_mg": 1.0,
+      "pantothenic_acid_b5_mg": 0.25,
+      "vitamin_b6_pyridoxine_mg": 0.22,
+      "biotin_b7_ug": 2.0,
+      "folate_b9_ug": 60.0,
+      "vitamin_b12_cobalamin_ug": 0.0,
+      "choline_mg": 12.3
+    },
+    "macrominerals_and_salts_mg": {
+      "potassium_mg": 299.0,
+      "sodium_salt_mg": 7.0,
+      "calcium_mg": 82.0,
+      "magnesium_mg": 57.0,
+      "phosphorus_mg": 61.0,
+      "sulfur_mg": 32.0,
+      "chloride_mg": 20.0
+    },
+    "microminerals_and_trace_elements": {
+      "iron_mg": 0.62,
+      "zinc_mg": 0.58,
+      "selenium_ug": 0.7,
+      "manganese_mg": 0.79,
+      "copper_mg": 0.11,
+      "iodine_ug": 2.2,
+      "boron_ug": 160.0,
+      "chromium_ug": 2.5,
+      "molybdenum_ug": 5.0,
+      "cobalt_ug": 0.3,
+      "silicon_mg": 7.5
+    }
+  },
+  "exhaustive_medicinal_and_bioactive_compounds": [
+    {
+      "compound_name": "Galacturonic Acid / Pectin Mucilage Complex",
+      "chemical_class": "Polysaccharide / Soluble Mucilage",
+      "concentration_mg_per_100g_dw": 3400.0,
+      "bioactive_mechanisms": "Forms viscoelastic intestinal hydration gel; binds bile acids and slows enzymatic glucose uptake",
+      "human_therapeutic_efficacy": "Reduces serum LDL cholesterol, blunts postprandial glucose spikes, and protects gastric mucosa",
+      "extraction_or_utilization": "Liberated into culinary broths or cold aqueous mucilage infusions"
+    },
+    {
+      "compound_name": "Isoquercitrin & Quercetin-3-O-gentiobioside",
+      "chemical_class": "Flavonoid / Polyphenol",
+      "concentration_mg_per_100g_dw": 180.0,
+      "bioactive_mechanisms": "Competitive alpha-glucosidase inhibition in intestinal brush-border membranes",
+      "human_therapeutic_efficacy": "Improves insulin sensitivity and reduces vascular oxidative stress",
+      "extraction_or_utilization": "Retained intact during quick high-heat searing or raw slicing"
+    }
+  ],
+  "cycle_parameters": {
+    "turnaround_days": 55,
+    "par_light_range": "350-500 umol/m2/s",
+    "ec_target": 2.0,
+    "ph_target": 6.4,
+    "temp_range_c": "24-32C"
+  },
+  "penalties_and_risks": [
+    "Strict daily harvest urgency (delay of 24-48 hours causes irreversible xylem lignification into woody inedibility).",
+    "Foliage epidermal prickles and trichome dust create mechanical and optical sensor abrasion."
+  ],
+  "human_culinary_use": "Crisp and tender when young. Sliced into stews as a natural thickening agent, blistered whole in cast-iron mess skillets, pickled in cider brine, or dried into prebiotic mucilage flour."
+}

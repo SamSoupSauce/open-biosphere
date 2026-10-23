@@ -1,0 +1,104 @@
+{
+  "taxon": "Wolffia globosa",
+  "common_name": "Asian Watermeal / Mankai Duckweed",
+  "ml_score": 9.8,
+  "category": "High-Density Caloric/Protein",
+  "drone_interaction": {
+    "agent_type": "Fluidic Skimmer",
+    "vision_modality": "Top-down RGB/NIR volume & chlorophyll fluorescence",
+    "harvest_tool": "Vacuum skimmer head with fine-mesh belt separator & wedge-wire run-off"
+  },
+  "exhaustive_nutritional_profile_per_100g": {
+    "calories_kcal": 330.0,
+    "macronutrients_g": {
+      "protein_g": 45.0,
+      "carbohydrate_g": 35.0,
+      "fiber_g": 28.0,
+      "fat_total_g": 5.5,
+      "saturated_fat_g": 0.8,
+      "monounsaturated_fat_g": 0.5,
+      "polyunsaturated_fat_g": 4.2,
+      "ala_omega3_g": 3.2,
+      "epa_dha_g": 0.0
+    },
+    "essential_amino_acids_mg": {
+      "histidine_mg": 950.0,
+      "isoleucine_mg": 1950.0,
+      "leucine_mg": 3400.0,
+      "lysine_mg": 2350.0,
+      "methionine_mg": 750.0,
+      "phenylalanine_mg": 2150.0,
+      "threonine_mg": 1850.0,
+      "tryptophan_mg": 620.0,
+      "valine_mg": 2450.0
+    },
+    "vitamins": {
+      "vitamin_a_rae_ug": 850.0,
+      "vitamin_c_mg": 32.0,
+      "vitamin_d_iu": 0.0,
+      "vitamin_e_alpha_tocopherol_mg": 4.5,
+      "vitamin_k_phylloquinone_ug": 120.0,
+      "thiamin_b1_mg": 0.45,
+      "riboflavin_b2_mg": 0.65,
+      "niacin_b3_mg": 3.2,
+      "pantothenic_acid_b5_mg": 1.5,
+      "vitamin_b6_pyridoxine_mg": 0.55,
+      "biotin_b7_ug": 18.0,
+      "folate_b9_ug": 320.0,
+      "vitamin_b12_cobalamin_ug": 2.8,
+      "choline_mg": 140.0
+    },
+    "macrominerals_and_salts_mg": {
+      "potassium_mg": 1800.0,
+      "sodium_salt_mg": 45.0,
+      "calcium_mg": 980.0,
+      "magnesium_mg": 320.0,
+      "phosphorus_mg": 850.0,
+      "sulfur_mg": 410.0,
+      "chloride_mg": 120.0
+    },
+    "microminerals_and_trace_elements": {
+      "iron_mg": 28.5,
+      "zinc_mg": 8.4,
+      "selenium_ug": 15.0,
+      "manganese_mg": 12.0,
+      "copper_mg": 1.8,
+      "iodine_ug": 22.0,
+      "boron_ug": 650.0,
+      "chromium_ug": 18.0,
+      "molybdenum_ug": 42.0,
+      "cobalt_ug": 12.0,
+      "silicon_mg": 15.0
+    }
+  },
+  "exhaustive_medicinal_and_bioactive_compounds": [
+    {
+      "compound_name": "Lutein and Zeaxanthin",
+      "chemical_class": "Carotenoid",
+      "concentration_mg_per_100g_dw": 85.0,
+      "bioactive_mechanisms": "Macular pigment optical density enhancement; potent singlet oxygen quenching",
+      "human_therapeutic_efficacy": "Protects retinal photoreceptor cells against high-energy photo-oxidative stress",
+      "extraction_or_utilization": "Direct dietary intake in whole fresh wet paste or dehydrated powder"
+    },
+    {
+      "compound_name": "Quercetin-3-O-glucoside",
+      "chemical_class": "Flavonoid / Polyphenol",
+      "concentration_mg_per_100g_dw": 42.0,
+      "bioactive_mechanisms": "Inhibition of NF-kB transcription and up-regulation of phase-II cytoprotective enzymes",
+      "human_therapeutic_efficacy": "Systemic anti-inflammatory and vascular endothelial cytoprotection",
+      "extraction_or_utilization": "Aqueous suspension during smoothie preparation"
+    }
+  ],
+  "cycle_parameters": {
+    "turnaround_days": 2,
+    "par_light_range": "150-250 umol/m2/s",
+    "ec_target": 1.5,
+    "ph_target": 6.8,
+    "temp_range_c": "22-28C"
+  },
+  "penalties_and_risks": [
+    "Sub-millimeter plant diameter can clog recirculating impellers without wedge-wire filtration.",
+    "Dense floating frond mats exceeding 10 mm depth induce localized anaerobic conditions."
+  ],
+  "human_culinary_use": "Neutral green flavor profile with no bitterness. Consumed fresh as a protein paste, blended into shakes, extruded into pasta, or dried into nutrient flour."
+}

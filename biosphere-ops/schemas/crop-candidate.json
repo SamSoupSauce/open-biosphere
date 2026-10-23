@@ -1,0 +1,242 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "BiosphereCropCandidateExhaustive",
+  "type": "object",
+  "required": [
+    "taxon",
+    "common_name",
+    "ml_score",
+    "category",
+    "drone_interaction",
+    "exhaustive_nutritional_profile_per_100g",
+    "exhaustive_medicinal_and_bioactive_compounds",
+    "cycle_parameters",
+    "penalties_and_risks",
+    "human_culinary_use"
+  ],
+  "properties": {
+    "taxon": { "type": "string" },
+    "common_name": { "type": "string" },
+    "ml_score": { "type": "number", "minimum": -1.0, "maximum": 10.0 },
+    "category": {
+      "type": "string",
+      "enum": [
+        "High-Density Caloric/Protein",
+        "Micro-Dosed Micronutrient",
+        "Drone-Autonomous",
+        "Negative-Control Anchor"
+      ]
+    },
+    "drone_interaction": {
+      "type": "object",
+      "required": ["agent_type", "vision_modality", "harvest_tool"],
+      "properties": {
+        "agent_type": {
+          "type": "string",
+          "enum": ["Aerial Spotter", "Branch Crawler", "Ground Rover", "Fluidic Skimmer", "Static Gantry"]
+        },
+        "vision_modality": { "type": "string" },
+        "harvest_tool": { "type": "string" }
+      }
+    },
+    "exhaustive_nutritional_profile_per_100g": {
+      "type": "object",
+      "required": [
+        "calories_kcal",
+        "macronutrients_g",
+        "essential_amino_acids_mg",
+        "vitamins",
+        "macrominerals_and_salts_mg",
+        "microminerals_and_trace_elements"
+      ],
+      "properties": {
+        "calories_kcal": { "type": "number" },
+        "macronutrients_g": {
+          "type": "object",
+          "required": [
+            "protein_g",
+            "carbohydrate_g",
+            "fiber_g",
+            "fat_total_g",
+            "saturated_fat_g",
+            "monounsaturated_fat_g",
+            "polyunsaturated_fat_g",
+            "ala_omega3_g",
+            "epa_dha_g"
+          ],
+          "properties": {
+            "protein_g": { "type": "number" },
+            "carbohydrate_g": { "type": "number" },
+            "fiber_g": { "type": "number" },
+            "fat_total_g": { "type": "number" },
+            "saturated_fat_g": { "type": "number" },
+            "monounsaturated_fat_g": { "type": "number" },
+            "polyunsaturated_fat_g": { "type": "number" },
+            "ala_omega3_g": { "type": "number" },
+            "epa_dha_g": { "type": "number" }
+          }
+        },
+        "essential_amino_acids_mg": {
+          "type": "object",
+          "required": [
+            "histidine_mg",
+            "isoleucine_mg",
+            "leucine_mg",
+            "lysine_mg",
+            "methionine_mg",
+            "phenylalanine_mg",
+            "threonine_mg",
+            "tryptophan_mg",
+            "valine_mg"
+          ],
+          "properties": {
+            "histidine_mg": { "type": "number" },
+            "isoleucine_mg": { "type": "number" },
+            "leucine_mg": { "type": "number" },
+            "lysine_mg": { "type": "number" },
+            "methionine_mg": { "type": "number" },
+            "phenylalanine_mg": { "type": "number" },
+            "threonine_mg": { "type": "number" },
+            "tryptophan_mg": { "type": "number" },
+            "valine_mg": { "type": "number" }
+          }
+        },
+        "vitamins": {
+          "type": "object",
+          "required": [
+            "vitamin_a_rae_ug",
+            "vitamin_c_mg",
+            "vitamin_d_iu",
+            "vitamin_e_alpha_tocopherol_mg",
+            "vitamin_k_phylloquinone_ug",
+            "thiamin_b1_mg",
+            "riboflavin_b2_mg",
+            "niacin_b3_mg",
+            "pantothenic_acid_b5_mg",
+            "vitamin_b6_pyridoxine_mg",
+            "biotin_b7_ug",
+            "folate_b9_ug",
+            "vitamin_b12_cobalamin_ug",
+            "choline_mg"
+          ],
+          "properties": {
+            "vitamin_a_rae_ug": { "type": "number" },
+            "vitamin_c_mg": { "type": "number" },
+            "vitamin_d_iu": { "type": "number" },
+            "vitamin_e_alpha_tocopherol_mg": { "type": "number" },
+            "vitamin_k_phylloquinone_ug": { "type": "number" },
+            "thiamin_b1_mg": { "type": "number" },
+            "riboflavin_b2_mg": { "type": "number" },
+            "niacin_b3_mg": { "type": "number" },
+            "pantothenic_acid_b5_mg": { "type": "number" },
+            "vitamin_b6_pyridoxine_mg": { "type": "number" },
+            "biotin_b7_ug": { "type": "number" },
+            "folate_b9_ug": { "type": "number" },
+            "vitamin_b12_cobalamin_ug": { "type": "number" },
+            "choline_mg": { "type": "number" }
+          }
+        },
+        "macrominerals_and_salts_mg": {
+          "type": "object",
+          "required": [
+            "potassium_mg",
+            "sodium_salt_mg",
+            "calcium_mg",
+            "magnesium_mg",
+            "phosphorus_mg",
+            "sulfur_mg",
+            "chloride_mg"
+          ],
+          "properties": {
+            "potassium_mg": { "type": "number" },
+            "sodium_salt_mg": { "type": "number" },
+            "calcium_mg": { "type": "number" },
+            "magnesium_mg": { "type": "number" },
+            "phosphorus_mg": { "type": "number" },
+            "sulfur_mg": { "type": "number" },
+            "chloride_mg": { "type": "number" }
+          }
+        },
+        "microminerals_and_trace_elements": {
+          "type": "object",
+          "required": [
+            "iron_mg",
+            "zinc_mg",
+            "selenium_ug",
+            "manganese_mg",
+            "copper_mg",
+            "iodine_ug"
+          ],
+          "properties": {
+            "iron_mg": { "type": "number" },
+            "zinc_mg": { "type": "number" },
+            "selenium_ug": { "type": "number" },
+            "manganese_mg": { "type": "number" },
+            "copper_mg": { "type": "number" },
+            "iodine_ug": { "type": "number" },
+            "boron_ug": { "type": "number" },
+            "chromium_ug": { "type": "number" },
+            "molybdenum_ug": { "type": "number" },
+            "cobalt_ug": { "type": "number" },
+            "silicon_mg": { "type": "number" }
+          }
+        }
+      }
+    },
+    "exhaustive_medicinal_and_bioactive_compounds": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "compound_name",
+          "chemical_class",
+          "bioactive_mechanisms",
+          "human_therapeutic_efficacy"
+        ],
+        "properties": {
+          "compound_name": { "type": "string" },
+          "chemical_class": {
+            "type": "string",
+            "enum": [
+              "Glucosinolate / Isothiocyanate",
+              "Flavonoid / Polyphenol",
+              "Carotenoid",
+              "Steroidal Lactone / Withanolide",
+              "Alkaloid",
+              "Terpenoid / Saponin",
+              "Polysaccharide / Soluble Mucilage",
+              "Organic Acid / Chelate",
+              "Phytosterol"
+            ]
+          },
+          "concentration_mg_per_100g_dw": { "type": "number" },
+          "bioactive_mechanisms": { "type": "string" },
+          "human_therapeutic_efficacy": { "type": "string" },
+          "extraction_or_utilization": { "type": "string" }
+        }
+      }
+    },
+    "cycle_parameters": {
+      "type": "object",
+      "required": [
+        "turnaround_days",
+        "par_light_range",
+        "ec_target",
+        "ph_target",
+        "temp_range_c"
+      ],
+      "properties": {
+        "turnaround_days": { "type": "integer" },
+        "par_light_range": { "type": "string" },
+        "ec_target": { "type": "number" },
+        "ph_target": { "type": "number" },
+        "temp_range_c": { "type": "string" }
+      }
+    },
+    "penalties_and_risks": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "human_culinary_use": { "type": "string" }
+  }
+}

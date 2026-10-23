@@ -1,0 +1,104 @@
+{
+  "taxon": "Monostroma nitidum",
+  "common_name": "Sea Lettuce / Green Laver (Aosa)",
+  "ml_score": 5.2,
+  "category": "Negative-Control Anchor",
+  "drone_interaction": {
+    "agent_type": "Fluidic Skimmer",
+    "vision_modality": "Underwater spectral transmission & light-attenuation turbidity sensors",
+    "harvest_tool": "Centrifugal vortex separator with rotating stainless mesh drum"
+  },
+  "exhaustive_nutritional_profile_per_100g": {
+    "calories_kcal": 145.0,
+    "macronutrients_g": {
+      "protein_g": 22.0,
+      "carbohydrate_g": 48.0,
+      "fiber_g": 34.0,
+      "fat_total_g": 1.2,
+      "saturated_fat_g": 0.3,
+      "monounsaturated_fat_g": 0.2,
+      "polyunsaturated_fat_g": 0.5,
+      "ala_omega3_g": 0.3,
+      "epa_dha_g": 0.1
+    },
+    "essential_amino_acids_mg": {
+      "histidine_mg": 340.0,
+      "isoleucine_mg": 780.0,
+      "leucine_mg": 1350.0,
+      "lysine_mg": 920.0,
+      "methionine_mg": 280.0,
+      "phenylalanine_mg": 850.0,
+      "threonine_mg": 820.0,
+      "tryptophan_mg": 210.0,
+      "valine_mg": 980.0
+    },
+    "vitamins": {
+      "vitamin_a_rae_ug": 480.0,
+      "vitamin_c_mg": 14.0,
+      "vitamin_d_iu": 0.0,
+      "vitamin_e_alpha_tocopherol_mg": 1.8,
+      "vitamin_k_phylloquinone_ug": 85.0,
+      "thiamin_b1_mg": 0.18,
+      "riboflavin_b2_mg": 0.42,
+      "niacin_b3_mg": 2.1,
+      "pantothenic_acid_b5_mg": 0.8,
+      "vitamin_b6_pyridoxine_mg": 0.32,
+      "biotin_b7_ug": 8.0,
+      "folate_b9_ug": 180.0,
+      "vitamin_b12_cobalamin_ug": 6.5,
+      "choline_mg": 45.0
+    },
+    "macrominerals_and_salts_mg": {
+      "potassium_mg": 1250.0,
+      "sodium_salt_mg": 2400.0,
+      "calcium_mg": 890.0,
+      "magnesium_mg": 1100.0,
+      "phosphorus_mg": 310.0,
+      "sulfur_mg": 620.0,
+      "chloride_mg": 3200.0
+    },
+    "microminerals_and_trace_elements": {
+      "iron_mg": 23.4,
+      "zinc_mg": 3.8,
+      "selenium_ug": 12.0,
+      "manganese_mg": 4.5,
+      "copper_mg": 0.8,
+      "iodine_ug": 2400.0,
+      "boron_ug": 920.0,
+      "chromium_ug": 14.0,
+      "molybdenum_ug": 22.0,
+      "cobalt_ug": 5.0,
+      "silicon_mg": 18.0
+    }
+  },
+  "exhaustive_medicinal_and_bioactive_compounds": [
+    {
+      "compound_name": "Rhamnan Sulfate",
+      "chemical_class": "Polysaccharide / Soluble Mucilage",
+      "concentration_mg_per_100g_dw": 6200.0,
+      "bioactive_mechanisms": "Sulfated polysaccharide binding to antithrombin III; protects vascular endothelial glycocalyx from degradation",
+      "human_therapeutic_efficacy": "Vascular wall restoration, anti-thrombotic activity, and systemic blood pressure stabilization",
+      "extraction_or_utilization": "Aqueous extraction in boiling water or hot dashi broth"
+    },
+    {
+      "compound_name": "Fucoxanthin & Algal Carotenoids",
+      "chemical_class": "Carotenoid",
+      "concentration_mg_per_100g_dw": 140.0,
+      "bioactive_mechanisms": "Upregulation of mitochondrial uncoupling protein 1 (UCP1) in adipose tissue",
+      "human_therapeutic_efficacy": "Stimulates non-shivering thermogenesis and enhances metabolic lipid clearance",
+      "extraction_or_utilization": "Direct dietary consumption of whole green laver"
+    }
+  ],
+  "cycle_parameters": {
+    "turnaround_days": 14,
+    "par_light_range": "100-200 umol/m2/s",
+    "ec_target": 35.0,
+    "ph_target": 8.2,
+    "temp_range_c": "15-20C"
+  },
+  "penalties_and_risks": [
+    "High salinity (25-35 PSU) causes aggressive galvanic corrosion on standard steel gantry hardware.",
+    "Erratic fluidic tumbling makes real-time optical segmentation and biomass volume calculation unreliable."
+  ],
+  "human_culinary_use": "Deep umami, aromatic oceanic profile. Crumbled over noodle bowls, steeped into dashi broths, or flash-toasted into savory seasoning flakes."
+}

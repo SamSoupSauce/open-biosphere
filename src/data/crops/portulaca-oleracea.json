@@ -1,0 +1,104 @@
+{
+  "taxon": "Portulaca oleracea",
+  "common_name": "Purslane / Verdolaga (Omega-3 Succulent)",
+  "ml_score": 7.9,
+  "category": "High-Density Caloric/Protein",
+  "drone_interaction": {
+    "agent_type": "Static Gantry",
+    "vision_modality": "Hyperspectral leaf-reflectance for succulent cell turgor & lipid accumulation",
+    "harvest_tool": "Multi-blade micro-shears executing cut-and-come-again pruning 2 cm above root crown"
+  },
+  "exhaustive_nutritional_profile_per_100g": {
+    "calories_kcal": 20.0,
+    "macronutrients_g": {
+      "protein_g": 2.03,
+      "carbohydrate_g": 3.4,
+      "fiber_g": 1.8,
+      "fat_total_g": 0.86,
+      "saturated_fat_g": 0.15,
+      "monounsaturated_fat_g": 0.05,
+      "polyunsaturated_fat_g": 0.55,
+      "ala_omega3_g": 0.40,
+      "epa_dha_g": 0.01
+    },
+    "essential_amino_acids_mg": {
+      "histidine_mg": 38.0,
+      "isoleucine_mg": 75.0,
+      "leucine_mg": 122.0,
+      "lysine_mg": 92.0,
+      "methionine_mg": 32.0,
+      "phenylalanine_mg": 78.0,
+      "threonine_mg": 72.0,
+      "tryptophan_mg": 25.0,
+      "valine_mg": 88.0
+    },
+    "vitamins": {
+      "vitamin_a_rae_ug": 1320.0,
+      "vitamin_c_mg": 21.0,
+      "vitamin_d_iu": 0.0,
+      "vitamin_e_alpha_tocopherol_mg": 12.2,
+      "vitamin_k_phylloquinone_ug": 38.0,
+      "thiamin_b1_mg": 0.047,
+      "riboflavin_b2_mg": 0.112,
+      "niacin_b3_mg": 0.48,
+      "pantothenic_acid_b5_mg": 0.22,
+      "vitamin_b6_pyridoxine_mg": 0.073,
+      "biotin_b7_ug": 2.1,
+      "folate_b9_ug": 12.0,
+      "vitamin_b12_cobalamin_ug": 0.0,
+      "choline_mg": 18.0
+    },
+    "macrominerals_and_salts_mg": {
+      "potassium_mg": 494.0,
+      "sodium_salt_mg": 45.0,
+      "calcium_mg": 65.0,
+      "magnesium_mg": 68.0,
+      "phosphorus_mg": 44.0,
+      "sulfur_mg": 35.0,
+      "chloride_mg": 55.0
+    },
+    "microminerals_and_trace_elements": {
+      "iron_mg": 1.99,
+      "zinc_mg": 0.17,
+      "selenium_ug": 0.9,
+      "manganese_mg": 0.3,
+      "copper_mg": 0.11,
+      "iodine_ug": 3.5,
+      "boron_ug": 280.0,
+      "chromium_ug": 4.0,
+      "molybdenum_ug": 6.0,
+      "cobalt_ug": 1.0,
+      "silicon_mg": 4.5
+    }
+  },
+  "exhaustive_medicinal_and_bioactive_compounds": [
+    {
+      "compound_name": "Betacyanin & Betaxanthin",
+      "chemical_class": "Alkaloid",
+      "concentration_mg_per_100g_dw": 180.0,
+      "bioactive_mechanisms": "Direct free radical quenching and upregulation of endothelial nitric oxide synthase (eNOS)",
+      "human_therapeutic_efficacy": "Vascular endothelium relaxation, reduced LDL lipid peroxidation",
+      "extraction_or_utilization": "Fresh leaf ingestion or light flash-steaming"
+    },
+    {
+      "compound_name": "Alpha-Linolenic Acid (ALA Omega-3)",
+      "chemical_class": "Organic Acid / Chelate",
+      "concentration_mg_per_100g_dw": 1600.0,
+      "bioactive_mechanisms": "Precursor to EPA/DHA synthesis; competitively reduces arachidonic acid inflammatory cascades",
+      "human_therapeutic_efficacy": "Anti-inflammatory, cardiovascular support, and membrane lipid homeostasis",
+      "extraction_or_utilization": "Direct dietary consumption of raw succulent foliage"
+    }
+  ],
+  "cycle_parameters": {
+    "turnaround_days": 28,
+    "par_light_range": "250-400 umol/m2/s",
+    "ec_target": 2.2,
+    "ph_target": 6.2,
+    "temp_range_c": "24-32C"
+  },
+  "penalties_and_risks": [
+    "Accumulates soluble oxalates; requires circadian-synchronized harvesting when CAM organic acid levels are lowest.",
+    "Sprawling prostrate growth habit can cause optical occlusion if vertical LED distance drifts."
+  ],
+  "human_culinary_use": "Crisp, thick succulent leaves with a tart, slightly lemony crunch. Delicious raw in salads, stir-fries, or blended into cold summer soups."
+}

@@ -1,0 +1,55 @@
+---
+title: Ticket Auditing & CI Pipeline
+description: Continuous candidate ingestion, JSON Schema contracts, and automated validation engine
+---
+
+To continuously evaluate, audit, and sort candidate plant species and robotics systems over time without manual documentation errors, the repository incorporates an automated ticket-driven pipeline.
+
+---
+
+## 1. Directory Structure
+
+```
+biosphere-ops/
+├── schemas/
+│   ├── crop-candidate.json    # Canonical JSON schema for crops
+│   ├── hardware-spec.json     # Hardware & kinematics schema
+│   └── zone-manifest.json     # Spatial zone schema
+├── scripts/
+│   ├── validate_candidates.py # Strict CLI auditor
+│   ├── score_evaluator.py     # ML suitability scoring engine
+│   └── sync_to_wiki.py        # Commits tickets to src/data/
+└── tickets/
+    ├── inbox/                 # Raw incoming species proposals
+    ├── processing/            # Active audit jobs & ML scoring
+    └── completed/             # Validated records
+```
+
+---
+
+## 2. Candidate Ingestion Workflow
+
+1. **Proposal Submission**:
+   Contributors or automated crawlers deposit a proposed candidate JSON ticket into `biosphere-ops/tickets/inbox/`.
+2. **Feature Extraction & ML Scoring**:
+   The auditing engine parses agronomic parameters, calculates vision trackability and harvest kinematics feasibility, and assigns an ML score ($-1.0$ to $10.0$).
+3. **Strict Schema Verification**:
+   The candidate object must validate against `biosphere-ops/schemas/crop-candidate.json` (checking required fields, amino acids, vitamins, minerals, bioactive compound classes, and cycle parameters).
+4. **Automated Database Commit**:
+   Validated candidates move to `tickets/completed/` and are synchronized into `src/data/crops/`.
+
+---
+
+## 3. Running Audits Locally
+
+You can audit all candidate crop data files locally using the bundled Python validator:
+
+```bash
+python3 biosphere-ops/scripts/validate_candidates.py src/data/crops
+```
+
+Or run via npm script:
+
+```bash
+npm run audit:crops
+```

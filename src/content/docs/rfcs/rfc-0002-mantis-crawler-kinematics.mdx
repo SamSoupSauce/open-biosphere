@@ -1,0 +1,23 @@
+---
+title: "RFC-0002: Mantis Roller Kinematics & Soft Harvest Pod"
+description: Mechanical specification for dual-actuated silicone pinch rollers and vacuum harvest pods for espalier berry shrubs
+---
+
+- **Status**: Accepted
+- **Author**: Robotics Working Group
+- **Created**: 2026-10-18
+- **Target Subsystem**: Hardware & Robotics
+
+---
+
+## 1. Summary
+
+Specifies the drive mechanics, clamping force curves, and end-effector vacuum pods for the Mantis Branch-Crawling Robot.
+
+---
+
+## 2. Technical Standard
+
+1. **Pinch Roller Material**: Cast silicone rubber (Shore 40A durometer) providing dynamic friction coefficient $\mu > 0.85$ on wet bark and stainless wire.
+2. **Torque-Limited Clamping**: Current-sensed stepper actuation restricting maximum clamping force to $8.5 \text{ N}$ to prevent branch xylem crushing.
+3. **Vacuum Shearing**: Low-pressure suction funnel ($15 \text{ kPa}$) draws ripe berries into a foam-lined deceleration pod simultaneously with micro-pedicel shearing.

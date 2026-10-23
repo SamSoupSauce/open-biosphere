@@ -1,0 +1,27 @@
+---
+title: Spatial Envelope & Hardware Datum (0,0,0)
+description: Mechanical coordinate systems, V-slot extrusions, and localization datums for biosphere robotics
+---
+
+To ensure collision-free multi-agent robotics coordination across aerial drones, branch crawlers, and ground AGVs, the biosphere establishes an absolute spatial coordinate datum $(0,0,0)$ grounded to the perimeter framework.
+
+---
+
+## 1. Physical Spatial Datum
+
+- **Origin $(0,0,0)$**: Situated at the South-West corner of the pool coping at water level line $(Z=0)$.
+- **$X$-Axis (Width)**: Spans $0.0 \text{ to } 3,048 \text{ mm}$ ($10.0 \text{ ft}$) across the transverse width.
+- **$Y$-Axis (Length)**: Spans $0.0 \text{ to } 6,096 \text{ mm}$ ($20.0 \text{ ft}$) down the longitudinal length.
+- **$Z$-Axis (Vertical)**:
+  - Deep Water Basin: $-1,372 \text{ to } 0 \text{ mm}$ ($-4.5 \text{ to } 0.0 \text{ ft}$) liquid depth.
+  - Canopy Airspace: $0 \text{ to } 1,372 \text{ mm}$ ($0.0 \text{ to } 4.5 \text{ ft}$) overhead clearance to lighting hood.
+
+---
+
+## 2. Perimeter Structural Extrusions
+
+The entire pool perimeter is fastened with **2040 and 4040 V-slot aluminum extrusions**:
+- **Overhead Gantry Rails ($Z = 1,200 \text{ mm}$)**: Support linear optical scanners, NIR cameras, and dual-axis harvest carriages.
+- **Drone Optical Localization Tags**: High-contrast AprilTags (36h11 family) placed at $1,000 \text{ mm}$ intervals along the upper extrusion provide sub-millimeter visual fiducial localization for aerial quadcopters.
+- **Espalier Rigid Guideframe**: Heavy-gauge stainless steel guide wires spaced $150 \text{ mm}$ apart vertically provide rigid indexing tracks for the Mantis branch crawler.
+- **Ground AGV Guide Strip**: Magnetic track tape beneath perimeter tiles routes automated guided vehicles between dark canister revolving bays and compost chutes.

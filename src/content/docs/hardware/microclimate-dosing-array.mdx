@@ -1,0 +1,21 @@
+---
+title: Microclimate Hood & Dosing Unit
+description: Automated environmental enclosure hood, CO2 injection, dynamic spectrum LED arrays, and precision peristaltic nutrient dosers
+---
+
+## 1. Subsystem Architecture
+
+The **Microclimate Hood & Dosing Unit** maintains an airtight atmospheric envelope above the pool enclosure. It controls temperature, relative humidity, $CO_2$ enrichment, PAR spectra, and ionic nutrient balances (EC and pH) in real time via automated PID and reinforcement learning loops.
+
+---
+
+## 2. Technical Specifications
+
+| Parameter | Specification | Target Range |
+| :--- | :--- | :--- |
+| **Atmospheric $CO_2$** | High-pressure $CO_2$ cylinder with electronic solenoid mass flow meter | 800 – 1,200 ppm |
+| **Relative Humidity (RH)** | Ultrasonic mist humidification + dual commercial refrigeration dehumidifiers | 65% – 75% RH |
+| **Air Temperature** | Inverter heat pump with duct distribution manifold | 21°C – 27°C day / 16°C – 19°C night |
+| **Lighting Strategy** | Controllable 8-channel dynamic spectrum LED bars (Deep Red 660nm, Far Red 730nm, Royal Blue 450nm, Full Spectrum White) | 150 – 600 µmol/m²/s PAR |
+| **Nutrient Dosing** | 6-channel industrial peristaltic pumps (Nitrates, Phosphates, Potassium, Micronutrients, pH Up, pH Down) | Resolution: $\pm 0.1 \text{ mL}$ |
+| **Control Unit** | Industrial Raspberry Pi Compute Module 4 with isolated I2C and RS-485 Modbus arrays | Continuous 1 Hz telemetry logging |

@@ -1,0 +1,104 @@
+{
+  "taxon": "Crocus sativus",
+  "common_name": "Saffron Crocus (Stigma Micro-Extraction)",
+  "ml_score": 6.8,
+  "category": "Micro-Dosed Micronutrient",
+  "drone_interaction": {
+    "agent_type": "Static Gantry",
+    "vision_modality": "High-magnification macro RGB vision targeting 3-part trifid scarlet stigmas",
+    "harvest_tool": "Micro-tweezer gantry end-effector with soft silicone micro-tips & optical confirmation"
+  },
+  "exhaustive_nutritional_profile_per_100g": {
+    "calories_kcal": 310.0,
+    "macronutrients_g": {
+      "protein_g": 11.4,
+      "carbohydrate_g": 65.4,
+      "fiber_g": 3.9,
+      "fat_total_g": 5.9,
+      "saturated_fat_g": 1.6,
+      "monounsaturated_fat_g": 0.4,
+      "polyunsaturated_fat_g": 2.1,
+      "ala_omega3_g": 0.8,
+      "epa_dha_g": 0.0
+    },
+    "essential_amino_acids_mg": {
+      "histidine_mg": 230.0,
+      "isoleucine_mg": 450.0,
+      "leucine_mg": 780.0,
+      "lysine_mg": 620.0,
+      "methionine_mg": 180.0,
+      "phenylalanine_mg": 510.0,
+      "threonine_mg": 460.0,
+      "tryptophan_mg": 140.0,
+      "valine_mg": 590.0
+    },
+    "vitamins": {
+      "vitamin_a_rae_ug": 27.0,
+      "vitamin_c_mg": 80.8,
+      "vitamin_d_iu": 0.0,
+      "vitamin_e_alpha_tocopherol_mg": 1.7,
+      "vitamin_k_phylloquinone_ug": 12.0,
+      "thiamin_b1_mg": 0.26,
+      "riboflavin_b2_mg": 0.27,
+      "niacin_b3_mg": 1.46,
+      "pantothenic_acid_b5_mg": 0.6,
+      "vitamin_b6_pyridoxine_mg": 1.01,
+      "biotin_b7_ug": 3.5,
+      "folate_b9_ug": 93.0,
+      "vitamin_b12_cobalamin_ug": 0.0,
+      "choline_mg": 38.0
+    },
+    "macrominerals_and_salts_mg": {
+      "potassium_mg": 1724.0,
+      "sodium_salt_mg": 148.0,
+      "calcium_mg": 111.0,
+      "magnesium_mg": 264.0,
+      "phosphorus_mg": 252.0,
+      "sulfur_mg": 140.0,
+      "chloride_mg": 80.0
+    },
+    "microminerals_and_trace_elements": {
+      "iron_mg": 11.1,
+      "zinc_mg": 1.1,
+      "selenium_ug": 5.6,
+      "manganese_mg": 28.4,
+      "copper_mg": 0.33,
+      "iodine_ug": 12.0,
+      "boron_ug": 580.0,
+      "chromium_ug": 8.0,
+      "molybdenum_ug": 14.0,
+      "cobalt_ug": 1.5,
+      "silicon_mg": 9.0
+    }
+  },
+  "exhaustive_medicinal_and_bioactive_compounds": [
+    {
+      "compound_name": "Crocin & Crocetin",
+      "chemical_class": "Carotenoid",
+      "concentration_mg_per_100g_dw": 8500.0,
+      "bioactive_mechanisms": "Water-soluble carotenoids modulating NMDA receptors and blocking synaptic serotonin reuptake",
+      "human_therapeutic_efficacy": "Potent antidepressant, neuroprotective, and retinal micro-circulation stimulant",
+      "extraction_or_utilization": "Aqueous infusion in warm water or milk"
+    },
+    {
+      "compound_name": "Safranal",
+      "chemical_class": "Terpenoid / Saponin",
+      "concentration_mg_per_100g_dw": 1200.0,
+      "bioactive_mechanisms": "Positive allosteric modulation of GABA-A receptor complex; anti-spasmodic signaling",
+      "human_therapeutic_efficacy": "Anxiolytic, sleep quality improvement, and circadian stabilization",
+      "extraction_or_utilization": "Liberated during mild thermal infusion"
+    }
+  ],
+  "cycle_parameters": {
+    "turnaround_days": 90,
+    "par_light_range": "200-350 umol/m2/s",
+    "ec_target": 1.0,
+    "ph_target": 6.8,
+    "temp_range_c": "12-20C"
+  },
+  "penalties_and_risks": [
+    "Extremely brief 48-hour flowering window requires instantaneous robotic dispatch.",
+    "Delicate perianth tube requires micro-tweezer end-effector to avoid crushing yellow stamens."
+  ],
+  "human_culinary_use": "Prized culinary aromatic and coloring agent. Infused into grains, savory broths, teas, and restorative clinical tisanes."
+}

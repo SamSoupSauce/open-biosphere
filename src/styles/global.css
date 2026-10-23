@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+:root {
+  --sl-color-accent-low: #064e3b;
+  --sl-color-accent: #10b981;
+  --sl-color-accent-high: #a7f3d0;
+  --sl-color-white: #f8fafc;
+  --sl-color-gray-1: #f1f5f9;
+  --sl-color-gray-2: #e2e8f0;
+  --sl-color-gray-3: #94a3b8;
+  --sl-color-gray-4: #64748b;
+  --sl-color-gray-5: #334155;
+  --sl-color-gray-6: #1e293b;
+  --sl-color-black: #0f172a;
+}
+
+/* Custom styles for interactive matrix & maps */
+.matrix-container {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.badge-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1;
+}

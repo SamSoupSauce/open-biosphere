@@ -1,0 +1,104 @@
+{
+  "taxon": "Wasabia japonica",
+  "common_name": "True Wasabi (Water-Grown / Sawa Method)",
+  "ml_score": 8.4,
+  "category": "Micro-Dosed Micronutrient",
+  "drone_interaction": {
+    "agent_type": "Static Gantry",
+    "vision_modality": "Multi-spectral NIR rhizome occlusion mapping & root-rot fluorescence",
+    "harvest_tool": "Gantry dual-blade root-severing spatula with high-pressure fluid wash"
+  },
+  "exhaustive_nutritional_profile_per_100g": {
+    "calories_kcal": 109.0,
+    "macronutrients_g": {
+      "protein_g": 4.8,
+      "carbohydrate_g": 23.5,
+      "fiber_g": 7.8,
+      "fat_total_g": 0.6,
+      "saturated_fat_g": 0.1,
+      "monounsaturated_fat_g": 0.1,
+      "polyunsaturated_fat_g": 0.3,
+      "ala_omega3_g": 0.1,
+      "epa_dha_g": 0.0
+    },
+    "essential_amino_acids_mg": {
+      "histidine_mg": 95.0,
+      "isoleucine_mg": 180.0,
+      "leucine_mg": 310.0,
+      "lysine_mg": 240.0,
+      "methionine_mg": 70.0,
+      "phenylalanine_mg": 200.0,
+      "threonine_mg": 190.0,
+      "tryptophan_mg": 60.0,
+      "valine_mg": 250.0
+    },
+    "vitamins": {
+      "vitamin_a_rae_ug": 15.0,
+      "vitamin_c_mg": 42.0,
+      "vitamin_d_iu": 0.0,
+      "vitamin_e_alpha_tocopherol_mg": 0.8,
+      "vitamin_k_phylloquinone_ug": 18.0,
+      "thiamin_b1_mg": 0.13,
+      "riboflavin_b2_mg": 0.11,
+      "niacin_b3_mg": 1.0,
+      "pantothenic_acid_b5_mg": 0.4,
+      "vitamin_b6_pyridoxine_mg": 0.27,
+      "biotin_b7_ug": 4.0,
+      "folate_b9_ug": 36.0,
+      "vitamin_b12_cobalamin_ug": 0.0,
+      "choline_mg": 25.0
+    },
+    "macrominerals_and_salts_mg": {
+      "potassium_mg": 568.0,
+      "sodium_salt_mg": 17.0,
+      "calcium_mg": 128.0,
+      "magnesium_mg": 69.0,
+      "phosphorus_mg": 64.0,
+      "sulfur_mg": 180.0,
+      "chloride_mg": 40.0
+    },
+    "microminerals_and_trace_elements": {
+      "iron_mg": 1.5,
+      "zinc_mg": 1.6,
+      "selenium_ug": 3.5,
+      "manganese_mg": 0.8,
+      "copper_mg": 0.2,
+      "iodine_ug": 8.0,
+      "boron_ug": 450.0,
+      "chromium_ug": 12.0,
+      "molybdenum_ug": 18.0,
+      "cobalt_ug": 2.0,
+      "silicon_mg": 8.0
+    }
+  },
+  "exhaustive_medicinal_and_bioactive_compounds": [
+    {
+      "compound_name": "Allyl isothiocyanate (AITC)",
+      "chemical_class": "Glucosinolate / Isothiocyanate",
+      "concentration_mg_per_100g_dw": 1200.0,
+      "bioactive_mechanisms": "TRPA1 ion channel agonist triggering transient neurovascular clearance; broad-spectrum microbial cell membrane lysis",
+      "human_therapeutic_efficacy": "Potent antimicrobial action against foodborne pathogens and respiratory decongestant",
+      "extraction_or_utilization": "Liberated enzymatically via cell disruption on micro-grater"
+    },
+    {
+      "compound_name": "6-(Methylsulfinyl)hexyl isothiocyanate (6-MSITC)",
+      "chemical_class": "Glucosinolate / Isothiocyanate",
+      "concentration_mg_per_100g_dw": 450.0,
+      "bioactive_mechanisms": "Inhibition of platelet aggregation and activation of ARE-mediated phase II detoxifying enzymes",
+      "human_therapeutic_efficacy": "Cardioprotection, anti-thrombotic activity, and neuroprotective antioxidant signaling",
+      "extraction_or_utilization": "Direct consumption of fresh rhizome paste within 15 minutes of grating"
+    }
+  ],
+  "cycle_parameters": {
+    "turnaround_days": 450,
+    "par_light_range": "80-140 umol/m2/s",
+    "ec_target": 1.2,
+    "ph_target": 6.5,
+    "temp_range_c": "10-15C"
+  },
+  "penalties_and_risks": [
+    "Long 15-to-18 month vegetative cycle increases vulnerability to system interruptions.",
+    "Requires chilled, highly-oxygenated water (DO > 8.0 mg/L); temperatures above 18C trigger Pythium root rot."
+  ],
+  "human_culinary_use": "Signature pungent, clean heat with sweet vegetal undertones. Grated fresh into sauces, sushi condiments, or pickled stems (wasabi-zuke)."
+}

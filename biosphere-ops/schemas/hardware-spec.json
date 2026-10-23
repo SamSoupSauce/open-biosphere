@@ -1,0 +1,97 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "BiosphereHardwareSpec",
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "subsystem_type",
+    "status",
+    "kinematics",
+    "electronics_and_compute",
+    "power_spec",
+    "serviced_crops",
+    "target_zones",
+    "bill_of_materials"
+  ],
+  "properties": {
+    "id": { "type": "string" },
+    "name": { "type": "string" },
+    "subsystem_type": {
+      "type": "string",
+      "enum": [
+        "Aerial Drone",
+        "Branch Crawler",
+        "Ground AGV",
+        "Fluidic Skimmer",
+        "Static Gantry",
+        "Sensor/Actuator Array",
+        "Environmental Controller"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": ["Concept", "Prototype", "Tested", "Production"]
+    },
+    "kinematics": {
+      "type": "object",
+      "required": ["actuation_type", "degrees_of_freedom", "payload_capacity_kg", "end_effector"],
+      "properties": {
+        "actuation_type": { "type": "string" },
+        "degrees_of_freedom": { "type": "integer" },
+        "payload_capacity_kg": { "type": "number" },
+        "end_effector": { "type": "string" },
+        "max_speed_mps": { "type": "number" },
+        "repeatability_mm": { "type": "number" }
+      }
+    },
+    "electronics_and_compute": {
+      "type": "object",
+      "required": ["primary_mcu_soc", "perception_sensors", "bus_protocol"],
+      "properties": {
+        "primary_mcu_soc": { "type": "string" },
+        "perception_sensors": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "bus_protocol": { "type": "string" }
+      }
+    },
+    "power_spec": {
+      "type": "object",
+      "required": ["voltage_v", "continuous_power_w", "supply_type"],
+      "properties": {
+        "voltage_v": { "type": "number" },
+        "continuous_power_w": { "type": "number" },
+        "peak_power_w": { "type": "number" },
+        "supply_type": {
+          "type": "string",
+          "enum": ["Tethered Bus", "LiFePO4 Swappable Battery", "Inductive Docking"]
+        }
+      }
+    },
+    "serviced_crops": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "target_zones": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "bill_of_materials": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["part_name", "category", "quantity", "unit_cost_usd", "cad_or_source_url"],
+        "properties": {
+          "part_name": { "type": "string" },
+          "category": { "type": "string" },
+          "quantity": { "type": "integer" },
+          "unit_cost_usd": { "type": "number" },
+          "cad_or_source_url": { "type": "string" },
+          "notes": { "type": "string" }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "BiosphereZoneManifest",
+  "type": "object",
+  "required": [
+    "id",
+    "title",
+    "spatial_boundary",
+    "environmental_setpoints",
+    "fluidic_spec",
+    "target_crops",
+    "assigned_subsystems"
+  ],
+  "properties": {
+    "id": { "type": "string" },
+    "title": { "type": "string" },
+    "spatial_boundary": {
+      "type": "object",
+      "required": ["footprint_sq_ft", "elevation_range_ft", "datum_origin_mm"],
+      "properties": {
+        "footprint_sq_ft": { "type": "number" },
+        "elevation_range_ft": { "type": "string" },
+        "datum_origin_mm": {
+          "type": "array",
+          "items": { "type": "number" },
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "datum_dimensions_mm": {
+          "type": "array",
+          "items": { "type": "number" },
+          "minItems": 3,
+          "maxItems": 3
+        }
+      }
+    },
+    "environmental_setpoints": {
+      "type": "object",
+      "required": ["temp_air_c", "rh_percent", "co2_ppm", "par_umol_m2_s"],
+      "properties": {
+        "temp_air_c": { "type": "string" },
+        "temp_water_c": { "type": "string" },
+        "rh_percent": { "type": "string" },
+        "co2_ppm": { "type": "string" },
+        "par_umol_m2_s": { "type": "string" },
+        "photoperiod_hours": { "type": "string" }
+      }
+    },
+    "fluidic_spec": {
+      "type": "object",
+      "required": ["water_volume_gal", "ph_target", "ec_mS_cm", "delivery_method"],
+      "properties": {
+        "water_volume_gal": { "type": "number" },
+        "ph_target": { "type": "number" },
+        "ec_mS_cm": { "type": "number" },
+        "delivery_method": { "type": "string" },
+        "filtration_cycle": { "type": "string" }
+      }
+    },
+    "target_crops": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "assigned_subsystems": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "taxon": "Morus alba",
+  "common_name": "Dwarf Bush Mulberry (Espalier Architecture)",
+  "ml_score": 8.1,
+  "category": "Drone-Autonomous",
+  "drone_interaction": {
+    "agent_type": "Branch Crawler",
+    "vision_modality": "Stereo RGB-NIR ripeness classification (identifying dark purple/black berries vs green/red)",
+    "harvest_tool": "Mantis soft silicone dual pinch rollers with high-precision micro-shears & vacuum cushioned collection pod"
+  },
+  "exhaustive_nutritional_profile_per_100g": {
+    "calories_kcal": 43.0,
+    "macronutrients_g": {
+      "protein_g": 1.44,
+      "carbohydrate_g": 9.8,
+      "fiber_g": 1.7,
+      "fat_total_g": 0.39,
+      "saturated_fat_g": 0.03,
+      "monounsaturated_fat_g": 0.04,
+      "polyunsaturated_fat_g": 0.21,
+      "ala_omega3_g": 0.09,
+      "epa_dha_g": 0.0
+    },
+    "essential_amino_acids_mg": {
+      "histidine_mg": 28.0,
+      "isoleucine_mg": 56.0,
+      "leucine_mg": 92.0,
+      "lysine_mg": 68.0,
+      "methionine_mg": 18.0,
+      "phenylalanine_mg": 60.0,
+      "threonine_mg": 52.0,
+      "tryptophan_mg": 16.0,
+      "valine_mg": 68.0
+    },
+    "vitamins": {
+      "vitamin_a_rae_ug": 1.0,
+      "vitamin_c_mg": 36.4,
+      "vitamin_d_iu": 0.0,
+      "vitamin_e_alpha_tocopherol_mg": 0.87,
+      "vitamin_k_phylloquinone_ug": 7.8,
+      "thiamin_b1_mg": 0.03,
+      "riboflavin_b2_mg": 0.1,
+      "niacin_b3_mg": 0.62,
+      "pantothenic_acid_b5_mg": 0.15,
+      "vitamin_b6_pyridoxine_mg": 0.05,
+      "biotin_b7_ug": 1.5,
+      "folate_b9_ug": 6.0,
+      "vitamin_b12_cobalamin_ug": 0.0,
+      "choline_mg": 12.3
+    },
+    "macrominerals_and_salts_mg": {
+      "potassium_mg": 194.0,
+      "sodium_salt_mg": 10.0,
+      "calcium_mg": 39.0,
+      "magnesium_mg": 18.0,
+      "phosphorus_mg": 38.0,
+      "sulfur_mg": 15.0,
+      "chloride_mg": 18.0
+    },
+    "microminerals_and_trace_elements": {
+      "iron_mg": 1.85,
+      "zinc_mg": 0.12,
+      "selenium_ug": 0.6,
+      "manganese_mg": 0.1,
+      "copper_mg": 0.06,
+      "iodine_ug": 1.0,
+      "boron_ug": 140.0,
+      "chromium_ug": 1.5,
+      "molybdenum_ug": 3.0,
+      "cobalt_ug": 0.2,
+      "silicon_mg": 5.0
+    }
+  },
+  "exhaustive_medicinal_and_bioactive_compounds": [
+    {
+      "compound_name": "1-Deoxynojirimycin (1-DNJ)",
+      "chemical_class": "Alkaloid",
+      "concentration_mg_per_100g_dw": 120.0,
+      "bioactive_mechanisms": "Competitive inhibition of intestinal alpha-glucosidase (maltase and sucrase)",
+      "human_therapeutic_efficacy": "Suppresses postprandial hyperglycemia and reduces glycemic variability",
+      "extraction_or_utilization": "Present in berries and leaves; consumed fresh or dried into tea"
+    },
+    {
+      "compound_name": "Cyanidin-3-O-glucoside & Resveratrol",
+      "chemical_class": "Flavonoid / Polyphenol",
+      "concentration_mg_per_100g_dw": 280.0,
+      "bioactive_mechanisms": "Direct vascular endothelial nitric oxide stimulation and potent reactive oxygen scavenging",
+      "human_therapeutic_efficacy": "Microvascular protection, enhanced ocular circulation, and anti-inflammatory activity",
+      "extraction_or_utilization": "Direct dietary consumption of fresh dark berries"
+    }
+  ],
+  "cycle_parameters": {
+    "turnaround_days": 60,
+    "par_light_range": "350-500 umol/m2/s",
+    "ec_target": 1.8,
+    "ph_target": 6.0,
+    "temp_range_c": "20-28C"
+  },
+  "penalties_and_risks": [
+    "Requires rigid horizontal espalier wires for robotic traction and branch indexing.",
+    "Soft berry drupelets bruise if gripper force exceeds 1.2 N; requires cushioned vacuum catch pod."
+  ],
+  "human_culinary_use": "Sweet, rich berry flavor with mild acidity. Consumed fresh as dessert fruit, simmered into preserves, or dehydrated into chewy fruit bars."
+}
