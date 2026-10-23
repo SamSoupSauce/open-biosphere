@@ -3,9 +3,30 @@ title: Mantis Branch-Crawler Robot
 description: Dual-actuated soft silicone pinch roller robot navigating rigid espalier branches for soft fruit harvesting
 ---
 
-## 1. Subsystem Architecture
+import { Card, CardGrid } from '@astrojs/starlight/components';
 
-The **Mantis Branch-Crawler** is a specialized robotic climber designed to navigate the rigid horizontal wire guideframes of the Trellised Espalier wall ($Z = 2.5$ to $4.0$ ft). It harvests delicate, soft-skinned fruits (dwarf mulberries, goldenberries) without damaging limbs or causing mechanical bruising.
+The **Mantis Branch-Crawler Robot** is an agile, limb-climbing harvesting robot designed to navigate the rigid horizontal wire guideframes of espalier-trained fruit bushes. It can be constructed as a standalone robotic harvester for orchard trellises, vineyards, and greenhouse espaliers, or deployed along the Trellised Espalier wall of the master Open Biosphere assembly.
+
+---
+
+## 1. Standalone Homesteading & Off-Grid Utility
+
+Delicate soft fruits such as mulberries, blackberries, and goldenberries bruise easily when picked with conventional robotic grippers or shaken mechanically. The Mantis crawler solves this with **soft-silicone pinch locomotion and cushioned vacuum-assisted harvesting**:
+
+<CardGrid>
+  <Card title="Espalier & Trellis Agility" icon="anchor">
+    Traverses standard 1/8-inch orchard guide wires and woody limbs (6 mm to 22 mm diameter) without slipping, stripping bark, or crushing vascular xylem.
+  </Card>
+  <Card title="Zero-Bruise Vacuum Catch" icon="feather">
+    Pneumatic suction pulls ripe fruit into a foam-lined funnel simultaneously with pedicel micro-shearing, eliminating drop damage completely.
+  </Card>
+  <Card title="Stereo Multispectral Ripeness" icon="eye">
+    Dual RGB-NIR cameras run on-device YOLO edge segmentation, distinguishing ripe, sugar-rich berries from unripe green fruit under variable lighting.
+  </Card>
+  <Card title="Off-Grid Battery or Tethered" icon="battery">
+    Runs on standard 18V/20V tool batteries (Makita, DeWalt) for portable field use, or plugs into a 24V bus rail for continuous greenhouse operation.
+  </Card>
+</CardGrid>
 
 ---
 
@@ -13,20 +34,38 @@ The **Mantis Branch-Crawler** is a specialized robotic climber designed to navig
 
 | Parameter | Specification |
 | :--- | :--- |
-| **Locomotion** | Dual-opposed silicone roller pinch drive (40A durometer Shore) |
-| **Limb Clamping Force** | Dynamic 2.0 – 8.5 N closed-loop torque control |
+| **Locomotion** | Dual-opposed silicone roller pinch drive (Shore 40A durometer) |
+| **Limb Clamping Force** | Dynamic 2.0 to 8.5 N closed-loop torque control |
 | **End-Effector** | High-precision micro-rotary shear + pneumatic vacuum catch pod |
-| **Harvest Cycle Time** | 4.2 seconds per berry |
-| **Onboard Compute** | NVIDIA Jetson Orin Nano (40 TOPS) for real-time edge segmentation |
+| **Harvest Cycle Time** | 4.2 seconds per fruit |
+| **Onboard Compute** | NVIDIA Jetson Orin Nano (40 TOPS) or Raspberry Pi 5 with AI Accelerator |
 | **Vision Modality** | Dual-stereo RGB + 850nm NIR structured light illuminator |
-| **Power Bus** | Tethered 24V DC bus along upper V-slot extrusion rail |
-| **Degrees of Freedom (DoF)**| 4-DoF articulated harvesting arm mounted to crawling chassis |
+| **Traversable Angle** | Up to 65° incline along tensioned trellis wire or woody espalier arms |
+| **Weight** | 1.85 kg (chassis + battery + end-effector) |
 
 ---
 
-## 3. End-Effector Mechanics
+## 3. Accessible Bill of Materials (BOM)
 
-1. **Approach**: The crawler clamps onto the branch wire using opposed silicone rollers, indexing its position relative to AprilTags along the extrusion rail.
-2. **Detection**: Stereo RGB-NIR sensors segment ripe fruit based on anthocyanin pigmentation and moisture reflectance.
-3. **Vacuum Capture**: A silicone suction funnel aligns with the fruit, drawing it into a soft foam-lined chamber while micro-shears cleanly sever the pedicel 1 mm from the calyx.
-4. **Deposition**: Captured berries are shuttled via low-pressure pneumatic tubing directly into collection bins along the perimeter tier.
+Engineered from accessible open-source 3D printer parts, custom FDM-printed brackets, and cast silicone:
+
+| Item Category | Component Name & Description | Sourcing / Standard Part | Est. Cost (USD) |
+| :--- | :--- | :--- | :--- |
+| **Climbing Rollers**| Cast Silicone Pinch Rollers (Shore 40A, molded in 3D printed molds) | 2-part platinum silicone kit | $18.00 |
+| **Pinch Actuation** | NEMA 14 Pancake Steppers (2x) with planetary gearboxes | Standard 3D printer extruder steppers | $36.00 |
+| **Harvest Shear** | High-speed 12V micro-rotary hobby tool motor + surgical scalpel disc | Standard coreless micro-motor | $15.00 |
+| **Vacuum Funnel** | 3D Printed TPU Funnel + 24V Miniature Centrifugal Blower Fan | 5015 blower fan or 24V mini-vacuum pump | $18.00 |
+| **Chassis** | Laser-cut 3mm Carbon Fiber / Aluminum Plates + PETG 3D prints | SendCutSend / local CNC or 3D print | $35.00 |
+| **Clamping Sensor**| Current-sensing driver (TMC2209) + micro-load cell for grip feedback | Standard 3D printer driver | $12.00 |
+| **Compute & Vision**| Raspberry Pi 5 (4GB) + Hailo-8L M.2 AI HAT + Dual IMX219 Cameras | Raspberry Pi official ecosystem | $125.00 |
+| **Total Build Cost**| Complete Robotic Branch Climber | Maker-accessible robotics hardware | **~$259.00** |
+
+---
+
+## 4. Master Biosphere Assembly Interlock
+
+In the integrated 20x10 ft Open Biosphere installation:
+
+1. **Perimeter Wall Indexing**: Navigates the rigid stainless guideframe wires running along the North-East vertical boundary wall ($Z = 760$ to $1,220$ mm).
+2. **Tethered DC Bus**: Draws continuous 24V power from an overhead slip-ring cable running along the gantry rail, eliminating battery swap downtime.
+3. **Pneumatic Transfer**: Deposits harvested berries directly into the Ground Track AGV transit bins stationed on the Perimeter Lower Tier.

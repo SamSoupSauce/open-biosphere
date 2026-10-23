@@ -1,11 +1,32 @@
 ---
-title: Fluidic Skimmer & Dewatering Loop
-description: Continuous surface biomass skimming, wedge-wire dewatering, and closed-loop recirculating filtration
+title: Fluidic Skimmer & Dewatering Separator
+description: Standalone aquatic surface biomass skimmer, wedge-wire separator, and closed-loop biofilter
 ---
 
-## 1. Subsystem Architecture
+import { Card, CardGrid } from '@astrojs/starlight/components';
 
-The **Fluidic Skimmer & Dewatering Loop** maintains water quality and drives automated daily harvesting across the 160 sq ft Central Basin. It combines directional surface water currents with an automated wedge-wire dewatering separator to harvest *Wolffia globosa* without damaging delicate fronds.
+The **Fluidic Skimmer & Dewatering Separator** is an open-hardware aquatic harvester and clarification machine. Designed to operate both as an independent surface biomass skimmer for farm ponds and homestead aquaponics systems, it also serves as the core aquatic protein engine for the master Open Biosphere assembly.
+
+---
+
+## 1. Standalone Homesteading & Off-Grid Utility
+
+For homesteaders managing duckweed (*Lemna minor* / *Wolffia globosa*) or operating small-scale aquaculture/aquaponics systems, harvesting surface biomass manually is backbreaking and erratic. This machine provides **continuous, autonomous surface skimming, solids separation, and water dewatering**:
+
+<CardGrid>
+  <Card title="Pond & Tank Duckweed Harvester" icon="leaf">
+    Mounts onto any farm pond edge, IBC tote, or stock tank to skim high-protein floating watermeal automatically, harvesting up to 12.5 kg of green biomass per hour.
+  </Card>
+  <Card title="Continuous Aeration & Clarification" icon="droplet">
+    Integrated Moving Bed Biofilm Reactor (MBBR) and venturi aerator maintain clear, pathogen-free water for fish or aquatic crops with zero chemical inputs.
+  </Card>
+  <Card title="Zero-Clog Wedge-Wire Screen" icon="grid">
+    V-shaped 316L stainless steel wedge wires shed microscopic fronds cleanly, eliminating the constant clogging seen in woven mesh nets.
+  </Card>
+  <Card title="12V/24V Off-Grid Solar Ready" icon="sun">
+    Powered by an efficient 24V brushless DC motor drawing just 45W to 120W, easily run directly off a small off-grid solar panel and battery bank.
+  </Card>
+</CardGrid>
 
 ---
 
@@ -13,17 +34,38 @@ The **Fluidic Skimmer & Dewatering Loop** maintains water quality and drives aut
 
 | Parameter | Specification |
 | :--- | :--- |
-| **Circulation Flow Rate** | 45 – 75 Gallons per Minute (GPM) |
-| **Skimmer Weir** | Variable-buoyancy bistable overflow weir (1,200 mm width) |
+| **Circulation Flow Rate** | 45 to 75 Gallons per Minute (GPM) |
+| **Skimmer Weir** | Variable-buoyancy bistable overflow weir (600 mm or 1,200 mm modular width) |
 | **Dewatering Screen** | Stainless 316L wedge-wire screen (slot width: 150 µm) |
 | **Harvest Rate** | Up to 12.5 kg wet biomass per hour |
-| **Biofilter Loop** | 3-stage moving bed biofilm reactor (MBBR) + 15W UV-C clarifier |
-| **Drive Pump** | Brushless DC variable-frequency magnetic-drive pump (240W) |
+| **Biofilter Loop** | 3-stage moving bed biofilm reactor (MBBR) with K1 media + 15W UV-C clarifier |
+| **Drive Pump** | Brushless DC variable-frequency magnetic-drive pump (240W max, 24V DC) |
+| **Separation Auger** | 3D printed PETG / stainless screw press (reduces frond moisture to ~82%) |
+| **Microcontroller** | Raspberry Pi Pico or ESP32 running FreeRTOS with optical level triggers |
 
 ---
 
-## 3. Operational Mechanics
+## 3. Accessible Bill of Materials (BOM)
 
-1. **Hydraulic Sweeping**: Low-velocity submerged laminar jets create a continuous surface drift pushing floating fronds toward the southern skimmer channel.
-2. **Weir Induction**: Once surface mat thickness exceeds 8 mm (detected by overhead optical line-scanners), the pneumatic weir lowers 12 mm, allowing the top water layer and *Wolffia* to cascade onto the wedge-wire screen.
-3. **Centrifugal Separation**: Separated fronds fall into a dewatering auger press that reduces moisture to 82%, discharging green protein paste into sealed cold canisters.
+Built using common plumbing components, aluminum extrusions, and off-the-shelf wedge wire:
+
+| Item Category | Component Name & Description | Sourcing / Standard Part | Est. Cost (USD) |
+| :--- | :--- | :--- | :--- |
+| **Flume Body** | Food-Grade 1/4-inch Acrylic / Polycarbonate Sheets or HDPE Tub | Hardware store / plastic supplier | $45.00 |
+| **Wedge-Wire Panel**| 316L Stainless Steel Wedge-Wire Screen (150µm slot, 300x400mm) | Industrial filtration supplier / eBay | $65.00 |
+| **Water Pump** | 24V DC Brushless Magnetic Drive Pump (80W–150W, 55 GPM) | Solar fountain / pond pump | $58.00 |
+| **Weir Actuator** | Micro Linear Actuator (50mm stroke, 12V with feedback) | Standard maker robotics actuator | $28.00 |
+| **Dewatering Press** | NEMA 23 High-Torque Stepper + 3D Printed PETG Auger Screw | 3D printed + 3D printer parts | $35.00 |
+| **Filter Media** | K1 Micro Filter Media (10 Liters) + 1.5-inch PVC pipe & valves | Standard pond / aquaculture supply | $24.00 |
+| **Electronics** | ESP32 board + 24V-to-12V buck converter + dual optical water sensors | Standard open-source maker parts | $25.00 |
+| **Total Build Cost**| Complete Standalone Harvesting Machine | Accessible COTS & 3D prints | **~$280.00** |
+
+---
+
+## 4. Master Biosphere Assembly Interlock
+
+In the integrated 20x10 ft Open Biosphere installation:
+
+1. **Basin Perimeter Mounting**: Clamps directly to the south coping of the pool ($X = 300$ to $2,748$ mm, $Y = 600$ mm) using standardized 4040 aluminum extrusion bracketry.
+2. **Cascading Recirculation**: Discharges clarified, nitrate-reduced effluent into the Central Basin and aeroponic manifold.
+3. **Automated Harvest Discharging**: Dewatered protein paste is deposited into Ground Track AGV carrier pods for automated transport.

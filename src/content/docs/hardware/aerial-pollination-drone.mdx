@@ -1,11 +1,32 @@
 ---
 title: Aerial Spotter & Pollination Drone
-description: Micro-quadcopter utilizing propeller wash for non-contact acoustic buzz-pollination and multispectral ripeness mapping
+description: Autonomous micro-quadcopter for acoustic buzz-pollination and multispectral ripeness mapping
 ---
 
-## 1. Subsystem Architecture
+import { Card, CardGrid } from '@astrojs/starlight/components';
 
-The **Aerial Spotter & Pollination Drone** is a lightweight (280g) micro-quadcopter engineered to operate within the 4.5 ft vertical clearance zone above the pool canopy. It delivers non-contact pollination to solanaceous fruiting crops (peppers, tomatoes) through calibrated acoustic and airflow wash while mapping crop maturity.
+The **Aerial Spotter & Pollination Drone** is an autonomous micro-quadcopter designed to eliminate manual hand-pollination in enclosed environments. It functions as an independent greenhouse pollination tool or operates within the canopy airspace of the master Open Biosphere assembly.
+
+---
+
+## 1. Standalone Homesteading & Off-Grid Utility
+
+In enclosed greenhouses, high tunnels, or indoor grow tents, natural insect pollinators (bees) often fail to thrive or escape, requiring tedious manual flower vibrating with electric toothbrushes or paintbrushes. This drone delivers **automated, non-contact buzz pollination and canopy diagnostics**:
+
+<CardGrid>
+  <Card title="Acoustic & Prop-Wash Buzz Pollination" icon="wind">
+    Calibrated propeller downwash (1.5 to 2.5 m/s) and motor acoustics induce resonant flower vibration (200–400 Hz), releasing pollen on solanaceous crops (peppers, tomatoes) with zero physical flower contact.
+  </Card>
+  <Card title="GPS-Denied Optical Indoor Navigation" icon="compass">
+    Down-facing optical flow sensors and AprilTag visual fiducial markers enable centimeter-precise indoor hover without requiring GPS or external motion-capture rigs.
+  </Card>
+  <Card title="Multispectral Canopy Inspection" icon="eye">
+    High-resolution downward RGB/NIR sensor maps vegetative indices (NDVI) and pinpoints localized nutrient deficiencies or pest outbreaks days before visible to human eyes.
+  </Card>
+  <Card title="Automated Contact-Charging Perch" icon="zap">
+    Landing legs feature spring-loaded copper contacts that seat into a conical landing pad, recharging the drone autonomously between 8-minute flight sorties.
+  </Card>
+</CardGrid>
 
 ---
 
@@ -13,21 +34,37 @@ The **Aerial Spotter & Pollination Drone** is a lightweight (280g) micro-quadcop
 
 | Parameter | Specification |
 | :--- | :--- |
-| **All-Up Weight (AUW)** | 280 g (including LiPo & camera payload) |
-| **Frame Dimension** | 120 mm diagonal wheelbase (carbon fiber unibody) |
-| **Power Supply** | 3S 850mAh LiFePO4 battery with inductive top-rail docking |
-| **Hover Endurance** | 14 minutes continuous flight per charge |
-| **Propeller Wash Velocity** | 1.8 – 2.5 m/s at 250 mm standoff distance |
-| **Onboard Compute** | ESP32-S3 + Raspberry Pi Zero 2W companion computer |
-| **Sensing Suite** | Downward-facing global-shutter RGB/NIR camera + VL53L8CX 8x8 ToF distance sensor |
-| **Communication** | Micro-ROS over 5.8 GHz Wi-Fi / ESP-NOW telemetry |
+| **Airframe Class** | 85mm to 120mm ducted micro-quadcopter (Whoop-style enclosed prop guards) |
+| **Weight** | 68 g (with 1S/2S LiPo battery and optical flow sensor) |
+| **Downwash Velocity** | 1.8 to 2.4 m/s at 150 mm distance (calibrated for solanaceous flower anthesis) |
+| **Flight Time** | 8.5 minutes per sortie (recharge cycle: 14 minutes on docking pad) |
+| **Vision & Sensors** | Dual-mode RGB/NIR micro-camera + PMW3901 optical flow + VL53L1X ToF lidar |
+| **Flight Controller**| Betaflight / ArduPilot / Crazyflie 2.1 open-source STM32 architecture |
+| **Fiducial Tracking**| AprilTags (36h11 family) along enclosure extrusions for global localization |
 
 ---
 
-## 3. Operational Protocols
+## 3. Accessible Bill of Materials (BOM)
 
-### Acoustic Buzz-Pollination
-Solanaceous flowers (*Capsicum annuum*) require vibration (180–220 Hz) to release pollen from poricidal anthers. The drone hovers 200 mm above flowering clusters, modulating motor RPM to generate acoustic resonant frequencies via propeller blade-pass wash, achieving 94% fruit-set efficiency without mechanical touch.
+Built entirely from standard micro-FPV drone racing parts and open-source flight controllers:
 
-### Multispectral Ripeness Indexing
-During autonomous sweep patrols, the drone captures normalized difference vegetation index (NDVI) and green-red vegetative index (GRVI) imagery, streaming geo-referenced harvest coordinates to the overhead gantry and Mantis crawler.
+| Item Category | Component Name & Description | Sourcing / Standard Part | Est. Cost (USD) |
+| :--- | :--- | :--- | :--- |
+| **Airframe** | 85mm Ducted Carbon Fiber / Polycarbonate Frame with Prop Guards | Standard micro FPV whoop frame | $14.00 |
+| **Motors** | 1103 10,000KV Brushless Motors (4x) + 2-inch Tri-Blade Props | Standard FPV drone motors | $38.00 |
+| **Flight Controller**| All-in-One (AIO) STM32F4/F7 Flight Controller with 4-in-1 ESC | Standard Betaflight AIO board | $42.00 |
+| **Optical Flow Sensor**| PMW3901 Optical Flow Breakout + VL53L1X ToF Laser Distance Sensor | Maker robotics sensor module | $19.00 |
+| **Camera & Telemetry**| RunCam Split HD / Micro RGB-NIR Camera + ESP32 WiFi Telemetry | Standard FPV / micro camera | $32.00 |
+| **Batteries** | 2S 450mAh LiPo High-Discharge Batteries (4x) | FPV drone hobby battery | $22.00 |
+| **Charge Dock** | 3D Printed Conical Perch + Copper PCB Landing Contacts + Charger Board | 3D printed + maker electronics | $18.00 |
+| **Total Build Cost**| Complete Autonomous Pollination Drone | Standard FPV & maker components | **~$185.00** |
+
+---
+
+## 4. Master Biosphere Assembly Interlock
+
+In the integrated 20x10 ft Open Biosphere installation:
+
+1. **Airspace Ceiling Routing**: Operates in the canopy airspace ($Z = 0$ to $1,372$ mm) between the water surface and lighting hoods.
+2. **AprilTag Extrusion Grid**: Navigates autonomously by referencing high-contrast AprilTags mounted along the upper 2040 perimeter extrusions at 1,000 mm intervals.
+3. **Automated Perch**: Returns to the landing perch mounted on the northern Mid-Tier coping deck for contact recharging between scheduled pollination runs.

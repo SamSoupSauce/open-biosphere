@@ -1,11 +1,32 @@
 ---
-title: 2-Axis Overhead Gantry Array
-description: Precision gantry system traversing the upper perimeter rails for optical scanning and micro-harvesting
+title: 2-Axis Precision Overhead Gantry Array
+description: Open-hardware Cartesian gantry system with magnetic kinematic toolhead for optical scanning and precision harvesting
 ---
 
-## 1. Subsystem Architecture
+import { Card, CardGrid } from '@astrojs/starlight/components';
 
-The **2-Axis Overhead Gantry** spans the length ($Y = 6,096$ mm) and width ($X = 3,048$ mm) of the pool enclosure at an elevation of $Z = 1,200$ mm. It provides rigid, high-precision positioning for macro optical cameras, micro-tweezer actuators (for saffron), and lateral shears (for purslane).
+The **2-Axis Precision Overhead Gantry Array** is a rigid Cartesian motion system engineered to position sensors and interchangeable agricultural toolheads across wide grow beds. It can be constructed as a standalone garden or greenhouse automated gantry (similar to FarmBot), or installed as the primary overhead Cartesian robot of the master Open Biosphere assembly.
+
+---
+
+## 1. Standalone Homesteading & Off-Grid Utility
+
+For homesteaders managing raised beds, hydroponic NFT channels, or microgreen trays, manual weeding, inspecting, and harvesting delicate crops takes hours every day. This machine automates **continuous optical inspection, micro-seeding, and selective micro-harvesting**:
+
+<CardGrid>
+  <Card title="Scalable Garden Automation" icon="maximize">
+    Easily scaled to any rectangular garden bed (from 4x8 ft up to 10x20 ft) using standard V-slot aluminum extrusions and GT2 timing belts.
+  </Card>
+  <Card title="Kinematic Quick-Swap Toolhead" icon="tool">
+    Magnetic tool mount allows hot-swapping between optical multi-spectral cameras, micro-tweezers (for saffron), precision seeders, and weed shears.
+  </Card>
+  <Card title="0.15 mm Sub-Millimeter Precision" icon="crosshair">
+    Closed-loop stepper motors provide high-accuracy indexing, allowing micro-tweezers to extract saffron stigmas without tearing delicate petals.
+  </Card>
+  <Card title="Open Firmware (Klipper / ESPHome)" icon="code">
+    Runs standard 3D printer firmware (Klipper on STM32 or ESPHome), configurable through familiar web interfaces with zero vendor lock-in.
+  </Card>
+</CardGrid>
 
 ---
 
@@ -13,17 +34,41 @@ The **2-Axis Overhead Gantry** spans the length ($Y = 6,096$ mm) and width ($X =
 
 | Parameter | Specification |
 | :--- | :--- |
+| **Motion Envelope** | Length: up to 6,096 mm ($Y$-Axis) | Width: up to 3,048 mm ($X$-Axis) | Elevation: 1,200 mm ($Z$) |
 | **Drive Mechanism** | GT2 9mm steel-reinforced timing belts with NEMA 23 closed-loop steppers |
-| **Linear Guide** | Dual 2040 V-slot aluminum extrusions with polyoxymethylene (POM) wheels |
+| **Linear Guide** | Dual 2040 / 4040 V-slot aluminum extrusions with polyoxymethylene (POM) wheels |
 | **Repeatability** | $\pm 0.15$ mm across the entire 20 × 10 ft envelope |
 | **Payload Rating** | Up to 8.5 kg toolhead payload |
-| **Toolhead Mount** | Magnetic kinematic quick-swap mount for interchangeable end-effectors |
-| **Controller** | BTT Octopus Pro (STM32H723) running Klipper firmware via CAN bus |
+| **Toolhead Mount** | Magnetic kinematic 3-point ball-seat quick-swap mount with 8-pin spring pogo bus |
+| **Controller** | BTT Octopus Pro / SKR 3 (STM32) running Klipper firmware over CAN bus |
 
 ---
 
-## 3. Interchangeable Toolheads
+## 3. Accessible Bill of Materials (BOM)
 
-- **Micro-Tweezer**: Silicone-tipped precision gripper for harvesting saffron stigmas.
-- **Rotary Shears**: High-speed reciprocating blades for cut-and-come-again purslane and sorrel harvesting.
-- **Multispectral Scanner**: 12-band spectral line camera generating full-canopy health heatmaps daily.
+Engineered exclusively from standard, globally accessible open-hardware CNC and 3D printer components:
+
+| Item Category | Component Name & Description | Sourcing / Standard Part | Est. Cost (USD) |
+| :--- | :--- | :--- | :--- |
+| **Linear Rails** | 2040 V-Slot Aluminum Extrusions (Black Anodized, standard lengths) | Standard extrusion supplier | $78.00 |
+| **Gantry Plates** | Laser-cut 4mm 6061 Aluminum Wheel Plates (4x) | OpenBuilds / SendCutSend | $32.00 |
+| **Motion Hardware** | POM Dual V-Wheels with 625-2RS Bearings (16x) + Eccentric Spacers | 3D printer wheel kits | $22.00 |
+| **Belts & Pulleys**| GT2 9mm Steel-Core Timing Belts (20m) + 20-Tooth Pulleys (4x) | Standard 3D printer belt kit | $26.00 |
+| **Steppers** | NEMA 23 Closed-Loop Steppers with Integrated Drivers (3x) | Maker CNC stepper motors | $95.00 |
+| **Toolhead Mount** | 3D Printed PETG Kinematic Magnetic Base + Neodymium Magnets & Pogo Pins | Standard maker parts | $14.00 |
+| **Control Board** | BigTreeTech SKR Mini E3 or Octopus Pro running Klipper | 3D printer mainboard | $45.00 |
+| **Cable Management**| Heavy-duty 15x30mm Nylon Drag Chains (8m total) | CNC cable carrier chains | $24.00 |
+| **Total Build Cost**| Complete 2-Axis Precision Gantry | Readily sourced CNC parts | **~$336.00** |
+
+---
+
+## 4. Interchangeable Toolheads & Biosphere Assembly Interlock
+
+In the integrated 20x10 ft Open Biosphere installation:
+
+1. **Perimeter Extrusion Mounting**: The Y-axis gantry rails bolt directly onto the outer 4040 aluminum perimeter extrusions at elevation $Z = 1,200$ mm.
+2. **Toolhead Ecosystem**:
+   - **Optical Inspection Cartridge**: 4K RGB + 850nm NIR camera for leaf area index (LAI) and canopy stress mapping.
+   - **Saffron Micro-Tweezer**: Micro-servo actuated silicone forceps extracting *Crocus sativus* stigmas with 0.15 mm repeatability.
+   - **Purslane Lateral Shear**: Oscillating reciprocating micro-blades trimming succulent purslane greens without pulling root plugs.
+   - **TPS Potato Root Extractor**: Vacuum-assisted nozzle descending into aeroponic root chambers to pick mature mini-tubers.

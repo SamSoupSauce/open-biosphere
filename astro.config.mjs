@@ -26,9 +26,24 @@ export default defineConfig({
         {
           label: 'Overview & Blueprint',
           items: [
-            { label: 'System Architecture', slug: 'overview/architecture' },
+            { label: 'System Architecture & Umbrella Philosophy', slug: 'overview/architecture' },
+            { label: 'Master Biosphere Assembly Guide', slug: 'overview/master-assembly' },
             { label: 'Spatial Envelope & Datum', slug: 'overview/spatial-datum' },
             { label: 'Audit & Ticket Pipeline', slug: 'overview/pipeline' },
+          ],
+        },
+        {
+          label: 'Open-Hardware Machine Registry',
+          items: [
+            { label: 'Interactive Machine Catalogue', slug: 'hardware/catalog' },
+            { label: 'Fluidic Skimmer & Dewatering Separator', slug: 'hardware/fluidic-skimmer-loop' },
+            { label: 'Revolving Sprout Bioreactor Drum', slug: 'hardware/revolving-sprout-bioreactor' },
+            { label: 'Mantis Branch-Crawler Robot', slug: 'hardware/mantis-branch-crawler' },
+            { label: 'Ground Track AGV Pod Carrier', slug: 'hardware/ground-track-agv' },
+            { label: '2-Axis Overhead Gantry Array', slug: 'hardware/overhead-gantry-system' },
+            { label: 'Aerial Spotter & Pollinator Drone', slug: 'hardware/aerial-pollination-drone' },
+            { label: 'Microclimate & Automated Dosing Array', slug: 'hardware/microclimate-dosing-array' },
+            { label: 'TPS Aeroponic Root-Zone Chamber', slug: 'hardware/tps-root-chamber' },
           ],
         },
         {
@@ -47,17 +62,6 @@ export default defineConfig({
             { label: 'Phaseolus vulgaris (Bush Bean)', slug: 'crops/phaseolus-vulgaris' },
             { label: 'Capsicum annuum (Bush Pepper)', slug: 'crops/capsicum-annuum' },
             { label: 'Vigna radiata (Mung Bean Hypocotyl)', slug: 'crops/vigna-radiata' },
-          ],
-        },
-        {
-          label: 'Hardware & Robotics Subsystems',
-          items: [
-            { label: 'Aerial Spotter & Pollinator Drone', slug: 'hardware/aerial-pollination-drone' },
-            { label: 'Mantis Branch-Crawler Robot', slug: 'hardware/mantis-branch-crawler' },
-            { label: 'Ground Track AGV Pod Carrier', slug: 'hardware/ground-track-agv' },
-            { label: 'Fluidic Skimmer & Dewatering Loop', slug: 'hardware/fluidic-skimmer-loop' },
-            { label: '2-Axis Overhead Gantry Array', slug: 'hardware/overhead-gantry-system' },
-            { label: 'Microclimate Hood & Dosing Unit', slug: 'hardware/microclimate-dosing-array' },
           ],
         },
         {

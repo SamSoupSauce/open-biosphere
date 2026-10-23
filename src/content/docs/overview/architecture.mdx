@@ -1,54 +1,88 @@
 ---
-title: System Architecture & Envelope
-description: Blueprints and operational specifications for the contained ~6,000-gallon pool biosystem
+title: System Architecture & Umbrella Philosophy
+description: Modular machine architecture, open hardware ecosystem, and physical assembly envelope
 ---
 
-This specification defines the physical enclosure blueprint, multi-agent drone routing, and automated command-line auditing pipelines for an enclosed **~6,000-gallon pool biosystem** (~20x10 ft footprint, 4.5 ft vertical clearance).
+import { Card, CardGrid } from '@astrojs/starlight/components';
 
-All candidate plant species, nutritional breakdowns, and ML evaluations (-1.0 to 10.0 scale) remain completely isolated in dedicated database contracts to prevent clutter and enable machine parsing.
+**Open Biosphere** is an umbrella open-hardware project and research platform for automated closed agriculture. Rather than a single monolithic apparatus, it is designed as a **suite of smaller, modular machines** built from common or easily ordered parts (COTS).
+
+Each machine fulfills an autonomous homesteading, farming, or off-grid function on its own—and all machines interlock seamlessly into a **Master Biosphere Assembly** within a standardized ~20x10 ft footprint (~200 sq ft, 4.5 ft vertical clearance, ~6,000-gallon pool envelope).
 
 ---
 
-## 1. Physical Envelope & Enclosure Zoning (~200 sq ft Footprint)
+## 1. The Umbrella Architecture Philosophy
 
-The enclosure occupies a standard swimming pool basin retrofitted with tiered vertical aeroponics and hydroponic gutters:
+```
+  ┌───────────────────────────────────────────────────────────────┐
+  │                   OPEN BIOSPHERE UMBRELLA                    │
+  │   Open-source specification & registry of modular machines    │
+  └───────────────────────────────┬───────────────────────────────┘
+                                  │
+         ┌────────────────────────┴────────────────────────┐
+         ▼                                                 ▼
+┌─────────────────────────────────┐       ┌─────────────────────────────────┐
+│     STANDALONE MACHINE USE      │       │    MASTER BIOSPHERE ASSEMBLY    │
+│  Build 1 or 2 machines for:     │       │  Interlock all machines into:   │
+│  • Kitchen/Cabin sprout growing │       │  • ~20x10 ft pool basin         │
+│  • Pond duckweed harvesting     │ ───►  │  • Spatial Datum (0,0,0)        │
+│  • Greenhouse pollination/weeding│      │  • Multi-agent closed loop      │
+│  • Automated nutrient dosing    │       │  • Continuous crop auditing     │
+└─────────────────────────────────┘       └─────────────────────────────────┘
+```
 
-| Zone Identifier | Spatial Boundary | Target Crops & Subsystems | Operational Mechanisms |
+<CardGrid>
+  <Card title="Accessible COTS Components" icon="puzzle">
+    Every machine is engineered from globally available standard parts: standard V-slot aluminum extrusions (2020, 2040, 4040), NEMA stepper motors, food-grade silicone, and maker microcontrollers (ESP32, RP2040, Raspberry Pi).
+  </Card>
+  <Card title="Independent Scalability" icon="rocket">
+    Makers and homesteaders can build a single appliance (e.g. the Revolving Sprout Drum or the Fluidic Skimmer) for under $200-$300 without needing to build the entire 6,000-gallon biosphere.
+  </Card>
+  <Card title="Plug-and-Play Assembly" icon="plug">
+    Standardized 24V DC power rails, quick-disconnect fluid manifolds, and CAN bus / Modbus protocols allow each standalone machine to dock into the master pool frame as needs grow.
+  </Card>
+  <Card title="Decoupled Crop Data Contracts" icon="document">
+    All crop species biological requirements, nutritional values, and robotics kinematics are stored in machine-readable JSON schemas, enabling automated software orchestration across all machines.
+  </Card>
+</CardGrid>
+
+---
+
+## 2. Physical Envelope & Spatial Enclosure (The Master Assembly)
+
+When assembled together, the individual machines occupy four interlocking spatial tiers within a standard ~20x10 ft retrofitted pool envelope:
+
+| Zone Identifier | Spatial Boundary | Interlocking Machines & Target Crops | Operational Mechanisms |
 | :--- | :--- | :--- | :--- |
-| **Central Basin** | 160 sq ft, 4.5 ft liquid depth | Non-vascular duckweed, *Wolffia*, True Potato Seed (TPS) mini-tubers | Primary skimming channel, 30–50μm aeroponic root misting, particulate dewatering, bio-filter loop |
-| **Perimeter Lower Tier** | 40 sq ft (0.5 – 1.2 ft elevation) | Sub-irrigated bush beans, unlit sprout bioreactors | Ground rover harvesting access, rotating dark hypocotyl canister docking bays |
-| **Perimeter Mid Tier** | 40 sq ft (1.2 – 2.5 ft elevation) | Basal rosettes (sorrel, purslane), dwarf sweet & chili peppers | Hydroponic NFT gutters, automated nutrient balance control |
-| **Trellised Espalier** | 40 sq ft (2.5 – 4.0 ft vertical wall) | Dwarf bush mulberries, goldenberry vines | Rigid vertical wire guideframes for branch-crawling robot indexing |
+| **Central Basin** | 160 sq ft, 4.5 ft liquid depth | **Fluidic Skimmer Loop**, **TPS Aeroponic Chambers**; *Wolffia*, potatoes, *Monostroma* | Continuous surface skimming, solids dewatering, moving-bed biofiltration, sub-surface ultrasonic root misting |
+| **Perimeter Lower Tier** | 40 sq ft (0.5 – 1.2 ft elevation) | **Ground Track AGV**, **Revolving Sprout Bioreactors**; bush beans, mung hypocotyls | Ground rover navigation, magnetic floor tape, automated canister unlatching and shuttling |
+| **Perimeter Mid Tier** | 40 sq ft (1.2 – 2.5 ft elevation) | **Aerial Spotter Drone Dock**, **Microclimate Dosing Array**; purslane, peppers, wasabi | Recirculating hydroponic NFT gutters, prop-wash acoustic buzz pollination, precision nutrient/pH dosing |
+| **Trellised Espalier** | 40 sq ft (2.5 – 4.0 ft vertical wall) | **Mantis Branch-Crawler Robot**; dwarf mulberries, goldenberries | Rigid stainless steel wire guideframes, silicone pinch-roller climbing, cushioned vacuum fruit harvesting |
 
 ---
 
-## 2. Multi-Agent Drone & Robotics Subsystems
+## 3. Autonomous Multi-Machine Ecosystem
+
+The machines cooperate along a shared Cartesian spatial datum and communication bus:
 
 ```
-[Main Basin Water System] <---> [Perimeter Aeroponic Racks] <---> [AGV / Drone Docking]
-          |                                  |                               |
-          +---------- [ML Control Unit / Micro-Doser] -----------------------+
+[Fluidic Skimmer] ──(Dewatered Biomass)──► [Ground Track AGV] ◄──(Canister Exchange)──► [Sprout Bioreactor]
+        │                                         ▲
+        ▼                                         │
+[Nutrient Manifold] ◄──(Stock Dosing)── [Microclimate Doser] ──(Telemetry)──► [Master Orchestrator]
+        │                                                                             ▲
+        ▼                                                                             │
+[Central Basin & NFT] ◄──(Pollination / Mapping)── [Aerial Spotter Drone] ────────────┤
+        │                                                                             │
+        └────────────────(Trellis Harvest)──────── [Mantis Branch-Crawler] ───────────┘
 ```
-
-### Aerial Spotter & Pollination Drones
-- Micro-quadcopters utilizing calibrated propeller wash (1.5–2.5 m/s) to deliver non-contact acoustic and airflow vibration pollination for fruiting peppers.
-- Downward-facing multi-spectral RGB/NIR sensors detect fruit ripeness indices and generate targeted harvest coordinates.
-
-### Branch-Crawling 'Mantis' Robot
-- Dual-actuated soft silicone pinch rollers engineered to navigate rigid horizontal and angled limbs without slippage.
-- High-precision micro-shears paired with vacuum-assisted collection pods enable soft fruit pedicel harvesting without mechanical bruising.
-
-### Ground Track AGVs (Automated Guided Vehicles)
-- Low-profile tracked units operating within designated perimeter service corridors.
-- Fitted with automated mechanical docking arms to exchange revolving unlit sprout canisters on a 4-to-6-day cycle.
-- Articulated 3-axis stereo-depth arms perform selective lateral pod severing for ground-level yields.
 
 ---
 
-## 3. Closed-Loop Nutrient Recycling Kinetics
+## 4. Closed-Loop Nutrient Recycling Kinetics
 
-The fluidic loop is designed around nitrogen cascading:
-1. **Bio-Digestion**: Organic waste and plant trimmings are anaerobically digested into bioavailable ammonium and nitrate ions.
-2. **High-EC Consumers**: The concentrated effluent is first routed to perimeter NFT channels (purslane, peppers, wasabi) requiring EC 1.8–2.4 mS/cm.
-3. **Runoff Filtration**: Drain water flows down into the central basin where floating mats of *Wolffia globosa* scavenge residual nitrates and phosphorus, operating as a biological polishing filter (target EC 1.2–1.5 mS/cm).
-4. **Aeroponic Sumps**: Polished water is pressurized through 30–50μm misters directly onto suspended True Potato Seed (TPS) root systems before returning to the main sump.
+The fluidic loop is designed around nitrogen cascading between machines:
+1. **Bio-Digestion**: Organic waste and spent root matter are digested into bioavailable ammonium and nitrate ions.
+2. **High-EC Consumers**: The concentrated effluent is first routed through perimeter NFT gutters (purslane, peppers, wasabi) requiring EC 1.8–2.4 mS/cm.
+3. **Biological Polishing Filter**: Drain runoff cascades into the central basin where floating *Wolffia globosa* scavenges residual nitrates and phosphorus, operating as a rapid biological filter (target EC 1.2–1.5 mS/cm).
+4. **Aeroponic Root Sumps**: Polished water is pressurized through 30–50μm misters directly onto suspended True Potato Seed (TPS) root systems before returning to the main sump.

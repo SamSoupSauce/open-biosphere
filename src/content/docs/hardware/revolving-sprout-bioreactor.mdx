@@ -1,0 +1,75 @@
+---
+title: Revolving Dark-Chamber Sprout Bioreactor
+description: Standalone rotating cylindrical drum bioreactor for continuous 4-day hypocotyl cultivation
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+The **Revolving Dark-Chamber Sprout Bioreactor** is a modular, standalone agricultural appliance engineered for continuous, rapid vegetative protein generation. While designed to dock into the Perimeter Lower Tier of the master Open Biosphere assembly, it functions as an autonomous benchtop or cabin appliance for homesteaders and off-grid setups.
+
+---
+
+## 1. Standalone Homesteading & Off-Grid Utility
+
+In off-grid and homestead scenarios, fresh bioavailable nutrients are often seasonally constrained. This machine produces **2.5 to 4.0 kg of crisp, high-protein mung bean or legume hypocotyls every 4 days** with zero soil, zero natural sunlight, and minimal water consumption:
+
+<CardGrid>
+  <Card title="Kitchen & Cabin Appliance" icon="star">
+    Operates independently on a kitchen counter, root cellar, or pantry shelf. Requires only 24V DC power and intermittent water supply.
+  </Card>
+  <Card title="Closed Water Conservation" icon="droplet">
+    Recirculating ultrasonic misting and scheduled drain cycles consume under 1.5 liters of fresh water per kilogram of fresh yield.
+  </Card>
+  <Card title="Photophobic Bioreaction" icon="moon">
+    Complete light isolation eliminates bitter chlorophyll synthesis, yielding tender, sweet, restaurant-grade hypocotyls without manual rinsing.
+  </Card>
+  <Card title="Ozonated Auto-Sanitization" icon="shield">
+    Integrated inline ozone generator executes an automated 3-minute sanitation wash between cycles, preventing fungal or bacterial mold.
+  </Card>
+</CardGrid>
+
+---
+
+## 2. Technical Specifications
+
+| Parameter | Specification |
+| :--- | :--- |
+| **Footprint Dimensions** | 450 mm (W) × 600 mm (D) × 500 mm (H) |
+| **Drum Geometry** | Cylindrical food-grade perforated drum: 300 mm diameter × 450 mm length |
+| **Batch Capacity** | 800 g dry seed (yields ~3.5 kg wet hypocotyls per 96-hour run) |
+| **Rotation Drive** | NEMA 17 planetary geared stepper motor (5.18:1 reduction) |
+| **Rotation Speed** | 0.5 to 2.0 RPM intermittent (rotates 15 seconds every 15 minutes) |
+| **Irrigation System** | Dual high-pressure atomizing misting nozzles (50 µm droplet size) |
+| **Sanitation Subsystem** | 200 mg/h corona-discharge ozone generator with gas diffuser stone |
+| **Power Consumption** | Average 18W continuous (12V/24V DC dual rail, peak 45W during misting) |
+| **Controller Architecture** | ESP32-S3 microcontroller with WiFi/BLE telemetry & local web UI |
+
+---
+
+## 3. Accessible Bill of Materials (BOM)
+
+Designed entirely from readily sourced, commercial off-the-shelf (COTS) components and standard 3D printed parts:
+
+| Item Category | Component Name & Description | Sourcing / Standard Part | Est. Cost (USD) |
+| :--- | :--- | :--- | :--- |
+| **Frame** | 2020 T-Slot Aluminum Extrusion (Black anodized) | Standard 400mm & 500mm lengths | $28.00 |
+| **Drum Core** | Food-Grade 304 Stainless Steel Perforated Mesh Cylinder | 1.5 mm hole diameter, 300mm dia | $42.00 |
+| **Drum Endcaps** | 3D Printed PETG / Polycarbonate Flanges with Ball Bearing Races | FDM 3D printed (0.28mm layer height) | $12.00 (filament) |
+| **Bearings** | 608-2RS Sealed Deep Groove Ball Bearings (4x) | Standard skate bearings | $6.00 |
+| **Drive Train** | NEMA 17 Geared Stepper (5.18:1) + GT2 6mm Timing Belt & Pulleys | 3D printer aftermarket part | $24.00 |
+| **Fluidics** | 24V Diaphragm Mist Pump (100 PSI) + Quick-Connect Fittings | Standard RO / misting kit parts | $26.00 |
+| **Misting Nozzles**| Brass / Nickel-plated 0.3mm atomizing nozzles (2x) | Off-the-shelf terrarium/cooling nozzles | $8.00 |
+| **Sanitation** | 12V 200mg/h Ozone Generator Module | Compact aquarium ozone unit | $16.00 |
+| **Compute & Power**| ESP32-S3 NodeMCU board + TMC2209 Silent Stepper Driver + 24V PSU | Open-source standard hardware | $35.00 |
+| **Total Build Cost**| Complete Standalone Machine | Accessible COTS & 3D prints | **~$197.00** |
+
+---
+
+## 4. Master Biosphere Assembly Interlock
+
+When deployed within the full Open Biosphere enclosure (~20x10 ft footprint):
+
+1. **Mechanical Docking**: The drum chassis features a standardized V-slot bottom dovetail rail that locks into the Perimeter Lower Tier mounting brackets ($Z = 150$ mm above water line).
+2. **Autonomous AGV Exchange**: The Ground Track AGV pod carrier uses an articulated pneumatic clamp to grip the drum's central hub, unlatching and shuttling spent canisters to the harvest station.
+3. **Plumbing Quick-Connect**: Magnetic-seat fluid disconnects tap directly into the enclosure's ozone sanitizing loop and nutrient drain manifold.
+4. **Communications Bus**: Communicates via CAN bus / ESPHome MQTT to the centralized master biosphere orchestrator.

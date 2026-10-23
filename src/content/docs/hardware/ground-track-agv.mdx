@@ -3,11 +3,30 @@ title: Ground Track AGV Pod Carrier
 description: Tracked autonomous guided vehicle servicing dark hypocotyl canisters and harvesting bush crops
 ---
 
-## 1. Subsystem Architecture
+import { Card, CardGrid } from '@astrojs/starlight/components';
 
-The **Ground Track AGV** is a low-profile tracked robot that navigates the Perimeter Lower Tier ($Z = 0.5$ to $1.2$ ft) maintenance lanes. It performs two core tasks:
-1. Automated exchange and transport of revolving dark-chamber sprout canisters.
-2. Stereo-depth pod harvesting for bush crops (*Phaseolus vulgaris*).
+The **Ground Track AGV Pod Carrier** is an autonomous, low-profile tracked robot engineered for narrow-lane agricultural transport and selective harvesting. It operates independently as a homestead or greenhouse utility rover, or services the Perimeter Lower Tier of the master Open Biosphere assembly.
+
+---
+
+## 1. Standalone Homesteading & Off-Grid Utility
+
+In greenhouses, hoop houses, and high tunnels, narrow aisles make traditional tractors and human carts cumbersome. This machine handles **heavy repetitive material shuttling, seedling tray transport, and low-canopy selective harvesting**:
+
+<CardGrid>
+  <Card title="Narrow-Aisle Rover" icon="truck">
+    Ultra-compact chassis (350 mm width) turns in place on rubber tracks, easily navigating tight greenhouse aisles and rough earthen paths.
+  </Card>
+  <Card title="25 kg Cargo Capacity" icon="box">
+    Pneumatic quick-docking latch carries seed drums, produce totes, compost tubs, or water reservoirs without manual lifting.
+  </Card>
+  <Card title="Simple Tape or LiDAR Guidance" icon="compass">
+    Follows low-cost adhesive magnetic floor tape for bulletproof reliability, or pairs with 2D LiDAR for flexible SLAM navigation.
+  </Card>
+  <Card title="Selective Robotic Harvester" icon="scissors">
+    Optional 3-axis articulated harvesting arm with soft silicone gripper and rotary shear picks low bush beans and peppers with stereo-depth precision.
+  </Card>
+</CardGrid>
 
 ---
 
@@ -15,16 +34,39 @@ The **Ground Track AGV** is a low-profile tracked robot that navigates the Perim
 
 | Parameter | Specification |
 | :--- | :--- |
-| **Chassis** | High-traction rubber continuous tracks with low center of gravity |
-| **Ground Clearance** | 45 mm (traverses floor sumps and drain grates) |
-| **Payload Capacity** | 25 kg (canister drum + harvest payload) |
-| **Docking Interface** | Pneumatic quick-connect latch for cylindrical revolving canisters |
+| **Chassis Dimensions** | 500 mm (L) × 350 mm (W) × 280 mm (H) |
+| **Locomotion** | Dual continuous rubber tracks with suspension bogies (45 mm ground clearance) |
+| **Payload Capacity** | 25 kg continuous payload on cargo bed |
+| **Max Speed** | 0.8 m/s (programmable working speed: 0.2 to 0.4 m/s) |
+| **Docking Interface** | Pneumatic quick-connect latch for standard cylindrical canisters and Euro-boxes |
 | **Harvest Arm** | 3-axis articulated arm with soft silicone 2-finger clamp & rotary blade |
-| **Navigation** | Magnetic floor tape tracking + LiDAR obstacle avoidance |
-| **Battery System** | 24V 20Ah LiFePO4 pack with automated magnetic floor charging dock |
+| **Battery System** | 24V 20Ah LiFePO4 pack (6+ hours runtime) with magnetic floor charging pads |
+| **Onboard Controller**| ESP32-S3 (motor control) + Raspberry Pi 4 / Radxa Zero (navigation) |
 
 ---
 
-## 3. Automated Canister Rotation & Servicing
+## 3. Accessible Bill of Materials (BOM)
 
-The AGV services 8 revolving dark-chamber hypocotyl canisters stacked beneath the perimeter deck. Every 4 hours, the AGV rotates each drum 180 degrees to prevent sprout root compaction, checks effluent drainage, and triggers ozonated rinse cycles.
+Built from standard tracked chassis kits, aluminum extrusions, and accessible maker motor drivers:
+
+| Item Category | Component Name & Description | Sourcing / Standard Part | Est. Cost (USD) |
+| :--- | :--- | :--- | :--- |
+| **Track Drive Kit** | All-Metal Tracked Chassis with Rubber Treads & Dual DC Planetary Motors | Off-the-shelf robotics tank chassis | $75.00 |
+| **Drive Electronics**| Dual Channel 15A Smart DC Motor Driver (Cytron / Sabertooth) | Standard robotics motor controller | $38.00 |
+| **Line / Tape Sensor**| 5-Channel Infrared / Magnetic Induction Track Follower Sensor | Off-the-shelf robotics sensor | $12.00 |
+| **LiDAR (Optional)** | 360-degree 2D LiDAR (RPLiDAR C1 / LD06, 12m range) | Maker LiDAR sensor | $68.00 |
+| **Battery** | 24V 15Ah LiFePO4 Battery Pack with Integrated BMS | Electric bike / solar battery pack | $85.00 |
+| **Cargo Latch** | 12V Compact Solenoid / Pneumatic Cam Latch | Standard cabinet / automation latch | $18.00 |
+| **Harvest Arm (Opt)**| 3-Axis Servo Articulated Arm + Coreless Metal-Gear Servos | Open-source 3D printed arm kit | $45.00 |
+| **Compute & Micro** | ESP32-S3 microcontroller + Buck Regulators | Open-source maker hardware | $22.00 |
+| **Total Build Cost**| Base Autonomous Carrier Unit | Readily sourced hardware | **~$250.00** |
+
+---
+
+## 4. Master Biosphere Assembly Interlock
+
+In the integrated 20x10 ft Open Biosphere installation:
+
+1. **Perimeter Lane Routing**: Follows the magnetic guide strip embedded along the Perimeter Lower Tier ($Z = 150$ to $365$ mm above water level).
+2. **Bioreactor Drum Exchange**: Automatically docks into the Revolving Sprout Bioreactor bays, unlatching ripe 4-day canisters and replacing them with freshly seeded drums.
+3. **Automated Recharging**: Docks into magnetic inductive floor charge plates located at the South-West datum origin $(0,0,0)$.

@@ -1,35 +1,55 @@
-# Open Biosphere (Autonomous Closed Biosphere Agriculture Wiki)
+# Open Biosphere (Umbrella Open-Hardware Project)
 
-[![Biosphere CI & Candidate Audit](https://github.com/SamSoupSauce/open-biosphere/actions/workflows/ci.yml/badge.svg)](https://github.com/SamSoupSauce/open-biosphere/actions/workflows/ci.yml)
-[![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Biosphere CI, Audit & Pages Deployment](https://github.com/SamSoupSauce/open-biosphere/actions/workflows/ci.yml/badge.svg)](https://github.com/SamSoupSauce/open-biosphere/actions/workflows/ci.yml)
+[![Live Documentation](https://img.shields.io/badge/Live%20Wiki-samsoupsauce.github.io%2Fopen--biosphere-064e3b.svg)](https://samsoupsauce.github.io/open-biosphere/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Built with Astro](https://img.shields.io/badge/Built%20with-Astro%205-FF5D01.svg)](https://astro.build)
 [![Starlight](https://img.shields.io/badge/Documentation-Starlight-064e3b.svg)](https://starlight.astro.build)
 
-An open-source technical specification and research platform for contained biosphere agriculture, autonomous multi-agent robotics, and continuous ML crop auditing within an enclosed **~6,000-gallon pool biosystem (~20x10 ft footprint, 4.5 ft vertical clearance)**.
+> **An open-hardware specification and research platform designed around enabling end-users, homesteaders, and makers to build essential agricultural, homesteading, and off-grid machines out of common or easily ordered parts (COTS) and 3D prints.**
+
+🌐 **Live Technical Wiki & Interactive Islands**: [https://samsoupsauce.github.io/open-biosphere/](https://samsoupsauce.github.io/open-biosphere/)
 
 ---
 
-## 🌟 Key Architecture Pillars
+## 🌟 The Umbrella Philosophy
 
-- **Physical Envelope**: Retrofits a ~200 sq ft pool into 4 discrete spatial zones:
-  - **Central Basin (160 sq ft, 4.5 ft depth)**: Continuous floating *Wolffia* protein engine, True Potato Seed (TPS) aeroponics, and wedge-wire biofilter loops.
-  - **Perimeter Lower Tier (40 sq ft, 0.5–1.2 ft)**: Ground Track AGV corridors and rotating dark-chamber sprout canisters.
-  - **Perimeter Mid Tier (40 sq ft, 1.2–2.5 ft)**: Hydroponic NFT gutters (purslane, peppers, wasabi) with aerial drone pollination.
-  - **Trellised Espalier (40 sq ft, 2.5–4.0 ft wall)**: Vertical guideframes for the dual-roller Mantis branch-crawler.
-- **Multi-Agent Robotics**:
-  - **Aerial Spotter Quadcopters**: Propeller-wash resonant buzz-pollination and multispectral ripeness mapping.
-  - **Mantis Branch-Crawler**: Dual-opposed silicone pinch rollers and vacuum-assisted fruit shearing.
-  - **Ground Track AGVs**: Automated revolving canister exchange and lateral pod severing.
-- **Decoupled Dual-File Crop Contract**:
-  - `data.json`: Canonical machine/ML contract validated against strict JSON Schema (50+ biochemical, amino acid, vitamin, and mineral fields).
-  - `guide.mdx`: Qualitative human research notes, cultivation SOPs, and culinary recipes.
-- **Continuous Ticket Auditing Engine**: Ticket-driven proposal pipeline (`biosphere-ops/tickets/`) with automated schema validation.
+Rather than requiring builders to construct a single monolithic, multi-thousand-dollar apparatus, **Open Biosphere** is architected as an **interlocking ecosystem of smaller, autonomous, standalone machines**:
+
+1. **Build Individually**: Each machine can be fabricated and deployed as an independent homesteading, kitchen, or farm tool (e.g. an automated duckweed pond skimmer, an off-grid rotating sprout drum, or a narrow-aisle greenhouse utility rover).
+2. **Assemble Progressively**: When combined along standardized Cartesian mounting extrusions, a unified 24V DC bus, and recirculating plumbing, all machines interlock into the **Master Biosphere Assembly** within a standard **~20x10 ft footprint (~200 sq ft, 4.5 ft vertical clearance, ~6,000-gallon pool envelope)**.
 
 ---
 
-## 📊 Candidate Crop Index Preview
+## 🛠️ The Modular Machine Suite
 
-| Crop | Taxon | ML Score | Primary Advantage | Primary Technical Challenge |
+| Machine | Category | Standalone Homestead / Off-Grid Use Case | Core COTS Parts | Est. Build Cost |
+| :--- | :--- | :--- | :--- | :---: |
+| **[Fluidic Skimmer & Dewatering Loop](https://samsoupsauce.github.io/open-biosphere/hardware/fluidic-skimmer-loop/)** | Harvester | Skims duckweed/watermeal on farm ponds & IBC aquaponics systems; dewaters green protein paste automatically. | 316L Wedge-wire screen, 24V BLDC pump, NEMA 23 auger, ESP32 | **~$280** |
+| **[Revolving Sprout Bioreactor](https://samsoupsauce.github.io/open-biosphere/hardware/revolving-sprout-bioreactor/)** | Bioreactor | Kitchen or off-grid cabin appliance yielding 3.5 kg fresh mung bean hypocotyls every 96 hrs without soil or sunlight. | 2020 extrusion, perforated stainless drum, NEMA 17, ozone generator | **~$197** |
+| **[Mantis Branch-Crawler Robot](https://samsoupsauce.github.io/open-biosphere/hardware/mantis-branch-crawler/)** | Robotics | Orchard trellis climber navigating guide wires to pick soft berries (figs, mulberries, goldenberries) with cushioned vacuum suction. | Shore 40A silicone rollers, NEMA 14 steppers, Raspberry Pi 5 + AI HAT | **~$259** |
+| **[Ground Track AGV Pod Carrier](https://samsoupsauce.github.io/open-biosphere/hardware/ground-track-agv/)** | Robotics | Narrow-aisle greenhouse rover with pneumatic latch for hauling sprout drums, harvest totes, and selective bush crop harvesting. | Continuous rubber tracks, dual 15A drivers, 24V LiFePO4, magnetic line sensor | **~$250** |
+| **[2-Axis Precision Overhead Gantry](https://samsoupsauce.github.io/open-biosphere/hardware/overhead-gantry-system/)** | Motion | FarmBot-style Cartesian motion gantry with magnetic quick-swap toolheads for laser weeding, micro-seeding, and saffron tweezing. | 2040 V-slot extrusions, GT2 9mm steel belts, NEMA 23 steppers, Klipper mainboard | **~$336** |
+| **[Aerial Spotter & Pollination Drone](https://samsoupsauce.github.io/open-biosphere/hardware/aerial-pollination-drone/)** | Drone | Greenhouse non-contact flower pollinator using tuned prop-wash resonance for peppers and tomatoes without bees. | 85mm whoop frame, 1103 motors, optical flow sensor, AIO flight controller | **~$185** |
+| **[Microclimate & Dosing Array](https://samsoupsauce.github.io/open-biosphere/hardware/microclimate-dosing-array/)** | Automation | Universal automation brain for any grow tent or greenhouse; controls 6 peristaltic channels, CO2 injection, and humidity. | 12V peristaltic pumps (6x), Atlas pH/EC probes, Sensirion SCD41 CO2 sensor | **~$268** |
+| **[TPS Aeroponic Root Chamber](https://samsoupsauce.github.io/open-biosphere/hardware/tps-root-chamber/)** | Grow Box | Pathogen-free seed potato generation from botanical seeds; non-destructive mini-tuber picking with zero light ingress. | Food-grade HDPE tote, 120 PSI booster pump, EPDM light seals, mist nozzles | **~$177** |
+
+---
+
+## 🏛️ Master Assembly Physical Envelope (~20x10 ft Footprint)
+
+When assembled into the full closed-loop biosphere, the machines integrate around standard **4040/2040 V-slot aluminum extrusions** retrofitted across a 6,000-gallon pool envelope:
+
+- **Central Basin (160 sq ft, 4.5 ft depth)**: Continuous floating *Wolffia* mat, sub-surface TPS aeroponic root misting, and wedge-wire biofilter loops.
+- **Perimeter Lower Tier (40 sq ft, 0.5–1.2 ft)**: Ground Track AGV corridors and rotating dark-chamber sprout canisters.
+- **Perimeter Mid Tier (40 sq ft, 1.2–2.5 ft)**: Hydroponic NFT gutters (purslane, peppers, wasabi) with aerial drone pollination.
+- **Trellised Espalier (40 sq ft, 2.5–4.0 ft wall)**: Vertical guideframes for the dual-roller Mantis branch-crawler.
+
+---
+
+## 📊 Candidate Crop Index
+
+| Crop | Taxon | ML Score | Standalone Advantage | Primary Technical Challenge |
 | :--- | :--- | :---: | :--- | :--- |
 | **Wolffia globosa** | *W. globosa* | **9.8** | Zero structural waste; non-contact CV volume continuous harvesting | Sub-millimeter particle management in fluid lines |
 | **Vigna radiata** | *V. radiata* | **9.1** | Ultra-fast 4-day turnover in zero-light dark canisters | Drum rotation and ozonated flush automation |
@@ -46,13 +66,8 @@ An open-source technical specification and research platform for contained biosp
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Development & Local Run
 
-### Prerequisites
-- Node.js `v20+` or `v22+`
-- Python `3.10+` (for candidate schema validator)
-
-### Installation
 ```bash
 # Clone the repository
 git clone https://github.com/SamSoupSauce/open-biosphere.git
@@ -60,59 +75,19 @@ cd open-biosphere
 
 # Install dependencies
 npm install --legacy-peer-deps
-```
 
-### Development Server
-```bash
+# Start the Astro Starlight development server
 npm run dev
-```
-Open [http://localhost:4321](http://localhost:4321) in your browser.
 
-### Candidate Data Contract Audit
-Audit all candidate crop JSON files against the canonical schema:
-```bash
+# Audit all candidate crop contracts
 npm run audit:crops
-```
 
-### Production Build
-```bash
+# Production build
 npm run build
 ```
 
 ---
 
-## 📂 Repository Organization
-
-```
-open-biosphere/
-├── .github/
-│   ├── workflows/ci.yml       # GitHub Actions CI for build & schema audits
-│   └── ISSUE_TEMPLATE/        # Standardized RFC proposal templates
-├── biosphere-ops/             # Continuous ticket ingestion daemon
-│   ├── schemas/               # JSON Schema data contracts
-│   ├── scripts/               # Python validation & scoring tools
-│   └── tickets/               # inbox / processing / completed ticket workflow
-├── src/
-│   ├── components/            # Interactive React islands (Matrix, Map, Kanban, Header)
-│   ├── content/docs/          # Starlight MDX pages (crops, hardware, zones, rfcs)
-│   ├── data/crops/            # Canonical machine-readable JSON crop contracts
-│   └── styles/                # Tailwind CSS v4 stylesheets
-├── astro.config.mjs           # Astro Starlight & Tailwind configuration
-├── package.json
-└── README.md
-```
-
----
-
-## 📜 Contributing & RFCs
-
-New crop species proposals and hardware designs are tracked as Request for Comments (RFCs):
-1. Review existing proposals on the [RFC Kanban Board](/rfcs/board/).
-2. Submit a proposal using the `.github/ISSUE_TEMPLATE/` forms.
-3. Validate candidate data contracts locally with `python3 biosphere-ops/scripts/validate_candidates.py`.
-
----
-
 ## ⚖️ License
 
-Licensed under the [Apache License, Version 2.0](LICENSE).
+Distributed under the **MIT License**. See [LICENSE](LICENSE) for more details.

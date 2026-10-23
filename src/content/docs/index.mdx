@@ -1,16 +1,20 @@
 ---
 title: Open Biosphere Technical Wiki
-description: Autonomous Closed Biosphere Agriculture, Multi-Agent Robotics & Continuous ML Crop Auditing
+description: Umbrella Open-Hardware Project for Autonomous Homesteading Machines & Closed-Loop Biosphere Agriculture
 template: splash
 hero:
-  tagline: Open-source engineering blueprints, autonomous robotics kinematics, and living candidate crop database for contained ~6,000-gallon pool biosystems.
+  tagline: An umbrella open-hardware specification enabling builders, homesteaders, and researchers to construct essential agricultural machines from accessible COTS parts—interlocking into an autonomous, closed-loop ~20x10 ft biosphere assembly.
   image:
     file: ../../assets/logo-dark.svg
   actions:
-    - text: Explore Candidate Matrix
-      link: /open-biosphere/crops/matrix/
+    - text: Open-Hardware Machine Registry
+      link: /open-biosphere/hardware/catalog/
       icon: right-arrow
       variant: primary
+    - text: Explore Candidate Matrix
+      link: /open-biosphere/crops/matrix/
+      icon: document
+      variant: secondary
     - text: Enclosure Spatial Map
       link: /open-biosphere/zones/map/
       icon: external
@@ -18,34 +22,47 @@ hero:
 ---
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
+import MachineCatalog from '../../components/MachineCatalog';
 import CropMatrix from '../../components/CropMatrix';
 import EnclosureMap from '../../components/EnclosureMap';
 
-## Core Architecture Pillars
+## Umbrella Architecture Pillars
 
 <CardGrid stagger>
-  <Card title="Autonomous Closed Biosphere" icon="seti:graphql">
-    Engineered within a **~20x10 ft footprint (~200 sq ft)** with **4.5 ft vertical canopy clearance** and **~6,000 gallons** of recirculating nutrient liquid.
+  <Card title="Umbrella Open-Hardware Project" icon="seti:graphql">
+    A modular suite of **accessible, standalone agricultural appliances** built from globally available COTS parts, 3D prints, and standard aluminum extrusions for homestead and off-grid food resilience.
   </Card>
-  <Card title="Multi-Agent Robotics" icon="setting">
-    **Aerial pollination drones**, **Mantis branch-crawling soft-roller robots**, and **ground-tracked AGVs** cooperating along absolute spatial datum $(0,0,0)$ V-slot tracks.
+  <Card title="Master Biosphere Assembly" icon="puzzle">
+    Each machine operates on its own or interlocks into the **~20x10 ft footprint (~200 sq ft, 4.5 ft vertical clearance)** master pool enclosure with **~6,000 gallons** of closed-loop recirculating nutrients.
   </Card>
-  <Card title="Machine Learning Crop Index (-1.0 to 10.0)" icon="open-book">
-    Rigorous ML suitability scoring assessing computer vision volume tracking, automated end-effector feasibility, and complete micronutrient/bioactive density.
+  <Card title="Multi-Agent Robotics Ecosystem" icon="setting">
+    **Aerial pollination drones**, **Mantis branch-crawling soft-roller robots**, **ground AGVs**, and **Cartesian gantries** cooperating along absolute spatial datum $(0,0,0)$ V-slot tracks.
   </Card>
-  <Card title="Continuous Ticket Ingestion Daemon" icon="github">
-    Git-native auditing pipeline validating incoming species proposals against strict JSON schema contracts before insertion into the primary database.
+  <Card title="Continuous ML Data Contracts" icon="open-book">
+    Rigorous JSON Schema contracts assessing computer vision volume tracking, automated end-effector feasibility, and complete micronutrient/bioactive density.
   </Card>
 </CardGrid>
 
 ---
 
-## Interactive Biosphere Blueprint
+## 🛠️ Modular Open-Hardware Machine Suite
+
+Every machine can be built independently for home, greenhouse, or farm pond use, or docked into the master biosphere:
+
+<MachineCatalog client:load />
+
+---
+
+## 🗺️ Interactive Master Biosphere Blueprint
+
+Explore how all modular machines interlock within the 20x10 ft physical envelope and spatial datum:
 
 <EnclosureMap client:load />
 
 ---
 
-## Live Candidate Crop Matrix
+## 📊 Live Candidate Crop Matrix
+
+Audited species evaluated across biomass turnover, robotics accessibility, and nutrient density:
 
 <CropMatrix client:load />

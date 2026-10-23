@@ -1,0 +1,92 @@
+---
+title: Master Biosphere Assembly Guide
+description: System-level integration manual for assembling modular open-hardware machines into the ~20x10 ft pool biosphere
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+The **Open Biosphere** is an umbrella open-hardware project. Rather than requiring builders to construct a single monolithic, multi-thousand-dollar apparatus, the entire system is architected as an **interlocking ecosystem of smaller, autonomous, standalone machines**.
+
+Each machine is built from accessible, commercial off-the-shelf (COTS) components, 3D printed brackets, and standard aluminum extrusions. Builders can start with a single machine for their homestead, cabin, or greenhouse, and progressively combine them into the **Master Biosphere Assembly** within a standard ~20x10 ft pool envelope.
+
+---
+
+## 1. System Assembly Hierarchy
+
+```
+┌────────────────────────────────────────────────────────────────────────┐
+│                   LEVEL 4: MASTER BIOSPHERE ASSEMBLY                   │
+│          ~20x10 ft Footprint (~200 sq ft) • ~6,000 Gallon Envelope      │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │ Interlocked via
+                                    ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│                 LEVEL 3: UNIFIED INTER-MACHINE BUSSES                  │
+│   • Spatial Datum (0,0,0)  • 24V DC Power Rails  • CAN Bus / Modbus    │
+│   • Recirculating Fluid Loop  • Quick-Disconnect Mechanical Mounts     │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │ Composed of
+                                    ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│               LEVEL 2: STANDALONE OPEN-HARDWARE MACHINES               │
+│                                                                        │
+│   [Fluidic Skimmer]    [Sprout Drum Bioreactor]   [2-Axis Gantry]      │
+│   [Mantis Climber]     [Ground Track AGV]         [Pollination Drone]  │
+│   [Dosing Array]       [TPS Aeroponic Chamber]                         │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │ Fabricated from
+                                    ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│                  LEVEL 1: ACCESSIBLE COTS & 3D PRINTS                  │
+│   • 2040/4040 V-Slot Extrusions  • NEMA Steppers & TMC Drivers         │
+│   • Food-Grade Silicone & PVC    • ESP32 & Raspberry Pi Controllers    │
+└────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 2. Core Integration Standards
+
+To ensure each machine functions seamlessly both as a standalone appliance and as a docked component in the master assembly, all designs adhere to four universal interfaces:
+
+<CardGrid>
+  <Card title="1. Standard Spatial Datum (0,0,0)" icon="compass">
+    The South-West corner of the pool coping at water level ($Z = 0$) serves as the master Cartesian origin $(0,0,0)$ in millimeters. Every gantry coordinate, drone AprilTag, and AGV docking bay is indexed to this absolute reference.
+  </Card>
+  <Card title="2. Unified 24V DC Power Backbone" icon="zap">
+    All stationary machines and docking stations run on a standard 24V DC bus, simplifying solar/battery off-grid integration and eliminating hazardous high-voltage AC wiring over open water.
+  </Card>
+  <Card title="3. Standardized Extrusion Mounts" icon="grid">
+    Perimeter structural extrusions (4040 and 2040 V-slot aluminum) provide universal mechanical rails. Machines clip or bolt in with standard M5 drop-in T-nuts and 3D printed PETG brackets.
+  </Card>
+  <Card title="4. Isolated Communications Bus" icon="laptop">
+    Subsystems exchange telemetry and coordination triggers over an isolated RS-485 Modbus and CAN bus network, bridging to an open-source ESPHome / Home Assistant / ROS2 orchestrator.
+  </Card>
+</CardGrid>
+
+---
+
+## 3. Physical Enclosure Assembly Walkthrough
+
+### Phase 1: Perimeter Structural Rail Installation
+1. Fasten **4040 V-slot aluminum extrusions** around the coping of the ~20x10 ft pool basin ($6,096 \text{ mm} \times 3,048 \text{ mm}$).
+2. Align the South-West corner bracket to establish the absolute **$(0,0,0)$ Spatial Datum**.
+3. Affix high-contrast **AprilTag (36h11 family) visual fiducials** along the top extrusion faces at 1,000 mm intervals for autonomous drone localization.
+4. Mount the **Overhead Gantry Y-axis guide rails** on the upper extrusion lip at elevation $Z = 1,200$ mm.
+
+### Phase 2: Fluidic Loops & Plumbing Manifold
+1. Position the **Fluidic Skimmer & Dewatering Separator** on the southern coping channel ($Y = 600$ mm).
+2. Install the 1.5-inch PVC bottom return line running from the skimmer's Moving Bed Biofilm Reactor (MBBR) down to the bottom sump ($Z = -1,372$ mm).
+3. Connect the **Microclimate & Automated Dosing Array** injection manifold into the filtered return stream to ensure complete chemical mixing before water enters the grow tiers.
+4. Seat the **TPS Aeroponic Root Chambers** into the southern bay suspended over the water line.
+
+### Phase 3: Perimeter Tiers & Robotic Transit Lanes
+1. Fasten the **Perimeter Lower Tier** brackets ($Z = 150$ to $365$ mm above water level) and lay the magnetic induction track tape for the **Ground Track AGV**.
+2. Mount the **Revolving Sprout Bioreactor** docking cradles along the lower tier maintenance corridor.
+3. Install the **Perimeter Mid Tier** hydroponic NFT channels ($Z = 365$ to $760$ mm) directly above the AGV lane.
+4. String stainless steel espalier guideframe wires (150 mm vertical pitch) along the North-East vertical boundary wall ($Z = 760$ to $1,220$ mm) for the **Mantis Branch-Crawler**.
+
+### Phase 4: Compute & Network Commissioning
+1. Mount the master controller cabinet (Raspberry Pi CM4 + CAN bus transceiver) adjacent to the South-West origin.
+2. Power up the 24V DC MeanWell power supplies and verify voltage stability across all perimeter tap points.
+3. Verify telemetry heartbeats from each machine's ESP32 node via the local web dashboard.
