@@ -13,23 +13,7 @@ Each machine fulfills an autonomous homesteading, farming, or off-grid function 
 
 ## 1. The Umbrella Architecture Philosophy
 
-```
-  ┌───────────────────────────────────────────────────────────────┐
-  │                   OPEN BIOSPHERE UMBRELLA                    │
-  │   Open-source specification & registry of modular machines    │
-  └───────────────────────────────┬───────────────────────────────┘
-                                  │
-         ┌────────────────────────┴────────────────────────┐
-         ▼                                                 ▼
-┌─────────────────────────────────┐       ┌─────────────────────────────────┐
-│     STANDALONE MACHINE USE      │       │    MASTER BIOSPHERE ASSEMBLY    │
-│  Build 1 or 2 machines for:     │       │  Interlock all machines into:   │
-│  • Kitchen/Cabin sprout growing │       │  • ~20x10 ft pool basin         │
-│  • Pond duckweed harvesting     │ ───►  │  • Spatial Datum (0,0,0)        │
-│  • Greenhouse pollination/weeding│      │  • Multi-agent closed loop      │
-│  • Automated nutrient dosing    │       │  • Continuous crop auditing     │
-└─────────────────────────────────┘       └─────────────────────────────────┘
-```
+![Open Biosphere Umbrella Architecture Philosophy](/open-biosphere/blueprints/umbrella-architecture.svg)
 
 <CardGrid>
   <Card title="Accessible COTS Components" icon="puzzle">
@@ -65,39 +49,7 @@ When assembled together, the individual machines occupy four interlocking spatia
 
 Under [RFC-0004](/rfcs/rfc-0004-controller-node-tool) and [RFC-0006](/rfcs/rfc-0006-agnostic-controller-runtime), the biosphere decouples heavy neural compute from edge electro-mechanics through a 3-tier hierarchy:
 
-```
-┌────────────────────────────────────────────────────────────────────────┐
-│                        CONTROLLER (CENTRAL BRAIN)                      │
-│  Portable Agnostic Software Runtime (RFC-0006: Linux / macOS Host)     │
-│  • Emits isolated farm AP: SSID [POTFRM-<CLUSTER_ID>] (192.168.42.0/24)│
-│  • Local GGUF Neural Inference via llama-cpp-python (Zero Cloud Calls) │
-│  • Status output: OLED screen, CLI stdout, or BLE Discovery Beacon     │
-│  • Maintains global biosphere model, scheduling, and multi-agent loops │
-└───────────────────────────────────┬────────────────────────────────────┘
-                                    │ Encrypted Local Wi-Fi (192.168.42.0/24)
-                                    ▼
-┌────────────────────────────────────────────────────────────────────────┐
-│                        NODE (MACHINE AGGREGATOR)                       │
-│  Mid-tier ESP32 (e.g. ESP32-S3 Dual-Core)                              │
-│  • One per physical machine / subsystem frame                          │
-│  • Onboard mini OLED status screen + setup push-button                 │
-│  • Connects UP to Controller via Wi-Fi using paired Cluster ID         │
-│  • Exposes BLE service for initial phone provisioning                  │
-│  • Manages local machine logic, safety watchdog, and down-links        │
-└───────────────────────────────────┬────────────────────────────────────┘
-                                    │ Low-Power BLE / Point-to-Point Bus
-        ┌───────────────────────────┼───────────────────────────┐
-        ▼                           ▼                           ▼
-┌───────────────────┐       ┌───────────────────┐       ┌───────────────────┐
-│       TOOL        │       │       TOOL        │       │       TOOL        │
-│ Dedicated Tiny    │       │ Dedicated Tiny    │       │ Dedicated Tiny    │
-│ ESP32 Edge Device │       │ ESP32 Edge Device │       │ ESP32 Edge Device │
-│ (e.g. ESP32-C3)   │       │ (e.g. ESP32-C3)   │       │ (e.g. ESP32-C3)   │
-│ Mini OLED Screen  │       │ Mini OLED Screen  │       │ Mini OLED Screen  │
-│ 250ms Deadman     │       │ 250ms Deadman     │       │ 250ms Deadman     │
-│ [Weir Actuator]   │       │ [Auger Stepper]   │       │ [Sump Ultrasonic] │
-└───────────────────┘       └───────────────────┘       └───────────────────┘
-```
+![Controller-Node-Tool (CNT) Hierarchical Edge Architecture](/open-biosphere/blueprints/cnt-edge-architecture.svg)
 
 1. **The Controller (Central Brain)**: Under [RFC-0006](/rfcs/rfc-0006-agnostic-controller-runtime), the Controller is defined strictly as a portable, hardware-agnostic software runtime (`biosphere-core`) running on any Linux (ARM64/x86_64) or macOS host (e.g. Raspberry Pi 4/5, repurposed x86 mini-PCs, thin clients, or laptops). It hosts an isolated Wi-Fi AP (`POTFRM-<CLUSTER_ID>` on `192.168.42.0/24`), executes local neural reasoning via `llama-cpp-python` with native hardware acceleration, and coordinates multi-agent schedules over secure WebSocket (`ws://192.168.42.1:8443/register`).
 2. **The Node (Machine Subsystem)**: Exactly one per physical machine frame (ESP32-S3 with PSRAM). Hosts an OLED status display (`[NODE: <NAME> | LINK -> CTRL_ID]`). Under [RFC-0005](/rfcs/rfc-0005-hardware-interlocks-ble-virtual-panel), physical control panels are banned: the enclosure carries strictly an inline DC power switch and a recessed SD recovery button. The operator provisions the Node and performs manual jogging via the Flutter companion app over local BLE.
@@ -109,17 +61,7 @@ Under [RFC-0004](/rfcs/rfc-0004-controller-node-tool) and [RFC-0006](/rfcs/rfc-0
 
 The machines cooperate along a shared Cartesian spatial datum and the CNT network:
 
-```
-[Fluidic Skimmer] ──(Dewatered Biomass)──► [Ground Track AGV] ◄──(Canister Exchange)──► [Sprout Bioreactor]
-        │                                         ▲
-        ▼                                         │
-[Nutrient Manifold] ◄──(Stock Dosing)── [Microclimate Doser] ──(Telemetry)──► [Central Controller]
-        │                                                                             ▲
-        ▼                                                                             │
-[Central Basin & NFT] ◄──(Pollination / Mapping)── [Aerial Spotter Drone] ────────────┤
-        │                                                                             │
-        └────────────────(Trellis Harvest)──────── [Mantis Branch-Crawler] ───────────┘
-```
+![Cross-Machine Material & Data Flow Topology](/open-biosphere/blueprints/multi-machine-flow.svg)
 
 ---
 

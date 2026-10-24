@@ -1,0 +1,125 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0f1d"/>
+      <stop offset="100%" stop-color="#030712"/>
+    </linearGradient>
+    <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
+      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#1e293b" stroke-width="0.75" opacity="0.6"/>
+    </pattern>
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8" />
+    </marker>
+    <marker id="arrowAmber" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#f59e0b" />
+    </marker>
+    <marker id="arrowEmerald" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#10b981" />
+    </marker>
+    <marker id="arrowPurple" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#a855f7" />
+    </marker>
+    <marker id="arrowRed" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#ef4444" />
+    </marker>
+  </defs>
+
+  <!-- Background &amp; Engineering Grid -->
+  <rect width="960" height="540" fill="url(#bgGrad)"/>
+  <rect width="960" height="540" fill="url(#grid)"/>
+
+  <!-- Outer Frame -->
+  <rect x="20" y="20" width="920" height="500" fill="none" stroke="#334155" stroke-width="1.5"/>
+  <rect x="25" y="25" width="910" height="490" fill="none" stroke="#1e293b" stroke-width="1"/>
+
+  <!-- Header Block -->
+  <path d="M 25 25 L 935 25 L 935 85 L 25 85 Z" fill="#0f172a" opacity="0.9"/>
+  <line x1="25" y1="85" x2="935" y2="85" stroke="#f59e0b" stroke-width="2"/>
+  
+  <text x="45" y="52" font-family="monospace" font-size="12" font-weight="bold" fill="#f59e0b" letter-spacing="2">OPEN BIOSPHERE // TECHNICAL VECTOR SPECIFICATION</text>
+  <text x="45" y="74" font-family="sans-serif" font-size="16" font-weight="700" fill="#f8fafc">Fluidic Skimmer &amp; Dewatering Separator</text>
+  
+  <rect x="690" y="42" width="245" height="28" rx="4" fill="#1e293b" stroke="#f59e0b" stroke-width="1"/>
+  <text x="813" y="61" font-family="monospace" font-size="11" font-weight="bold" fill="#f59e0b" text-anchor="middle">STAGE 1 // ELECTROMECHANICAL</text>
+
+  <!-- Content Graphic -->
+  <g id="drawing-content">
+
+    <!-- Power Section -->
+    <g transform="translate(60, 115)">
+      <rect x="0" y="0" width="180" height="90" rx="6" fill="#1e293b" stroke="#f59e0b" stroke-width="1.5"/>
+      <text x="15" y="25" font-family="monospace" font-size="11" font-weight="bold" fill="#f59e0b">POWER SUPPLY</text>
+      <text x="15" y="45" font-family="sans-serif" font-size="12" font-weight="bold" fill="#f8fafc">24V DC 150W PSU</text>
+      <text x="15" y="65" font-family="monospace" font-size="10" fill="#94a3b8">MeanWell LRS-150-24</text>
+      
+      <line x1="180" y1="45" x2="230" y2="45" stroke="#f59e0b" stroke-width="2" marker-end="url(#arrowAmber)"/>
+    </g>
+
+    <!-- Strict Two-Control Enclosure -->
+    <g transform="translate(290, 105)">
+      <rect x="0" y="0" width="310" height="230" rx="8" fill="#0f172a" stroke="#f59e0b" stroke-width="2"/>
+      <text x="15" y="25" font-family="monospace" font-size="11" font-weight="bold" fill="#f59e0b">IP67 TWO-CONTROL JUNCTION BOX</text>
+      
+      <!-- Control 1 -->
+      <rect x="15" y="40" width="280" height="42" rx="4" fill="#1e293b" stroke="#ef4444" stroke-width="1.5"/>
+      <circle cx="35" cy="61" r="9" fill="#ef4444"/>
+      <text x="55" y="58" font-family="sans-serif" font-size="11" font-weight="bold" fill="#f8fafc">Control 1: Master DC Cut Switch</text>
+      <text x="55" y="72" font-family="monospace" font-size="9" fill="#94a3b8">Inline Physical Power Cut (No Soft Off)</text>
+
+      <!-- Control 2 -->
+      <rect x="15" y="90" width="280" height="42" rx="4" fill="#1e293b" stroke="#3b82f6" stroke-width="1.5"/>
+      <circle cx="35" cy="111" r="9" fill="#3b82f6"/>
+      <text x="55" y="108" font-family="sans-serif" font-size="11" font-weight="bold" fill="#f8fafc">Control 2: SD Reset Button</text>
+      <text x="55" y="122" font-family="monospace" font-size="9" fill="#94a3b8">Recessed Tactile Switch (5s Flash Restore)</text>
+
+      <!-- OLED & BLE -->
+      <rect x="15" y="140" width="280" height="35" rx="3" fill="#020617" stroke="#38bdf8" stroke-width="1"/>
+      <text x="155" y="162" font-family="monospace" font-size="10" fill="#38bdf8" text-anchor="middle">[SKIMMER-01 | BLE READY]</text>
+
+      <rect x="15" y="182" width="280" height="35" rx="3" fill="#1e293b" stroke="#8b5cf6" stroke-width="1"/>
+      <text x="155" y="204" font-family="sans-serif" font-size="10" font-weight="bold" fill="#c084fc" text-anchor="middle">ESP32 BLE GATT Peripheral (Ephemeral Link)</text>
+    </g>
+
+    <!-- Drive Train & Motors Section -->
+    <g transform="translate(640, 105)">
+      <rect x="0" y="0" width="260" height="230" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="1.5"/>
+      <text x="15" y="25" font-family="monospace" font-size="11" font-weight="bold" fill="#38bdf8">ACTUATORS &amp; DRIVERS</text>
+      
+      <!-- Pump -->
+      <rect x="15" y="40" width="230" height="50" rx="4" fill="#0f172a" stroke="#38bdf8" stroke-width="1"/>
+      <text x="25" y="60" font-family="sans-serif" font-size="11" font-weight="bold" fill="#f8fafc">24V Brushless Mag Pump</text>
+      <text x="25" y="76" font-family="monospace" font-size="9" fill="#38bdf8">55 GPM High-Flow Circulation</text>
+
+      <!-- Stepper & Driver -->
+      <rect x="15" y="100" width="230" height="60" rx="4" fill="#0f172a" stroke="#f59e0b" stroke-width="1"/>
+      <text x="25" y="120" font-family="sans-serif" font-size="11" font-weight="bold" fill="#f8fafc">NEMA 23 Geared Stepper</text>
+      <text x="25" y="136" font-family="monospace" font-size="9" fill="#f59e0b">TB6600 Driver (1/8 Microstep)</text>
+      <text x="25" y="150" font-family="monospace" font-size="9" fill="#94a3b8">Friction Slip Clutch (4.8 N·m Limit)</text>
+
+      <!-- Manual Backup Callout -->
+      <rect x="15" y="170" width="230" height="48" rx="4" fill="#020617" stroke="#10b981" stroke-width="1"/>
+      <text x="25" y="190" font-family="sans-serif" font-size="10" font-weight="bold" fill="#10b981">1/2" Hex Hand Crank Socket</text>
+      <text x="25" y="206" font-family="monospace" font-size="9" fill="#cbd5e1">100% Simultaneous Manual Override</text>
+    </g>
+
+    <!-- Interconnect Busses -->
+    <path d="M 600 160 L 640 160" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)"/>
+    <path d="M 600 210 L 640 210" stroke="#f59e0b" stroke-width="2" marker-end="url(#arrowAmber)"/>
+
+    <!-- Bottom Annotation Card -->
+    <g transform="translate(60, 360)">
+      <rect x="0" y="0" width="840" height="90" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+      <text x="20" y="28" font-family="monospace" font-size="11" font-weight="bold" fill="#f59e0b">WIRING &amp; INTERLOCK SAFETY SPECIFICATION</text>
+      <text x="20" y="48" font-family="sans-serif" font-size="11" fill="#cbd5e1">• Heavy-duty double-pole mechanical switch cuts raw DC power before PSU capacitor banks reach logic lines.</text>
+      <text x="20" y="66" font-family="sans-serif" font-size="11" fill="#cbd5e1">• Mobile Virtual Panel connects over BLE 5.0 without Wi-Fi router dependency; zero interference with manual cranking.</text>
+    </g>
+
+  </g>
+
+  <!-- Blueprint Title Block Footer -->
+  <path d="M 25 485 L 935 485 L 935 515 L 25 515 Z" fill="#0f172a" opacity="0.9"/>
+  <line x1="25" y1="485" x2="935" y2="485" stroke="#334155" stroke-width="1.5"/>
+
+  <text x="45" y="505" font-family="monospace" font-size="10" fill="#94a3b8">SUBTITLE: <tspan fill="#f8fafc">Stage 1 Electromechanical Schematic &amp; BLE Virtual Panel</tspan></text>
+  <text x="690" y="505" font-family="monospace" font-size="10" fill="#94a3b8">STANDARD: <tspan fill="#f59e0b" font-weight="bold">RFC-0011 VECTOR SVG</tspan></text>
+</svg>

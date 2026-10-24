@@ -19,39 +19,7 @@ This RFC establishes the **Controller-Node-Tool (CNT)** standard across the enti
 * **The Node (Machine Subsystem / Aggregator):** Exactly one per physical machine frame (e.g. Fluidic Skimmer, Sprout Bioreactor), orchestrating that machine's immediate sub-environment.
 * **The Tools (Actuators & Sensors):** Minimalist edge micro-controllers dedicated 1:1 to a single operational device (stepper, valve, float sensor, camera).
 
-```
-┌────────────────────────────────────────────────────────────────────────┐
-│                        CONTROLLER (CENTRAL BRAIN)                      │
-│  Portable Agnostic Software Runtime (RFC-0006: Linux / macOS Host)     │
-│  • Emits isolated farm AP: SSID [POTFRM-<CLUSTER_ID>] (192.168.42.0/24)│
-│  • Local GGUF Neural Inference via llama-cpp-python (Zero Cloud Calls) │
-│  • Status display: OLED screen, CLI stdout, or BLE Discovery Beacon    │
-│  • Maintains global biosphere model, scheduling, and multi-agent loops │
-└───────────────────────────────────┬────────────────────────────────────┘
-                                    │ Encrypted Local Wi-Fi (192.168.42.0/24)
-                                    ▼
-┌────────────────────────────────────────────────────────────────────────┐
-│                        NODE (MACHINE AGGREGATOR)                       │
-│  Mid-tier ESP32 (e.g. ESP32-S3 Dual-Core)                              │
-│  • One per physical machine / subsystem frame                          │
-│  • Onboard mini OLED status screen + setup push-button                 │
-│  • Connects UP to Controller via Wi-Fi using paired Cluster ID         │
-│  • Exposes BLE service for initial phone provisioning                  │
-│  • Manages local machine logic, safety watchdog, and down-links        │
-└───────────────────────────────────┬────────────────────────────────────┘
-                                    │ Low-Power BLE / Point-to-Point Bus
-        ┌───────────────────────────┼───────────────────────────┐
-        ▼                           ▼                           ▼
-┌───────────────────┐       ┌───────────────────┐       ┌───────────────────┐
-│       TOOL        │       │       TOOL        │       │       TOOL        │
-│ Dedicated Tiny    │       │ Dedicated Tiny    │       │ Dedicated Tiny    │
-│ ESP32 Edge Device │       │ ESP32 Edge Device │       │ ESP32 Edge Device │
-│ (e.g. ESP32-C3)   │       │ (e.g. ESP32-C3)   │       │ (e.g. ESP32-C3)   │
-│ Mini OLED Screen  │       │ Mini OLED Screen  │       │ Mini OLED Screen  │
-│ 250ms Deadman     │       │ 250ms Deadman     │       │ 250ms Deadman     │
-│ [Weir Actuator]   │       │ [Auger Stepper]   │       │ [Sump Ultrasonic] │
-└───────────────────┘       └───────────────────┘       └───────────────────┘
-```
+![RFC-0004 Controller-Node-Tool (CNT) Architecture](/open-biosphere/blueprints/cnt-edge-architecture.svg)
 
 ---
 

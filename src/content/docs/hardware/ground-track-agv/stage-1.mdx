@@ -51,45 +51,7 @@ The Stage 1 electromechanical pack motorizes the **Ground Track AGV Pod Carrier*
 
 ### Add-On 1 Electromechanical Wiring & BLE Virtual Panel Blueprint
 
-```text
-========================================================================================
-ADD-ON 1 ELECTROMECHANICAL SCHEMATIC & BLE VIRTUAL PANEL BLUEPRINT
-Strict Two-Control Physical Standard (RFC-0005) with Ephemeral Flutter BLE Control
-========================================================================================
-
-  [24V 15Ah LiFePO4 Pack] ──[40A Fuse]──[Master DC Power Switch]──┬── (24V Power Bus)
-                                                                  └── (GND Return Bus)
-                                                                            │
-   ┌──────────────── STRICT TWO-CONTROL CHASSIS BOX ──────────────────────┐│
-   │                                                                      ││
-   │  [Master DC Power Switch]         ["Nuke & Pave" SD Reset Button]    ││
-   │   Inline Mechanical Cut            Recessed Tactile Switch (5s hold) ││
-   │                                                                      ││
-   │  [Micro-SD Card Slot Module]      [0.91" I2C Status OLED Display]    ││
-   │   Preloaded golden .bin            Displays [AGV-A1 | BLE READY]     ││
-   │                                                                      ││
-   │  [ESP32 BLE GATT Peripheral] ◄───── (Ephemeral Mobile Link) ────────┼│
-   └───────────────────┬──────────────────────────────────────────────────┘│
-                       │                                                   │
-                       ▼ (Motor Controller PWM/DIR Signals)                │
-   ┌────────────────── DRIVE TRAIN & MOTORS ──────────────────────────────┐│
-   │                                                                      ││
-   │  Dual-Channel 15A Smart DC Motor Driver ◄────────────────────────────┘│
-   │       │                     │                                         │
-   │       ▼                     ▼                                         │
-   │  [Left 250W Motor]     [Right 250W Motor]                             │
-   │       │                     │                                         │
-   │       ▼ (Drive Chains)      ▼ (Drive Chains)                          │
-   │  [Left Dog Clutch]     [Right Dog Clutch]                             │
-   │  (Flippable Levers)    (Flippable Levers)                             │
-   │       │                     │                                         │
-   │       ▼                     ▼                                         │
-   │  [Left Track]          [Right Track]                                  │
-   │                                                                       │
-   │  12V High-Force Latch Solenoid ◄── Relay Trigger ─────────────────────┘
-   └───────────────────────────────────────────────────────────────────────┘
-========================================================================================
-```
+![Add-On 1 Electromechanical Schematic & BLE Virtual Panel Blueprint](/open-biosphere/blueprints/ground-track-agv-stage-1-schematic.svg)
 
 ---
 

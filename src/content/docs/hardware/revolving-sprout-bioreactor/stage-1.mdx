@@ -53,46 +53,7 @@ The Stage 1 electromechanical pack motorizes the **Revolving Sprout Bioreactor D
 
 ### Add-On 1 Electromechanical Wiring & BLE Virtual Panel Blueprint
 
-```text
-========================================================================================
-ADD-ON 1 ELECTROMECHANICAL SCHEMATIC & BLE VIRTUAL PANEL BLUEPRINT
-Strict Two-Control Physical Standard (RFC-0005) with Ephemeral Flutter BLE Control
-========================================================================================
-
-   [24V DC 60W PSU] ──[Master DC Power Switch]──┬── (24V Power Bus)
-                                                └── (GND Return Bus)
-                                                          │
-   ┌──────────────── STRICT TWO-CONTROL JUNCTION BOX ──────────────────┐│
-   │                                                                   ││
-   │  [Master DC Power Switch]      ["Nuke & Pave" SD Reset Button]    ││
-   │   Inline Mechanical Cut         Recessed Tactile Switch (5s hold) ││
-   │                                                                   ││
-   │  [Micro-SD Card Slot Module]   [0.91" I2C Status OLED Display]    ││
-   │   Preloaded golden .bin         Displays [SPROUT-A1 | BLE READY]  ││
-   │                                                                   ││
-   │  [ESP32 BLE GATT Peripheral] ◄─── (Ephemeral Mobile Link) ───────┼│
-   └───────────────────┬───────────────────────────────────────────────┘│
-                       │                                                │
-                       ▼ (TMC Driver & Pump Relay Signals)              │
-   ┌────────────────── DRIVE TRAIN & PUMP ─────────────────────────────┐│
-   │                                                                   ││
-   │  24V DC 100 PSI Diaphragm Pump ◄── High-Current Relay ────────────┘│
-   │         │                                                          │
-   │         ▼ (Pressure Line)                                          │
-   │  [Dual 0.3mm Brass Mist Nozzles]                                   │
-   │                                                                    │
-   │  NEMA 17 Planetary Stepper Motor ◄── TMC2209 Silent Driver ────────┘
-   │         │
-   │         ▼ (Motor Output Shaft)
-   │     ┌───────┐
-   │     │ ░░░░░ │ Axial Sliding Dog Clutch
-   │     └───────┘ [PULL TO DISENGAGE MOTOR FOR MANUAL HAND CRANK]
-   │         │
-   │         ▼ (Drum Axle)
-   │   [Perforated Drum Cylinder]
-   └───────────────────────────────────────────────────────────────────┘
-========================================================================================
-```
+![Add-On 1 Electromechanical Wiring & BLE Virtual Panel Blueprint](/open-biosphere/blueprints/revolving-sprout-bioreactor-stage-1-schematic.svg)
 
 ---
 

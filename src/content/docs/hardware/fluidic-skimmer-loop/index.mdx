@@ -66,23 +66,21 @@ A builder can start with the **Base Machine ($180.00)**, run completely off-grid
 
 ### Step-by-Step Conversion Roadmap (Zero Waste Upgrade Path)
 
-```text
-Upgrade Path 1: Converting Base Machine to Add-On 1 (Semi-Autonomous)
-  ├── 1. Leave all Base Machine acrylic chassis, wedge wire, and auger screw completely intact.
-  ├── 2. Mount 24V brushless pump on lower flume bracket; plumb into existing 1.5" PVC bulkhead.
-  ├── 3. Bolt NEMA 23 motor bracket to auger chassis; slide spring-loaded slip-clutch over auger hex shaft.
-  ├── 4. Mount Two-Control IP67 box (Master DC Cut + SD Reset + Micro-SD) and pair Flutter BLE Virtual Panel.
-  └── Result: Full electromechanical push-button operation; manual crank remains functional via slip-clutch.
+#### Upgrade Path 1: Converting Base Machine to Add-On 1 (Semi-Autonomous)
+1. Leave all Base Machine acrylic chassis, wedge wire, and auger screw completely intact.
+2. Mount 24V brushless pump on lower flume bracket; plumb into existing 1.5" PVC bulkhead.
+3. Bolt NEMA 23 motor bracket to auger chassis; slide spring-loaded slip-clutch over auger hex shaft.
+4. Mount Two-Control IP67 box (Master DC Cut + SD Reset + Micro-SD) and pair Flutter BLE Virtual Panel.
+5. **Result**: Full electromechanical push-button operation; manual crank remains functional via slip-clutch.
 
-Upgrade Path 2: Converting Add-On 1 to Add-On 2 (Agentic CNT)
-  ├── 1. Leave all Add-On 1 pumps, motor drives, slip-clutch, and manual override panel in place.
-  ├── 2. Unpin the manual counterweight link from the weir gate arm; bolt 12V micro linear actuator in its place.
-  ├── 3. Mount overhead 2020 camera strut at Z=1,400mm; install Sony IMX219 NIR camera module for Central Controller stream.
-  ├── 4. Install JSN-SR04T ultrasonic level sensor and optical float switch inside the sump with DEV_SUMP_LEVEL tool.
-  ├── 5. Mount Skimmer Node (ESP32-S3 + OLED + Two-Control Standard); bind modular Tools via Flutter BLE Virtual Panel.
-  ├── 6. Commission Skimmer Node with Target Controller ID via Flutter BLE Virtual Panel; bind DEV_WEIR_ACT, DEV_AUGER_STEP, DEV_PUMP_VFD, DEV_SUMP_LEVEL.
-  └── Result: Fully autonomous closed-loop CNT AI operation with 100% preserved manual & push-button fallback.
-```
+#### Upgrade Path 2: Converting Add-On 1 to Add-On 2 (Agentic CNT)
+1. Leave all Add-On 1 pumps, motor drives, slip-clutch, and manual override panel in place.
+2. Unpin the manual counterweight link from the weir gate arm; bolt 12V micro linear actuator in its place.
+3. Mount overhead 2020 camera strut at $Z=1,400$ mm; install Sony IMX219 NIR camera module for Central Controller stream.
+4. Install JSN-SR04T ultrasonic level sensor and optical float switch inside the sump with `DEV_SUMP_LEVEL` tool.
+5. Mount Skimmer Node (ESP32-S3 + OLED + Two-Control Standard); bind modular Tools via Flutter BLE Virtual Panel.
+6. Commission Skimmer Node with Target Controller ID via Flutter BLE Virtual Panel; bind `DEV_WEIR_ACT`, `DEV_AUGER_STEP`, `DEV_PUMP_VFD`, `DEV_SUMP_LEVEL`.
+7. **Result**: Fully autonomous closed-loop CNT AI operation with 100% preserved manual & push-button fallback.
 
 ---
 

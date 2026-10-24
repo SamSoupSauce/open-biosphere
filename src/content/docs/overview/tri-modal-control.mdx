@@ -11,20 +11,7 @@ Conversely, hardwiring physical button panels, rotary dials, and analog potentio
 
 The **Open Biosphere Tri-Modal Control Standard** (enforcing [RFC-0004](/rfcs/rfc-0004-controller-node-tool) and [RFC-0005](/rfcs/rfc-0005-hardware-interlocks-ble-virtual-panel)) mandates that every machine in the ecosystem must be operable across three distinct, parallel tiers of control:
 
-```
-┌────────────────────────────────────────────────────────────────────────┐
-│                        TRI-MODAL CONTROL SPECTRUM                      │
-├───────────────────────┬────────────────────────┬───────────────────────┤
-│    TIER 1: MANUAL     │  TIER 2: BLE VIRTUAL   │     TIER 3: AI        │
-│  Zero-Electricity     │  Two-Control Hardware  │   Autonomous Edge     │
-├───────────────────────┼────────────────────────┼───────────────────────┤
-│ • Hand levers         │ • Inline DC Power Cut  │ • Central Pi 5 + NPU  │
-│ • Rotary hand cranks  │ • SD "Nuke & Pave" Btn │ • Closed-loop CNT     │
-│ • Ball / gate valves  │ • Flutter BLE Panel    │ • Multi-agent mesh    │
-│ • Mechanical ratchets │ • Virtual jog pads     │ • 250ms deadman timer │
-│ • Gravity / siphons   │ • Ephemeral override   │ • Continuous ML audit │
-└───────────────────────┴────────────────────────┴───────────────────────┘
-```
+![Tri-Modal Control Spectrum Standard](/open-biosphere/blueprints/tri-modal-control-spectrum.svg)
 
 ---
 

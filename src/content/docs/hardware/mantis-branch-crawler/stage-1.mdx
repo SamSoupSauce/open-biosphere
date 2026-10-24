@@ -52,44 +52,7 @@ The Stage 1 electromechanical pack motorizes the **Mantis Branch-Crawler Robot**
 
 ### Add-On 1 Electromechanical Wiring & BLE Virtual Panel Blueprint
 
-```text
-========================================================================================
-ADD-ON 1 ELECTROMECHANICAL SCHEMATIC & BLE VIRTUAL PANEL BLUEPRINT
-Strict Two-Control Physical Standard (RFC-0005) with Ephemeral Flutter BLE Control
-========================================================================================
-
-  [18V/20V Tool Battery] ──[Master DC Power Switch]──┬── (18V Power Bus)
-                                                     └── (GND Return Bus)
-                                                               │
-   ┌──────────────── STRICT TWO-CONTROL CHASSIS BOX ───────────────────┐│
-   │                                                                   ││
-   │  [Master DC Power Switch]      ["Nuke & Pave" SD Reset Button]    ││
-   │   Inline Mechanical Cut         Recessed Tactile Switch (5s hold) ││
-   │                                                                   ││
-   │  [Micro-SD Card Slot Module]   [0.91" I2C Status OLED Display]    ││
-   │   Preloaded golden .bin         Displays [MANTIS-A1 | BLE READY]  ││
-   │                                                                   ││
-   │  [ESP32 BLE GATT Peripheral] ◄─── (Ephemeral Mobile Link) ───────┼│
-   └───────────────────┬───────────────────────────────────────────────┘│
-                       │                                                │
-                       ▼ (TMC Driver & MOSFET Signals)                  │
-   ┌────────────────── DRIVE TRAIN & ACTUATORS ────────────────────────┐│
-   │                                                                   ││
-   │  Dual NEMA 14 Pancake Steppers ◄── Dual TMC2208 Drivers ──────────┘│
-   │         │                                                          │
-   │         ▼ (Pinion Gears)                                           │
-   │     ┌───────┐                                                      │
-   │     │ ░░░░░ │ Quick-Release Spring Cam Disengage Mechanism         │
-   │     └───────┘ [SWING CAM OUT TO ROLL BY HAND WITHOUT MOTOR DRAG]   │
-   │         │                                                          │
-   │         ▼ (Roller Shafts)                                          │
-   │   [Silicone Pinch Rollers]                                         │
-   │                                                                    │
-   │  12V Coreless Micro-Shear ◄── Logic-Level MOSFET Trigger ──────────┘
-   │  24V 5015 Vacuum Blower   ◄── High-Current Relay ──────────────────┘
-   └───────────────────────────────────────────────────────────────────┘
-========================================================================================
-```
+![Add-On 1 Electromechanical Schematic & BLE Virtual Panel Blueprint](/open-biosphere/blueprints/mantis-branch-crawler-stage-1-schematic.svg)
 
 ---
 

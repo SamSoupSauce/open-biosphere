@@ -106,57 +106,7 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Base Machine Blueprint & Elevation Profile
 
-```text
-========================================================================================
-BASE MACHINE MECHANICAL ELEVATION & KINEMATICS BLUEPRINT (ZERO-POWER BASELINE)
-All dimensions in millimeters [mm] | Datum Z=0.00 at South Coping Surface
-========================================================================================
-
-                 [Adjustable Counterweight: 1.2 kg]
-                                  │
-                                 ┌┴┐
-             [Hand Lever] ═══════╡ ╞══════════════════════════════════╗ (Counterweight Arm)
-                                 └┬┘                                  ║
-                                  │ Pivot Pin (Delrin, Ø12mm)         ║ Linkage Rod
-                                                                      ▼
- WATER SURFACE ────────────────────────────────────────┐          ┌───────┐
- ~~~~~~~~~~~~~ [Surface Duckweed Mat: 4-12mm] ~~~~~~~~ │  Flow    │Floating│ [Weir Gate Lip]
-                                                       ▼ ───────► │ Weir  │ (Travel: 0-25mm)
-   ┌──────────────────────────────────────────────────────────────┴───────┴──────┐
-   │ INLET FLUME (Food-Grade Acrylic/HDPE, Width: 600mm, Length: 400mm)         │
-   │                                                                             │
-   │     Duckweed + Water Inflow                                                 │
-   │     ═══════════════════════════════════════╗                                │
-   │                                            ▼                                │
-   │                             ┌───────────────────────────────┐               │
-   │                             │  316L Stainless Wedge-Wire   │               │
-   │                             │  Screen (150µm Slot Width,   │               │
-   │                             │   Declination: 38° Angle)    │               │
-   │                             └──────────────┬────────────────┘               │
-   │                                            │ Separated Fronds               │
-   │    Clarified Filtrate Return               ▼                                │
-   │    ┌─────────────────────────── [Auger Dewatering Chamber] ────────────────┐│
-   │    │                                                                       ││
-   │    │  [Removable Crank]         PETG Continuous Screw Flight               ││
-   │    │      ┌───┐             ┌───┬───┬───┬───┬───┬───┬───┐    Discharge Chute│
-   │    │  (C) │   ╞═════════════╡ / │ / │ / │ / │ / │ / │ / ╞═══► [Protein     ││
-   │    │      └───┘             └───┴───┴───┴───┴───┴───┴───┘     Paste Out]   ││
-   │    │  1/2" Hex Socket        Perforated Stainless Sleeve                   ││
-   │    └───────────────────────────────────────┬───────────────────────────────┘│
-   │                                            │ Expressed Liquid               │
-   │                                            ▼                                │
-   │  GRAVITY RETENTION SUMP                                                     │
-   │  ┌────────────────────────────────────────────────────────────────────────┐ │
-   │  │ K1 Micro Biomedia Chamber (10 Liters Moving Bed)                      │ │
-   │  └────────────────────────────────────┬───────────────────────────────────┘ │
-   └───────────────────────────────────────┼─────────────────────────────────────┘
-                                           ▼
-                       3-Way Manual L-Port PVC Ball Valve (Ø1.5")
-                                   ┌───────┴───────┐
-                      [Position A] │               │ [Position B]
-                     Gravity Sump  ▼               ▼ Direct Pond/Basin Return
-========================================================================================
-```
+![Base Machine Mechanical Elevation & Kinematics Blueprint](/open-biosphere/blueprints/fluidic-skimmer-elevation-kinematics.svg)
 
 ### Base Kinematics & Gravity Flow
 

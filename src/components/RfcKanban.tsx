@@ -114,6 +114,16 @@ const RFC_LIST: RFCItem[] = [
     summary: 'Mandates 1:1 blueprint-to-step pairing across all machine stage assembly procedures with persistent viewing perspective, spatial datum anchoring, and layer-by-layer reverse inspection.',
     docSlug: '/rfcs/rfc-0010-stepwise-reverse-deconstructed-blueprints',
   },
+  {
+    id: 'RFC-0011',
+    title: 'Universal Vector SVG Blueprint Standard & Code Block Elimination',
+    author: 'Documentation Systems & Physical CAD Engineering Team',
+    targetType: 'Documentation',
+    status: 'Implemented',
+    date: '2026-10-24',
+    summary: 'Eliminates all raw ASCII blueprint diagrams from markdown code blocks in favor of high-contrast, scalable, responsive vector SVG schematics and elevations.',
+    docSlug: '/rfcs/rfc-0011-vector-blueprint-standard',
+  },
 ];
 
 export default function RfcKanban() {

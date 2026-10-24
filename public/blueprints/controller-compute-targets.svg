@@ -1,0 +1,133 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0f1d"/>
+      <stop offset="100%" stop-color="#030712"/>
+    </linearGradient>
+    <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
+      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#1e293b" stroke-width="0.75" opacity="0.6"/>
+    </pattern>
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8" />
+    </marker>
+    <marker id="arrowAmber" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#f59e0b" />
+    </marker>
+    <marker id="arrowEmerald" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#10b981" />
+    </marker>
+    <marker id="arrowPurple" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#a855f7" />
+    </marker>
+    <marker id="arrowRed" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#ef4444" />
+    </marker>
+  </defs>
+
+  <!-- Background &amp; Engineering Grid -->
+  <rect width="960" height="540" fill="url(#bgGrad)"/>
+  <rect width="960" height="540" fill="url(#grid)"/>
+
+  <!-- Outer Frame -->
+  <rect x="20" y="20" width="920" height="500" fill="none" stroke="#334155" stroke-width="1.5"/>
+  <rect x="25" y="25" width="910" height="490" fill="none" stroke="#1e293b" stroke-width="1"/>
+
+  <!-- Header Block -->
+  <path d="M 25 25 L 935 25 L 935 85 L 25 85 Z" fill="#0f172a" opacity="0.9"/>
+  <line x1="25" y1="85" x2="935" y2="85" stroke="#38bdf8" stroke-width="2"/>
+  
+  <text x="45" y="52" font-family="monospace" font-size="12" font-weight="bold" fill="#38bdf8" letter-spacing="2">OPEN BIOSPHERE // TECHNICAL VECTOR SPECIFICATION</text>
+  <text x="45" y="74" font-family="sans-serif" font-size="16" font-weight="700" fill="#f8fafc">Agnostic Controller Runtime Compute Targets</text>
+  
+  <rect x="690" y="42" width="245" height="28" rx="4" fill="#1e293b" stroke="#38bdf8" stroke-width="1"/>
+  <text x="813" y="61" font-family="monospace" font-size="11" font-weight="bold" fill="#38bdf8" text-anchor="middle">RFC-0006 // COMPUTE MATRIX</text>
+
+  <!-- Content Graphic -->
+  <g id="drawing-content">
+
+    <!-- 4 Tiers of Compute Targets -->
+    <!-- Tier 1 -->
+    <g transform="translate(60, 115)">
+      <rect x="0" y="0" width="195" height="230" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="1.5"/>
+      <text x="15" y="28" font-family="monospace" font-size="11" font-weight="bold" fill="#38bdf8">TIER 1: ARM64 SBCs</text>
+      <text x="15" y="52" font-family="sans-serif" font-size="12" font-weight="bold" fill="#f8fafc">Raspberry Pi 4 / 5</text>
+      <text x="15" y="72" font-family="monospace" font-size="10" fill="#cbd5e1">Orange Pi 5 (RK3588)</text>
+      
+      <rect x="15" y="85" width="165" height="1" fill="#334155"/>
+      <text x="15" y="105" font-family="monospace" font-size="9" fill="#94a3b8">• Low power (5-15W)</text>
+      <text x="15" y="125" font-family="monospace" font-size="9" fill="#94a3b8">• Direct GPIO/CAN hats</text>
+      <text x="15" y="145" font-family="monospace" font-size="9" fill="#94a3b8">• Native Linux aarch64</text>
+      <text x="15" y="165" font-family="monospace" font-size="9" fill="#94a3b8">• 4-8 GB RAM typical</text>
+      
+      <rect x="15" y="185" width="165" height="30" rx="4" fill="#0f172a" stroke="#38bdf8" stroke-width="1"/>
+      <text x="97" y="204" font-family="monospace" font-size="10" fill="#38bdf8" text-anchor="middle">BEST FOR HOMESTEADS</text>
+    </g>
+
+    <!-- Tier 2 -->
+    <g transform="translate(280, 115)">
+      <rect x="0" y="0" width="195" height="230" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="1.5"/>
+      <text x="15" y="28" font-family="monospace" font-size="11" font-weight="bold" fill="#f59e0b">TIER 2: x86_64 MINI-PCs</text>
+      <text x="15" y="52" font-family="sans-serif" font-size="12" font-weight="bold" fill="#f8fafc">Intel N100 / N200</text>
+      <text x="15" y="72" font-family="monospace" font-size="10" fill="#cbd5e1">AMD Ryzen Embedded</text>
+      
+      <rect x="15" y="85" width="165" height="1" fill="#334155"/>
+      <text x="15" y="105" font-family="monospace" font-size="9" fill="#94a3b8">• 15-25W TDP</text>
+      <text x="15" y="125" font-family="monospace" font-size="9" fill="#94a3b8">• Dual 2.5GbE Ethernet</text>
+      <text x="15" y="145" font-family="monospace" font-size="9" fill="#94a3b8">• AVX2 / OpenVINO accel</text>
+      <text x="15" y="165" font-family="monospace" font-size="9" fill="#94a3b8">• M.2 NVMe storage</text>
+      
+      <rect x="15" y="185" width="165" height="30" rx="4" fill="#0f172a" stroke="#f59e0b" stroke-width="1"/>
+      <text x="97" y="204" font-family="monospace" font-size="10" fill="#f59e0b" text-anchor="middle">BEST PRICE/PERF</text>
+    </g>
+
+    <!-- Tier 3 -->
+    <g transform="translate(500, 115)">
+      <rect x="0" y="0" width="195" height="230" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="1.5"/>
+      <text x="15" y="28" font-family="monospace" font-size="11" font-weight="bold" fill="#10b981">TIER 3: LAPTOPS &amp; MAC</text>
+      <text x="15" y="52" font-family="sans-serif" font-size="12" font-weight="bold" fill="#f8fafc">Apple Silicon M1/M2/M3</text>
+      <text x="15" y="72" font-family="monospace" font-size="10" fill="#cbd5e1">Refurbished ThinkPads</text>
+      
+      <rect x="15" y="85" width="165" height="1" fill="#334155"/>
+      <text x="15" y="105" font-family="monospace" font-size="9" fill="#94a3b8">• Built-in battery UPS</text>
+      <text x="15" y="125" font-family="monospace" font-size="9" fill="#94a3b8">• Metal / Apple GPU NPU</text>
+      <text x="15" y="145" font-family="monospace" font-size="9" fill="#94a3b8">• Integrated keyboard/LCD</text>
+      <text x="15" y="165" font-family="monospace" font-size="9" fill="#94a3b8">• Zero extra hardware buy</text>
+      
+      <rect x="15" y="185" width="165" height="30" rx="4" fill="#0f172a" stroke="#10b981" stroke-width="1"/>
+      <text x="97" y="204" font-family="monospace" font-size="10" fill="#10b981" text-anchor="middle">FASTEST ONBOARDING</text>
+    </g>
+
+    <!-- Tier 4 -->
+    <g transform="translate(720, 115)">
+      <rect x="0" y="0" width="180" height="230" rx="8" fill="#1e293b" stroke="#a855f7" stroke-width="1.5"/>
+      <text x="15" y="28" font-family="monospace" font-size="11" font-weight="bold" fill="#c084fc">TIER 4: SERVERS</text>
+      <text x="15" y="52" font-family="sans-serif" font-size="12" font-weight="bold" fill="#f8fafc">Proxmox / KVM Nodes</text>
+      <text x="15" y="72" font-family="monospace" font-size="10" fill="#cbd5e1">Dedicated GPU Rigs</text>
+      
+      <rect x="15" y="85" width="150" height="1" fill="#334155"/>
+      <text x="15" y="105" font-family="monospace" font-size="9" fill="#94a3b8">• Multi-facility scale</text>
+      <text x="15" y="125" font-family="monospace" font-size="9" fill="#94a3b8">• Full 70B+ LLM models</text>
+      <text x="15" y="145" font-family="monospace" font-size="9" fill="#94a3b8">• Redundant arrays</text>
+      <text x="15" y="165" font-family="monospace" font-size="9" fill="#94a3b8">• PCIe passthrough</text>
+      
+      <rect x="15" y="185" width="150" height="30" rx="4" fill="#0f172a" stroke="#a855f7" stroke-width="1"/>
+      <text x="90" y="204" font-family="monospace" font-size="10" fill="#c084fc" text-anchor="middle">COMMERCIAL FARMS</text>
+    </g>
+
+    <!-- Bottom Spec Card -->
+    <g transform="translate(60, 365)">
+      <rect x="0" y="0" width="840" height="85" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+      <text x="20" y="26" font-family="monospace" font-size="11" font-weight="bold" fill="#38bdf8">RFC-0006 PORTABILITY INVARIANT</text>
+      <text x="20" y="46" font-family="sans-serif" font-size="11" fill="#cbd5e1">• Central Controller software (`biosphere-core`) is completely agnostic to host compute, distributing as Python / OCI container.</text>
+      <text x="20" y="66" font-family="sans-serif" font-size="11" fill="#cbd5e1">• Any computer running Linux or macOS capable of Python 3.10+ and Wi-Fi hostapd or local Ethernet functions as the Central Brain.</text>
+    </g>
+
+  </g>
+
+  <!-- Blueprint Title Block Footer -->
+  <path d="M 25 485 L 935 485 L 935 515 L 25 515 Z" fill="#0f172a" opacity="0.9"/>
+  <line x1="25" y1="485" x2="935" y2="485" stroke="#334155" stroke-width="1.5"/>
+
+  <text x="45" y="505" font-family="monospace" font-size="10" fill="#94a3b8">SUBTITLE: <tspan fill="#f8fafc">Supported Host Classes: ARM64 SBCs, x86 Mini-PCs, Laptops &amp; Servers</tspan></text>
+  <text x="690" y="505" font-family="monospace" font-size="10" fill="#94a3b8">STANDARD: <tspan fill="#38bdf8" font-weight="bold">RFC-0011 VECTOR SVG</tspan></text>
+</svg>

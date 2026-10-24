@@ -22,17 +22,7 @@ The Central Biosphere Controller is defined strictly as a **portable, hardware-a
 
 Previous design drafts referenced a dedicated Raspberry Pi 5 paired with a Hailo-8 M.2 HAT as a monolithic hardware requirement. Under **RFC-0006**, that combination is recategorized as merely one of many supported **Reference Hardware Profiles**. Open Biosphere installations must be deployable on off-lease corporate desktop workstations, ruggedized industrial mini-PCs, used laptops, or existing home servers, ensuring resilience against single-board computer supply shortages and minimizing capital expenditures.
 
-```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                   SUPPORTED CONTROLLER COMPUTE TARGETS                      │
-├───────────────────┬───────────────────┬───────────────────┬─────────────────┤
-│ Single-Board Comps│ Repurposed x86    │ Laptops / Tablets │ Workstations &  │
-│ (SBCs)            │ Thin Clients      │ (Field / Mobile)  │ Home Servers    │
-│ • Raspberry Pi 4/5│ • HP EliteDesk    │ • Lenovo ThinkPad │ • Proxmox / KVM │
-│ • Orange Pi 5     │ • Dell OptiPlex   │ • Apple Silicon   │ • Tower Servers │
-│ • Rockchip RK3588 │ • Intel NUC / Mini│   MacBook (M1-M4) │ • Custom Rig    │
-└───────────────────┴───────────────────┴───────────────────┴─────────────────┘
-```
+![Supported Controller Compute Targets](/open-biosphere/blueprints/controller-compute-targets.svg)
 
 ---
 
@@ -75,28 +65,7 @@ The Biosphere Controller hosts an **isolated, local-only private wireless networ
   TXT: cluster_id=4096, version=2.0.0, runtime=biosphere-core
   ```
 
-```text
-========================================================================================
-ISOLATED LOCAL NETWORK ENVELOPE (192.168.42.0/24)
-========================================================================================
-
-                 ┌────────────────────────────────────────────────────────┐
-                 │          CENTRAL CONTROLLER COMPUTING HOST             │
-                 │          Static IP: 192.168.42.1 | Port: 8443          │
-                 │          SSID: POTFRM-4096 (Hidden or Broadcast)       │
-                 └───────────────────────────┬────────────────────────────┘
-                                             │
-             ┌───────────────────────────────┼───────────────────────────────┐
-             │ DHCP: 192.168.42.10           │ DHCP: 192.168.42.25           │ DHCP: 192.168.42.50
-             ▼                               ▼                               ▼
-    ┌─────────────────┐             ┌─────────────────┐             ┌─────────────────┐
-    │  SKIMMER NODE   │             │   GANTRY NODE   │             │   DOSER NODE    │
-    │  ESP32-S3       │             │   ESP32-S3      │             │   ESP32-S3      │
-    └────────┬────────┘             └────────┬────────┘             └────────┬────────┘
-             │ BLE Tools                     │ BLE Tools                     │ BLE Tools
-             ▼                               ▼                               ▼
-      [Auger / Pump]                  [X / Y / Head]                  [Pumps / Gas]
-```
+![Isolated Farm Network Envelope Topology](/open-biosphere/blueprints/isolated-network-envelope.svg)
 
 ---
 
@@ -104,31 +73,7 @@ ISOLATED LOCAL NETWORK ENVELOPE (192.168.42.0/24)
 
 The Controller runtime is composed of three lightweight, decoupled daemon layers executed under asynchronous event orchestration:
 
-```
-┌────────────────────────────────────────────────────────────────────────┐
-│                        FLUTTER COMPANION APP                           │
-│          (Connects via Direct BLE or Local Wi-Fi 192.168.42.1)         │
-└───────────────────────────────────┬────────────────────────────────────┘
-                                    │ WebSocket / REST API (:8443)
-                                    ▼
-┌────────────────────────────────────────────────────────────────────────┐
-│                   CONTROLLER ORCHESTRATION DAEMON                      │
-│                        (Python 3.10+ AsyncIO)                          │
-│  • Node registry & state tree: /nodes/{node_id}/tools                  │
-│  • 250ms periodic heartbeat dispatcher                                 │
-│  • Autonomous harvest & replenishment event scheduler                  │
-│  • Local SQLite / TimescaleDB telemetry datalogging                    │
-└───────────────────┬────────────────────────────────┬───────────────────┘
-                    │ Local Loopback API             │ In-Memory IPC
-                    ▼                                ▼
-┌──────────────────────────────────────┐  ┌──────────────────────────────┐
-│       llama-cpp-python ENGINE        │  │    WIRELESS MESH GATEWAY     │
-│   (Quantized Local GGUF Models)      │  │    (hostapd / dnsmasq)       │
-│  • Vision-Language Multimodal Eval   │  │  • SSID: POTFRM-<CLUSTER_ID> │
-│  • Non-linear closed-loop decisions  │  │  • Static IP: 192.168.42.1   │
-│  • Zero-cloud privacy and offline    │  │  • DHCP lease table for Nodes│
-└──────────────────────────────────────┘  └──────────────────────────────┘
-```
+![Controller Software Stack & Orchestration Daemons](/open-biosphere/blueprints/controller-orchestration-layers.svg)
 
 ### 4.1 Wireless Mesh Gateway (`hostapd` / `dnsmasq` or NetworkManager)
 - Automatically establishes the `POTFRM-<CLUSTER_ID>` Wi-Fi access point upon host boot.

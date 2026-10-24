@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0f1d"/>
+      <stop offset="100%" stop-color="#030712"/>
+    </linearGradient>
+    <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
+      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#1e293b" stroke-width="0.75" opacity="0.6"/>
+    </pattern>
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8" />
+    </marker>
+    <marker id="arrowAmber" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#f59e0b" />
+    </marker>
+    <marker id="arrowEmerald" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#10b981" />
+    </marker>
+    <marker id="arrowPurple" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#a855f7" />
+    </marker>
+    <marker id="arrowRed" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#ef4444" />
+    </marker>
+  </defs>
+
+  <!-- Background &amp; Engineering Grid -->
+  <rect width="960" height="540" fill="url(#bgGrad)"/>
+  <rect width="960" height="540" fill="url(#grid)"/>
+
+  <!-- Outer Frame -->
+  <rect x="20" y="20" width="920" height="500" fill="none" stroke="#334155" stroke-width="1.5"/>
+  <rect x="25" y="25" width="910" height="490" fill="none" stroke="#1e293b" stroke-width="1"/>
+
+  <!-- Header Block -->
+  <path d="M 25 25 L 935 25 L 935 85 L 25 85 Z" fill="#0f172a" opacity="0.9"/>
+  <line x1="25" y1="85" x2="935" y2="85" stroke="#38bdf8" stroke-width="2"/>
+  
+  <text x="45" y="52" font-family="monospace" font-size="12" font-weight="bold" fill="#38bdf8" letter-spacing="2">OPEN BIOSPHERE // TECHNICAL VECTOR SPECIFICATION</text>
+  <text x="45" y="74" font-family="sans-serif" font-size="16" font-weight="700" fill="#f8fafc">Open Biosphere Architectural Philosophy</text>
+  
+  <rect x="690" y="42" width="245" height="28" rx="4" fill="#1e293b" stroke="#38bdf8" stroke-width="1"/>
+  <text x="813" y="61" font-family="monospace" font-size="11" font-weight="bold" fill="#38bdf8" text-anchor="middle">ECOSYSTEM ARCHITECTURE</text>
+
+  <!-- Content Graphic -->
+  <g id="drawing-content">
+
+    <!-- Umbrella Root -->
+    <g transform="translate(260, 105)">
+      <rect x="0" y="0" width="440" height="75" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+      <text x="220" y="32" font-family="monospace" font-size="13" font-weight="bold" fill="#38bdf8" text-anchor="middle">OPEN BIOSPHERE UMBRELLA</text>
+      <text x="220" y="54" font-family="sans-serif" font-size="12" fill="#cbd5e1" text-anchor="middle">Open-Source Specification &amp; Canonical Registry of Modular Machines</text>
+    </g>
+
+    <!-- Split Branches -->
+    <path d="M 400 180 L 400 215 L 240 215 L 240 250" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)"/>
+    <path d="M 560 180 L 560 215 L 720 215 L 720 250" stroke="#f59e0b" stroke-width="2" marker-end="url(#arrowAmber)"/>
+
+    <!-- Left Branch: Standalone -->
+    <g transform="translate(70, 255)">
+      <rect x="0" y="0" width="360" height="190" rx="8" fill="#0f172a" stroke="#38bdf8" stroke-width="2"/>
+      <text x="25" y="32" font-family="monospace" font-size="12" font-weight="bold" fill="#38bdf8">STANDALONE MACHINE USE</text>
+      <text x="25" y="52" font-family="sans-serif" font-size="11" font-weight="bold" fill="#94a3b8">Build 1 or 2 appliances for immediate utility:</text>
+      
+      <text x="25" y="80" font-family="sans-serif" font-size="12" fill="#f8fafc">• Kitchen / Cabin automated sprout drum</text>
+      <text x="25" y="105" font-family="sans-serif" font-size="12" fill="#f8fafc">• Pond duckweed harvesting skimmer</text>
+      <text x="25" y="130" font-family="sans-serif" font-size="12" fill="#f8fafc">• Greenhouse drone pollination &amp; spot weeding</text>
+      <text x="25" y="155" font-family="sans-serif" font-size="12" fill="#f8fafc">• Precision microclimate root nutrient doser</text>
+      <rect x="25" y="165" width="310" height="1" fill="#334155"/>
+    </g>
+
+    <!-- Right Branch: Master Assembly -->
+    <g transform="translate(530, 255)">
+      <rect x="0" y="0" width="360" height="190" rx="8" fill="#0f172a" stroke="#f59e0b" stroke-width="2"/>
+      <text x="25" y="32" font-family="monospace" font-size="12" font-weight="bold" fill="#f59e0b">MASTER BIOSPHERE ASSEMBLY</text>
+      <text x="25" y="52" font-family="sans-serif" font-size="11" font-weight="bold" fill="#94a3b8">Dock all machines into synchronized envelope:</text>
+      
+      <text x="25" y="80" font-family="sans-serif" font-size="12" fill="#f8fafc">• Standard ~20x10 ft retrofitted pool envelope</text>
+      <text x="25" y="105" font-family="sans-serif" font-size="12" fill="#f8fafc">• Unified Cartesian Spatial Datum (0,0,0)</text>
+      <text x="25" y="130" font-family="sans-serif" font-size="12" fill="#f8fafc">• Multi-agent Controller-Node-Tool closed loop</text>
+      <text x="25" y="155" font-family="sans-serif" font-size="12" fill="#f8fafc">• 100% Zero-Loss nutrient recycling &amp; harvest</text>
+      <rect x="25" y="165" width="310" height="1" fill="#334155"/>
+    </g>
+
+    <!-- Connecting Progressive Arrow -->
+    <path d="M 430 350 L 520 350" stroke="#10b981" stroke-width="3" stroke-dasharray="6 3" marker-end="url(#arrowEmerald)"/>
+    <text x="475" y="340" font-family="monospace" font-size="10" font-weight="bold" fill="#10b981" text-anchor="middle">Scales Into</text>
+
+  </g>
+
+  <!-- Blueprint Title Block Footer -->
+  <path d="M 25 485 L 935 485 L 935 515 L 25 515 Z" fill="#0f172a" opacity="0.9"/>
+  <line x1="25" y1="485" x2="935" y2="485" stroke="#334155" stroke-width="1.5"/>
+
+  <text x="45" y="505" font-family="monospace" font-size="10" fill="#94a3b8">SUBTITLE: <tspan fill="#f8fafc">Decoupled Standalone Appliances Scaling Into Master Assembly</tspan></text>
+  <text x="690" y="505" font-family="monospace" font-size="10" fill="#94a3b8">STANDARD: <tspan fill="#38bdf8" font-weight="bold">RFC-0011 VECTOR SVG</tspan></text>
+</svg>

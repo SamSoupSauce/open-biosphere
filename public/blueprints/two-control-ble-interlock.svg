@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0f1d"/>
+      <stop offset="100%" stop-color="#030712"/>
+    </linearGradient>
+    <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
+      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#1e293b" stroke-width="0.75" opacity="0.6"/>
+    </pattern>
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8" />
+    </marker>
+    <marker id="arrowAmber" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#f59e0b" />
+    </marker>
+    <marker id="arrowEmerald" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#10b981" />
+    </marker>
+    <marker id="arrowPurple" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#a855f7" />
+    </marker>
+    <marker id="arrowRed" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#ef4444" />
+    </marker>
+  </defs>
+
+  <!-- Background &amp; Engineering Grid -->
+  <rect width="960" height="540" fill="url(#bgGrad)"/>
+  <rect width="960" height="540" fill="url(#grid)"/>
+
+  <!-- Outer Frame -->
+  <rect x="20" y="20" width="920" height="500" fill="none" stroke="#334155" stroke-width="1.5"/>
+  <rect x="25" y="25" width="910" height="490" fill="none" stroke="#1e293b" stroke-width="1"/>
+
+  <!-- Header Block -->
+  <path d="M 25 25 L 935 25 L 935 85 L 25 85 Z" fill="#0f172a" opacity="0.9"/>
+  <line x1="25" y1="85" x2="935" y2="85" stroke="#f59e0b" stroke-width="2"/>
+  
+  <text x="45" y="52" font-family="monospace" font-size="12" font-weight="bold" fill="#f59e0b" letter-spacing="2">OPEN BIOSPHERE // TECHNICAL VECTOR SPECIFICATION</text>
+  <text x="45" y="74" font-family="sans-serif" font-size="16" font-weight="700" fill="#f8fafc">Strict Two-Control Standard &amp; BLE Virtual Panel</text>
+  
+  <rect x="690" y="42" width="245" height="28" rx="4" fill="#1e293b" stroke="#f59e0b" stroke-width="1"/>
+  <text x="813" y="61" font-family="monospace" font-size="11" font-weight="bold" fill="#f59e0b" text-anchor="middle">RFC-0005 // INTERLOCK PROTOCOL</text>
+
+  <!-- Content Graphic -->
+  <g id="drawing-content">
+
+    <!-- Operator Device -->
+    <g transform="translate(60, 115)">
+      <rect x="0" y="0" width="240" height="150" rx="8" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+      <text x="120" y="30" font-family="monospace" font-size="11" font-weight="bold" fill="#a78bfa" text-anchor="middle">OPERATOR MOBILE DEVICE</text>
+      <text x="120" y="55" font-family="sans-serif" font-size="12" font-weight="bold" fill="#f8fafc" text-anchor="middle">Flutter Companion App</text>
+      <text x="120" y="75" font-family="monospace" font-size="10" fill="#cbd5e1" text-anchor="middle">1. Walk-Up &amp; Scan BLE</text>
+      <text x="120" y="95" font-family="monospace" font-size="10" fill="#cbd5e1" text-anchor="middle">2. Pair with Machine Node</text>
+      <text x="120" y="115" font-family="monospace" font-size="10" fill="#cbd5e1" text-anchor="middle">3. Virtual Jogs &amp; Status</text>
+      <rect x="20" y="125" width="200" height="16" rx="3" fill="#8b5cf6" opacity="0.3"/>
+      <text x="120" y="137" font-family="monospace" font-size="9" fill="#e9d5ff" text-anchor="middle">ZERO Physical Potentiometers</text>
+      
+      <path d="M 240 190 L 330 190" stroke="#8b5cf6" stroke-width="2" stroke-dasharray="4 3" marker-end="url(#arrowPurple)"/>
+      <text x="285" y="180" font-family="monospace" font-size="9" fill="#a78bfa" text-anchor="middle">BLE 5.0</text>
+    </g>
+
+    <!-- Strict Two-Control Enclosure -->
+    <g transform="translate(350, 105)">
+      <rect x="0" y="0" width="550" height="230" rx="8" fill="#0f172a" stroke="#f59e0b" stroke-width="2"/>
+      <text x="25" y="28" font-family="monospace" font-size="12" font-weight="bold" fill="#f59e0b">RFC-0005 MANDATORY HARDWARE INTERLOCK ENCLOSURE</text>
+      
+      <!-- Control 1 -->
+      <g transform="translate(25, 45)">
+        <rect x="0" y="0" width="500" height="50" rx="5" fill="#1e293b" stroke="#ef4444" stroke-width="1.5"/>
+        <circle cx="30" cy="25" r="12" fill="#ef4444"/>
+        <text x="55" y="22" font-family="sans-serif" font-size="12" font-weight="bold" fill="#f8fafc">CONTROL 1: MASTER DC POWER CUT SWITCH</text>
+        <text x="55" y="38" font-family="monospace" font-size="10" fill="#94a3b8">True physical circuit break. Immediately drops all raw 24V/12V actuator rails.</text>
+      </g>
+
+      <!-- Control 2 -->
+      <g transform="translate(25, 105)">
+        <rect x="0" y="0" width="500" height="50" rx="5" fill="#1e293b" stroke="#3b82f6" stroke-width="1.5"/>
+        <circle cx="30" cy="25" r="12" fill="#3b82f6"/>
+        <text x="55" y="22" font-family="sans-serif" font-size="12" font-weight="bold" fill="#f8fafc">CONTROL 2: RECESSED "NUKE &amp; PAVE" SD RESET BUTTON</text>
+        <text x="55" y="38" font-family="monospace" font-size="10" fill="#94a3b8">Requires 5-second paperclip hold. Flashes pristine golden firmware from Micro-SD.</text>
+      </g>
+
+      <!-- Read-Only Displays -->
+      <g transform="translate(25, 165)">
+        <rect x="0" y="0" width="240" height="48" rx="4" fill="#020617" stroke="#38bdf8" stroke-width="1"/>
+        <text x="15" y="20" font-family="monospace" font-size="9" fill="#94a3b8">READ-ONLY OLED SCREEN:</text>
+        <text x="15" y="36" font-family="monospace" font-size="11" font-weight="bold" fill="#38bdf8">[NODE: AGV-01 | READY]</text>
+
+        <rect x="260" y="0" width="240" height="48" rx="4" fill="#020617" stroke="#10b981" stroke-width="1"/>
+        <text x="275" y="20" font-family="monospace" font-size="9" fill="#94a3b8">MICRO-SD CARD SLOT:</text>
+        <text x="275" y="36" font-family="monospace" font-size="11" font-weight="bold" fill="#10b981">golden-image.bin (Read-Only)</text>
+      </g>
+    </g>
+
+    <!-- Bottom Protocol Card -->
+    <g transform="translate(60, 360)">
+      <rect x="0" y="0" width="840" height="90" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+      <text x="20" y="26" font-family="monospace" font-size="11" font-weight="bold" fill="#38bdf8">PHYSICAL INTERLOCK INVARIANTS</text>
+      <text x="20" y="46" font-family="sans-serif" font-size="11" fill="#cbd5e1">• Physical pushbuttons, toggle switches, or potentiometers are banned for manual jogging to prevent water corrosion and control fights.</text>
+      <text x="20" y="66" font-family="sans-serif" font-size="11" fill="#cbd5e1">• If a node firmware hangs or misbehaves, pressing Control 2 restores factory defaults without a laptop or JTAG debugger.</text>
+    </g>
+
+  </g>
+
+  <!-- Blueprint Title Block Footer -->
+  <path d="M 25 485 L 935 485 L 935 515 L 25 515 Z" fill="#0f172a" opacity="0.9"/>
+  <line x1="25" y1="485" x2="935" y2="485" stroke="#334155" stroke-width="1.5"/>
+
+  <text x="45" y="505" font-family="monospace" font-size="10" fill="#94a3b8">SUBTITLE: <tspan fill="#f8fafc">RFC-0005 Interlock Architecture &amp; Ephemeral Control Workflow</tspan></text>
+  <text x="690" y="505" font-family="monospace" font-size="10" fill="#94a3b8">STANDARD: <tspan fill="#f59e0b" font-weight="bold">RFC-0011 VECTOR SVG</tspan></text>
+</svg>

@@ -50,26 +50,7 @@ Every machine node and tool controller enclosure is restricted to exactly two ph
 
 Because each node and tool operates on an ESP32 (ESP32-S3 for Nodes, ESP32-C3 for Tools), the physical user interface lives dynamically inside the mobile Flutter companion app:
 
-```text
-[ Operator with Phone / Tablet ]
-│
-│  1. Walk up & BLE Pair
-▼
-┌──────────────────────────────────────────────┐
-│       FLUTTER APP: "VIRTUAL PANEL"           │
-│  • Reads Tool/Node Manifest via BLE GATT     │
-│  • Displays dynamic controls for that unit:  │
-│      - Forward / Reverse jog touch pads      │
-│      - Speed / Flow touch sliders            │
-│      - Target Controller ID input field      │
-│      - Live sensor telemetry gauges & graphs │
-└──────────────────────────────────────────────┘
-│
-│  2. Execute configuration, calibration, or jog
-│  3. Disconnect & Walk Away
-▼
-[ Node commits settings to NVS, resumes autonomous work ]
-```
+![Strict Two-Control Hardware & BLE Virtual Panel Interlock Architecture](/open-biosphere/blueprints/two-control-ble-interlock.svg)
 
 ### The Provisioning & Override Flow
 

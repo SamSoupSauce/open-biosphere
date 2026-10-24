@@ -1,0 +1,142 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0f1d"/>
+      <stop offset="100%" stop-color="#030712"/>
+    </linearGradient>
+    <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
+      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#1e293b" stroke-width="0.75" opacity="0.6"/>
+    </pattern>
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8" />
+    </marker>
+    <marker id="arrowAmber" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#f59e0b" />
+    </marker>
+    <marker id="arrowEmerald" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#10b981" />
+    </marker>
+    <marker id="arrowPurple" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#a855f7" />
+    </marker>
+    <marker id="arrowRed" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#ef4444" />
+    </marker>
+  </defs>
+
+  <!-- Background &amp; Engineering Grid -->
+  <rect width="960" height="540" fill="url(#bgGrad)"/>
+  <rect width="960" height="540" fill="url(#grid)"/>
+
+  <!-- Outer Frame -->
+  <rect x="20" y="20" width="920" height="500" fill="none" stroke="#334155" stroke-width="1.5"/>
+  <rect x="25" y="25" width="910" height="490" fill="none" stroke="#1e293b" stroke-width="1"/>
+
+  <!-- Header Block -->
+  <path d="M 25 25 L 935 25 L 935 85 L 25 85 Z" fill="#0f172a" opacity="0.9"/>
+  <line x1="25" y1="85" x2="935" y2="85" stroke="#38bdf8" stroke-width="2"/>
+  
+  <text x="45" y="52" font-family="monospace" font-size="12" font-weight="bold" fill="#38bdf8" letter-spacing="2">OPEN BIOSPHERE // TECHNICAL VECTOR SPECIFICATION</text>
+  <text x="45" y="74" font-family="sans-serif" font-size="16" font-weight="700" fill="#f8fafc">Fluidic Skimmer &amp; Dewatering Separator</text>
+  
+  <rect x="690" y="42" width="245" height="28" rx="4" fill="#1e293b" stroke="#38bdf8" stroke-width="1"/>
+  <text x="813" y="61" font-family="monospace" font-size="11" font-weight="bold" fill="#38bdf8" text-anchor="middle">STAGE 0 // PURE MECHANICAL</text>
+
+  <!-- Content Graphic -->
+  <g id="drawing-content">
+
+    <!-- Datum Baseline -->
+    <line x1="60" y1="210" x2="900" y2="210" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="6 3"/>
+    <text x="70" y="202" font-family="monospace" font-size="11" fill="#38bdf8">WATER SURFACE // COUPLING DATUM Z=0.00 (South Coping)</text>
+
+    <!-- Floating Lemna Mat -->
+    <rect x="60" y="210" width="340" height="12" fill="#10b981" opacity="0.35"/>
+    <text x="80" y="219" font-family="monospace" font-size="9" fill="#10b981">Lemna / Wolffia Biomass Mat (4-12mm)</text>
+
+    <!-- Counterweight & Hand Lever -->
+    <g transform="translate(180, 115)">
+      <rect x="0" y="0" width="110" height="35" rx="4" fill="#1e293b" stroke="#f59e0b" stroke-width="1.5"/>
+      <text x="55" y="22" font-family="sans-serif" font-size="11" font-weight="bold" fill="#f8fafc" text-anchor="middle">1.2 kg Counterweight</text>
+      
+      <line x1="55" y1="35" x2="55" y2="60" stroke="#f59e0b" stroke-width="3"/>
+      <circle cx="55" cy="60" r="7" fill="#f59e0b"/>
+      <text x="70" y="64" font-family="monospace" font-size="10" fill="#cbd5e1">Delrin Pivot Ø12mm</text>
+      
+      <!-- Hand Lever Arm -->
+      <line x1="-60" y1="60" x2="190" y2="60" stroke="#f8fafc" stroke-width="4"/>
+      <rect x="-80" y="52" width="20" height="16" rx="3" fill="#ef4444"/>
+      <text x="-70" y="64" font-family="monospace" font-size="9" fill="#ffffff" text-anchor="middle">LEVER</text>
+      
+      <!-- Linkage Rod Down to Weir Gate -->
+      <line x1="190" y1="60" x2="190" y2="95" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="4 2"/>
+      <polygon points="186,95 194,95 190,103" fill="#f59e0b"/>
+    </g>
+
+    <!-- Floating Weir Gate -->
+    <rect x="360" y="200" width="60" height="30" rx="3" fill="#0f172a" stroke="#f59e0b" stroke-width="2"/>
+    <text x="390" y="218" font-family="sans-serif" font-size="10" font-weight="bold" fill="#f59e0b" text-anchor="middle">Weir Lip</text>
+    <text x="390" y="242" font-family="monospace" font-size="9" fill="#94a3b8" text-anchor="middle">0-25mm Travel</text>
+
+    <!-- Flow Arrow into Flume -->
+    <path d="M 330 205 L 360 215" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="340" y="195" font-family="sans-serif" font-size="10" fill="#38bdf8">Inflow</text>
+
+    <!-- Acrylic Inlet Flume Enclosure -->
+    <rect x="420" y="200" width="480" height="270" rx="6" fill="#0f172a" stroke="#64748b" stroke-width="1.5"/>
+    <text x="435" y="222" font-family="monospace" font-size="11" font-weight="bold" fill="#cbd5e1">ACRYLIC INLET FLUME (600mm x 400mm)</text>
+
+    <!-- 316L Stainless Wedge-Wire Screen -->
+    <line x1="440" y1="235" x2="560" y2="305" stroke="#38bdf8" stroke-width="4"/>
+    <text x="510" y="255" font-family="sans-serif" font-size="10" font-weight="bold" fill="#38bdf8">316L Wedge-Wire</text>
+    <text x="510" y="270" font-family="monospace" font-size="9" fill="#94a3b8">150µm Slot, 38° Angle</text>
+
+    <!-- Concentrated Fronds Path -->
+    <path d="M 540 300 L 590 325" stroke="#10b981" stroke-width="2" marker-end="url(#arrowEmerald)"/>
+    <text x="570" y="315" font-family="monospace" font-size="9" fill="#10b981">Fronds</text>
+
+    <!-- Auger Dewatering Chamber -->
+    <rect x="580" y="310" width="300" height="65" rx="5" fill="#1e293b" stroke="#10b981" stroke-width="1.5"/>
+    <text x="595" y="328" font-family="monospace" font-size="11" font-weight="bold" fill="#10b981">AUGER DEWATERING BARREL</text>
+    
+    <!-- Screw Flight Lines -->
+    <line x1="620" y1="335" x2="620" y2="370" stroke="#38bdf8" stroke-width="3"/>
+    <line x1="645" y1="335" x2="645" y2="370" stroke="#38bdf8" stroke-width="3"/>
+    <line x1="670" y1="335" x2="670" y2="370" stroke="#38bdf8" stroke-width="3"/>
+    <line x1="695" y1="335" x2="695" y2="370" stroke="#38bdf8" stroke-width="3"/>
+    <line x1="720" y1="335" x2="720" y2="370" stroke="#38bdf8" stroke-width="3"/>
+    <line x1="745" y1="335" x2="745" y2="370" stroke="#38bdf8" stroke-width="3"/>
+    <text x="680" y="358" font-family="sans-serif" font-size="10" fill="#f8fafc">PETG Continuous Screw</text>
+
+    <!-- Hand Crank / Socket -->
+    <rect x="535" y="332" width="40" height="20" rx="3" fill="#334155" stroke="#f8fafc" stroke-width="1"/>
+    <text x="555" y="346" font-family="monospace" font-size="9" fill="#f8fafc" text-anchor="middle">1/2" HEX</text>
+
+    <!-- Discharge Chute -->
+    <rect x="790" y="325" width="80" height="35" rx="3" fill="#10b981" opacity="0.25" stroke="#10b981" stroke-width="1"/>
+    <text x="830" y="346" font-family="sans-serif" font-size="10" font-weight="bold" fill="#10b981" text-anchor="middle">Paste Out</text>
+
+    <!-- Gravity Sump & MBBR Biofilter -->
+    <rect x="440" y="385" width="340" height="70" rx="5" fill="#020617" stroke="#3b82f6" stroke-width="1.5"/>
+    <text x="455" y="405" font-family="monospace" font-size="11" font-weight="bold" fill="#3b82f6">K1 MICRO BIOMEDIA RETENTION SUMP (10 Liters Moving Bed)</text>
+    <text x="455" y="425" font-family="sans-serif" font-size="10" fill="#cbd5e1">Clarified Filtrate Trickles Downward Through 150µm Slots</text>
+
+    <!-- 3-Way Valve -->
+    <g transform="translate(800, 395)">
+      <circle cx="40" cy="25" r="22" fill="#1e293b" stroke="#f59e0b" stroke-width="2"/>
+      <text x="40" y="22" font-family="monospace" font-size="9" font-weight="bold" fill="#f59e0b" text-anchor="middle">3-WAY</text>
+      <text x="40" y="33" font-family="monospace" font-size="8" fill="#cbd5e1" text-anchor="middle">VALVE</text>
+      
+      <!-- Paths -->
+      <line x1="40" y1="47" x2="40" y2="65" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)"/>
+      <text x="40" y="78" font-family="monospace" font-size="8" fill="#38bdf8" text-anchor="middle">Drain / Basin</text>
+    </g>
+
+  </g>
+
+  <!-- Blueprint Title Block Footer -->
+  <path d="M 25 485 L 935 485 L 935 515 L 25 515 Z" fill="#0f172a" opacity="0.9"/>
+  <line x1="25" y1="485" x2="935" y2="485" stroke="#334155" stroke-width="1.5"/>
+
+  <text x="45" y="505" font-family="monospace" font-size="10" fill="#94a3b8">SUBTITLE: <tspan fill="#f8fafc">Zero-Power Mechanical Elevation &amp; Kinematics Datum</tspan></text>
+  <text x="690" y="505" font-family="monospace" font-size="10" fill="#94a3b8">STANDARD: <tspan fill="#38bdf8" font-weight="bold">RFC-0011 VECTOR SVG</tspan></text>
+</svg>

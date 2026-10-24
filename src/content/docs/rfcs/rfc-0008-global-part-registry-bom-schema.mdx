@@ -25,18 +25,7 @@ Prior to RFC-0008, components and raw stock materials were documented in isolate
 
 **RFC-0008** establishes a centralized **Global Part Registry (`parts/`)** anchored by a canonical machine-readable database ([`src/data/parts.json`](/open-biosphere/parts/catalog/)), standardized part pages categorized by subsystem, public CAD/drawing asset storage, and bidirectional cross-machine dependency mapping.
 
-```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                       GLOBAL PART REGISTRY PIPELINE                         │
-├─────────────────────┬─────────────────────┬─────────────────────────────────┤
-│ Canonical Database  │ Dedicated Doc Pages │ Machine Stage Linking           │
-│ src/data/parts.json │ src/content/docs/   │ hardware/<machine>/stage-X.mdx  │
-│                     │   parts/<category>/ │ • Links part name to registry   │
-│ • Schema validation │     <part_id>.mdx   │ • Surfaces part_id & supplier   │
-│ • Sourcing & CAD    │ • Reverse lookups   │ • Direct CAD asset downloads    │
-│ • Shared quantities │ • Procurement table │ • Stage & cumulative totals     │
-└─────────────────────┴─────────────────────┴─────────────────────────────────┘
-```
+![Global Part Registry Pipeline & Architecture](/open-biosphere/blueprints/part-registry-pipeline.svg)
 
 ---
 

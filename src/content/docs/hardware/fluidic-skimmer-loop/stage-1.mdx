@@ -44,46 +44,7 @@ The Stage 1 electromechanical pack motorizes the **Fluidic Skimmer & Dewatering 
 
 ### Add-On 1 Electromechanical Wiring & BLE Virtual Panel Blueprint
 
-```text
-========================================================================================
-ADD-ON 1 ELECTROMECHANICAL SCHEMATIC & BLE VIRTUAL PANEL BLUEPRINT
-Strict Two-Control Physical Standard (RFC-0005) with Ephemeral Flutter BLE Control
-========================================================================================
-
-    [24V DC 150W MeanWell PSU] ──[Heavy-Duty DC Power Switch]──┬── (24V Power Bus)
-                                                               └── (GND Return Bus)
-                                                                         │
-   ┌──────────────── STRICT TWO-CONTROL JUNCTION BOX ──────────────────┐│
-   │                                                                   ││
-   │  [Master DC Power Switch]      ["Nuke & Pave" SD Reset Button]    ││
-   │   Inline Mechanical Cut         Recessed Tactile Switch (5s hold) ││
-   │                                                                   ││
-   │  [Micro-SD Card Slot Module]   [0.91" I2C Status OLED Display]    ││
-   │   Preloaded golden .bin         Displays [SKIMMER-A1 | BLE READY] ││
-   │                                                                   ││
-   │  [ESP32 BLE GATT Peripheral] ◄─── (Ephemeral Mobile Link) ───────┼│
-   └───────────────────┬───────────────────────────────────────────────┘│
-                       │                                                │
-                       ▼ (Driver STEP/DIR & Relay Triggers)             │
-   ┌────────────────── DRIVE TRAIN & MOTORS ───────────────────────────┐│
-   │                                                                   ││
-   │  24V DC Brushless Magnetic Pump (55 GPM) ◄── High-Current Relay ──┘│
-   │                                                                    │
-   │  NEMA 23 Geared Stepper Motor ◄── TB6600 Stepper Driver ───────────┘
-   │         │
-   │         ▼ (Motor Output Shaft)
-   │     ┌───────┐
-   │     │ ░░░░░ │ Friction Spring Slip-Clutch (Torque Limit: 4.8 N·m)
-   │     └───────┘ [SLIPS ON MANUAL CRANK OR OVERTORQUE]
-   │         │
-   │         ▼ (Auger Drive Shaft)
-   │    ═════╪══════════════════════════════════════════════════╗
-   │         │                                                  ║
-   │   [Auger Screw Press]                                [1/2" Hex Socket]
-   │   (Motor driven OR hand cranked simultaneously)       (Hand Crank Ready)
-   └────────────────────────────────────────────────────────────────────┘
-========================================================================================
-```
+![Add-On 1 Electromechanical Wiring & BLE Virtual Panel Blueprint](/open-biosphere/blueprints/fluidic-skimmer-loop-stage-1-schematic.svg)
 
 ---
 

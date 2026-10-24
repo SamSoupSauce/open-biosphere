@@ -1,0 +1,137 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0f1d"/>
+      <stop offset="100%" stop-color="#030712"/>
+    </linearGradient>
+    <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
+      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#1e293b" stroke-width="0.75" opacity="0.6"/>
+    </pattern>
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8" />
+    </marker>
+    <marker id="arrowAmber" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#f59e0b" />
+    </marker>
+    <marker id="arrowEmerald" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#10b981" />
+    </marker>
+    <marker id="arrowPurple" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#a855f7" />
+    </marker>
+    <marker id="arrowRed" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#ef4444" />
+    </marker>
+  </defs>
+
+  <!-- Background &amp; Engineering Grid -->
+  <rect width="960" height="540" fill="url(#bgGrad)"/>
+  <rect width="960" height="540" fill="url(#grid)"/>
+
+  <!-- Outer Frame -->
+  <rect x="20" y="20" width="920" height="500" fill="none" stroke="#334155" stroke-width="1.5"/>
+  <rect x="25" y="25" width="910" height="490" fill="none" stroke="#1e293b" stroke-width="1"/>
+
+  <!-- Header Block -->
+  <path d="M 25 25 L 935 25 L 935 85 L 25 85 Z" fill="#0f172a" opacity="0.9"/>
+  <line x1="25" y1="85" x2="935" y2="85" stroke="#10b981" stroke-width="2"/>
+  
+  <text x="45" y="52" font-family="monospace" font-size="12" font-weight="bold" fill="#10b981" letter-spacing="2">OPEN BIOSPHERE // TECHNICAL VECTOR SPECIFICATION</text>
+  <text x="45" y="74" font-family="sans-serif" font-size="16" font-weight="700" fill="#f8fafc">Multi-Machine Flow &amp; Data Topology</text>
+  
+  <rect x="690" y="42" width="245" height="28" rx="4" fill="#1e293b" stroke="#10b981" stroke-width="1"/>
+  <text x="813" y="61" font-family="monospace" font-size="11" font-weight="bold" fill="#10b981" text-anchor="middle">SYSTEM INTERCONNECT</text>
+
+  <!-- Content Graphic -->
+  <g id="drawing-content">
+
+    <!-- Skimmer -->
+    <g transform="translate(60, 115)">
+      <rect x="0" y="0" width="200" height="85" rx="6" fill="#1e293b" stroke="#38bdf8" stroke-width="1.5"/>
+      <text x="100" y="32" font-family="sans-serif" font-size="12" font-weight="bold" fill="#f8fafc" text-anchor="middle">Fluidic Skimmer Loop</text>
+      <text x="100" y="52" font-family="monospace" font-size="10" fill="#38bdf8" text-anchor="middle">Duckweed Dewatering</text>
+      <text x="100" y="70" font-family="monospace" font-size="9" fill="#94a3b8" text-anchor="middle">Continuous Solids Cut</text>
+    </g>
+
+    <!-- AGV -->
+    <g transform="translate(380, 115)">
+      <rect x="0" y="0" width="200" height="85" rx="6" fill="#1e293b" stroke="#f59e0b" stroke-width="1.5"/>
+      <text x="100" y="32" font-family="sans-serif" font-size="12" font-weight="bold" fill="#f8fafc" text-anchor="middle">Ground Track AGV</text>
+      <text x="100" y="52" font-family="monospace" font-size="10" fill="#f59e0b" text-anchor="middle">Canister &amp; Payload Shuttle</text>
+      <text x="100" y="70" font-family="monospace" font-size="9" fill="#94a3b8" text-anchor="middle">Magnetic Floor Transit</text>
+    </g>
+
+    <!-- Sprout Bioreactor -->
+    <g transform="translate(700, 115)">
+      <rect x="0" y="0" width="200" height="85" rx="6" fill="#1e293b" stroke="#10b981" stroke-width="1.5"/>
+      <text x="100" y="32" font-family="sans-serif" font-size="12" font-weight="bold" fill="#f8fafc" text-anchor="middle">Sprout Bioreactor</text>
+      <text x="100" y="52" font-family="monospace" font-size="10" fill="#10b981" text-anchor="middle">Revolving Germination</text>
+      <text x="100" y="70" font-family="monospace" font-size="9" fill="#94a3b8" text-anchor="middle">High-Protein Microgreens</text>
+    </g>
+
+    <!-- Flows across top -->
+    <path d="M 260 157 L 370 157" stroke="#10b981" stroke-width="2" marker-end="url(#arrowEmerald)"/>
+    <text x="315" y="148" font-family="monospace" font-size="9" fill="#10b981" text-anchor="middle">Dewatered Biomass</text>
+
+    <path d="M 580 157 L 690 157" stroke="#f59e0b" stroke-width="2" marker-end="url(#arrowAmber)"/>
+    <text x="635" y="148" font-family="monospace" font-size="9" fill="#f59e0b" text-anchor="middle">Canister Exchange</text>
+
+    <!-- Nutrient Doser -->
+    <g transform="translate(380, 260)">
+      <rect x="0" y="0" width="200" height="85" rx="6" fill="#1e293b" stroke="#38bdf8" stroke-width="1.5"/>
+      <text x="100" y="32" font-family="sans-serif" font-size="12" font-weight="bold" fill="#f8fafc" text-anchor="middle">Microclimate Dosing Array</text>
+      <text x="100" y="52" font-family="monospace" font-size="10" fill="#38bdf8" text-anchor="middle">pH / EC / Stock Solutions</text>
+      <text x="100" y="70" font-family="monospace" font-size="9" fill="#94a3b8" text-anchor="middle">Continuous Injection</text>
+    </g>
+
+    <!-- Central Basin / Manifold -->
+    <g transform="translate(60, 260)">
+      <rect x="0" y="0" width="200" height="85" rx="6" fill="#0f172a" stroke="#3b82f6" stroke-width="2"/>
+      <text x="100" y="32" font-family="sans-serif" font-size="12" font-weight="bold" fill="#f8fafc" text-anchor="middle">Nutrient Manifold &amp; Basin</text>
+      <text x="100" y="52" font-family="monospace" font-size="10" fill="#3b82f6" text-anchor="middle">6,000-Gal Closed Loop</text>
+      <text x="100" y="70" font-family="monospace" font-size="9" fill="#94a3b8" text-anchor="middle">Sub-Surface MBBR</text>
+    </g>
+
+    <!-- Central Brain -->
+    <g transform="translate(700, 260)">
+      <rect x="0" y="0" width="200" height="85" rx="6" fill="#1e293b" stroke="#a855f7" stroke-width="2"/>
+      <text x="100" y="32" font-family="sans-serif" font-size="12" font-weight="bold" fill="#f8fafc" text-anchor="middle">Central Controller</text>
+      <text x="100" y="52" font-family="monospace" font-size="10" fill="#c084fc" text-anchor="middle">Cluster ID: POTFRM-4096</text>
+      <text x="100" y="70" font-family="monospace" font-size="9" fill="#94a3b8" text-anchor="middle">Multi-Agent Orchestrator</text>
+    </g>
+
+    <!-- Links between rows -->
+    <path d="M 160 200 L 160 250" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="145" y="230" font-family="monospace" font-size="8" fill="#38bdf8" text-anchor="end">Clarified Filtrate</text>
+
+    <path d="M 380 302 L 270 302" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="325" y="295" font-family="monospace" font-size="9" fill="#38bdf8" text-anchor="middle">Stock Dosing</text>
+
+    <path d="M 580 302 L 690 302" stroke="#a855f7" stroke-width="2" stroke-dasharray="3 3" marker-end="url(#arrowPurple)"/>
+    <text x="635" y="295" font-family="monospace" font-size="9" fill="#c084fc" text-anchor="middle">Telemetry Uplink</text>
+
+    <!-- Bottom Row: Drone & Mantis -->
+    <g transform="translate(220, 395)">
+      <rect x="0" y="0" width="230" height="65" rx="6" fill="#1e293b" stroke="#10b981" stroke-width="1.5"/>
+      <text x="115" y="28" font-family="sans-serif" font-size="11" font-weight="bold" fill="#f8fafc" text-anchor="middle">Aerial Pollination Drone</text>
+      <text x="115" y="48" font-family="monospace" font-size="9" fill="#10b981" text-anchor="middle">Buzz Anthesis &amp; Canopy Mapping</text>
+    </g>
+
+    <g transform="translate(510, 395)">
+      <rect x="0" y="0" width="230" height="65" rx="6" fill="#1e293b" stroke="#f59e0b" stroke-width="1.5"/>
+      <text x="115" y="28" font-family="sans-serif" font-size="11" font-weight="bold" fill="#f8fafc" text-anchor="middle">Mantis Branch-Crawler</text>
+      <text x="115" y="48" font-family="monospace" font-size="9" fill="#f59e0b" text-anchor="middle">Wire Climber Trellis Harvest</text>
+    </g>
+
+    <path d="M 220 425 L 160 425 L 160 355" stroke="#10b981" stroke-width="1.5" stroke-dasharray="3 3" marker-end="url(#arrowEmerald)"/>
+    <path d="M 740 425 L 800 425 L 800 355" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="3 3" marker-end="url(#arrowAmber)"/>
+
+  </g>
+
+  <!-- Blueprint Title Block Footer -->
+  <path d="M 25 485 L 935 485 L 935 515 L 25 515 Z" fill="#0f172a" opacity="0.9"/>
+  <line x1="25" y1="485" x2="935" y2="485" stroke="#334155" stroke-width="1.5"/>
+
+  <text x="45" y="505" font-family="monospace" font-size="10" fill="#94a3b8">SUBTITLE: <tspan fill="#f8fafc">Cross-Machine Material Exchanges, Fluidic Recirculation &amp; Edge Sync</tspan></text>
+  <text x="690" y="505" font-family="monospace" font-size="10" fill="#94a3b8">STANDARD: <tspan fill="#10b981" font-weight="bold">RFC-0011 VECTOR SVG</tspan></text>
+</svg>

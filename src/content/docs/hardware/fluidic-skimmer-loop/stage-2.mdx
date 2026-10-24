@@ -44,47 +44,7 @@ The Stage 2 agentic pack elevates the **Fluidic Skimmer & Dewatering Separator**
 
 ### Add-On 2 Cyber-Physical Edge Architecture Blueprint
 
-```text
-========================================================================================
-ADD-ON 2 CONTROLLER-NODE-TOOL (CNT) HIERARCHICAL EDGE ARCHITECTURE BLUEPRINT
-Decoupled Neural Perception, Dual-Core Machine Node & 250ms Watchdog Edge Tools
-========================================================================================
-
-            CENTRAL BIOSPHERE CONTROLLER (Agnostic Runtime / POTFRM-4096)
-            • Emits Isolated Farm AP: SSID [POTFRM-4096] (192.168.42.0/24)
-            • Host Status Output: OLED / CLI / Beacon: [POTFRM-4096]
-            • YOLOv8 Canopy Biomass Vision & Global Biosphere Coordination
-                                       │
-                                       │ Isolated Farm Wi-Fi (192.168.42.0/24)
-                                       ▼
-     ┌─────────────────────── SKIMMER NODE (ESP32-S3) ────────────────────────┐
-     │  • Mini I2C OLED Status Display: [NODE: SKIMMER-01 | LINK -> 4096]       │
-     │  • Physical Setup Push-Button for Mobile Companion BLE Provisioning     │
-     │  • Wi-Fi Client Uplink to Controller | BLE Central Downlink to Tools    │
-     │  • Coordinates Local Harvesting Logic & Fail-Safe Watchdogs            │
-     └─────────────────────────────────┬──────────────────────────────────────┘
-                                       │
-            ┌──────────────────────────┼──────────────────────────┐
-            │ Low-Power BLE Downlink   │ Low-Power BLE Downlink   │
-            ▼                          ▼                          ▼
- ┌──────────────────────┐   ┌──────────────────────┐   ┌──────────────────────┐
- │  TOOL: DEV_WEIR_ACT  │   │ TOOL: DEV_AUGER_STEP │   │  TOOL: DEV_PUMP_VFD  │
- │  ESP32-C3 Edge Micro │   │ ESP32-C3 Edge Micro  │   │  ESP32-C3 Edge Micro │
- │  0.42" OLED Screen   │   │ 0.42" OLED Screen    │   │  0.42" OLED Screen   │
- │  250ms Deadman Timer │   │ 250ms Deadman Timer  │   │  250ms Deadman Timer │
- │  12V Linear Actuator │   │ NEMA 23 Auger Stepper│   │  Pump VFD Throttle   │
- └──────────────────────┘   └──────────────────────┘   └──────────────────────┘
-            │
-            ▼ (BLE Downlink)
- ┌──────────────────────┐
- │ TOOL: DEV_SUMP_LEVEL │
- │  ESP32-C3 Edge Micro │
- │  0.42" OLED Screen   │
- │  250ms Deadman Timer │
- │  Ultrasonic + Floats │
- └──────────────────────┘
-========================================================================================
-```
+![Add-On 2 Cyber-Physical Edge Architecture Blueprint](/open-biosphere/blueprints/fluidic-skimmer-loop-stage-2-architecture.svg)
 
 ---
 

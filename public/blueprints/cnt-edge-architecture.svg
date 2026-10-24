@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0f1d"/>
+      <stop offset="100%" stop-color="#030712"/>
+    </linearGradient>
+    <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
+      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#1e293b" stroke-width="0.75" opacity="0.6"/>
+    </pattern>
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8" />
+    </marker>
+    <marker id="arrowAmber" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#f59e0b" />
+    </marker>
+    <marker id="arrowEmerald" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#10b981" />
+    </marker>
+    <marker id="arrowPurple" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#a855f7" />
+    </marker>
+    <marker id="arrowRed" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#ef4444" />
+    </marker>
+  </defs>
+
+  <!-- Background &amp; Engineering Grid -->
+  <rect width="960" height="540" fill="url(#bgGrad)"/>
+  <rect width="960" height="540" fill="url(#grid)"/>
+
+  <!-- Outer Frame -->
+  <rect x="20" y="20" width="920" height="500" fill="none" stroke="#334155" stroke-width="1.5"/>
+  <rect x="25" y="25" width="910" height="490" fill="none" stroke="#1e293b" stroke-width="1"/>
+
+  <!-- Header Block -->
+  <path d="M 25 25 L 935 25 L 935 85 L 25 85 Z" fill="#0f172a" opacity="0.9"/>
+  <line x1="25" y1="85" x2="935" y2="85" stroke="#a855f7" stroke-width="2"/>
+  
+  <text x="45" y="52" font-family="monospace" font-size="12" font-weight="bold" fill="#a855f7" letter-spacing="2">OPEN BIOSPHERE // TECHNICAL VECTOR SPECIFICATION</text>
+  <text x="45" y="74" font-family="sans-serif" font-size="16" font-weight="700" fill="#f8fafc">Controller-Node-Tool (CNT) Edge Architecture</text>
+  
+  <rect x="690" y="42" width="245" height="28" rx="4" fill="#1e293b" stroke="#a855f7" stroke-width="1"/>
+  <text x="813" y="61" font-family="monospace" font-size="11" font-weight="bold" fill="#a855f7" text-anchor="middle">RFC-0004 // CNT ARCHITECTURE</text>
+
+  <!-- Content Graphic -->
+  <g id="drawing-content">
+
+    <!-- Controller Tier -->
+    <g transform="translate(60, 100)">
+      <rect x="0" y="0" width="840" height="90" rx="8" fill="#1e293b" stroke="#a855f7" stroke-width="2"/>
+      <text x="25" y="26" font-family="monospace" font-size="12" font-weight="bold" fill="#c084fc">TIER 1: CONTROLLER (CENTRAL BRAIN)</text>
+      <text x="25" y="48" font-family="sans-serif" font-size="13" font-weight="bold" fill="#f8fafc">Hardware-Agnostic Software Runtime (Linux / macOS Host • 192.168.42.1:8443)</text>
+      <text x="25" y="68" font-family="monospace" font-size="10" fill="#cbd5e1">Emits Isolated AP [POTFRM-&lt;ID&gt;] • llama-cpp-python GGUF Vision • Multi-Agent Schedule Orchestration</text>
+      
+      <line x1="420" y1="90" x2="420" y2="125" stroke="#a855f7" stroke-width="2" stroke-dasharray="4 3" marker-end="url(#arrowPurple)"/>
+      <text x="430" y="112" font-family="monospace" font-size="10" fill="#a855f7">Encrypted Wi-Fi (192.168.42.0/24)</text>
+    </g>
+
+    <!-- Node Tier -->
+    <g transform="translate(140, 225)">
+      <rect x="0" y="0" width="680" height="85" rx="8" fill="#0f172a" stroke="#38bdf8" stroke-width="2"/>
+      <text x="25" y="26" font-family="monospace" font-size="12" font-weight="bold" fill="#38bdf8">TIER 2: NODE (MACHINE AGGREGATOR)</text>
+      <text x="25" y="48" font-family="sans-serif" font-size="13" font-weight="bold" fill="#f8fafc">ESP32-S3 Dual-Core SoC (One per Physical Machine Subsystem Frame)</text>
+      <text x="25" y="68" font-family="monospace" font-size="10" fill="#cbd5e1">OLED Display [NODE: &lt;ID&gt; | LINK -&gt; CTRL] • Two-Control Standard • BLE Setup Virtual Panel</text>
+    </g>
+
+    <!-- BLE Links -->
+    <path d="M 230 310 L 170 355" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="3 3" marker-end="url(#arrow)"/>
+    <path d="M 480 310 L 480 355" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="3 3" marker-end="url(#arrow)"/>
+    <path d="M 730 310 L 790 355" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="3 3" marker-end="url(#arrow)"/>
+
+    <!-- Tool Tier -->
+    <!-- Tool A -->
+    <g transform="translate(60, 360)">
+      <rect x="0" y="0" width="250" height="95" rx="6" fill="#1e293b" stroke="#10b981" stroke-width="1.5"/>
+      <text x="15" y="22" font-family="monospace" font-size="10" font-weight="bold" fill="#10b981">TOOL: ACTUATOR DRIVER</text>
+      <text x="15" y="40" font-family="sans-serif" font-size="11" font-weight="bold" fill="#f8fafc">Dedicated ESP32-C3 Edge Micro</text>
+      <text x="15" y="58" font-family="monospace" font-size="9" fill="#94a3b8">0.42" Status OLED Display</text>
+      <rect x="15" y="66" width="220" height="20" rx="3" fill="#ef4444" opacity="0.2"/>
+      <text x="125" y="80" font-family="monospace" font-size="9" fill="#ef4444" text-anchor="middle">250ms Hardware Deadman Watchdog</text>
+    </g>
+
+    <!-- Tool B -->
+    <g transform="translate(355, 360)">
+      <rect x="0" y="0" width="250" height="95" rx="6" fill="#1e293b" stroke="#10b981" stroke-width="1.5"/>
+      <text x="15" y="22" font-family="monospace" font-size="10" font-weight="bold" fill="#10b981">TOOL: STEPPER / MOTOR VFD</text>
+      <text x="15" y="40" font-family="sans-serif" font-size="11" font-weight="bold" fill="#f8fafc">Dedicated ESP32-C3 Edge Micro</text>
+      <text x="15" y="58" font-family="monospace" font-size="9" fill="#94a3b8">0.42" Status OLED Display</text>
+      <rect x="15" y="66" width="220" height="20" rx="3" fill="#ef4444" opacity="0.2"/>
+      <text x="125" y="80" font-family="monospace" font-size="9" fill="#ef4444" text-anchor="middle">250ms Hardware Deadman Watchdog</text>
+    </g>
+
+    <!-- Tool C -->
+    <g transform="translate(650, 360)">
+      <rect x="0" y="0" width="250" height="95" rx="6" fill="#1e293b" stroke="#10b981" stroke-width="1.5"/>
+      <text x="15" y="22" font-family="monospace" font-size="10" font-weight="bold" fill="#10b981">TOOL: SENSOR CLUSTER</text>
+      <text x="15" y="40" font-family="sans-serif" font-size="11" font-weight="bold" fill="#f8fafc">Dedicated ESP32-C3 Edge Micro</text>
+      <text x="15" y="58" font-family="monospace" font-size="9" fill="#94a3b8">0.42" Status OLED Display</text>
+      <rect x="15" y="66" width="220" height="20" rx="3" fill="#ef4444" opacity="0.2"/>
+      <text x="125" y="80" font-family="monospace" font-size="9" fill="#ef4444" text-anchor="middle">250ms Hardware Deadman Watchdog</text>
+    </g>
+
+  </g>
+
+  <!-- Blueprint Title Block Footer -->
+  <path d="M 25 485 L 935 485 L 935 515 L 25 515 Z" fill="#0f172a" opacity="0.9"/>
+  <line x1="25" y1="485" x2="935" y2="485" stroke="#334155" stroke-width="1.5"/>
+
+  <text x="45" y="505" font-family="monospace" font-size="10" fill="#94a3b8">SUBTITLE: <tspan fill="#f8fafc">Decoupled 3-Tier Compute, Node Aggregation &amp; Edge Deadman Tools</tspan></text>
+  <text x="690" y="505" font-family="monospace" font-size="10" fill="#94a3b8">STANDARD: <tspan fill="#a855f7" font-weight="bold">RFC-0011 VECTOR SVG</tspan></text>
+</svg>

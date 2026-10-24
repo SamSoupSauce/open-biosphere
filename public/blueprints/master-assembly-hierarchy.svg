@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0f1d"/>
+      <stop offset="100%" stop-color="#030712"/>
+    </linearGradient>
+    <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
+      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#1e293b" stroke-width="0.75" opacity="0.6"/>
+    </pattern>
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8" />
+    </marker>
+    <marker id="arrowAmber" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#f59e0b" />
+    </marker>
+    <marker id="arrowEmerald" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#10b981" />
+    </marker>
+    <marker id="arrowPurple" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#a855f7" />
+    </marker>
+    <marker id="arrowRed" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#ef4444" />
+    </marker>
+  </defs>
+
+  <!-- Background &amp; Engineering Grid -->
+  <rect width="960" height="540" fill="url(#bgGrad)"/>
+  <rect width="960" height="540" fill="url(#grid)"/>
+
+  <!-- Outer Frame -->
+  <rect x="20" y="20" width="920" height="500" fill="none" stroke="#334155" stroke-width="1.5"/>
+  <rect x="25" y="25" width="910" height="490" fill="none" stroke="#1e293b" stroke-width="1"/>
+
+  <!-- Header Block -->
+  <path d="M 25 25 L 935 25 L 935 85 L 25 85 Z" fill="#0f172a" opacity="0.9"/>
+  <line x1="25" y1="85" x2="935" y2="85" stroke="#38bdf8" stroke-width="2"/>
+  
+  <text x="45" y="52" font-family="monospace" font-size="12" font-weight="bold" fill="#38bdf8" letter-spacing="2">OPEN BIOSPHERE // TECHNICAL VECTOR SPECIFICATION</text>
+  <text x="45" y="74" font-family="sans-serif" font-size="16" font-weight="700" fill="#f8fafc">Open Biosphere System Architecture</text>
+  
+  <rect x="690" y="42" width="245" height="28" rx="4" fill="#1e293b" stroke="#38bdf8" stroke-width="1"/>
+  <text x="813" y="61" font-family="monospace" font-size="11" font-weight="bold" fill="#38bdf8" text-anchor="middle">INTEGRATION HIERARCHY</text>
+
+  <!-- Content Graphic -->
+  <g id="drawing-content">
+
+    <!-- Level 4: Master Assembly -->
+    <g transform="translate(100, 105)">
+      <rect x="0" y="0" width="760" height="68" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+      <text x="25" y="26" font-family="monospace" font-size="12" font-weight="bold" fill="#38bdf8">LEVEL 4: MASTER BIOSPHERE ASSEMBLY</text>
+      <text x="25" y="48" font-family="sans-serif" font-size="13" font-weight="bold" fill="#f8fafc">~20x10 ft Footprint (~200 sq ft) • ~6,000 Gallon Closed Pool Envelope</text>
+      
+      <line x1="380" y1="68" x2="380" y2="92" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)"/>
+      <text x="400" y="84" font-family="monospace" font-size="10" fill="#94a3b8">Interlocked via</text>
+    </g>
+
+    <!-- Level 3: Unified Inter-Machine Busses -->
+    <g transform="translate(100, 197)">
+      <rect x="0" y="0" width="760" height="68" rx="8" fill="#0f172a" stroke="#f59e0b" stroke-width="2"/>
+      <text x="25" y="26" font-family="monospace" font-size="12" font-weight="bold" fill="#f59e0b">LEVEL 3: UNIFIED INTER-MACHINE BUSSES</text>
+      <text x="25" y="48" font-family="sans-serif" font-size="12" fill="#cbd5e1">Spatial Datum (0,0,0) • 24V DC Power Backbone • Isolated CAN / Modbus Bus • Recirculating Fluid Loop</text>
+      
+      <line x1="380" y1="68" x2="380" y2="92" stroke="#f59e0b" stroke-width="2" marker-end="url(#arrowAmber)"/>
+      <text x="400" y="84" font-family="monospace" font-size="10" fill="#94a3b8">Composed of</text>
+    </g>
+
+    <!-- Level 2: Standalone Machines -->
+    <g transform="translate(100, 289)">
+      <rect x="0" y="0" width="760" height="74" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+      <text x="25" y="24" font-family="monospace" font-size="12" font-weight="bold" fill="#10b981">LEVEL 2: EIGHT MODULAR OPEN-HARDWARE APPLIANCES</text>
+      <text x="25" y="45" font-family="sans-serif" font-size="11" fill="#f8fafc">[Fluidic Skimmer] • [Sprout Bioreactor] • [Overhead Gantry] • [Mantis Climber]</text>
+      <text x="25" y="63" font-family="sans-serif" font-size="11" fill="#f8fafc">[Ground Track AGV] • [Pollination Drone] • [Dosing Array] • [TPS Root Chamber]</text>
+      
+      <line x1="380" y1="74" x2="380" y2="98" stroke="#10b981" stroke-width="2" marker-end="url(#arrowEmerald)"/>
+      <text x="400" y="90" font-family="monospace" font-size="10" fill="#94a3b8">Fabricated from</text>
+    </g>
+
+    <!-- Level 1: Accessible COTS -->
+    <g transform="translate(100, 387)">
+      <rect x="0" y="0" width="760" height="68" rx="8" fill="#0f172a" stroke="#a855f7" stroke-width="2"/>
+      <text x="25" y="26" font-family="monospace" font-size="12" font-weight="bold" fill="#c084fc">LEVEL 1: ACCESSIBLE COTS &amp; STANDARD FABRICATION</text>
+      <text x="25" y="48" font-family="sans-serif" font-size="12" fill="#cbd5e1">2040 / 4040 V-Slot Extrusions • NEMA Steppers &amp; Silent Drivers • Food-Grade PVC &amp; Silicone • ESP32 &amp; SBCs</text>
+    </g>
+
+  </g>
+
+  <!-- Blueprint Title Block Footer -->
+  <path d="M 25 485 L 935 485 L 935 515 L 25 515 Z" fill="#0f172a" opacity="0.9"/>
+  <line x1="25" y1="485" x2="935" y2="485" stroke="#334155" stroke-width="1.5"/>
+
+  <text x="45" y="505" font-family="monospace" font-size="10" fill="#94a3b8">SUBTITLE: <tspan fill="#f8fafc">Master Biosphere System Assembly Integration Hierarchy</tspan></text>
+  <text x="690" y="505" font-family="monospace" font-size="10" fill="#94a3b8">STANDARD: <tspan fill="#38bdf8" font-weight="bold">RFC-0011 VECTOR SVG</tspan></text>
+</svg>

@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0f1d"/>
+      <stop offset="100%" stop-color="#030712"/>
+    </linearGradient>
+    <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
+      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#1e293b" stroke-width="0.75" opacity="0.6"/>
+    </pattern>
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8" />
+    </marker>
+    <marker id="arrowAmber" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#f59e0b" />
+    </marker>
+    <marker id="arrowEmerald" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#10b981" />
+    </marker>
+    <marker id="arrowPurple" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#a855f7" />
+    </marker>
+    <marker id="arrowRed" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#ef4444" />
+    </marker>
+  </defs>
+
+  <!-- Background &amp; Engineering Grid -->
+  <rect width="960" height="540" fill="url(#bgGrad)"/>
+  <rect width="960" height="540" fill="url(#grid)"/>
+
+  <!-- Outer Frame -->
+  <rect x="20" y="20" width="920" height="500" fill="none" stroke="#334155" stroke-width="1.5"/>
+  <rect x="25" y="25" width="910" height="490" fill="none" stroke="#1e293b" stroke-width="1"/>
+
+  <!-- Header Block -->
+  <path d="M 25 25 L 935 25 L 935 85 L 25 85 Z" fill="#0f172a" opacity="0.9"/>
+  <line x1="25" y1="85" x2="935" y2="85" stroke="#f59e0b" stroke-width="2"/>
+  
+  <text x="45" y="52" font-family="monospace" font-size="12" font-weight="bold" fill="#f59e0b" letter-spacing="2">OPEN BIOSPHERE // TECHNICAL VECTOR SPECIFICATION</text>
+  <text x="45" y="74" font-family="sans-serif" font-size="16" font-weight="700" fill="#f8fafc">Universal Helical Shutter Optical Flux Architecture</text>
+  
+  <rect x="690" y="42" width="245" height="28" rx="4" fill="#1e293b" stroke="#f59e0b" stroke-width="1"/>
+  <text x="813" y="61" font-family="monospace" font-size="11" font-weight="bold" fill="#f59e0b" text-anchor="middle">RFC-0009 // OPTICAL ARCHITECTURE</text>
+
+  <!-- Content Graphic -->
+  <g id="drawing-content">
+
+    <!-- Direct Solar Flux -->
+    <g transform="translate(330, 95)">
+      <rect x="0" y="0" width="300" height="40" rx="6" fill="#f59e0b" opacity="0.25" stroke="#f59e0b" stroke-width="1.5"/>
+      <text x="150" y="25" font-family="monospace" font-size="12" font-weight="bold" fill="#f59e0b" text-anchor="middle">DIRECT SOLAR FLUX // AMBIENT PAR</text>
+      
+      <!-- Solar Rays -->
+      <line x1="60" y1="40" x2="60" y2="65" stroke="#f59e0b" stroke-width="2" marker-end="url(#arrowAmber)"/>
+      <line x1="150" y1="40" x2="150" y2="65" stroke="#f59e0b" stroke-width="2" marker-end="url(#arrowAmber)"/>
+      <line x1="240" y1="40" x2="240" y2="65" stroke="#f59e0b" stroke-width="2" marker-end="url(#arrowAmber)"/>
+    </g>
+
+    <!-- Layer 1: Static Collector Ring -->
+    <g transform="translate(100, 170)">
+      <rect x="0" y="0" width="760" height="70" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+      <text x="25" y="26" font-family="monospace" font-size="12" font-weight="bold" fill="#38bdf8">1. STATIC KEYED BOROSILICATE / POLISHED ALUMINUM COLLECTOR RING</text>
+      <text x="25" y="48" font-family="sans-serif" font-size="11" fill="#cbd5e1">• Fixed spoke array angled at 45° declination • Seals greenhouse biological envelope (zero gas / pest exchange)</text>
+      
+      <line x1="380" y1="70" x2="380" y2="95" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)"/>
+      <text x="395" y="87" font-family="monospace" font-size="9" fill="#38bdf8">Reflected Keyed Photons</text>
+    </g>
+
+    <!-- Layer 2: Helical Rotary Shutter -->
+    <g transform="translate(100, 275)">
+      <rect x="0" y="0" width="760" height="75" rx="8" fill="#0f172a" stroke="#f59e0b" stroke-width="2"/>
+      <text x="25" y="26" font-family="monospace" font-size="12" font-weight="bold" fill="#f59e0b">2. HELICAL ROTARY PIPE SHUTTER (Rotating Stainless / Aluminum Cylinder)</text>
+      <text x="25" y="46" font-family="sans-serif" font-size="11" fill="#cbd5e1">• Slotted spiral apertures dynamically sweep open/closed via single NEMA 17 stepper drive</text>
+      <text x="25" y="64" font-family="monospace" font-size="10" fill="#94a3b8">• 17-Bit Absolute Optical Encoder Indexing • Zero-Plastic Ceramic / Stainless Bearing Races</text>
+      
+      <line x1="380" y1="75" x2="380" y2="100" stroke="#f59e0b" stroke-width="2" marker-end="url(#arrowAmber)"/>
+      <text x="395" y="92" font-family="monospace" font-size="9" fill="#f59e0b">Modulated PAR Beam</text>
+    </g>
+
+    <!-- Layer 3: Growth Chamber Interior -->
+    <g transform="translate(100, 385)">
+      <rect x="0" y="0" width="760" height="65" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+      <text x="25" y="26" font-family="monospace" font-size="12" font-weight="bold" fill="#10b981">3. BIOSPHERE GROWTH CHAMBER INTERIOR (Lemna Basin / Espalier / Roots)</text>
+      <text x="25" y="48" font-family="sans-serif" font-size="11" fill="#cbd5e1">• Shadowless, non-scorching ambient PAR bath • Zero volatile organic compound (VOC) outgassing</text>
+    </g>
+
+  </g>
+
+  <!-- Blueprint Title Block Footer -->
+  <path d="M 25 485 L 935 485 L 935 515 L 25 515 Z" fill="#0f172a" opacity="0.9"/>
+  <line x1="25" y1="485" x2="935" y2="485" stroke="#334155" stroke-width="1.5"/>
+
+  <text x="45" y="505" font-family="monospace" font-size="10" fill="#94a3b8">SUBTITLE: <tspan fill="#f8fafc">Decoupled External Solar Collection, Dynamic Rotary Attenuation &amp; Clean PAR</tspan></text>
+  <text x="690" y="505" font-family="monospace" font-size="10" fill="#94a3b8">STANDARD: <tspan fill="#f59e0b" font-weight="bold">RFC-0011 VECTOR SVG</tspan></text>
+</svg>

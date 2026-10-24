@@ -1,0 +1,111 @@
+---
+title: "RFC-0011: Universal Vector SVG Blueprint Standard & Code Block Elimination"
+description: "Mandates the complete elimination of ASCII blueprints in markdown code blocks in favor of scalable, responsive vector SVG engineering schematics and architectural blueprints."
+sidebar:
+  badge:
+    text: "STANDARD"
+    variant: "success"
+---
+
+import { Card, CardGrid, LinkButton } from '@astrojs/starlight/components';
+
+# RFC-0011: Universal Vector SVG Blueprint Standard & Code Block Elimination
+
+* **RFC ID:** `RFC-0011` (Supersedes legacy text blueprint practices)
+* **Author:** Documentation Systems & Physical Engineering Architecture Team
+* **Status:** `Implemented / Canonical Standard`
+* **Target Classification:** Documentation Standards / Technical Graphics / CAD Systems
+* **Applicable Scope:** All System Overview, RFC, and Hardware Stage Documentation Pages
+
+---
+
+## 1. Executive Summary & Problem Statement
+
+Prior iterations of the Open Biosphere technical documentation utilized plain-text code fences (```text or ```) containing ASCII-art box drawings to represent mechanical elevation profiles, electromechanical schematics, and system architectures. While convenient during early authoring, ASCII diagrams present severe shortcomings in production open-hardware documentation:
+
+* **Mobile & Small-Screen Clipping:** Monospace ASCII diagrams cannot reflow and clip horizontally on mobile viewports, tablet screens, or narrow browser panes.
+* **Lack of Zoom & High-DPI Clarity:** ASCII text cannot scale smoothly when builders zoom in to inspect dense wiring harnesses, pinouts, or mechanical tolerances.
+* **Visual Inconsistency:** Monospace ASCII lacks visual hierarchy, contrast styling, and standardized color channels for power, ground, signal, and mechanical structures.
+* **Search & Accessibility Ambiguity:** Screen readers and automated parsers misinterpret ASCII art characters (such as `┌`, `│`, `─`, `═`) as garbled punctuation rather than structured technical figures.
+
+**RFC-0011** establishes that **all engineering blueprints, kinematics profiles, wiring schematics, and system architecture diagrams must be authored and embedded as standalone Vector SVG (`.svg`) assets**. Raw code blocks are strictly forbidden for graphical diagrams and are restricted exclusively to executable code, configuration scripts, and data payloads.
+
+---
+
+## 2. Core Architectural Invariants
+
+### 2.1 The "Zero ASCII Blueprint" Invariant
+1. No technical drawing, mechanical elevation, electrical schematic, or system flow diagram may be enclosed within markdown code blocks (` ```text `, ` ``` `, or similar).
+2. Code blocks are reserved solely for:
+   * Programmatic source code (Python, C++, Dart, JavaScript)
+   * Machine-readable data files and schemas (JSON, YAML, INI)
+   * Shell command execution snippets (Bash)
+3. Any legacy ASCII diagram discovered during audits must be replaced with a dedicated Vector SVG specification file.
+
+### 2.2 Standardized Vector SVG Palette & Styling
+All generated blueprints must adhere to the standardized Open Biosphere dark-mode engineering palette:
+
+| Visual Element | Hex Code | Purpose / Usage |
+| :--- | :--- | :--- |
+| **Background Fill** | `#0a0f1d` to `#030712` | High-contrast linear gradient engineering canvas |
+| **Grid Pattern** | `#1e293b` (0.75px) | 30×30 mm isometric/Cartesian layout reference grid |
+| **Chassis / Frame** | `#334155` / `#64748b` | Outer structural borders, mechanical datum lines |
+| **Mechanical / Active** | `#38bdf8` (Cyan) | Primary mechanical components, fluidic lines, links |
+| **Electromechanical / Actuators** | `#f59e0b` (Amber) | Motors, stepper drivers, power buses, clutches |
+| **Sensors & Biomedia** | `#10b981` (Emerald) | Ultrasonic sensors, float switches, duckweed mat |
+| **Control / Reset** | `#3b82f6` (Blue) | Secondary logic, SD recovery interlocks |
+| **Power Cut / Safety** | `#ef4444` (Red) | Master DC disconnect switches, 250ms deadman triggers |
+| **Compute / Neural** | `#a855f7` (Purple) | Central Controller, GGUF inference, BLE virtual links |
+
+### 2.3 XML Entity Safety Standard
+In strict compliance with browser XML parsers and Astro static site generation pipelines, all SVG files must escape XML entity delimiters in text tags:
+* Standalone ampersands (`&`) must strictly be written as `&amp;`
+* Angle brackets (`<`, `>`) must strictly be written as `&lt;` and `&gt;`
+* All files must validate cleanly against `xml.etree.ElementTree`.
+
+---
+
+## 3. Directory Structure & Mirroring Hierarchy
+
+SVG blueprint assets are systematically categorized across centralized and subsystem-specific directories:
+
+```text
+public/
+├── blueprints/
+│   ├── master-assembly-hierarchy.svg
+│   ├── umbrella-architecture.svg
+│   ├── cnt-edge-architecture.svg
+│   ├── multi-machine-flow.svg
+│   ├── tri-modal-control-spectrum.svg
+│   ├── two-control-ble-interlock.svg
+│   ├── controller-compute-targets.svg
+│   ├── isolated-network-envelope.svg
+│   ├── controller-orchestration-layers.svg
+│   ├── part-registry-pipeline.svg
+│   ├── helical-shutter-optical-flux.svg
+│   ├── fluidic-skimmer-elevation-kinematics.svg
+│   ├── fluidic-skimmer-loop-stage-1-schematic.svg
+│   ├── fluidic-skimmer-loop-stage-2-architecture.svg
+│   ├── ground-track-agv-stage-1-schematic.svg
+│   ├── mantis-branch-crawler-stage-1-schematic.svg
+│   └── revolving-sprout-bioreactor-stage-1-schematic.svg
+```
+
+For hardware stage manuals, machine-specific schematics are mirrored into their respective documentation source folders:
+* `src/content/docs/hardware/<machine-slug>/assets/stage-<N>/`
+* `public/hardware/<machine-slug>/assets/stage-<N>/`
+
+---
+
+## 4. Verification & Audit Protocol
+
+Compliance with RFC-0011 is verified via an automated CI validation suite:
+1. **ASCII Code Block Scan**: An AST regex pass traverses all markdown/MDX files verifying zero occurrences of box-drawing characters (`┌`, `│`, `─`, `═`) or ASCII blueprint headers inside ```` ```` fences.
+2. **SVG XML Parser Validation**: Every `.svg` asset across `public/` and `src/content/docs/` is validated with `xml.etree.ElementTree` to guarantee zero entity ref or unclosed tag errors.
+3. **YAML & Astro Build Verification**: Astro content collections parse all modified documents without YAML frontmatter syntax exceptions.
+
+---
+
+<LinkButton href="/open-biosphere/rfcs/board/" variant="secondary" icon="left-arrow">
+  Back to Specifications &amp; RFCs
+</LinkButton>
