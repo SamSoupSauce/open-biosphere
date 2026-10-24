@@ -141,94 +141,136 @@ flowchart TD
 
 ---
 
-## 4. Add-On 1: Semi-Autonomous Electromechanical Pack (Buttons & Dials)
+## 4. Add-On 1: Semi-Autonomous Electromechanical Pack (BLE Virtual Panel)
 
-The **Semi-Autonomous Pack** converts the manual push cart into a heavy-duty motorized power tug. Featuring dual 24V 250W brushed planetary gearmotors, a smart dual-channel 15A motor driver, an industrial 3-button pendant with speed potentiometer, and a 24V 15Ah LiFePO4 battery pack, it hauls 25 kg payloads up 15° inclines with zero operator physical strain.
+Under [RFC-0005](/rfcs/rfc-0005-hardware-interlocks-ble-virtual-panel), physical control boxes, rotary potentiometers, and tethered industrial pendants are banned across all machine tiers to eliminate cable snagging, moisture ingress, and priority contention. 
+
+The **Semi-Autonomous Pack** converts the manual push cart into a heavy-duty motorized power tug governed by the **Strict Two-Control Physical Standard**:
+1. **Master Hardware DC Power Switch**: Inline high-current switch mechanically isolating the 24V LiFePO4 battery pack.
+2. **"Nuke & Pave" SD Factory Restore Button**: Dedicated recessed tactile switch that triggers an automatic hardware re-flash from micro-SD storage.
+
+All manual jogging, steering, speed regulation, and tote unlatching are performed via the **Flutter Companion App Virtual Panel** over direct local BLE.
 
 ### Electromechanical Actuation Architecture & Decoupling
 - **Drive Powertrain**: Dual 24V 250W brushed DC planetary gearmotors (18:1 reduction, 14 N·m torque per track) driving the sprockets through heavy-duty #25 roller chain.
-- **Mechanical Decoupling**: The base sliding dog clutches are preserved intact. Flipping the red clutch levers disengages the sprockets from the motor chains, restoring 100% manual freewheel pushing in $< 2$ seconds.
-- **Smart Motor Driver**: Dual-channel 15A continuous (30A peak) motor controller (Cytron MDDS30 or Sabertooth 2x12) with regenerative braking and thermal cutoffs.
-- **Operator Pendant**: Heavy-duty IP65 yellow pendant with Forward / Reverse momentary buttons, emergency stop mushroom button, and an analog rotary speed potentiometer (0.1 to 0.8 m/s).
-
-```
-       ELECTROMECHANICAL WIRING & PENDANT CONTROL SCHEMATIC
-  =================================================================
-  [24V 15Ah LiFePO4 Pack with BMS]
-         |
-         +----[40A Master Fuse]----+----[E-Stop Push Button]
-                                   |
-                                   v
-                  [Dual-Channel 15A DC Motor Driver]
-                     |                           |
-         +-----------+-----------+               |
-         | Analog In             | Direction     |
-         v                       v               v
-  [Speed Potentiometer]    [Fwd/Rev Push]    [12V Solenoid Latch]
-  (Industrial Pendant)     (Button Switch)   (Toggle Switch)
-         |                       |
-         +-----------+-----------+
-                     |
-         +-----------+-----------+
-         | Left Motor            | Right Motor
-         v                       v
-   [24V 250W Gearmotor]    [24V 250W Gearmotor]
-   (Dog Clutch Left)       (Dog Clutch Right)
-         |                       |
-         v                       v
-    [Left Track]            [Right Track]
-```
+- **Mechanical Decoupling**: The base sliding dog clutches are preserved intact. Flipping the red clutch levers disengages sprockets from motor chains, restoring 100% manual freewheel pushing in $< 2$ seconds.
+- **Smart Motor Driver**: Dual-channel 15A continuous (30A peak) motor controller (Cytron MDDS30 or Sabertooth 2x12) with regenerative electric braking and thermal cutoffs.
+- **Strict Two-Control Enclosure**: An IP65 aluminum electronics enclosure inside the battery deck contains:
+  - Heavy-duty toggle switch directly isolating positive battery power.
+  - Recessed tactile button next to the 0.91" I2C OLED display for 5-second SD recovery reflash.
+  - Micro-SD card slot module pre-loaded with golden recovery `firmware.bin` and `config.default`.
+- **Ephemeral BLE Virtual Panel**: Operators connect using the Flutter companion app on mobile device: Virtual Directional Drive Pad (Forward / Reverse / Differential Pivot), Drive Speed Touch Slider (0.1 to 0.8 m/s), and Tote Latch Solenoid Toggle.
 
 ### Step-by-Step Retrofit Protocol
 
-#### Step 2.1: Dual 250W Gearmotor Bracket Installation
-1. Bolt steel motor mounting brackets to the inner chassis side walls using M6 grade 8.8 bolts and flange nuts.
-2. Mount the two 24V 250W planetary gearmotors horizontally with drive shafts facing outward.
-3. Install 9T #25 hardened drive sprockets onto the 10 mm keyed motor output shafts.
-4. Route #25 roller chains to 24T sprockets attached to the dog clutch input hubs. Tension chains to 6 mm slack.
+```text
+Step 2.1: Dual 250W Gearmotor Bracket Installation
+  ├── Bolt steel motor mounting brackets to inner chassis side walls with M6 grade 8.8 bolts.
+  ├── Mount two 24V 250W planetary gearmotors horizontally with drive shafts facing outward.
+  ├── Install 9T #25 hardened drive sprockets onto 10mm keyed motor output shafts.
+  └── Route #25 roller chains to 24T sprockets on dog clutch input hubs; tension to 6mm slack.
 
-#### Step 2.2: LiFePO4 Battery & BMS Installation
-1. Secure a steel battery tray in the lowest center section of the chassis between the track wells.
-2. Seat the 24V 15Ah LiFePO4 battery pack, clamping it down with a rubber-padded quick-release strap.
-3. Install an inline 40A MIDI fuse block directly off the positive battery terminal.
+Step 2.2: LiFePO4 Battery & BMS Installation
+  ├── Secure steel battery tray in lowest center section of chassis between track wells.
+  ├── Seat 24V 15Ah LiFePO4 battery pack, clamping down with rubber-padded quick-release strap.
+  └── Install inline 40A MIDI fuse block directly off positive battery terminal.
 
-#### Step 2.3: Motor Controller & Solenoid Latch Wiring
-1. Mount the dual-channel 15A motor controller on aluminum standoffs against the rear bulkhead.
-2. Wire battery positive through a 2-pole master disconnect switch to the controller's `B+` terminal.
-3. Connect motor power leads using 12 AWG high-flex silicone wire.
-4. Replace the manual foot latch rocker with a 12V 25 N high-force push-pull solenoid, wired through a momentary relay.
+Step 2.3: Motor Controller & Solenoid Latch Wiring
+  ├── Mount dual-channel 15A motor controller on aluminum standoffs against rear bulkhead.
+  ├── Wire battery positive through master DC disconnect switch to controller B+ terminal.
+  ├── Connect motor power leads using 12 AWG high-flex silicone wire.
+  └── Replace manual foot latch with 12V 25N high-force push-pull solenoid wired through relay.
 
-#### Step 2.4: Industrial Pendant Cable Loom Rigging
-1. Mount a heavy-duty 4-conductor coiled pendant cable (2.5 m extended length) to the rear chassis cable gland.
-2. Terminate conductors inside the yellow pendant to:
-   - Green Button: Forward run contact.
-   - Yellow Button: Reverse run contact.
-   - Rotary Potentiometer: 0–5V analog speed reference.
-   - Twist-to-Release Red E-Stop: Series power break.
+Step 2.4: Two-Control Enclosure Assembly
+  ├── Mount IP65 enclosure above battery deck with master DC toggle and recessed SD reset button.
+  ├── Insert micro-SD slot module pre-loaded with golden recovery firmware.bin and config.default.
+  ├── Mount 0.91" I2C OLED display showing [AGV-A1 | BLE READY].
+  └── Wire dual-channel motor controller PWM/DIR lines to ESP32 BLE peripheral controller.
 
-#### Step 2.5: Differential Drive Calibration
-1. Elevate the AGV chassis on jackstands so rubber tracks clear the bench.
-2. Turn the master power switch ON. Set the speed dial to 20% and press Forward; verify both tracks rotate forward smoothly.
-3. Calibrate potentiometer deadband so tracks remain completely stationary when buttons are released.
+Step 2.5: Differential Drive Calibration
+  ├── Elevate AGV chassis on jackstands so rubber tracks clear the bench.
+  ├── Turn master DC power switch ON. Open Flutter companion app and connect to AGV-A1 over BLE.
+  ├── Test Virtual Drive Pad: verify forward, reverse, and pivot steering respond smoothly.
+  └── Test dog clutch: flipping levers disengages motors, allowing effortless manual pushing.
+```
+
+### Step-by-Step BLE Virtual Panel Operating Runbook
+
+1. **Power-On & BLE Check**: Flip the master DC power switch ON (blue status LED illuminates). The 0.91" OLED displays: `[AGV-A1 | BLE STANDBY]`.
+2. **Engaging Drive Gearboxes**: Push both red mechanical dog clutch levers inward until drive teeth mesh solidly with sprockets.
+3. **Walk-Up BLE Virtual Panel Connection**: Open Flutter companion app on mobile device. Connect to `AGV-A1`. The app displays the AGV Virtual Panel.
+4. **Speed Regulation via Virtual Slider**: Set virtual speed slider to 30% for indoor walking pace ($0.3$ m/s).
+5. **Motorized Material Hauling**: Walk alongside or behind AGV. Press and hold the **Virtual Forward Drive Pad** in app to traverse aisles. Release pad to engage regenerative electric braking (stops within 150 mm).
+6. **Electronic Latch Actuation**: To unload cargo, tap the **Virtual Latch Toggle** in app; the 12V solenoid retracts latch wedge, allowing tote to slide onto transfer shelf.
+7. **"Nuke & Pave" SD Recovery Protocol**: If firmware hangs, hold the physical recessed reset button for 5 seconds during power-on to restore factory baseline from micro-SD.
+8. **Emergency Neutral Freewheeling**: If battery level drops below 10%, disengage both dog clutch levers to push the AGV by hand back to charging dock.
+
+### Add-On 1 Electromechanical Wiring & BLE Virtual Panel Blueprint
+
+```text
+========================================================================================
+ADD-ON 1 ELECTROMECHANICAL SCHEMATIC & BLE VIRTUAL PANEL BLUEPRINT
+Strict Two-Control Physical Standard (RFC-0005) with Ephemeral Flutter BLE Control
+========================================================================================
+
+  [24V 15Ah LiFePO4 Pack] ──[40A Fuse]──[Master DC Power Switch]──┬── (24V Power Bus)
+                                                                  └── (GND Return Bus)
+                                                                            │
+   ┌──────────────── STRICT TWO-CONTROL CHASSIS BOX ──────────────────────┐│
+   │                                                                      ││
+   │  [Master DC Power Switch]         ["Nuke & Pave" SD Reset Button]    ││
+   │   Inline Mechanical Cut            Recessed Tactile Switch (5s hold) ││
+   │                                                                      ││
+   │  [Micro-SD Card Slot Module]      [0.91" I2C Status OLED Display]    ││
+   │   Preloaded golden .bin            Displays [AGV-A1 | BLE READY]     ││
+   │                                                                      ││
+   │  [ESP32 BLE GATT Peripheral] ◄───── (Ephemeral Mobile Link) ────────┼│
+   └───────────────────┬──────────────────────────────────────────────────┘│
+                       │                                                   │
+                       ▼ (Motor Controller PWM/DIR Signals)                │
+   ┌────────────────── DRIVE TRAIN & MOTORS ──────────────────────────────┐│
+   │                                                                      ││
+   │  Dual-Channel 15A Smart DC Motor Driver ◄────────────────────────────┘│
+   │       │                     │                                         │
+   │       ▼                     ▼                                         │
+   │  [Left 250W Motor]     [Right 250W Motor]                             │
+   │       │                     │                                         │
+   │       ▼ (Drive Chains)      ▼ (Drive Chains)                          │
+   │  [Left Dog Clutch]     [Right Dog Clutch]                             │
+   │  (Flippable Levers)    (Flippable Levers)                             │
+   │       │                     │                                         │
+   │       ▼                     ▼                                         │
+   │  [Left Track]          [Right Track]                                  │
+   │                                                                       │
+   │  12V High-Force Latch Solenoid ◄── Relay Trigger ─────────────────────┘
+   └───────────────────────────────────────────────────────────────────────┘
+========================================================================================
+```
+
+### Add-On 1 Signal & Override Flow
 
 ```mermaid
 flowchart LR
-    A[Pendant Speed Dial] -->|0-5V Analog| B[Dual 15A Motor Driver]
-    C[Fwd / Rev Buttons] -->|Logic Signals| B
-    D[24V 15Ah LiFePO4] -->|40A Fused Line| B
-    B --> E[Left 250W Motor: Left Track]
-    B --> F[Right 250W Motor: Right Track]
-    E & F --> G[Smooth Motorized Hauling]
+    subgraph S2_Electrical["Add-On 1: Electromechanical & BLE Virtual Panel (RFC-0005)"]
+        Bat["24V LiFePO4 Battery"] --> MasterSW["Master DC Power Switch"]
+        MasterSW --> Box["Strict Two-Control Enclosure"]
+        
+        App["Flutter Companion App (Virtual Panel)"] <-->|"Ephemeral BLE GATT"| BLE["ESP32 BLE Peripheral"]
+        Box -.->|"5s Reset Hold"| SDReset["Micro-SD Golden Reflash"]
+        
+        BLE -->|"Virtual Drive Pad & Slider"| Driver["Dual 15A Motor Driver"]
+        Driver --> M1["Left 250W Motor"]
+        Driver --> M2["Right 250W Motor"]
+        M1 --> C1["Left Dog Clutch"]
+        M2 --> C2["Right Dog Clutch"]
+        C1 --> T1["Left Track"]
+        C2 --> T2["Right Track"]
+        
+        BLE -->|"Virtual Latch Toggle"| Sol["12V Latch Solenoid"]
+        
+        ManualTiller["Manual Push Tiller"] -.->|"Mechanical Override (Disengage Clutches)"| T1 & T2
+    end
 ```
-
-### Step-by-Step Push-Button Operating Runbook
-
-1. **Power-On & Pendant Checkout**: Disengage the red E-stop button on the pendant (twist clockwise). Turn master power key ON (blue LED illuminates).
-2. **Engaging Drive Gearboxes**: Push both red mechanical dog clutch levers inward until drive teeth mesh solidly with sprockets.
-3. **Speed Regulation via Dial**: Rotate the yellow pendant dial to 30% speed for indoor walking pace ($0.3$ m/s).
-4. **Motorized Material Hauling**: Walk alongside or behind the AGV. Press and hold the green Forward button to traverse aisles. Release button to engage regenerative electric braking (stops within 150 mm).
-5. **Electronic Latch Actuation**: To unload cargo, press the pendant's toggle switch; the 12V solenoid retracts the latch wedge, allowing the tote to slide onto the transfer shelf.
-6. **Emergency Neutral Freewheeling**: If battery level drops below 10% (audible low-voltage beep), disengage both dog clutch levers to push the AGV by hand back to the charging outlet.
 
 ### Add-On 1 Bill of Materials (BOM)
 
@@ -236,11 +278,12 @@ flowchart LR
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | **A1-01** | 24V 250W Brushed DC Planetary Gearmotors (18:1 ratio) | Robotics drive supplier | 2 | $24.00 | $48.00 |
 | **A1-02** | Dual-Channel 15A Smart DC Motor Driver Board | Cytron MDDS30 or equivalent | 1 | $38.00 | $38.00 |
-| **A1-03** | Heavy-Duty IP65 3-Button Industrial Pendant + Dial | Hoist pendant manufacturer | 1 | $24.00 | $24.00 |
-| **A1-04** | 24V 15Ah LiFePO4 Battery Pack with Built-In BMS | Solar / e-mobility store | 1 | $85.00 | $85.00 |
-| **A1-05** | 12V High-Force 25N Push-Pull Latch Solenoid | Automation components shop | 1 | $18.00 | $18.00 |
+| **A1-03** | Strict Two-Control Enclosure (Master DC Cut + SD Reset + Micro-SD Module + 0.91" OLED) | Maker electrical kit | 1 | $24.00 | $24.00 |
+| **A1-04** | ESP32 BLE Virtual Panel Peripheral Controller | Maker electronics shop | 1 | $15.00 | $15.00 |
+| **A1-05** | 24V 15Ah LiFePO4 Battery Pack with Built-In BMS | Solar / e-mobility store | 1 | $70.00 | $70.00 |
+| **A1-06** | 12V High-Force 25N Push-Pull Latch Solenoid | Automation components shop | 1 | $18.00 | $18.00 |
 | **Total** | **Add-On 1 Electromechanical Pack** | **Retrofits directly to Base** | | | **+$213.00** |
-| **Cumul.** | **Operational Pendant-Controlled Power Tug** | **Base ($119) + Add-On 1 ($213)** | | | **$332.00** |
+| **Cumul.** | **Operational BLE-Controlled Power Tug** | **Base ($119) + Add-On 1 ($213)** | | | **$332.00** |
 
 ---
 
@@ -359,7 +402,7 @@ stateDiagram-v2
 
 | Item | Component Description | Sourcing / Part Reference | Qty | Unit Cost | Total Cost |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **A2-01** | AGV Machine Node: ESP32-S3 (8MB PSRAM) + 0.96" OLED + Setup Button | Espressif distributor | 1 | $16.00 | $16.00 |
+| **A2-01** | AGV Machine Node: ESP32-S3 (8MB PSRAM) + 0.96" OLED + Master DC Cut + SD Reset & Micro-SD Module | Espressif distributor | 1 | $16.00 | $16.00 |
 | **A2-02** | 5-Channel Magnetic Track Induction Sensor + 1x ESP32-C3 Nav Tool | Robotics sensor store | 1 | $20.00 | $20.00 |
 | **A2-03** | 360-Degree 2D LiDAR Scanner (RPLiDAR C1 / LD06) | Maker LiDAR distributor | 1 | $68.00 | $68.00 |
 | **A2-04** | 3-Axis Mini Articulated Arm Kit + Servos + 1x ESP32-C3 Arm Tool | 3D printed + metal servos | 1 | $36.00 | $36.00 |
@@ -376,19 +419,21 @@ stateDiagram-v2
 | Build Stage | Operational Capability | Direct Stage Cost | Cumulative Investment |
 | :--- | :--- | :--- | :--- |
 | **Base: Instructions** | 100% mechanical manual push cart with neutral gearbox lever and foot-pedal clamp | $119.00 | **$119.00** |
-| **Add-On 1: Semi-Auto** | Motorized planetary track drive with wired industrial jog pendant and LiFePO4 pack | +$213.00 | **$332.00** |
+| **Add-On 1: Semi-Auto** | Motorized planetary track drive with BLE Virtual Panel & 2 physical controls | +$213.00 | **$332.00** |
 | **Add-On 2: Agentic AI** | Controller-Node-Tool (CNT) automation, 2D LiDAR, magnetic line following, & inductive charge | +$165.00 | **$497.00** |
 
 ### Step-by-Step Zero-Waste Conversion Roadmap
 
-#### Path 1: Base Machine $ightarrow$ Add-On 1 (Motorized Tug Upgrade)
+#### Path 1: Base Machine $
+ightarrow$ Add-On 1 (Motorized Tug Upgrade)
 1. Bolt the two 24V 250W gearmotor brackets inside the welded chassis.
 2. Connect the #25 drive chains to the dog clutch input hubs (the manual freewheel dog clutch levers remain fully functional).
-3. Drop the 24V LiFePO4 battery pack into the pre-drilled central tray, wire the motor driver, and plug in the yellow industrial pendant. The manual push tiller can either fold flat or be detached via its quick-release pins.
+3. Drop the 24V LiFePO4 battery pack into the central tray, wire the motor driver, and connect Two-Control box with BLE Virtual Panel. The manual push tiller can either fold flat or be detached via its quick-release pins.
 
-#### Path 2: Add-On 1 $ightarrow$ Add-On 2 (Autonomous Robotics CNT Platform)
+#### Path 2: Add-On 1 $
+ightarrow$ Add-On 2 (Autonomous Robotics CNT Platform)
 1. Mount the AGV Node (ESP32-S3 + OLED + Button) and modular ESP32-C3 Tools in the electronics deck.
-2. Wire the `DEV_TRACK_DRV` tool to the motor drivers in parallel with the manual jog pendant.
+2. Wire the `DEV_TRACK_DRV` tool to the motor drivers in parallel with the BLE Virtual Panel controller.
 3. Install the 5-channel magnetic sensor bar and 2D LiDAR scanner linked to `DEV_NAV_SNS`.
 4. Bolt the 3-axis articulated transfer arm and wire to `DEV_ARM_ACT`.
 5. Install the 120W inductive charging receiver coil on the chassis underside, provision the AGV Node with Central Controller ID via mobile app BLE, and confirm 250ms watchdogs are active.

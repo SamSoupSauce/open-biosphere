@@ -153,91 +153,136 @@ flowchart TD
 
 ---
 
-## 4. Add-On 1: Semi-Autonomous Electromechanical Pack (Buttons & Dials)
+## 4. Add-On 1: Semi-Autonomous Electromechanical Pack (BLE Virtual Panel)
 
-The **Semi-Autonomous Pack** retrofits onto the Base Machine in under 60 minutes. It automates repetitive tumbling and misting using robust electro-mechanical switchgear: an industrial planetary stepper motor, a 100 PSI diaphragm pump with brass atomizing nozzles, an analog countdown dial timer, and momentary jog push-buttons.
+Under [RFC-0005](/rfcs/rfc-0005-hardware-interlocks-ble-virtual-panel), physical control panels with dedicated jog buttons, countdown dials, and switches are banned to prevent water ingress and control priority conflicts. 
+
+The **Semi-Autonomous Pack** motorizes tumbling and misting under the **Strict Two-Control Physical Standard**:
+1. **Master Hardware DC Power Switch**: Mechanically disconnects 24V power.
+2. **"Nuke & Pave" SD Factory Restore Button**: Dedicated recessed tactile switch that triggers an automatic hardware re-flash from micro-SD storage.
+
+All manual jogging, inspection rotations, and mist timing adjustments are executed via the **Flutter Companion App Virtual Panel** over direct local BLE.
 
 ### Electromechanical Actuation Architecture & Decoupling
 - **Drive Motor**: NEMA 17 planetary geared stepper motor (5.18:1 ratio, 1.8 N·m output torque) driving a GT2 6 mm timing belt (60T drum pulley, 20T motor pulley).
-- **Mechanical Decoupling**: A spring-loaded dog clutch slides axially on the 8 mm D-shaft. Pulling the knurled collar disengages the motor drive dogs, allowing instant hand-crank manual operation without fighting motor cogging or back-powering drivers.
+- **Mechanical Decoupling**: A spring-loaded dog clutch slides axially on the 8 mm D-shaft. Pulling the knurled collar disengages the motor drive dogs, allowing instant hand-crank manual operation without back-powering drivers.
 - **Pressurized Misting**: A 24V DC diaphragm pump pressurizes an inline manifold to 100 PSI, delivering a 50 µm atomized fog through two 0.3 mm brass orifice nozzles directly into the drum core.
-- **Operator Interface**: Dual panel-mounted spring-wound countdown dial timers control mist interval (0–60 min) and mist duration (0–60 sec). A momentary green button provides instant manual jog rotation.
-
-```
-       ELECTROMECHANICAL WIRING & CONTROL PANEL SCHEMATIC
-  =================================================================
-  [24V DC 60W PSU]
-        |
-        +----[Main Toggle SW]----(Power LED Red)
-        |
-        +----[Jog Button NO]----+-----> [TMC Driver STEP/DIR Engine]
-        |                       |                 |
-        +----[Dial Timer 1]-----+                 v
-        |    (Tumble Interval)            [NEMA 17 Geared Stepper]
-        |                                         |
-        |                                 (Dog Slip Clutch)
-        |                                         |
-        |                                         v
-        |                                 [Perforated Drum]
-        |
-        +----[Dial Timer 2]-----------> [24V Diaphragm Mist Pump]
-             (Mist Duration)                      |
-                                                  v
-                                      [Dual 0.3mm Brass Nozzles]
-```
+- **Strict Two-Control Enclosure**: An IP65 junction box on the frame rail contains:
+  - Heavy-duty toggle switch directly isolating 24V DC master power.
+  - Recessed tactile button next to the 0.91" I2C OLED display for 5-second SD recovery reflash.
+  - Micro-SD card slot module pre-loaded with golden recovery `firmware.bin` and `config.default`.
+- **Ephemeral BLE Virtual Panel**: Operators open the Flutter companion app on their phone or tablet. The app auto-discovers the bioreactor over BLE GATT and presents virtual touch controls: Drum Jog Touch Pad, Mist Pulse Duration slider (5 to 60 sec), and Tumble Interval slider (5 to 60 min).
 
 ### Step-by-Step Retrofit Protocol
 
-#### Step 2.1: Stepper Motor & Belt Drive Bracket Mounting
-1. Bolt a slotted NEMA 17 motor bracket to the rear vertical 2020 extrusion using M5 drop-in T-nuts.
-2. Mount the NEMA 17 planetary geared motor with its 20T GT2 aluminum pulley facing inward.
-3. Slide the 60T GT2 drum pulley onto the 8 mm D-shaft between the pillow block and the drum endcap.
-4. Route a 6 mm closed-loop GT2 neoprene timing belt between pulleys. Tension motor bracket until 5 mm belt deflection occurs at 2 N finger pressure.
+```text
+Step 2.1: Stepper Motor & Belt Drive Bracket Mounting
+  ├── Bolt slotted NEMA 17 motor bracket to rear vertical 2020 extrusion using M5 drop-in T-nuts.
+  ├── Mount NEMA 17 planetary geared motor with its 20T GT2 aluminum pulley facing inward.
+  ├── Slide 60T GT2 drum pulley onto 8mm D-shaft between pillow block and drum endcap.
+  └── Route 6mm GT2 timing belt between pulleys; tension until 5mm deflection occurs at 2N pressure.
 
-#### Step 2.2: Dog Clutch Retrofit on Main D-Shaft
-1. Install the sliding dog clutch sleeve between the 60T pulley hub and the axle shaft collar.
-2. Verify axial sliding action: when engaged, the dog teeth lock the pulley to the shaft; when pulled outward, the shaft spins completely freely.
-3. Retain the manual hand crank on the outer shaft stub for instant mechanical fallback.
+Step 2.2: Dog Clutch Retrofit on Main D-Shaft
+  ├── Install sliding dog clutch sleeve between 60T pulley hub and axle shaft collar.
+  ├── Verify axial sliding action: when engaged, teeth lock pulley to shaft; when pulled, shaft spins freely.
+  └── Retain manual hand crank on outer shaft stub for instant mechanical fallback.
 
-#### Step 2.3: Diaphragm Misting Pump & Atomizing Manifold
-1. Mount the 24V DC diaphragm mist pump (100 PSI, 1.2 L/min) to the lower chassis rail using vibration-dampening rubber grommets.
-2. Plumb a 1/4" food-grade polyurethane pressure line from the pump outlet to a brass tee fitting mounted inside the top hood.
-3. Install two 0.3 mm anti-drip brass atomizing misting nozzles angled at 45° across the seed bed.
-4. Plumb the pump inlet to an external 5-gallon food-grade water reservoir with an inline 80-mesh stainless suction filter.
+Step 2.3: Diaphragm Misting Pump & Atomizing Manifold
+  ├── Mount 24V DC diaphragm mist pump (100 PSI, 1.2 L/min) to lower chassis rail with rubber grommets.
+  ├── Plumb 1/4" polyurethane pressure line to brass tee fitting inside top hood.
+  ├── Install two 0.3mm anti-drip brass atomizing misting nozzles angled at 45° across seed bed.
+  └── Plumb pump inlet to external water reservoir with inline 80-mesh stainless suction filter.
 
-#### Step 2.4: IP65 Electrical Control Enclosure Installation
-1. Mount an IP65 polycarbonate electrical junction box (160 × 160 × 90 mm) to the side frame rail.
-2. Drill panel cutouts for:
-   - One 22 mm red illuminated latching power rocker switch.
-   - One 22 mm green momentary tactile jog push-button.
-   - Two 48 mm panel-mount mechanical spring-wound countdown timers.
-3. Snap a 24V-to-12V DC-DC buck converter and a standalone pulse-generator module onto internal DIN rail.
+Step 2.4: Two-Control Enclosure Assembly
+  ├── Mount IP65 electrical junction box to side frame rail.
+  ├── Install master heavy-duty DC power switch on positive power input lead.
+  ├── Install recessed tactile button wired to secondary bootloader recovery GPIO pin.
+  ├── Insert micro-SD slot module pre-loaded with golden firmware.bin and config.default.
+  └── Mount 0.91" I2C OLED display showing [SPROUT-A1 | BLE READY].
 
-#### Step 2.5: Point-to-Point Wiring & Grounding Verification
-1. Wire 24V DC positive through the main rocker switch to the pulse generator, timers, and pump relay.
-2. Connect the green jog button directly across the manual pulse-trigger terminal on the stepper driver board.
-3. Wire the chassis aluminum frame to earth ground through a 3-pin fused IEC power inlet.
-4. Verify isolation: resistance between 24V DC negative and the aluminum frame must measure $> 10\text{ M}\Omega$.
+Step 2.5: Driver, BLE Controller & Grounding Verification
+  ├── Wire TMC2209 silent stepper driver and mist pump relay to ESP32 BLE peripheral controller.
+  ├── Wire chassis aluminum frame to earth ground through fused IEC power inlet.
+  ├── Verify BLE GATT service advertises [SPROUT-VIRTUAL-PANEL] upon power-up.
+  └── Test dog clutch: pulling collar disengages motor, allowing smooth zero-power hand cranking.
+```
+
+### Step-by-Step BLE Virtual Panel Operating Runbook
+
+1. **System Power-Up**: Flip the master DC power toggle to ON. The 0.91" OLED illuminates: `[SPROUT-A1 | BLE STANDBY]`.
+2. **Walk-Up BLE Virtual Panel Connection**: Open Flutter companion app on mobile device. Connect to `SPROUT-A1`. The app renders the Bioreactor Virtual Panel.
+3. **Drum Loading via Virtual Jog Pad**: Open drum access hatch. Tap and hold the **Virtual Jog Pad** to rotate drum until hatch faces vertically upward. Release pad (drum stops instantly). Load 800 g soaked seeds and latch hatch.
+4. **Automated Tumbling & Misting Configuration**: Adjust virtual sliders in Flutter app: set Tumble Interval to 15 minutes, set Mist Duration to 30 seconds. The controller commits schedule to local memory.
+5. **Mid-Cycle Observation Jog**: To inspect sprout development, open Flutter app and tap the Jog Pad to rotate inspection port into view without resetting cycle timers.
+6. **"Nuke & Pave" SD Recovery Protocol**: If firmware hangs, hold the physical recessed reset button for 5 seconds during power-on. The bootloader reflashes factory baseline firmware from micro-SD in 4 seconds.
+7. **Zero-Power Fallback Override**: If off-grid power is lost, pull dog clutch collar outward and slide hand crank onto shaft. Resume manual tumbling and misting without dismounting motor or belt.
+
+### Add-On 1 Electromechanical Wiring & BLE Virtual Panel Blueprint
+
+```text
+========================================================================================
+ADD-ON 1 ELECTROMECHANICAL SCHEMATIC & BLE VIRTUAL PANEL BLUEPRINT
+Strict Two-Control Physical Standard (RFC-0005) with Ephemeral Flutter BLE Control
+========================================================================================
+
+   [24V DC 60W PSU] ──[Master DC Power Switch]──┬── (24V Power Bus)
+                                                └── (GND Return Bus)
+                                                          │
+   ┌──────────────── STRICT TWO-CONTROL JUNCTION BOX ──────────────────┐│
+   │                                                                   ││
+   │  [Master DC Power Switch]      ["Nuke & Pave" SD Reset Button]    ││
+   │   Inline Mechanical Cut         Recessed Tactile Switch (5s hold) ││
+   │                                                                   ││
+   │  [Micro-SD Card Slot Module]   [0.91" I2C Status OLED Display]    ││
+   │   Preloaded golden .bin         Displays [SPROUT-A1 | BLE READY]  ││
+   │                                                                   ││
+   │  [ESP32 BLE GATT Peripheral] ◄─── (Ephemeral Mobile Link) ───────┼│
+   └───────────────────┬───────────────────────────────────────────────┘│
+                       │                                                │
+                       ▼ (TMC Driver & Pump Relay Signals)              │
+   ┌────────────────── DRIVE TRAIN & PUMP ─────────────────────────────┐│
+   │                                                                   ││
+   │  24V DC 100 PSI Diaphragm Pump ◄── High-Current Relay ────────────┘│
+   │         │                                                          │
+   │         ▼ (Pressure Line)                                          │
+   │  [Dual 0.3mm Brass Mist Nozzles]                                   │
+   │                                                                    │
+   │  NEMA 17 Planetary Stepper Motor ◄── TMC2209 Silent Driver ────────┘
+   │         │
+   │         ▼ (Motor Output Shaft)
+   │     ┌───────┐
+   │     │ ░░░░░ │ Axial Sliding Dog Clutch
+   │     └───────┘ [PULL TO DISENGAGE MOTOR FOR MANUAL HAND CRANK]
+   │         │
+   │         ▼ (Drum Axle)
+   │   [Perforated Drum Cylinder]
+   └───────────────────────────────────────────────────────────────────┘
+========================================================================================
+```
+
+### Add-On 1 Signal & Override Flow
 
 ```mermaid
 flowchart LR
-    A[Main Power Switch] --> B{Timer or Jog?}
-    B -->|Jog Button Pressed| C[Immediate Stepper Rotation]
-    B -->|Dial Timer Trigger| D[Pulse Generator: 15s Rotation]
-    B -->|Mist Interval Timer| E[24V Pump: 30s Atomized Spray]
-    C & D --> F[Drum Tumbling Action]
-    E --> G[Hydration & Cooling]
-    F & G --> H[Tender Hypocotyl Growth]
+    subgraph S2_Electrical["Add-On 1: Electromechanical & BLE Virtual Panel (RFC-0005)"]
+        PSU["24V DC Power Supply"] --> MasterSW["Master DC Power Switch"]
+        MasterSW --> Box["Strict Two-Control Enclosure"]
+        
+        App["Flutter Companion App (Virtual Panel)"] <-->|"Ephemeral BLE GATT"| BLE["ESP32 BLE Peripheral"]
+        Box -.->|"5s Reset Hold"| SDReset["Micro-SD Golden Reflash"]
+        
+        BLE -->|"Virtual Mist Sliders"| Relay["Pump Relay"]
+        Relay --> Pump["24V Diaphragm Mist Pump"]
+        Pump --> Nozzles["Brass Atomizing Nozzles"]
+        
+        BLE -->|"Virtual Drum Jog Pad"| TMC["TMC2209 Stepper Driver"]
+        TMC --> NEMA17["NEMA 17 Geared Stepper"]
+        NEMA17 --> Clutch["Axial Dog Clutch"]
+        Clutch --> Drum["Perforated Drum Cylinder"]
+        
+        HandCrank["Manual Hand Crank"] -.->|"Mechanical Override (Disengages Clutch)"| Drum
+    end
 ```
-
-### Step-by-Step Push-Button Operating Runbook
-
-1. **System Power-Up & Dial Calibration**: Flip the red master toggle switch to ON. Set Dial Timer 1 (Tumble Interval) to 15 minutes. Set Dial Timer 2 (Mist Duration) to 30 seconds.
-2. **Drum Loading via Green Jog Button**: Open the drum access hatch. Press and hold the green momentary jog button to rotate the drum until the hatch opening faces vertically upward. Release button (drum stops instantly). Load 800 g soaked seeds and latch hatch.
-3. **Automated Continuous Cycling**: Leave the machine in automated dial mode. Every 15 minutes, the pulse generator triggers a 15-second rotation at 1.0 RPM. Simultaneously, the diaphragm pump pressurizes the misting nozzles for 30 seconds, maintaining 95% relative humidity inside the dark chamber.
-4. **Mid-Cycle Observation & Manual Jog**: To inspect sprout progress without disrupting the schedule, press the green jog button to rotate the inspection port into view.
-5. **Drain Flush Maintenance**: Open the lower brass ball valve twice daily for 2 minutes to discharge accumulated mist runoff from the sump.
-6. **Zero-Power Fallback Override**: If off-grid power is lost, pull the dog clutch ring outward and slide the hand crank onto the shaft. Resume the 7-step manual runbook without dismounting the motor or belt.
 
 ### Add-On 1 Bill of Materials (BOM)
 
@@ -248,8 +293,8 @@ flowchart LR
 | **A1-03** | Axial Spring-Loaded Dog Clutch Sliding Mechanism | Machined aluminum / 3D PETG | 1 | $14.00 | $14.00 |
 | **A1-04** | 24V DC 100 PSI Diaphragm Mist Pump (1.2 L/min) | Hydroponics mist supplier | 1 | $32.00 | $32.00 |
 | **A1-05** | Brass 0.3mm Atomizing Misting Nozzles + 1/4" Fittings | High-pressure fogging kit | 2 | $5.00 | $10.00 |
-| **A1-06** | Spring-Wound Mechanical Countdown Dial Timers | Industrial appliance controls | 2 | $12.00 | $24.00 |
-| **A1-07** | IP65 Control Enclosure + Green Jog Button + Rocker Switch | Electrical enclosure kit | 1 | $16.00 | $16.00 |
+| **A1-06** | Strict Two-Control Enclosure (Master DC Switch + SD Reset + Micro-SD Module + 0.91" OLED) | Electrical enclosure kit | 1 | $22.00 | $22.00 |
+| **A1-07** | ESP32 BLE Virtual Panel Controller + TMC2209 Driver | Standard maker electronics | 1 | $18.00 | $18.00 |
 | **A1-08** | 24V 2.5A (60W) Desktop Industrial Power Supply | Mean Well or equivalent | 1 | $18.00 | $18.00 |
 | **Total** | **Add-On 1 Electromechanical Pack** | **Retrofits directly to Base** | | | **+$147.00** |
 | **Cumul.** | **Operational Semi-Autonomous Bioreactor** | **Base ($145) + Add-On 1 ($147)** | | | **$292.00** |
@@ -376,7 +421,7 @@ stateDiagram-v2
 
 | Item | Component Description | Sourcing / Part Reference | Qty | Unit Cost | Total Cost |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **A2-01** | Sprout Machine Node: ESP32-S3 (8MB PSRAM) + 0.96" OLED + Setup Button | Espressif distributor | 1 | $14.00 | $14.00 |
+| **A2-01** | Sprout Machine Node: ESP32-S3 (8MB PSRAM) + 0.96" OLED + Master DC Cut + SD Reset & Micro-SD Module | Espressif distributor | 1 | $14.00 | $14.00 |
 | **A2-02** | Trinamic TMC2209 Silent Stepper Driver (UART/StallGuard) | 3D printer electronics supplier | 1 | $8.00 | $8.00 |
 | **A2-03** | Sensirion SHT40 Temp/RH Probe + 1x ESP32-C3 Climate Tool | Precision sensor distributor | 1 | $15.00 | $15.00 |
 | **A2-04** | 12V 200mg/h Corona Ozone Generator + Diffuser Stone | Compact ozone module supplier | 1 | $19.00 | $19.00 |
@@ -397,7 +442,7 @@ The Sprout Bioreactor is intentionally designed so that **not a single bolt or b
 | Build Stage | Operational Capability | Direct Stage Cost | Cumulative Investment |
 | :--- | :--- | :--- | :--- |
 | **Base: Instructions** | 100% mechanical zero-electricity benchtop tumbler with hand crank and ratchet | $145.00 | **$145.00** |
-| **Add-On 1: Semi-Auto** | Motorized planetary rotation, pressurized misting, and analog dial countdown timer | +$147.00 | **$292.00** |
+| **Add-On 1: Semi-Auto** | Motorized planetary rotation, misting with BLE Virtual Panel & 2 physical controls | +$147.00 | **$292.00** |
 | **Add-On 2: Agentic AI** | Controller-Node-Tool (CNT) automation, StallGuard homing, ozone sanitizing, & AGV interlock | +$89.00 | **$381.00** |
 
 ### Step-by-Step Zero-Waste Conversion Roadmap
@@ -406,10 +451,10 @@ The Sprout Bioreactor is intentionally designed so that **not a single bolt or b
 1. Mount the NEMA 17 motor bracket to the rear vertical extrusion using existing T-slot channels (no drilling required).
 2. Slide the 60T GT2 pulley and axial dog clutch onto the protruding 8 mm D-shaft stub between the pillow block and hand crank.
 3. Install the 24V diaphragm mist pump in the lower frame base, threading the 1/4" mist line through the pre-cast access grommets in the top hood.
-4. Fasten the IP65 control box to the front rail with two M5 T-nuts, plug in the 24V desktop power supply, and enjoy automated timed tumbling and misting. The hand crank remains permanently installed for manual zero-power override.
+4. Mount the Two-Control IP65 enclosure (Master DC Cut + SD Reset + Micro-SD) and pair Flutter BLE Virtual Panel. The hand crank remains permanently installed for manual zero-power override.
 
 #### Path 2: Add-On 1 $\rightarrow$ Add-On 2 (Agentic Autonomous CNT Upgrade)
-1. Open the IP65 control enclosure. Unclip the mechanical spring-wound countdown timers and mount the Sprout Node (ESP32-S3 + OLED + Button) and modular ESP32-C3 Tools on the DIN rail.
+1. Mount the Sprout Node (ESP32-S3 + OLED + Two-Control Standard) and modular ESP32-C3 Tools on the DIN rail.
 2. Connect the stepper motor 4-wire lead to the TMC2209 driver governed by the `DEV_DRUM_STEP` tool with StallGuard homing.
 3. Insert the SHT40 probe into the pre-molded exhaust flue socket and plug the 4-wire lead into the `DEV_CLIMATE_SNS` tool.
 4. Mount the corona ozone module and connect its aeration tube to the reservoir stone, wired to the `DEV_OZONE_GEN` tool.

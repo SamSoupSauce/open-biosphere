@@ -83,6 +83,7 @@ export default defineConfig({
             { label: 'RFC-0002: Mantis Roller Kinematics', slug: 'rfcs/rfc-0002-mantis-crawler-kinematics' },
             { label: 'RFC-0003: TPS Aeroponic Root Shields', slug: 'rfcs/rfc-0003-tps-potato-root-shields' },
             { label: 'RFC-0004: Controller-Node-Tool Architecture', slug: 'rfcs/rfc-0004-controller-node-tool' },
+            { label: 'RFC-0005: Hardware Interlocks & BLE Virtual Panel', slug: 'rfcs/rfc-0005-hardware-interlocks-ble-virtual-panel' },
           ],
         },
       ],

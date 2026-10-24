@@ -56,12 +56,13 @@ const RFC_LIST: RFCItem[] = [
   },
   {
     id: 'RFC-0005',
-    title: 'Micro-Quadcopter Prop-Wash Resonant Pollination Protocol',
-    author: 'Flight Control Team',
+    title: 'Physical Hardware Interlocks & Minimalist BLE Virtual Interface Standard',
+    author: 'Architecture & System Safety Working Group',
     targetType: 'Hardware',
-    status: 'Draft',
-    date: '2026-10-23',
-    summary: 'Acoustic vibration calibration (180-220 Hz) for pepper flower buzz-pollination using propeller downwash velocity modulation.',
+    status: 'Implemented',
+    date: '2026-10-24',
+    summary: 'Strict Two-Control Physical Standard (Inline Master DC Power Cut & SD Factory Restore Tactile Button) with ephemeral Flutter BLE Virtual Panel interface, banning physical button panels and dials.',
+    docSlug: '/rfcs/rfc-0005-hardware-interlocks-ble-virtual-panel',
   },
   {
     id: 'RFC-0006',

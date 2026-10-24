@@ -188,19 +188,24 @@ flowchart TD
 
 ---
 
-## 4. Add-On 1: Semi-Autonomous Electromechanical Pack (Buttons & Dials)
+## 4. Add-On 1: Semi-Autonomous Electromechanical Pack (BLE Virtual Panel)
 
-Add-On 1 adds **motorized pumping, electric auger driving, and local push-button controls** to the base machine. It requires 24V DC power but operates **without firmware, microcontrollers, networks, or cloud dependencies**.
+Under [RFC-0005](/rfcs/rfc-0005-hardware-interlocks-ble-virtual-panel), physical control panels with dedicated jog buttons, dials, and potentiometers are banned across all machine tiers to eliminate water ingress and control priority contention. 
+
+Add-On 1 introduces **motorized pumping and electric auger pressing** governed by the **Strict Two-Control Physical Standard**:
+1. **Master Hardware DC Power Switch**: Mechanically disconnects 24V power.
+2. **"Nuke & Pave" SD Factory Restore Button**: Dedicated recessed tactile switch wired to trigger an automatic re-flash from micro-SD storage.
+
+All manual jogging, auger jam clearing, and pump speed adjustments are executed via the **Flutter Companion App Virtual Panel** over direct local BLE.
 
 ### Electromechanical Actuation & Controls
 - **Motorized Circulation**: A 24V DC brushless magnetic-drive pump (55 GPM) circulates water across the weir flume without manual siphoning.
-- **Electric Auger Drive**: A high-torque NEMA 23 stepper motor couples to the auger shaft via an inline spring-loaded friction slip-clutch. If the auger jams or the motor is unpowered, an operator can still insert the manual hand crank and turn the auger without back-driving or damaging the stepper.
-- **Local Control Panel**: An IP67 waterproof enclosure mounted on the side flume contains:
-  - High-current toggle switch for master pump power (Low / Medium / High flow).
-  - Green momentary push-button for forward auger jogging.
-  - Yellow momentary push-button for reverse auger clearing (purges debris).
-  - 10-turn analog potentiometer dial to set pump speed directly without code.
-- **Hardware Override Bus**: Push-buttons connect directly to the enable and step pins of the TB6600 motor driver and coil triggers of high-current relays, guaranteeing operation even if digital controllers are disconnected.
+- **Electric Auger Drive**: A high-torque NEMA 23 stepper motor couples to the auger shaft via an inline spring-loaded friction slip-clutch. If the auger jams or power is cut, an operator can insert the manual hand crank and turn the auger without back-driving or damaging the stepper.
+- **Strict Two-Control Enclosure**: An IP67 waterproof junction box mounted on the side flume contains:
+  - Heavy-duty toggle switch directly isolating the 24V DC supply line.
+  - Recessed tactile button next to the 0.91" I2C OLED display for 5-second SD recovery reflash.
+  - Micro-SD card slot module pre-loaded with golden recovery `firmware.bin` and `config.default`.
+- **Ephemeral BLE Virtual Panel**: When nearby, an operator opens the Flutter companion app on their phone or tablet. The app auto-discovers the skimmer over BLE GATT and displays real-time virtual touch pads: Forward Jog, Reverse Jam Purge, and a Pump Flow Rate slider (45 to 75 GPM).
 
 ### Step-by-Step Retrofit & Electromechanical Wiring Protocol
 
@@ -217,88 +222,76 @@ Step 2.2: NEMA 23 Stepper & Slip-Clutch Mechanical Coupling
   ├── Mate clutch output hub directly to the auger 1/2" hex drive shaft using M6 cross-pin.
   └── Verify hex hand crank still fits securely onto rear shaft stub for simultaneous manual override.
 
-Step 2.3: IP67 Control Enclosure Assembly
-  ├── Drill five 22mm panel cutouts into IP67 polycarbonate electrical enclosure:
-  │     Cutout 1: 2-position heavy-duty toggle switch (Pump Power).
-  │     Cutout 2: 10-turn wirewound precision potentiometer with counting dial (Pump Speed).
-  │     Cutout 3: Green momentary IP67 push-button (Auger Jog Forward).
-  │     Cutout 4: Yellow momentary IP67 push-button (Auger Clear Reverse).
-  │     Cutout 5: Red twist-to-release mushroom emergency stop button.
-  └── Install M16 IP68 liquid-tight nylon cable glands along enclosure bottom rim.
+Step 2.3: Two-Control Enclosure Assembly
+  ├── Mount IP67 polycarbonate junction box on outer coping rail.
+  ├── Install heavy-duty inline 24V DC toggle switch on the positive power entry lead.
+  ├── Install recessed tactile push-button wired to secondary bootloader recovery GPIO pin.
+  ├── Insert micro-SD card slot module preloaded with golden firmware.bin and config.default.
+  └── Mount 0.91" I2C OLED display showing [SKIMMER-A1 | BLE READY].
 
-Step 2.4: Driver, Pulse Generator & Power Distribution Wiring
+Step 2.4: Driver, BLE Peripheral & Power Distribution Wiring
   ├── Mount MeanWell 24V 150W power supply (LRS-150-24) inside sheltered enclosure with 10A fuse.
-  ├── Wire E-Stop switch inline on the 24V positive rail before all motor drivers and relays.
-  ├── Wire NE555 hardware timer circuit (set to 800 Hz pulse output) to TB6600 STEP pin.
-  ├── Route Green Jog PB through 555 output to TB6600 STEP pin (drives motor forward when pressed).
-  ├── Route Yellow Clear PB to TB6600 DIR pin (inverts step direction to reverse auger).
-  └── Connect Potentiometer wiper to pump speed input (0-10V analog speed command signal).
+  ├── Wire TB6600 stepper driver and high-current pump relay to ESP32 BLE peripheral controller.
+  ├── Verify BLE GATT service advertises [SKIMMER-VIRTUAL-PANEL] upon power-up.
+  └── Flash ESP32 firmware with Virtual Panel peripheral profile (supports touch jog and flow sliders).
 
 Step 2.5: Slip-Clutch Torque Verification
   ├── Fix auger flight with a wooden block to simulate a heavy branch/debris jam.
-  ├── Press Green Jog PB; observe slip-clutch slipping smoothly with zero stepper gear stripping.
+  ├── Trigger Forward Jog from Flutter mobile app; observe slip-clutch slipping smoothly without motor stalling.
   ├── Insert manual speed-handle crank and rotate by hand against motor holding torque.
   └── Clutch slips smoothly, verifying operator hand operation cannot back-feed or damage the motor.
 ```
 
-### Step-by-Step Push-Button Operating Runbook
+### Step-by-Step BLE Virtual Panel Operating Runbook
 
-1. **Power Initialization**: Verify emergency stop button is pulled out. Flip the 24V master power breaker; verify power LED illuminates on the IP67 control panel.
-2. **Circulation Flow Engagement**: Flip the Pump Power toggle switch to ON. Observe brushless pump ramp-up.
-3. **Flow Rate Adjustment**: Rotate the 10-turn analog potentiometer dial clockwise to adjust skimming flow between 45 and 75 GPM. Align dial to achieve a 12 mm laminar water sheet over the weir lip.
-4. **On-Demand Dewatering Pressing**: When green duckweed fronds pile up against the wedge-wire screen, press and hold the **Green Jog Push-Button**. The NEMA 23 stepper drives the auger forward at 30 RPM, continuously pressing protein paste out the discharge nozzle. Release button to stop.
-5. **Jam Clearing Recovery**: If stringy roots or floating twigs jam the auger, release the Green Jog button and press the **Yellow Reverse Push-Button** for 2 to 3 seconds. The motor reverses 5 full turns, breaking up the jam. Press Green Jog to resume normal extrusion.
-6. **Immediate Manual Fallback**: If power is cut or an emergency stop occurs, operators do not need to disengage motors or flip clutches. Simply insert the manual 1/2" hex hand crank and rotate manually—the friction slip-clutch slips at 4.8 N·m, enabling instant zero-electricity operation.
+1. **Power Initialization**: Flip the heavy-duty 24V master DC power switch to ON. The onboard 0.91" OLED illuminates: `[SKIMMER-A1 | BLE STANDBY]`.
+2. **Walk-Up BLE Virtual Panel Connection**: Open the Flutter companion app on mobile device. Select `SKIMMER-A1` from discovered BLE peripherals. The app instantly renders the Skimmer Virtual Panel.
+3. **Circulation Flow Adjustment**: Drag the virtual flow slider in the Flutter app to set desired skimming flow (45 to 75 GPM). The brushless pump ramps smoothly to target speed.
+4. **On-Demand Dewatering Pressing**: When duckweed fronds accumulate against the wedge-wire screen, press and hold the **Virtual Forward Jog Pad** in the app. The auger rotates at 30 RPM, pressing protein paste out the nozzle. Release pad to stop.
+5. **Jam Clearing Recovery**: If debris jams the auger, tap the **Virtual Reverse Purge Button** in the app. The motor reverses 5 full turns, clearing the blockage. Tap Forward Jog to resume extrusion.
+6. **"Nuke & Pave" SD Recovery Protocol**: If firmware hangs or configuration deadlocks, hold the physical recessed reset button for 5 seconds during power-on. The bootloader reflashes factory baseline firmware from micro-SD in 4 seconds.
+7. **Immediate Manual Fallback**: If power is severed, insert the manual 1/2" hex hand crank and rotate manually—the friction slip-clutch slips smoothly at 4.8 N·m, enabling instant zero-electricity operation.
 
-### Add-On 1 Electromechanical Wiring & Control Panel Blueprint
+### Add-On 1 Electromechanical Wiring & BLE Virtual Panel Blueprint
 
 ```text
 ========================================================================================
-ADD-ON 1 ELECTROMECHANICAL SCHEMATIC & LOCAL CONTROL PANEL BLUEPRINT
-Zero-Code / Push-Button & Dial Wiring with Spring-Loaded Mechanical Slip-Clutch
+ADD-ON 1 ELECTROMECHANICAL SCHEMATIC & BLE VIRTUAL PANEL BLUEPRINT
+Strict Two-Control Physical Standard (RFC-0005) with Ephemeral Flutter BLE Control
 ========================================================================================
 
-    [24V DC 150W MeanWell PSU] ──[10A Breaker / E-Stop Switch]──┬── (24V Power Bus)
-                                                                └── (GND Return Bus)
-                                                                          │
-  ┌─────────────────── IP67 OPERATOR CONTROL PANEL ──────────────────────┐│
-  │                                                                      ││
-  │  [Master Pump Power]      [Pump Speed Dial]     [Auger Jog Fwd]      ││
-  │   Heavy-Duty Toggle      10-Turn Potentiometer  Green Momentary PB   ││
-  │      ┌─────────┐             ┌─────────┐           ┌─────────┐       ││
-  │      │  ON/OFF │             │ (0-10V) │           │   FWD   │       ││
-  │      └────┬────┘             └────┬────┘           └────┬────┘       ││
-  │           │                       │                     │            ││
-  │           ▼                       ▼                     ▼            ││
-  │      To Pump Relay           To 24V Pump VFD      To TB6600 Step Gen ││
-  │                                                         │            ││
-  │  [Auger Jam Reverse]      [Emergency Stop Loop]         │            ││
-  │   Yellow Momentary PB     Red Twist-Lock Mushroom       │            ││
-  │      ┌─────────┐             ┌─────────┐                │            ││
-  │      │   REV   │             │  E-STOP │                │            ││
-  │      └────┬────┘             └────┬────┘                │            ││
-  │           │                       │                     │            ││
-  │           ▼                       ▼                     ▼            ││
-  │     To TB6600 Dir Pin        Master Coil Cut      To Driver Pulse In ││
-  └──────────────────────────────────────────────────────────────────────┘│
-                                                                          │
-  ┌──────────────────── DRIVE TRAIN & MOTORS ────────────────────────────┐│
-  │                                                                      ││
-  │  24V DC Brushless Magnetic Pump (55 GPM) ◄─── High-Current Relay ────┘│
-  │                                                                       │
-  │  NEMA 23 Geared Stepper Motor ◄─── TB6600 Stepper Driver (3.5A Peak) ─┘
-  │         │
-  │         ▼ (Motor Output Shaft)
-  │     ┌───────┐
-  │     │ ░░░░░ │ Friction Spring Slip-Clutch (Torque Limit: 4.8 N·m)
-  │     └───────┘ [SLIPS ON MANUAL CRANK OR OVERTORQUE]
-  │         │
-  │         ▼ (Auger Drive Shaft)
-  │    ═════╪══════════════════════════════════════════════════╗
-  │         │                                                  ║
-  │   [Auger Screw Press]                                [1/2" Hex Socket]
-  │   (Motor driven OR hand cranked simultaneously)       (Hand Crank Ready)
-  └───────────────────────────────────────────────────────────────────────┘
+    [24V DC 150W MeanWell PSU] ──[Heavy-Duty DC Power Switch]──┬── (24V Power Bus)
+                                                               └── (GND Return Bus)
+                                                                         │
+   ┌──────────────── STRICT TWO-CONTROL JUNCTION BOX ──────────────────┐│
+   │                                                                   ││
+   │  [Master DC Power Switch]      ["Nuke & Pave" SD Reset Button]    ││
+   │   Inline Mechanical Cut         Recessed Tactile Switch (5s hold) ││
+   │                                                                   ││
+   │  [Micro-SD Card Slot Module]   [0.91" I2C Status OLED Display]    ││
+   │   Preloaded golden .bin         Displays [SKIMMER-A1 | BLE READY] ││
+   │                                                                   ││
+   │  [ESP32 BLE GATT Peripheral] ◄─── (Ephemeral Mobile Link) ───────┼│
+   └───────────────────┬───────────────────────────────────────────────┘│
+                       │                                                │
+                       ▼ (Driver STEP/DIR & Relay Triggers)             │
+   ┌────────────────── DRIVE TRAIN & MOTORS ───────────────────────────┐│
+   │                                                                   ││
+   │  24V DC Brushless Magnetic Pump (55 GPM) ◄── High-Current Relay ──┘│
+   │                                                                    │
+   │  NEMA 23 Geared Stepper Motor ◄── TB6600 Stepper Driver ───────────┘
+   │         │
+   │         ▼ (Motor Output Shaft)
+   │     ┌───────┐
+   │     │ ░░░░░ │ Friction Spring Slip-Clutch (Torque Limit: 4.8 N·m)
+   │     └───────┘ [SLIPS ON MANUAL CRANK OR OVERTORQUE]
+   │         │
+   │         ▼ (Auger Drive Shaft)
+   │    ═════╪══════════════════════════════════════════════════╗
+   │         │                                                  ║
+   │   [Auger Screw Press]                                [1/2" Hex Socket]
+   │   (Motor driven OR hand cranked simultaneously)       (Hand Crank Ready)
+   └────────────────────────────────────────────────────────────────────┘
 ========================================================================================
 ```
 
@@ -306,20 +299,17 @@ Zero-Code / Push-Button & Dial Wiring with Spring-Loaded Mechanical Slip-Clutch
 
 ```mermaid
 flowchart LR
-    subgraph S2_Electrical["Add-On 1: Electromechanical Controls"]
-        PSU["24V DC MeanWell PSU"] --> EStop["Twist-Lock E-Stop Switch"]
-        EStop --> Panel["IP67 Local Control Panel"]
+    subgraph S2_Electrical["Add-On 1: Electromechanical & BLE Virtual Panel (RFC-0005)"]
+        PSU["24V DC MeanWell PSU"] --> MasterSW["Master DC Power Switch"]
+        MasterSW --> Box["Strict Two-Control Enclosure"]
         
-        Panel -->|"Toggle Switch"| Relay["High-Current DC Relay"]
-        Panel -->|"10-Turn Potentiometer (0-10V)"| VFD["Brushless Pump VFD Controller"]
-        VFD --> MagPump["24V DC Magnetic Drive Pump"]
-        Relay --> MagPump
+        App["Flutter Companion App (Virtual Panel)"] <-->|"Ephemeral BLE GATT"| BLE["ESP32 BLE Peripheral"]
+        Box -.->|"5s Reset Hold"| SDReset["Micro-SD Golden Reflash"]
         
-        Panel -->|"Green Fwd Jog PB"| PulseGen["555 Hardware Pulse Generator"]
-        Panel -->|"Yellow Rev Clear PB"| DirPin["Driver Direction Select"]
-        PulseGen --> TB6600["TB6600 Stepper Driver"]
-        DirPin --> TB6600
+        BLE -->|"Virtual Flow Slider"| Relay["Pump Relay / PWM"]
+        Relay --> MagPump["24V DC Magnetic Drive Pump"]
         
+        BLE -->|"Virtual Jog Pads"| TB6600["TB6600 Stepper Driver"]
         TB6600 --> NEMA23["NEMA 23 Geared Stepper"]
         NEMA23 --> Clutch["Spring-Loaded Friction Slip-Clutch (4.8 N·m)"]
         Clutch --> Auger["Dewatering Press Auger Shaft"]
@@ -329,14 +319,14 @@ flowchart LR
 ```
 
 ### Add-On 1 Bill of Materials (BOM)
-*Adds motorized pumping, electric auger dewatering drive, and local IP67 jog push-buttons without software.*
+*Adds motorized pumping, electric auger dewatering drive, Strict Two-Control hardware, and Flutter BLE Virtual Panel.*
 
 | Item Category | Component Name & Description | Sourcing / Standard Part | Est. Cost (USD) |
 | :--- | :--- | :--- | :--- |
 | **Water Pump** | 24V DC Brushless Magnetic Drive Pump (80W–120W, 55 GPM) | Solar fountain / pond pump | $58.00 |
 | **Motorized Auger** | NEMA 23 High-Torque Geared Stepper Motor | 3D printer / CNC stepper supplier | $32.00 |
-| **Control Box** | Waterproof IP67 Enclosure with Fwd/Rev Momentary Jog Buttons + Speed Dial | Industrial electrical supply | $24.00 |
-| **Motor Drivers** | Dual-Channel TB6600 Stepper Driver + High-Current DC Pump Relay | Standard maker electronics | $18.00 |
+| **Two-Control Enclosure** | IP67 ABS Box + Master DC Power Switch + Recessed SD Reset Button + 0.91" OLED | Industrial electrical supply | $24.00 |
+| **Motor Drivers & BLE** | Dual-Channel TB6600 Driver + Pump Relay + ESP32 BLE Virtual Panel Controller | Standard maker electronics | $18.00 |
 | **Power Supply** | 24V 150W MeanWell Industrial Power Supply + Inline Breaker Fuse | Standard electrical supply | $28.00 |
 | **Add-On 1 Direct Cost** | **Electromechanical Power Upgrade** | **Adds to Base Machine** | **+$160.00** |
 | **Cumulative Total** | **Operational Semi-Autonomous Harvester** | **Base + Add-On 1** | **$340.00** |
@@ -494,7 +484,7 @@ flowchart TD
 
 | Item Category | Component Name & Description | Sourcing / Standard Part | Est. Cost (USD) |
 | :--- | :--- | :--- | :--- |
-| **Machine Node** | ESP32-S3 Dual-Core (8MB PSRAM) + 0.96" I2C OLED Display + Setup Button | Espressif / maker distributor | $16.00 |
+| **Machine Node** | ESP32-S3 Dual-Core (8MB PSRAM) + 0.96" OLED + Master DC Cut + SD Reset & Micro-SD Module | Espressif / maker distributor | $16.00 |
 | **Modular Edge Tools** | 3x ESP32-C3 Micro Boards with 0.42" Micro OLED Displays & 250ms Watchdog (Weir, Auger, Pump) | Microcontroller supplier | $21.00 |
 | **Sump Telemetry Tool** | 1x ESP32-C3 Micro Board + JSN-SR04T Ultrasonic Sensor + Dual Optical Float Switches | Maker electronics | $18.00 |
 | **Linear Actuator** | 12V Micro Linear Actuator (50mm stroke with analog potentiometer feedback) | Robotics actuator supplier | $28.00 |
@@ -511,7 +501,7 @@ A builder can start with the **Base Machine ($180.00)**, run completely off-grid
 | Build Tier | Operational Capability | Direct Tier Cost | Cumulative Investment |
 | :--- | :--- | :--- | :--- |
 | **Base Machine** | 100% mechanical, zero-power off-grid harvesting with hand levers & cranks | $180.00 | **$180.00** |
-| **Add-On 1** | Motorized pumping & auger pressing with waterproof panel buttons & dials | +$160.00 | **$340.00** |
+| **Add-On 1** | Motorized pumping & auger pressing with BLE Virtual Panel & 2 physical controls | +$160.00 | **$340.00** |
 | **Add-On 2** | Controller-Node-Tool (CNT) architecture, automated weir, & 250ms watchdogs | +$97.00 | **$437.00** |
 
 ### Step-by-Step Conversion Roadmap (Zero Waste Upgrade Path)
@@ -521,7 +511,7 @@ Upgrade Path 1: Converting Base Machine to Add-On 1 (Semi-Autonomous)
   ├── 1. Leave all Base Machine acrylic chassis, wedge wire, and auger screw completely intact.
   ├── 2. Mount 24V brushless pump on lower flume bracket; plumb into existing 1.5" PVC bulkhead.
   ├── 3. Bolt NEMA 23 motor bracket to auger chassis; slide spring-loaded slip-clutch over auger hex shaft.
-  ├── 4. Mount IP67 control box to outer coping; wire 24V PSU, TB6600 driver, pump toggle, and jog buttons.
+  ├── 4. Mount Two-Control IP67 box (Master DC Cut + SD Reset + Micro-SD) and pair Flutter BLE Virtual Panel.
   └── Result: Full electromechanical push-button operation; manual crank remains functional via slip-clutch.
 
 Upgrade Path 2: Converting Add-On 1 to Add-On 2 (Agentic CNT)
@@ -529,8 +519,8 @@ Upgrade Path 2: Converting Add-On 1 to Add-On 2 (Agentic CNT)
   ├── 2. Unpin the manual counterweight link from the weir gate arm; bolt 12V micro linear actuator in its place.
   ├── 3. Mount overhead 2020 camera strut at Z=1,400mm; install Sony IMX219 NIR camera module for Central Controller stream.
   ├── 4. Install JSN-SR04T ultrasonic level sensor and optical float switch inside the sump with DEV_SUMP_LEVEL tool.
-  ├── 5. Mount Skimmer Node (ESP32-S3 + OLED + Button); wire driver STEP/DIR to DEV_AUGER_STEP tool in parallel with manual jog buttons.
-  ├── 6. Pair Skimmer Node with Central Controller ID via mobile app BLE; bind DEV_WEIR_ACT, DEV_AUGER_STEP, DEV_PUMP_VFD, DEV_SUMP_LEVEL.
+  ├── 5. Mount Skimmer Node (ESP32-S3 + OLED + Two-Control Standard); bind modular Tools via Flutter BLE Virtual Panel.
+  ├── 6. Commission Skimmer Node with Target Controller ID via Flutter BLE Virtual Panel; bind DEV_WEIR_ACT, DEV_AUGER_STEP, DEV_PUMP_VFD, DEV_SUMP_LEVEL.
   └── Result: Fully autonomous closed-loop CNT AI operation with 100% preserved manual & push-button fallback.
 ```
 

@@ -1,0 +1,100 @@
+---
+title: "RFC-0005: Physical Hardware Interlocks & Minimalist BLE Virtual Interface Standard"
+description: Architectural standard banning physical control panels, establishing the Strict Two-Control Physical Standard and the Flutter BLE Virtual Panel interface
+---
+
+- **Status**: Implemented
+- **Author**: Architecture & System Safety Working Group
+- **Created**: 2026-10-24
+- **Target Subsystem**: System Architecture (SYS-002)
+
+---
+
+## 1. Executive Summary & Design Law
+
+Physical control panels with dedicated jog buttons, dials, analog potentiometers, and forward/reverse toggle switches are **banned across all machine tiers**.
+
+In high-humidity, mist-heavy agricultural enclosures, physical control boxes introduce severe engineering liabilities:
+1. **Water Ingress & Corrosion**: Every potentiometer shaft, toggle grommet, and push-button cutout is a moisture breach point that corrodes in humid greenhouse air.
+2. **Component Cost Bloat**: Industrial IP65/IP67 rated rotary dials and waterproof button boxes add \$25–\$45 per machine in dead electromechanical overhead.
+3. **Control Priority Contention ("Control Fights")**: Hardwired manual jog switches conflict directly with autonomous closed-loop firmware and CAN/Wi-Fi dispatch routines, creating hazardous race conditions and motor stall transients.
+
+Under this RFC, all Open Biosphere nodes and tools must adhere to the **Strict Two-Control Physical Standard**:
+1. **Physical Master Power Cut:** Inline hardware switch directly isolating DC supply (Solar/Battery/Rail).
+2. **SD Factory Restore Button:** Dedicated tactile switch that triggers an automatic hardware re-flash from micro-SD storage, returning the board to factory baseline.
+
+All interactive operation, calibration, jogging, and pairing are conducted via ephemeral Bluetooth Low Energy (BLE) using the Flutter companion app (**"Virtual Panel"**).
+
+---
+
+## 2. Hardware Specification: The Two Physical Controls
+
+Every machine node and tool controller enclosure is restricted to exactly two physical controls:
+
+### Control 1: True Hardware Power Disconnect
+* **Placement:** Located directly on the master DC input line between the power source (solar charge controller, battery pack, or 24V power supply) and the board.
+* **Function:** Mechanically severs positive power. Zero soft-switches, zero sleep-state leakage, and zero quiescent microcontroller draw.
+* **Maintenance Safety:** When switched OFF, the node and all connected peripheral motor drivers, relays, and sensors are completely de-energized, allowing safe physical maintenance.
+
+### Control 2: The "Nuke & Pave" SD Reset Button
+* **Placement:** Recessed tactile button on the node enclosure directly adjacent to the status OLED display.
+* **Operation & Logic:**
+  * Holding the button for 5 seconds during boot trips the secondary bootloader routine in the ESP32 firmware.
+  * The bootloader reads the golden recovery image (`firmware.bin` and `config.default`) from the onboard micro-SD card slot module.
+  * Overwrites the internal flash memory and wipes all Non-Volatile Storage (NVS) partitions clean.
+  * Restores factory defaults: clears assigned Controller IDs, kills deadlocks or runaway state machines, and re-initializes BLE in an unassigned, discoverable state.
+
+---
+
+## 3. Ephemeral BLE Interaction Pattern ("Virtual Panel")
+
+Because each node and tool operates on an ESP32 (ESP32-S3 for Nodes, ESP32-C3 for Tools), the physical user interface lives dynamically inside the mobile Flutter companion app:
+
+```text
+[ Operator with Phone / Tablet ]
+│
+│  1. Walk up & BLE Pair
+▼
+┌──────────────────────────────────────────────┐
+│       FLUTTER APP: "VIRTUAL PANEL"           │
+│  • Reads Tool/Node Manifest via BLE GATT     │
+│  • Displays dynamic controls for that unit:  │
+│      - Forward / Reverse jog touch pads      │
+│      - Speed / Flow touch sliders            │
+│      - Target Controller ID input field      │
+│      - Live sensor telemetry gauges & graphs │
+└──────────────────────────────────────────────┘
+│
+│  2. Execute configuration, calibration, or jog
+│  3. Disconnect & Walk Away
+▼
+[ Node commits settings to NVS, resumes autonomous work ]
+```
+
+### The Provisioning & Override Flow
+
+1. **Commissioning:**
+   * Operator opens the Flutter app and scans for nearby unassigned nodes via BLE.
+   * Tap target node (e.g. `SKIMMER-NODE-01`).
+   * App presents an input field: *"Target Controller ID"*.
+   * Operator types the 4-digit pairing integer displayed on the Central Pi 5's OLED display (e.g. `4096`).
+   * Node saves the ID to NVS, initiates connection to the Controller's hidden Wi-Fi network, and unpairs BLE.
+
+2. **Manual Jog / Maintenance Override:**
+   * When an operator needs to purge an auger, prime a dosing pump, or jog a gantry axis, they walk up to the machine with their mobile device.
+   * The Flutter app connects over direct BLE GATT.
+   * The app dynamically renders real-time virtual jog buttons and telemetry gauges tailored to that specific node.
+   * The operator performs the manual adjustment.
+   * Upon exiting the app or walking away, the BLE link disconnects cleanly, and the node returns to executing high-level commands from the Central Controller.
+
+---
+
+## 4. Remediation Directives for Documentation & Catalog
+
+1. **Catalog Updates:** Purge all mentions of external IP67 button boxes, 10-turn analog potentiometers, wired yellow industrial pendants, and multi-switch jog panels from machine specifications.
+2. **Hardware BOMs:** Update all Node/Tool BOMs to reflect:
+   * 1x Heavy-Duty Inline DC Power Switch.
+   * 1x Tactile Reset Button (wired to SD recovery GPIO pin).
+   * 1x Micro-SD Card Slot Module (with 8GB/16GB recovery card pre-loaded with golden `firmware.bin` and `config.default`).
+   * 1x Mini status OLED display (0.42" or 0.91" I2C).
+3. **Firmware Guidelines:** Enforce the recovery bootloader routine and implement the standardized BLE GATT configuration service across all ESP32 firmware templates.

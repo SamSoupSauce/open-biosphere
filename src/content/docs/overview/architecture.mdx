@@ -100,7 +100,7 @@ Under [RFC-0004](/rfcs/rfc-0004-controller-node-tool), the biosphere decouples h
 ```
 
 1. **The Controller (Central Brain)**: A single black-box appliance (Raspberry Pi 5 + Hailo-8 M.2 HAT) running neural perception, spatial mapping, and multi-agent coordination. Emits a hidden WPA3 Wi-Fi network and displays `[CTRL_ID: XXXX]` on its OLED screen for mobile app pairing.
-2. **The Node (Machine Subsystem)**: Exactly one per physical machine frame (ESP32-S3 with PSRAM). Hosts an OLED status display (`[NODE: <NAME> | LINK -> CTRL_ID]`) and a setup button. The operator provisions the Node via mobile BLE with the Controller ID, connecting the Node to the hidden Wi-Fi.
+2. **The Node (Machine Subsystem)**: Exactly one per physical machine frame (ESP32-S3 with PSRAM). Hosts an OLED status display (`[NODE: <NAME> | LINK -> CTRL_ID]`). Under [RFC-0005](/rfcs/rfc-0005-hardware-interlocks-ble-virtual-panel), physical control panels are banned: the enclosure carries strictly an inline DC power switch and a recessed SD recovery button. The operator provisions the Node and performs manual jogging via the Flutter companion app over local BLE.
 3. **The Tools (Actuators & Sensors)**: Minimalist micro-controllers (ESP32-C3 / Xiao) dedicated 1:1 to single motors, drivers, or sensor clusters. Each Tool features a micro OLED status display and a **250ms hardware deadman watchdog** that cuts power or snaps valves closed if communication to its Node is lost.
 
 ---

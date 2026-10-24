@@ -146,38 +146,53 @@ flowchart TD
 
 ---
 
-## 4. Add-On 1: Semi-Autonomous Electromechanical Pack (Buttons & Dials)
+## 4. Add-On 1: Semi-Autonomous Electromechanical Pack (BLE Virtual Panel)
 
-The **Semi-Autonomous Pack** adds powered aerial locomotion: an 85 mm ducted polycarbonate whoop airframe with integrated propeller guards, four 1103 10,000KV brushless motors, an STM32F4 AIO flight controller with 12A ESC, a 2.4 GHz ExpressLRS receiver, and a high-frequency piezo flower vibrator. The pilot flies the drone via a handheld RC radio, engaging altitude hold and burst-throttle buzz pollination over crop rows.
+Under [RFC-0005](/rfcs/rfc-0005-hardware-interlocks-ble-virtual-panel), physical control panels, dedicated button boxes, rotary dials, and bulky handheld RC transmitters with mechanical switches are banned across all machine tiers to eliminate water ingress and control priority contention.
+
+Add-On 1 introduces powered aerial locomotion governed by the **Strict Two-Control Physical Standard**:
+1. **Master Hardware DC Power Switch**: Inline mechanical disconnect directly isolating the 2S LiPo battery and charging bus.
+2. **"Nuke & Pave" SD Factory Restore Button**: Dedicated recessed tactile switch on the ground bench module/node wired to trigger an automatic secondary bootloader re-flash from micro-SD storage.
+
+All manual flight trim calibration, virtual stick steering, motor test pulses, and acoustic buzz pollination triggers are conducted via the **Flutter Companion App Virtual Panel** over direct local BLE GATT.
 
 ### Electromechanical Actuation Architecture & Decoupling
 - **Airframe**: 85 mm wheelbase ducted whoop frame molded in high-impact polycarbonate. Enclosed duct guards ensure props cannot cut plant leaves or vines on accidental contact.
 - **Powertrain**: Four 1103 10,000KV brushless outrunner motors spinning 2.0-inch tri-blade polycarbonate propellers, generating 240 g total thrust ($3.5:1$ thrust-to-weight ratio).
 - **Acoustic Downwash Generation**: Prop downwash velocity measures 2.2 m/s at 150 mm below the ducts, sufficient to flutter blossoms and vibrate pollen free without physical contact.
-- **Pilot Radio Interface**: 2.4 GHz ExpressLRS handheld transmitter with dual hall-effect gimbals, a 3-position flight mode switch (Angle, Altitude Hold, Buzz Burst), and an emergency throttle disarm toggle.
+- **Strict Two-Control Enclosure & Dock**: A benchtop charging station and drone power harness feature:
+  - Inline mechanical DC cut switch directly isolating the battery lead with zero soft-switch leakage.
+  - Recessed tactile button next to the 0.91" I2C OLED display (`[DRONE-A1 | BLE READY]`) for 5-second SD recovery reflash.
+  - Micro-SD card slot module pre-loaded with golden recovery `firmware.bin` and `config.default`.
+- **Ephemeral BLE Virtual Panel**: When nearby, an operator opens the Flutter companion app on mobile device. The app auto-discovers the drone over BLE GATT and displays real-time virtual touch flight pads: virtual twin gimbals, Altitude Hold toggle, and Acoustic Buzz burst button.
 - **Mechanical Decoupling**: If battery is depleted, the entire whoop drone snaps into the Base carbon wand socket, instantly reverting to manual sweep pollination.
 
 ```
-       ELECTROMECHANICAL WIRING & MICRO-WHOOP SCHEMATIC
+       ELECTROMECHANICAL WIRING & BLE VIRTUAL INTERFACE SCHEMATIC
   =================================================================
   [2S 450mAh LiPo Battery (7.4V / 8.4V Peak)]
          |
-         +----[20A Solid XT30 Connector]----+----(Current Sensor)
-                                            |
-         +----------------------------------+-------------------+
-         |                                                      |
-         v                                                      v
-  [STM32F411 AIO Flight Controller]              [4-in-1 12A BLHeli_S ESC]
-  (Betaflight / ArduPilot Firmware)                      |
-         |                               +---------------+---------------+
-         | SPI / UART                    |       |               |       |
-         v                               v       v               v       v
-  [ExpressLRS 2.4GHz RX]               [M1]    [M2]            [M3]    [M4]
-  (From Handheld Radio)                (1103 Brushless Motors - 10,000KV)
+         +----[Master DC Cut Switch]----+----(XT30 Connector)
+                                        |
+         +------------------------------+---------------------------+
+         |                                                          |
+         v                                                          v
+  [STM32F411 AIO Flight Controller]                  [4-in-1 12A BLHeli_S ESC]
+  (BLE Peripheral Bridge + OLED + SD Reset)                 |
+         |                                   +--------------+--------------+
+         | I2C / UART                        |       |              |      |
+         v                                   v       v              v      v
+  [0.91" I2C OLED Status Display]          [M1]    [M2]           [M3]   [M4]
+  [Micro-SD Slot + Recovery Bin ]          (1103 Brushless Motors - 10,000KV)
          |
          v GPIO
   [High-Frequency Piezo Transducer]
   (Acoustic Stems Vibration: 310 Hz)
+         ^
+         : Direct BLE GATT (No Contention)
+         v
+  [Flutter Companion App Virtual Panel]
+  (Virtual Flight Sticks, Alt-Hold Toggle, Buzz Pollinate Burst)
 ```
 
 ### Step-by-Step Retrofit Protocol
@@ -190,42 +205,45 @@ The **Semi-Autonomous Pack** adds powered aerial locomotion: an 85 mm ducted pol
 #### Step 2.2: AIO Flight Controller & ESC Mounting
 1. Mount the STM32F411 All-in-One flight controller board on soft silicone anti-vibration grommets in the center bay.
 2. Solder the three motor phase wires from each corner directly to the corresponding ESC solder pads.
-3. Solder an XT30 battery lead with a 16V 220µF low-ESR electrolytic capacitor to damp voltage spikes.
+3. Solder an XT30 battery lead through the heavy-duty inline master DC switch with a 16V 220µF low-ESR capacitor.
 
-#### Step 2.3: ExpressLRS Radio Receiver Integration
-1. Solder a 2.4 GHz ExpressLRS (ELRS) serial receiver to UART2 on the flight controller (TX, RX, 5V, GND).
-2. Route the ceramic tower antenna vertically through the protective top canopy.
-3. Bind the receiver to your handheld 2.4 GHz ELRS radio transmitter.
+#### Step 2.3: BLE Peripheral Integration & Two-Control Dock
+1. Wire the ESP32 BLE peripheral bridge to UART2 on the flight controller (TX, RX, 5V, GND).
+2. Wire the recessed tactile SD recovery button and micro-SD card slot module pre-loaded with golden `firmware.bin` and `config.default`.
+3. Connect 0.91" I2C OLED display showing `[DRONE-A1 | BLE READY]`.
 
 #### Step 2.4: Piezo Acoustic Vibration Transducer Rigging
 1. Mount a 27 mm brass-backed piezoelectric ceramic transducer to the underside carbon battery tray.
 2. Wire the piezo disc through a miniature N-channel FET driven by a spare PWM output (LED pad).
-3. Program Betaflight resource remapping to trigger 310 Hz square-wave oscillation when Radio Switch SD is toggled.
+3. Program flight controller to trigger 310 Hz square-wave oscillation when the Virtual Panel BUZZ command is received over BLE.
 
 #### Step 2.5: Bench Flight Calibration
-1. Connect flight controller to Betaflight Configurator via USB-C.
-2. Calibrate onboard 6-axis gyroscope/accelerometer on a dead-level surface.
+1. Connect flight controller to configuration software; calibrate onboard 6-axis gyroscope/accelerometer on a dead-level surface.
+2. Connect mobile companion app over BLE; verify virtual sticks move flight channels smoothly with zero latency jitter.
 3. Set motor idle speed to 5.5% and verify smooth motor spin-up with zero vibration resonance.
 
 ```mermaid
 flowchart LR
-    A[Handheld 2.4GHz ELRS Radio] -->|Radio Packets| B[Onboard ELRS Receiver]
-    B -->|CRSF Protocol| C[STM32F4 AIO Flight Controller]
-    C -->|DShot300 Signals| D[4-in-1 12A ESC]
-    C -->|PWM Oscillation| E[310 Hz Piezo Transducer]
-    D --> F[Four 1103 Motors: 2.2 m/s Prop Downwash]
-    E --> G[Acoustic Resonance on Stems]
-    F & G --> H[Contactless Buzz Pollination]
+    A[Flutter Companion App: Virtual Panel] -->|BLE GATT Packets| B[Onboard BLE Receiver Bridge]
+    B -->|CRSF / MSP Protocol| C[STM32F4 AIO Flight Controller]
+    D[2S LiPo Battery] -->|Master DC Switch| C
+    C -->|DShot300 Signals| E[4-in-1 12A ESC]
+    C -->|PWM Oscillation| F[310 Hz Piezo Transducer]
+    E --> G[Four 1103 Motors: 2.2 m/s Prop Downwash]
+    F --> H[Acoustic Resonance on Stems]
+    G & H --> I[Contactless Buzz Pollination]
 ```
 
-### Step-by-Step Push-Button Operating Runbook
+### Step-by-Step BLE Virtual Panel Operating Runbook
 
 1. **Pre-Flight Battery Check**: Verify 2S 450mAh LiPo battery voltage reads $8.40\text{ V}$ ($4.20\text{ V/cell}$) on a digital battery checker. Slide pack into silicone battery strap; connect XT30 plug.
-2. **Transmitter Initialization**: Power on the handheld ELRS radio transmitter. Verify telemetry signal strength (RSSI $> -75\text{ dBm}$).
-3. **Arming the Quadcopter**: Place the drone on a flat, clear section of the greenhouse path. Flip the left 2-position switch to ARM (props idle at 5.5% RPM).
-4. **Canopy Hover & Traverse**: Raise throttle to 45% hover. Fly along the trellised crop row at 0.5 m/s, maintaining 150 mm to 300 mm clearance directly above blooming pepper clusters.
-5. **Engaging Buzz Pollination**: Position the drone directly above an open flower cluster. Flip the 3-position auxiliary switch to BUZZ. The flight controller holds altitude while pulsing throttle $\pm 8\%$ and oscillating the piezo transducer at 310 Hz for 2 seconds. The combined prop-wash and acoustic vibration releases pollen clouds instantly.
-6. **Return & Battery Swap**: When battery voltage sags to 7.0V ($3.5\text{ V/cell}$ under load), navigate back to the landing pad, disarm motors, and swap in a fresh LiPo pack.
+2. **Master Power Engagement**: Flip the inline master DC switch to ON. The onboard 0.91" OLED illuminates: `[DRONE-A1 | BLE READY]`.
+3. **Walk-Up BLE Virtual Panel Connection**: Open the Flutter companion app on mobile device. Select `DRONE-A1` from discovered BLE peripherals. The app instantly renders the Flight Virtual Panel.
+4. **Arming the Quadcopter**: Place the drone on a flat, clear section of the greenhouse path. Tap the virtual ARM button in the app (props idle at 5.5% RPM).
+5. **Canopy Hover & Traverse**: Raise the virtual throttle slider to 45% hover. Fly along the trellised crop row at 0.5 m/s, maintaining 150 mm to 300 mm clearance directly above blooming pepper clusters.
+6. **Engaging Buzz Pollination**: Position the drone directly above an open flower cluster. Tap the virtual BUZZ button in the app. The flight controller holds altitude while pulsing throttle $\pm 8\%$ and oscillating the piezo transducer at 310 Hz for 2 seconds. The combined prop-wash and acoustic vibration releases pollen clouds instantly.
+7. **"Nuke & Pave" SD Recovery Protocol**: If flight firmware locks up or parameter corruption occurs, hold the recessed SD reset button for 5 seconds during power-on. The bootloader reflashes golden firmware from micro-SD in 4 seconds.
+8. **Return & Battery Swap**: When battery voltage sags to 7.0V ($3.5\text{ V/cell}$ under load), land on the path, disarm motors via virtual panel, flip master DC switch OFF, and swap in a fresh LiPo pack.
 
 ### Add-On 1 Bill of Materials (BOM)
 
@@ -234,7 +252,7 @@ flowchart LR
 | **A1-01** | 85mm Ducted Polycarbonate Whoop Airframe + Ducts | BetaFPV / Happymodel frame | 1 | $14.00 | $14.00 |
 | **A1-02** | 1103 10,000KV Brushless Outrunner Motors + Props | FPV micro-motor supplier | 4 | $9.50 | $38.00 |
 | **A1-03** | STM32F4 AIO Flight Controller + 4-in-1 12A ESC | Betaflight AIO board | 1 | $42.00 | $42.00 |
-| **A1-04** | 2.4 GHz ExpressLRS Radio Receiver + Transmitter | RadioMaster Pocket / ELRS | 1 | $45.00 | $45.00 |
+| **A1-04** | BLE Virtual Interface & Two-Control Dock Module (Master DC Switch, Recessed SD Reset Button, Micro-SD Slot + 16GB Golden Card, 0.91" I2C OLED) | Maker electronics supplier | 1 | $45.00 | $45.00 |
 | **A1-05** | 2S 450mAh 75C High-Discharge LiPo Batteries (4x pack) | Tattu / GNB micro battery | 1 | $22.00 | $22.00 |
 | **A1-06** | 27mm Piezo Acoustic Vibration Transducer + FET | Electronics supplier | 1 | $12.00 | $12.00 |
 | **Total** | **Add-On 1 Electromechanical Pack** | **Retrofits directly to Base** | | | **+$173.00** |
@@ -247,7 +265,7 @@ flowchart LR
 Under [RFC-0004](/rfcs/rfc-0004-controller-node-tool), the **Agentic Autonomous AI Pack** enables fully autonomous indoor pollination without human pilots or GPS under the **Controller-Node-Tool (CNT)** standard. The drone operates as a flying **Drone Node** commanding modular **Edge Tools** over BLE, receiving global flight sortie schedules and bloom coordinates from the Central Biosphere Controller over Wi-Fi.
 
 ### Autonomous Vision & Telemetry Architecture
-- **Drone Flight Node (ESP32-S3)**: Dual-Core Xtensa LX7 (240 MHz, 8 MB PSRAM) flight companion computer with an onboard 0.96" I2C OLED display (`[NODE: DRONE-01 | LINK -> 4096]`) and physical setup button for mobile BLE provisioning. Uplinks to Central Controller via Wi-Fi; receives flight plans, coordinates local pose estimation, and downlinks to Tools via BLE Central.
+- **Drone Flight Node (ESP32-S3)**: Dual-Core Xtensa LX7 (240 MHz, 8 MB PSRAM) flight companion computer governed by the **Strict Two-Control Physical Standard** (Master DC Power Switch and Recessed SD Reset Button alongside 0.96" I2C OLED `[NODE: DRONE-01 | LINK -> 4096]`). Uplinks to Central Controller via Wi-Fi; receives flight plans, coordinates local pose estimation, and downlinks to Tools via BLE Central.
 - **Decoupled Optical AprilTag Tracking**: Down-facing micro-camera streams video directly over Wi-Fi to the Central Controller (Raspberry Pi 5 + Hailo-8 M.2 HAT), which processes AprilTags spaced along greenhouse ceiling extrusions at 30 FPS, returning millimeter 6-DoF global pose vectors $(X, Y, Z)$ to the drone.
 - **Dedicated Modular Edge Tools (ESP32-C3)**: Driven 1:1 by micro ESP32-C3 controllers equipped with 0.42" micro OLED displays and **250ms hardware deadman watchdogs**:
   - `DEV_FLIGHT_CTL`: Micro ESP32-C3 / STM32 bridge with 0.42" OLED (`TOOL: FLIGHT_CTL | LINK: OK`) + 250ms watchdog driving 4x brushless ESCs with auto-land descent failsafe.
@@ -367,17 +385,19 @@ stateDiagram-v2
 | Build Stage | Operational Capability | Direct Stage Cost | Cumulative Investment |
 | :--- | :--- | :--- | :--- |
 | **Base: Instructions** | 100% mechanical manual wand with acoustic resonant flower vibrator & mirror | $52.00 | **$52.00** |
-| **Add-On 1: Semi-Auto** | Handheld RC radio-piloted ducted whoop flight with push-button buzz pollination | +$173.00 | **$225.00** |
+| **Add-On 1: Semi-Auto** | Flutter BLE Virtual Panel piloted ducted whoop flight with two-control interlocks | +$173.00 | **$225.00** |
 | **Add-On 2: Agentic AI** | Controller-Node-Tool (CNT) automation, indoor AprilTag SLAM, optical flow hover, & auto-perch | +$99.00 | **$324.00** |
 
 ### Step-by-Step Zero-Waste Conversion Roadmap
 
-#### Path 1: Base Machine $ightarrow$ Add-On 1 (Piloted Micro-Whoop Drone)
+#### Path 1: Base Machine $
+ightarrow$ Add-On 1 (Piloted Micro-Whoop Drone)
 1. Assemble the 85 mm ducted whoop airframe, brushless motors, and STM32F4 flight controller.
-2. Solder the ExpressLRS receiver and piezo acoustic transducer.
+2. Wire the BLE peripheral bridge, Two-Control power harness, and piezo acoustic transducer.
 3. The Base carbon wand and 1/4"-20 cradle remain fully functional as a handheld backup mount if flying indoors is restricted by temporary netting.
 
-#### Path 2: Add-On 1 $ightarrow$ Add-On 2 (Autonomous Edge CNT Drone)
+#### Path 2: Add-On 1 $
+ightarrow$ Add-On 2 (Autonomous Edge CNT Drone)
 1. Mount the Drone Flight Node (ESP32-S3 + OLED + Button) and modular ESP32-C3 Tools on the carbon airframe.
 2. Connect `DEV_OPT_FLOW` tool to the bottom optical flow and laser ToF sensors.
 3. Wire the RunCam micro-camera with Wi-Fi video streaming to the Central Controller.

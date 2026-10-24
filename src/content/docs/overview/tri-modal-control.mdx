@@ -1,26 +1,28 @@
 ---
-title: Tri-Modal Control Standard (Manual, Buttons, AI)
-description: Engineering specification for mechanical manual fallback, push-button electromechanics, and autonomous AI actuation
+title: Tri-Modal Control Standard (Manual, BLE Virtual Panel, AI)
+description: Engineering specification for mechanical manual fallback, ephemeral BLE virtual panels with two physical interlocks, and autonomous AI actuation
 ---
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
 
 A core vulnerability of modern agricultural technology and robotics is **brittle complexity**. When a system requires high-speed internet, cloud servers, complex software stacks, and microcontrollers just to turn a valve or harvest a tray, a blown fuse, software bug, or off-grid blackout turns expensive equipment into useless scrap.
 
-The **Open Biosphere Tri-Modal Control Standard** mandates that every machine in the ecosystem must be operable across three distinct, parallel tiers of control:
+Conversely, hardwiring physical button panels, rotary dials, and analog potentiometers across a high-humidity greenhouse leads to rapid contact corrosion, water ingress, and priority contention ("control fights") between manual switches and autonomous firmware.
+
+The **Open Biosphere Tri-Modal Control Standard** (enforcing [RFC-0004](/rfcs/rfc-0004-controller-node-tool) and [RFC-0005](/rfcs/rfc-0005-hardware-interlocks-ble-virtual-panel)) mandates that every machine in the ecosystem must be operable across three distinct, parallel tiers of control:
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
 │                        TRI-MODAL CONTROL SPECTRUM                      │
 ├───────────────────────┬────────────────────────┬───────────────────────┤
-│    TIER 1: MANUAL     │    TIER 2: BUTTONS     │     TIER 3: AI        │
-│  Zero-Electricity     │  Local Electromech     │   Autonomous Edge     │
+│    TIER 1: MANUAL     │  TIER 2: BLE VIRTUAL   │     TIER 3: AI        │
+│  Zero-Electricity     │  Two-Control Hardware  │   Autonomous Edge     │
 ├───────────────────────┼────────────────────────┼───────────────────────┤
-│ • Hand levers         │ • Momentary push-btn   │ • Computer vision     │
-│ • Rotary hand cranks  │ • Toggle switches      │ • Closed-loop PID     │
-│ • Ball / gate valves  │ • Potentiometer dials  │ • Multi-agent ROS2    │
-│ • Mechanical ratchets │ • Wired jog pendants   │ • Central orchestrator│
-│ • Gravity / siphons   │ • Hardware timers      │ • Continuous ML audit │
+│ • Hand levers         │ • Inline DC Power Cut  │ • Central Pi 5 + NPU  │
+│ • Rotary hand cranks  │ • SD "Nuke & Pave" Btn │ • Closed-loop CNT     │
+│ • Ball / gate valves  │ • Flutter BLE Panel    │ • Multi-agent mesh    │
+│ • Mechanical ratchets │ • Virtual jog pads     │ • 250ms deadman timer │
+│ • Gravity / siphons   │ • Ephemeral override   │ • Continuous ML audit │
 └───────────────────────┴────────────────────────┴───────────────────────┘
 ```
 
@@ -30,10 +32,10 @@ The **Open Biosphere Tri-Modal Control Standard** mandates that every machine in
 
 <CardGrid>
   <Card title="Tier 1: 100% Mechanical Manual Fallback" icon="hands">
-    **Zero electrical power required.** In an off-grid battery failure, emergency shutdown, or EMP event, an operator can operate the machine entirely by hand using physical levers, manual valves, hand cranks, and mechanical latches.
+    **Zero electrical power required.** In an off-grid battery failure, emergency shutdown, or EMP event, an operator can operate the machine entirely by hand using physical levers, manual valves, hand cranks, and mechanical slip-clutches.
   </Card>
-  <Card title="Tier 2: Local Push-Button & Dial Control" icon="setting">
-    **No software, network, or firmware required.** Machine operators can jog motors, prime pumps, open valves, and execute harvest cycles directly from physical panel buttons, rotary dials, and toggle switches wired to simple relays and motor drivers.
+  <Card title="Tier 2: Ephemeral BLE Virtual Panel (Strict Two-Control Hardware)" icon="setting">
+    **Zero physical button corrosion or control contention.** Under [RFC-0005](/rfcs/rfc-0005-hardware-interlocks-ble-virtual-panel), physical jog panels, dials, and potentiometers are banned. Physical hardware features strictly **two controls**: (1) True Inline Master DC Power Disconnect, and (2) SD Factory Restore Tactile Button. Manual jogging, pump priming, and speed adjustments run via the Flutter companion app over local BLE.
   </Card>
   <Card title="Tier 3: Autonomous AI & Agent Orchestration" icon="cpu">
     **Fully autonomous closed-loop intelligence.** Under [RFC-0004](/rfcs/rfc-0004-controller-node-tool), the system operates on a Controller-Node-Tool (CNT) model: a Central Controller (Raspberry Pi 5 + Hailo-8 NPU) orchestrates machine Nodes (ESP32-S3) over hidden WPA3 Wi-Fi, while Nodes coordinate dedicated edge Tools (ESP32-C3) over BLE with 250ms hardware deadman watchdogs.
@@ -45,9 +47,9 @@ The **Open Biosphere Tri-Modal Control Standard** mandates that every machine in
 
 ---
 
-## 2. Mechanical Decoupling Mechanisms
+## 2. Mechanical Decoupling & Hardware Interlock Mechanisms
 
-To ensure manual inputs and motorized servos operate without stripping gears or fighting motor detent torque, designs employ three standard decoupling patterns:
+To ensure manual inputs, motorized servos, and emergency procedures operate without stripping gears or fighting motor detent torque, designs employ three standard patterns:
 
 ### Pattern A: Dual-Yoke & Slip-Clutch Linkages (For Levers & Rotary Motion)
 - **Application**: Gantry axes, crawler clamps, and mechanical skimmer weirs.
@@ -58,27 +60,27 @@ To ensure manual inputs and motorized servos operate without stripping gears or 
 - **Application**: Fluidic skimmer flow, nutrient dosing injection, and aeroponic misting loops.
 - **Mechanism**: Standard 3-way L-port ball valves or tee-junction bypass lines are installed in parallel with electronic solenoid and peristaltic pumps.
 - **Operation**: 
-  - In **AI/Button Mode**, the manual valve is left in the "Auto" position, routing flow through the motorized pumps and electronic solenoids.
+  - In **Auto/BLE Mode**, the manual valve is left in the "Auto" position, routing flow through the motorized pumps and electronic solenoids.
   - In **Manual Mode**, opening the physical ball valve lever allows direct gravity drainage, siphon action, or manual hand-pump pressurization.
 
-### Pattern C: Local Hardware Override Bus (For Electronics)
-- **Application**: Motor drivers, relays, and pump power buses.
-- **Mechanism**: Momentary push buttons and toggle switches are wired directly into the enable/step pins of motor drivers (e.g. TMC2209 standalone mode) or coil triggers of 12V/24V relays, in parallel with the microcontroller GPIO pins.
-- **Operation**: Pressing the physical green button pulses the driver or energizes the relay directly—even if the microcontroller is unplugged or crashed.
+### Pattern C: Strict Two-Control Hardware Interlock (RFC-0005)
+- **Application**: All machine nodes and edge tool enclosures.
+- **Control 1 (True Hardware Power Disconnect)**: Heavy-duty inline mechanical switch on the positive DC feed line. Instantly de-energizes the board and all attached actuators for maintenance with zero quiescent sleep leakage.
+- **Control 2 (SD Factory Restore Button)**: Recessed tactile button next to the status OLED. Holding for 5 seconds on boot triggers the secondary bootloader, which reflashes the golden `firmware.bin` and `config.default` from the onboard micro-SD slot module, wiping NVS partitions and restoring clean factory baseline.
 
 ---
 
 ## 3. Subsystem Implementation Matrix
 
-| Subsystem Machine | Tier 1: Manual Control | Tier 2: Button / Dial Control | Tier 3: Autonomous AI Control (CNT Architecture) |
+| Subsystem Machine | Tier 1: Manual Control | Tier 2: BLE Virtual Panel (RFC-0005) | Tier 3: Autonomous AI Control (CNT Architecture) |
 | :--- | :--- | :--- | :--- |
-| **Fluidic Skimmer** | Counterweight hand lever on weir gate; manual crank on dewatering auger press. | Waterproof toggle switches for pump speed; push-button auger reverse jog. | Central Controller vision modulates Skimmer Node via Wi-Fi; Tool ESP32 modulates pump & weir with 250ms watchdog. |
-| **Sprout Bioreactor** | Hand-crank handle on drum axle with ratchet pawl; manual gravity flush valve. | Momentary drum rotation jog button; rotary dial interval timer (0–60 min). | Sprout Node executes scheduled rotation/flush from Controller; downlinks via BLE to drum stepper Tool and solenoid Tool. |
-| **Mantis Crawler** | Squeeze-lever cable actuator for silicone clamp; manual shears on pole mount. | Wired thumbstick joystick for forward/reverse roll; trigger button for shear. | Central Controller offloads stereo pedicel detection; Mantis Node commands dual roller & shear Tools over BLE with 250ms watchdog. |
-| **Ground Track AGV** | Fold-out rear push bar with mechanical drum release foot pedal. | Tethered 3-button pendant (Forward, Reverse, Stop); rotary speed potentiometer. | Central Controller plans global pathing; AGV Node guides steer/drive Tools over BLE with magnetic/inductive feedback. |
-| **Overhead Gantry** | Handwheels on X/Y belt drives; manual squeeze-lever cable on toolhead shears. | 4-way D-pad directional jog buttons + fast/slow toggle switch on gantry frame. | Central Controller coordinates Cartesian pathing; Gantry Node coordinates X/Y stepper Tools & end-effector Tool over BLE. |
-| **Microclimate Doser**| Graduated gravity burettes with manual 3-way L-port ball valves for chemical stock. | Momentary push buttons for priming each pump; manual potentiometer for flow rate. | Doser Node aggregates sensor telemetry; Central Controller runs 1 Hz PID loop; Node pulses peristaltic pump Tools over BLE. |
-| **TPS Root Chamber** | Manual hand-pump pressure spray tank; sliding inspection door with light-baffles. | Rocker switch for continuous mist; mechanical dial countdown timer. | Root Chamber Node drives ultrasonic transducer Tool and pressure pump Tool via BLE; 250ms watchdog prevents dry-running. |
+| **Fluidic Skimmer** | Counterweight hand lever on weir gate; manual crank on dewatering auger press. | Flutter BLE Virtual Panel jog pad for auger purge & pump flow slider; inline DC switch & SD reset. | Central Controller vision modulates Skimmer Node via Wi-Fi; Tool ESP32 modulates pump & weir with 250ms watchdog. |
+| **Sprout Bioreactor** | Hand-crank handle on drum axle with ratchet pawl; manual gravity flush valve. | Flutter BLE Virtual Panel drum jog pad & manual mist flush trigger; inline DC switch & SD reset. | Sprout Node executes scheduled rotation/flush from Controller; downlinks via BLE to drum stepper Tool and solenoid Tool. |
+| **Mantis Crawler** | Squeeze-lever cable actuator for silicone clamp; manual shears on pole mount. | Flutter BLE Virtual Panel virtual thumbstick for forward/reverse roll & shear pulse; inline DC switch & SD reset. | Central Controller offloads stereo pedicel detection; Mantis Node commands dual roller & shear Tools over BLE with 250ms watchdog. |
+| **Ground Track AGV** | Fold-out rear push bar with mechanical drum release foot pedal. | Flutter BLE Virtual Panel virtual directional jog pad & speed slider; inline DC switch & SD reset. | Central Controller plans global pathing; AGV Node guides steer/drive Tools over BLE with magnetic/inductive feedback. |
+| **Overhead Gantry** | Handwheels on X/Y belt drives; manual squeeze-lever cable on toolhead shears. | Flutter BLE Virtual Panel 4-axis Cartesian virtual jog D-pad & speed slider; inline DC switch & SD reset. | Central Controller coordinates Cartesian pathing; Gantry Node coordinates X/Y stepper Tools & end-effector Tool over BLE. |
+| **Microclimate Doser**| Graduated gravity burettes with manual 3-way L-port ball valves for chemical stock. | Flutter BLE Virtual Panel 6-channel pump prime buttons & dose volume sliders; inline DC switch & SD reset. | Doser Node aggregates sensor telemetry; Central Controller runs 1 Hz PID loop; Node pulses peristaltic pump Tools over BLE. |
+| **TPS Root Chamber** | Manual hand-pump pressure spray tank; sliding inspection door with light-baffles. | Flutter BLE Virtual Panel manual mist pulse button & test depressurization trigger; inline DC switch & SD reset. | Root Chamber Node drives ultrasonic transducer Tool and pressure pump Tool via BLE; 250ms watchdog prevents dry-running. |
 
 ---
 

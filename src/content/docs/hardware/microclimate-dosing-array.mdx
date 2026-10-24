@@ -140,37 +140,49 @@ flowchart TD
 
 ---
 
-## 4. Add-On 1: Semi-Autonomous Electromechanical Pack (Buttons & Dials)
+## 4. Add-On 1: Semi-Autonomous Electromechanical Pack (BLE Virtual Panel)
 
-The **Semi-Autonomous Pack** motorizes chemical delivery: six 12V DC industrial peristaltic pumps (100 mL/min), six momentary green priming buttons, six multi-turn analog speed/volume potentiometers, a ULN2803A Darlington driver board, a 12V 5A MeanWell power supply, and an electric brass $CO_2$ solenoid with manual override push-pin. The grower dials in dose volumes and triggers precise chemical injections with a single button press.
+Under [RFC-0005](/rfcs/rfc-0005-hardware-interlocks-ble-virtual-panel), physical control panels with dedicated priming buttons, rotary dials, and multi-turn analog potentiometers are strictly banned across all machine tiers to eliminate liquid breach points and control priority contention.
+
+Add-On 1 motorizes chemical delivery governed by the **Strict Two-Control Physical Standard**:
+1. **Master Hardware DC Power Switch**: Heavy-duty toggle switch directly isolating the 12V DC power bus.
+2. **"Nuke & Pave" SD Factory Restore Button**: Dedicated recessed tactile switch wired to trigger an automatic secondary bootloader re-flash from micro-SD storage.
+
+All channel priming, calibrated pulse volume metering (0.1 to 30.0 mL), and atmospheric $CO_2$ solenoid pulsing are conducted via the **Flutter Companion App Virtual Panel** over direct local BLE GATT.
 
 ### Electromechanical Actuation Architecture & Decoupling
 - **Peristaltic Dosing Pumps**: Six 12V DC brushed peristaltic pumps with 3-roller rotors and food-grade PharMed BPT / silicone tubing ($0.15$ mL per rotor revolution, 100 mL/min peak).
 - **Mechanical Decoupling**: The 3-way L-port valves from the Base build connect to the pump outputs. Rotating the valve handle 90° isolates the peristaltic tubing completely, restoring instant gravity-drain burette operation if power fails.
-- **Operator Interface**: Six waterproof momentary push-buttons for channel priming, paired with six 10-turn precision dial potentiometers governing pump run-time pulses (0.5 to 30 seconds).
+- **Strict Two-Control Enclosure**: An IP65 waterproof enclosure mounted beside the manifold contains:
+  - Heavy-duty toggle switch directly isolating the 12V DC supply line.
+  - Recessed tactile button next to the 0.91" I2C OLED display (`[DOSER-A1 | BLE READY]`) for 5-second SD recovery reflash.
+  - Micro-SD card slot module pre-loaded with golden recovery `firmware.bin` and `config.default`.
 - **Atmospheric Gas Solenoid**: 12V DC direct-acting brass $CO_2$ solenoid valve with a mechanical manual override thumb-pin, allowing gas to be locked on, pulsed electrically, or opened by hand.
+- **Ephemeral BLE Virtual Panel**: When nearby, an operator opens the Flutter companion app on mobile device. The app auto-discovers the doser over BLE GATT and displays real-time virtual touch controls: 6-channel momentary virtual prime pads, calibrated pulse volume sliders, and a $CO_2$ solenoid purge toggle.
 
 ```
-       ELECTROMECHANICAL WIRING & DIAL DOSING SCHEMATIC
+       ELECTROMECHANICAL WIRING & BLE VIRTUAL DOSING SCHEMATIC
   =================================================================
   [12V 5A MeanWell Power Supply]
          |
-         +----[Main Power Switch]----+----(Power LED Green)
-         |                           |
-         +---------------------------+---------------------------+
-         |                           |                           |
-         v                           v                           v
-  [Channel 1 Pulse Timer]     [Channel 2 Pulse Timer]     [CO2 Solenoid Relay]
-  (Potentiometer 10-Turn)     (Potentiometer 10-Turn)     (Mechanical Push-Pin)
-         |                           |                           |
-         +----[Prime Button 1]       +----[Prime Button 2]       v
-         |                           |                    [12V Brass Valve]
-         v                           v                           |
-  [ULN2803A Driver CH1]       [ULN2803A Driver CH2]              v
-         |                           |                     (CO2 Gas Line)
-         v                           v
-  [12V Peristaltic Pump 1]    [12V Peristaltic Pump 2]
-  (Nitrate Solution)          (Phosphate Solution)
+         +----[Master DC Switch]----+----(OLED: [DOSER-A1 | BLE READY])
+                                    |
+         +--------------------------+---------------------------+
+         |                          |                           |
+         v                          v                           v
+  [ESP32 BLE Controller]     [ULN2803A Driver CH1-6]     [12V CO2 Solenoid Relay]
+  (Recessed SD Reset Button)        |                           |
+  (Micro-SD Golden Recovery)        |                           v
+         |                          +---------------+    [12V Brass Valve]
+         |                          |               |           |
+         v                          v               v           v
+  [Peristaltic Pumps 1-3]    [Peristaltic Pumps 4-6]      (CO2 Gas Line)
+  (N, P, K Solutions)        (Micro, pH Down, pH Up)
+         ^
+         : Direct BLE GATT (No Contention)
+         v
+  [Flutter Companion App Virtual Panel]
+  (Virtual Priming Pads, Calibrated Dose Sliders, CO2 Pulse Toggle)
 ```
 
 ### Step-by-Step Retrofit Protocol
@@ -180,58 +192,60 @@ The **Semi-Autonomous Pack** motorizes chemical delivery: six 12V DC industrial 
 2. Plumb the suction tube of each pump directly into concentrated stock gallon jugs resting beneath the panel.
 3. Plumb the discharge tube of each pump into Port 3 (Side) of the corresponding 3-way L-port bypass valve.
 
-#### Step 2.2: Potentiometer Dial & Push-Button Panel Installation
-1. Mount a secondary aluminum control rail below the pumps.
-2. Install six 22 mm green momentary priming push-buttons.
-3. Install six 10-turn counting dials paired with 10k$\Omega$ precision potentiometers.
+#### Step 2.2: Two-Control Enclosure & Driver Board Assembly
+1. Mount an IP65 sealed ABS junction box on the lower aluminum rail.
+2. Install the heavy-duty inline 12V master switch, recessed SD reset tactile button, micro-SD slot module, and 0.91" I2C OLED display.
+3. Mount the ULN2803A 8-channel Darlington driver board and ESP32 BLE peripheral controller inside the junction box.
+4. Wire driver outputs to the six peristaltic pump motor leads.
 
-#### Step 2.3: Darlington Driver & Pulse Timer Board
-1. Mount a ULN2803A 8-channel Darlington driver module and 555-based monostable pulse timer board inside the rear junction box.
-2. Wire each potentiometer into the timing resistor network of its channel: turning the dial linearly adjusts pump run time from 1.0 second (approx $1.5$ mL) to 20 seconds (approx $30$ mL).
-3. Wire the momentary green buttons in parallel with the timer trigger, providing direct continuous manual motor run while held down.
-
-#### Step 2.4: 12V $CO_2$ Electronic Solenoid Installation
+#### Step 2.3: 12V $CO_2$ Electronic Solenoid Installation
 1. Thread a 12V DC normally-closed brass solenoid valve inline between the gas regulator and the high-precision needle valve.
-2. Wire solenoid coil through a toggle switch with a red illuminated indicator.
+2. Wire solenoid coil through driver channel 7 with flyback diode protection.
 3. Test manual override: press the spring-loaded brass pin on the solenoid body to verify gas flows even with power disconnected.
 
-#### Step 2.5: Power Supply & Calibration Routine
+#### Step 2.4: Power Distribution & BLE Firmware Flashing
 1. Mount the 12V 5A MeanWell power supply to the backplane base with an IEC fused power switch.
-2. Place a 50 mL graduated cylinder under each pump discharge line.
-3. Hold each green prime button for exactly 10 seconds; adjust the inline calibration trimpot until output registers exactly $16.6\text{ mL} \pm 0.2\text{ mL}$.
+2. Flash the ESP32 controller with the Doser Virtual Panel peripheral firmware; verify it advertises `[DOSER-A1]`.
+3. Verify onboard OLED renders `[DOSER-A1 | BLE READY]`.
+
+#### Step 2.5: Volumetric Calibration Routine via Mobile App
+1. Place a 50 mL graduated cylinder under each pump discharge line.
+2. Open the Flutter companion app; tap the virtual prime pad for Channel 1 for exactly 10 seconds.
+3. Adjust calibration factor in app until 10-second pulse registers exactly $16.6\text{ mL} \pm 0.2\text{ mL}$. Repeat for all 6 channels.
 
 ```mermaid
 flowchart LR
-    A[Potentiometer Dial: Set Volume] --> B[Pulse Timer Circuit]
-    C[Momentary Prime Button] --> D[ULN2803A Driver]
-    B --> D
-    E[12V 5A Power Supply] --> D
-    D --> F[12V Peristaltic Pump: Exact Dosing]
-    G[CO2 Toggle Switch] --> H[12V Gas Solenoid]
-    F & H --> I[Automated Nutrient & Carbon Balance]
+    A[Flutter Companion App: Virtual Panel] -->|BLE GATT Packets| B[ESP32 BLE Peripheral Controller]
+    B -->|Logic Signals| C[ULN2803A Darlington Driver]
+    D[12V 5A Power Supply] -->|Master DC Switch| C
+    C --> E[Six 12V Peristaltic Pumps: Calibrated Dosing]
+    C --> F[12V Brass Gas Solenoid]
+    E & F --> G[Nutrient & Carbon Dioxide Enrichment]
 ```
 
-### Step-by-Step Push-Button Operating Runbook
+### Step-by-Step BLE Virtual Panel Operating Runbook
 
-1. **Power-On & Status Check**: Flip master rocker switch ON (green LED illuminates). Verify all six peristaltic tube lines are full of liquid with zero air gaps.
-2. **Channel Priming**: If an air bubble is spotted in the suction line, press and hold the green prime button for that channel until solid liquid discharges into the manifold.
-3. **Dialing In Calculated Doses**: Check current water EC and pH. Rotate the 10-turn dials to the desired dose volumes (e.g. Dial 1 set to 3.5 turns = 5.2 mL of Nitrogen stock; Dial 5 set to 2.0 turns = 3.0 mL of pH Down).
-4. **Triggering the Dosing Cycle**: Press the pulse trigger button once. The selected peristaltic pumps run for their calibrated durations, automatically delivering the exact chemical volumes before shutting off.
-5. **$CO_2$ Enrichment Toggle**: Flip the $CO_2$ toggle switch ON when lights illuminate. The solenoid opens, releasing $CO_2$ through the pre-set needle valve at a steady 2 bubbles/second.
-6. **Zero-Power Bypass Override**: If power fails during a storm, turn the 3-way L-port valves 90° to open the burette ports, fill burettes by hand, and resume manual gravity dosing.
+1. **Power Initialization**: Flip master 12V DC toggle switch ON. The onboard 0.91" OLED illuminates: `[DOSER-A1 | BLE READY]`. Verify all six peristaltic lines are primed with zero bubbles.
+2. **Walk-Up BLE Virtual Panel Connection**: Open the Flutter companion app on mobile device. Select `DOSER-A1` from discovered BLE peripherals. The app instantly renders the 6-channel Dosing Virtual Panel.
+3. **Channel Priming**: If an air bubble is spotted in a suction line, tap and hold the corresponding virtual prime button in the app until solid liquid discharges into the manifold.
+4. **Setting Calibrated Doses**: Inspect current water EC and pH. Adjust virtual dose sliders in the app (e.g. Channel 1: 5.2 mL of Nitrogen stock; Channel 5: 3.0 mL of pH Down).
+5. **Triggering the Dosing Cycle**: Tap the virtual "Execute Dosing Cycle" button. The selected peristaltic pumps run for their calibrated durations, automatically delivering the exact chemical volumes before shutting off.
+6. **$CO_2$ Enrichment Toggle**: Toggle the virtual $CO_2$ switch ON in the app. The solenoid opens, releasing $CO_2$ through the pre-set needle valve at a steady 2 bubbles/second.
+7. **"Nuke & Pave" SD Recovery Protocol**: If calibration values corrupt or firmware locks up, hold the physical recessed reset button for 5 seconds during power-on. The secondary bootloader reflashes factory baseline firmware from micro-SD in 4 seconds.
+8. **Immediate Zero-Power Bypass Override**: If power fails during an outage, turn the 3-way L-port valves 90° to open the burette ports, fill burettes by hand, and resume manual gravity dosing.
 
 ### Add-On 1 Bill of Materials (BOM)
 
 | Item | Component Description | Sourcing / Part Reference | Qty | Unit Cost | Total Cost |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | **A1-01** | 12V DC Brushed Peristaltic Dosing Pumps (100 mL/min) | Aquarium / hydro supplier | 6 | $8.00 | $48.00 |
-| **A1-02** | Waterproof Green Momentary Tactile Priming Buttons | Industrial switch store | 6 | $2.00 | $12.00 |
-| **A1-03** | 10-Turn Precision Analog Potentiometers + Counting Dials | Electronics component shop | 6 | $2.66 | $16.00 |
+| **A1-02** | Two-Control Physical Enclosure Pack (Heavy-Duty Master 12V DC Switch, Recessed Tactile SD Reset Button, Micro-SD Slot Module + 16GB Golden Card) | Industrial switch / maker shop | 1 | $18.00 | $18.00 |
+| **A1-03** | 0.91" I2C Status OLED Display & BLE Peripheral Carrier | Microcontroller display store | 1 | $10.00 | $10.00 |
 | **A1-04** | ULN2803A 8-Channel Darlington Driver Board + Timers | Standard maker electronics | 1 | $12.00 | $12.00 |
 | **A1-05** | 12V 5A (60W) MeanWell Enclosed Industrial Power Supply | Mean Well authorized dealer | 1 | $24.00 | $24.00 |
 | **A1-06** | 12V DC Normally-Closed Brass $CO_2$ Solenoid with Push-Pin | Aquarium gas supply store | 1 | $18.00 | $18.00 |
 | **Total** | **Add-On 1 Electromechanical Pack** | **Retrofits directly to Base** | | | **+$130.00** |
-| **Cumul.** | **Operational Dial-Calibrated Dosing Unit** | **Base ($122) + Add-On 1 ($130)** | | | **$252.00** |
+| **Cumul.** | **Operational BLE Virtual Dosing Unit** | **Base ($122) + Add-On 1 ($130)** | | | **$252.00** |
 
 ---
 
@@ -240,7 +254,7 @@ flowchart LR
 Under [RFC-0004](/rfcs/rfc-0004-controller-node-tool), the **Agentic Autonomous AI Pack** transforms the dosing panel into a 24/7 self-regulating **Controller-Node-Tool (CNT)** water chemistry orchestrator. It operates as a dedicated **Doser Node** commanding modular **Edge Tools** over BLE, receiving nutrient recipe ratios and 1 Hz closed-loop PID setpoints from the Central Biosphere Controller over Wi-Fi.
 
 ### Autonomous Vision & Telemetry Architecture
-- **Doser Machine Node (ESP32-S3)**: Dual-Core Xtensa LX7 (240 MHz, 8 MB PSRAM) mounted inside an IP65 enclosure. Hosts an onboard 0.96" I2C OLED display (`[NODE: DOSER-01 | LINK -> 4096]`) and physical setup button for mobile BLE provisioning. Uplinks to Central Controller via Wi-Fi; collects telemetry and downlinks to Tools via BLE Central.
+- **Doser Machine Node (ESP32-S3)**: Dual-Core Xtensa LX7 (240 MHz, 8 MB PSRAM) mounted inside an IP65 enclosure governed by the **Strict Two-Control Physical Standard** (Master DC Power Switch and Recessed SD Reset Button alongside 0.96" I2C OLED `[NODE: DOSER-01 | LINK -> 4096]`). Uplinks to Central Controller via Wi-Fi; collects telemetry and downlinks to Tools via BLE Central.
 - **Galvanically Isolated Chemistry Probes**: Dual-junction sealed lab-grade pH probe and platinum dual-pin EC electrode connected via Atlas Scientific galvanic isolation circuits, eliminating ground-loop electrical noise from submersible pumps.
 - **Photoacoustic Ambient Gas Sensor**: Sensirion SCD41 photoacoustic NDIR sensor measuring atmospheric $CO_2$ (400 to 5,000 ppm $\pm 40$ ppm), air temperature ($\pm 0.8^\circ	ext{C}$), and relative humidity ($\pm 2\%$).
 - **Dedicated Modular Edge Tools (ESP32-C3)**: Driven 1:1 by micro ESP32-C3 controllers equipped with 0.42" micro OLED displays and **250ms hardware deadman watchdogs**:
@@ -374,17 +388,19 @@ stateDiagram-v2
 | Build Stage | Operational Capability | Direct Stage Cost | Cumulative Investment |
 | :--- | :--- | :--- | :--- |
 | **Base: Instructions** | 100% mechanical gravity burettes, manual 3-way L-port valves, and colorimetric drops | $122.00 | **$122.00** |
-| **Add-On 1: Semi-Auto** | Motorized 6-channel peristaltic pumping, push-button priming, and potentiometer dials | +$130.00 | **$252.00** |
+| **Add-On 1: Semi-Auto** | Motorized 6-channel peristaltic pumping with Flutter BLE Virtual Panel & Two-Control Standard | +$130.00 | **$252.00** |
 | **Add-On 2: Agentic AI** | Controller-Node-Tool (CNT) automation, 1 Hz closed-loop PID, NDIR $CO_2$, & 250ms watchdogs | +$184.00 | **$436.00** |
 
 ### Step-by-Step Zero-Waste Conversion Roadmap
 
-#### Path 1: Base Machine $ightarrow$ Add-On 1 (Motorized Dosing Panel)
+#### Path 1: Base Machine $
+ightarrow$ Add-On 1 (Motorized Dosing Panel)
 1. Bolt the six 12V peristaltic pumps into the pre-drilled central holes on the acrylic backplane.
 2. Plumb the pump discharge lines into Port 3 of the 3-way L-port bypass valves (the manual burettes remain fully usable).
-3. Install the 12V MeanWell power supply, priming push-buttons, and calibration potentiometers on the lower rail.
+3. Install the 12V MeanWell power supply, Two-Control enclosure, and link the Flutter Companion App BLE Virtual Panel.
 
-#### Path 2: Add-On 1 $ightarrow$ Add-On 2 (Autonomous Closed-Loop CNT Brain)
+#### Path 2: Add-On 1 $
+ightarrow$ Add-On 2 (Autonomous Closed-Loop CNT Brain)
 1. Mount the Doser Node (ESP32-S3 + OLED + Button) and modular ESP32-C3 Tools inside the IP65 enclosure.
 2. Connect `DEV_WATER_SNS` to the galvanically isolated pH and EC probe BNC headers.
 3. Connect `DEV_PUMP_BANK1` and `DEV_PUMP_BANK2` to the MOSFET driver board in parallel with the manual push buttons.
