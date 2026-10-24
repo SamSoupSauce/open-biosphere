@@ -12,6 +12,6 @@
   <text x="300" y="42" fill="#38bdf8" font-family="monospace" font-size="12" text-anchor="middle">LENGTH: 55.0 mm</text>
   <line x1="510" y1="80" x2="510" y2="280" stroke="#38bdf8" stroke-width="1.5"/>
   <text x="525" y="185" fill="#38bdf8" font-family="monospace" font-size="12">WIDTH: 45.0 mm</text>
-  <text x="30" y="360" fill="#94a3b8" font-family="monospace" font-size="14" font-weight="bold">PART-FAB-DOCK-POGO-GANTRY - Overhead Gantry Spring-Loaded Pogo-Pin Docking Shoe & Latch</text>
+  <text x="30" y="360" fill="#94a3b8" font-family="monospace" font-size="14" font-weight="bold">PART-FAB-DOCK-POGO-GANTRY - Overhead Gantry Spring-Loaded Pogo-Pin Docking Shoe &amp; Latch</text>
   <text x="30" y="380" fill="#64748b" font-family="monospace" font-size="11">THICKNESS: 20.0 mm | TOL: ±0.1 | OPEN-BIOSPHERE CANONICAL SPEC</text>
 </svg>

@@ -13,7 +13,7 @@
     </filter>
   </defs>
 
-  <!-- Background & Engineering Grid -->
+  <!-- Background &amp; Engineering Grid -->
   <rect width="960" height="540" fill="url(#bgGrad)"/>
   <rect width="960" height="540" fill="url(#grid)"/>
 
@@ -78,7 +78,7 @@
   <text x="45" y="505" font-family="monospace" font-size="10" fill="#94a3b8">REVISION: <tspan fill="#f8fafc">v2.4 (RFC-0007)</tspan></text>
 
   <text x="320" y="490" font-family="monospace" font-size="10" fill="#94a3b8">ARCHITECTURE: <tspan fill="#f8fafc">Stage 0: Zero-Power Baseline (Pure Mechanical)</tspan></text>
-  <text x="320" y="505" font-family="sans-serif" font-size="10" fill="#cbd5e1">100% Mechanical Dog-Clutch Gravity Tumble Drum & Foot-Pedal Siphon</text>
+  <text x="320" y="505" font-family="sans-serif" font-size="10" fill="#cbd5e1">100% Mechanical Dog-Clutch Gravity Tumble Drum &amp; Foot-Pedal Siphon</text>
 
   <text x="820" y="490" font-family="monospace" font-size="10" fill="#94a3b8">SCALE: <tspan fill="#f8fafc">1:1 SCHEMATIC</tspan></text>
   <text x="820" y="505" font-family="monospace" font-size="10" fill="#38bdf8">STATUS: APPROVED</text>

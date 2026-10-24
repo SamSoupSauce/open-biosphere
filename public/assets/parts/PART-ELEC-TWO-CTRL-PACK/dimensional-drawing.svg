@@ -12,6 +12,6 @@
   <text x="300" y="42" fill="#38bdf8" font-family="monospace" font-size="12" text-anchor="middle">LENGTH: 115.0 mm</text>
   <line x1="510" y1="80" x2="510" y2="280" stroke="#38bdf8" stroke-width="1.5"/>
   <text x="525" y="185" fill="#38bdf8" font-family="monospace" font-size="12">WIDTH: 65.0 mm</text>
-  <text x="30" y="360" fill="#94a3b8" font-family="monospace" font-size="14" font-weight="bold">PART-ELEC-TWO-CTRL-PACK - Strict Two-Control Physical Interlock & SD Recovery Pack</text>
+  <text x="30" y="360" fill="#94a3b8" font-family="monospace" font-size="14" font-weight="bold">PART-ELEC-TWO-CTRL-PACK - Strict Two-Control Physical Interlock &amp; SD Recovery Pack</text>
   <text x="30" y="380" fill="#64748b" font-family="monospace" font-size="11">THICKNESS: 40.0 mm | TOL: ±0.5 | OPEN-BIOSPHERE CANONICAL SPEC</text>
 </svg>

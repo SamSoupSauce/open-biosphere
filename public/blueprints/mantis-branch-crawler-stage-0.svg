@@ -13,7 +13,7 @@
     </filter>
   </defs>
 
-  <!-- Background & Engineering Grid -->
+  <!-- Background &amp; Engineering Grid -->
   <rect width="960" height="540" fill="url(#bgGrad)"/>
   <rect width="960" height="540" fill="url(#grid)"/>
 
