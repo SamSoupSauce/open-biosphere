@@ -1,0 +1,200 @@
+---
+title: "RFC-0008: Global Part Registry & Shared Bill of Materials Schema"
+description: "Specification for the centralized canonical part registry, standardized JSON schema, 3D CAD asset repository, and cross-machine bill-of-materials linking."
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+## Status & Metadata
+- **RFC ID:** RFC-0008 / DATA-001
+- **Working Group:** Open-Hardware & Data Systems Working Group
+- **Author:** Physical Systems & Supply Chain Architecture Team
+- **Status:** Implemented
+- **Supersedes / Refines:** Replaces hardcoded BOM markdown tables with canonical part IDs and structured registry linking
+- **Target Subsystems:** Global Part Registry (`parts/`), Machine Stage BOMs, Sourcing & CAD Asset Pipeline
+- **Release Target:** Open Biosphere v2.0-alpha
+
+---
+
+## 1. Executive Summary & Problem Statement
+
+Prior to RFC-0008, components and raw stock materials were documented in isolated, hardcoded Markdown tables across individual machine documents. This caused significant operational and engineering friction:
+1. **Redundant Metadata & Pricing Drift**: Shared components (such as NEMA steppers, MeanWell 24V power supplies, TB6600 drivers, ESP32 microcontrollers, and OLED displays) had duplicated, slightly differing price estimates and vendor references across different machines.
+2. **Untracked Cross-Machine Synergies**: Builders could not easily generate a single consolidated shopping list when constructing multiple machines for a complete biosphere installation.
+3. **Missing Fabrication Assets**: 3D-printable files (`.stl`, `.step`), CAD meshes (`.3ds`), and dimensioned vector engineering drawings (`.svg`) were not organized under a deterministic pathing schema.
+
+**RFC-0008** establishes a centralized **Global Part Registry (`parts/`)** anchored by a canonical machine-readable database ([`src/data/parts.json`](/open-biosphere/parts/catalog/)), standardized part pages categorized by subsystem, public CAD/drawing asset storage, and bidirectional cross-machine dependency mapping.
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                       GLOBAL PART REGISTRY PIPELINE                         │
+├─────────────────────┬─────────────────────┬─────────────────────────────────┤
+│ Canonical Database  │ Dedicated Doc Pages │ Machine Stage Linking           │
+│ src/data/parts.json │ src/content/docs/   │ hardware/<machine>/stage-X.mdx  │
+│                     │   parts/<category>/ │ • Links part name to registry   │
+│ • Schema validation │     <part_id>.mdx   │ • Surfaces part_id & supplier   │
+│ • Sourcing & CAD    │ • Reverse lookups   │ • Direct CAD asset downloads    │
+│ • Shared quantities │ • Procurement table │ • Stage & cumulative totals     │
+└─────────────────────┴─────────────────────┴─────────────────────────────────┘
+```
+
+---
+
+## 2. Directory Hierarchy & Registry Structure
+
+The Global Part Registry is structured across three core areas:
+
+```text
+src/
+├── data/
+│   └── parts.json                      # Machine-readable single source of truth
+├── content/docs/parts/
+│   ├── catalog.mdx                     # Interactive Global Part Registry & Search
+│   ├── mechanical/                     # Extrusions, fasteners, bearings, shafts
+│   │   └── <part_id>.mdx
+│   ├── electrical/                     # Sensors, actuators, drivers, controllers
+│   │   └── <part_id>.mdx
+│   ├── fluidic/                        # Valves, pumps, nozzles, bulkheads, media
+│   │   └── <part_id>.mdx
+│   └── custom-fab/                     # 3D printed, laser cut, or welded assemblies
+│       └── <part_id>.mdx
+public/
+└── assets/parts/
+    └── <part_id>/
+        ├── photo.webp                  # Physical component photo or 3D render
+        ├── dimensional-drawing.svg     # Dimensioned engineering vector drawing
+        ├── model.3ds                   # Scalable 3D CAD mesh
+        ├── print.stl                   # Slicer-ready 3D print file (if custom-fab)
+        └── cad.step                    # Parametric CAD solid model (if custom-fab)
+```
+
+---
+
+## 3. Canonical Part Schema Specification (`parts.json`)
+
+Every component registered in `parts.json` conforms to the following strict JSON schema:
+
+```json
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "part_id": "PART-MECH-WEDGE-150U",
+  "name": "316L Stainless Wedge-Wire Screen Panel (150µm)",
+  "category": "fluidic",
+  "summary": "Continuous slot V-wire dewatering filter panel for fine floating aquatic biomass separation.",
+  "dimensions": {
+    "length_mm": 400.0,
+    "width_mm": 300.0,
+    "thickness_mm": 6.5,
+    "tolerance_mm": "±0.5",
+    "weight_grams": 820.0
+  },
+  "fabrication": {
+    "is_custom_fab": false,
+    "is_3d_printed": false,
+    "print_spec": null,
+    "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-WEDGE-150U/model.3ds",
+    "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-WEDGE-150U/dimensional-drawing.svg",
+    "photo_url": "/open-biosphere/assets/parts/PART-MECH-WEDGE-150U/photo.webp"
+  },
+  "procurement": [
+    {
+      "supplier_name": "McMaster-Carr",
+      "sku": "9284K41",
+      "direct_url": "https://www.mcmaster.com/",
+      "unit_price_usd": 72.50,
+      "moq": 1,
+      "lead_time_days": 2
+    },
+    {
+      "supplier_name": "Direct Industrial Filtration",
+      "sku": "WW-316L-150-300400",
+      "direct_url": "https://aliexpress.com/",
+      "unit_price_usd": 48.00,
+      "moq": 1,
+      "lead_time_days": 18
+    }
+  ],
+  "used_by": [
+    {
+      "machine_slug": "fluidic-skimmer-loop",
+      "stage": 0,
+      "quantity_required": 1
+    }
+  ]
+}
+```
+
+### 3.1 3D-Printed / Custom-Fab Variant Schema
+
+When `"is_3d_printed": true`, the `print_spec` object is populated with recommended FDM/SLA slicer settings:
+
+```json
+{
+  "part_id": "PART-FAB-AUGER-PETG-50P",
+  "name": "Dewatering Continuous Flight Press Auger (50mm Pitch)",
+  "category": "custom-fab",
+  "summary": "Progressive pitch dewatering flight auger for duckweed cake compression against wedge wire.",
+  "dimensions": {
+    "length_mm": 280.0,
+    "outer_diameter_mm": 85.0,
+    "core_diameter_mm": 20.0,
+    "hex_bore_inch": 0.50,
+    "weight_grams": 340.0
+  },
+  "fabrication": {
+    "is_custom_fab": true,
+    "is_3d_printed": true,
+    "print_spec": {
+      "material": "PETG or CF-PETG",
+      "nozzle_diameter_mm": 0.6,
+      "layer_height_mm": 0.28,
+      "perimeters": 5,
+      "infill_percentage": 40,
+      "infill_pattern": "gyroid",
+      "print_time_hours": 7.5,
+      "filament_weight_grams": 350.0
+    },
+    "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-AUGER-PETG-50P/model.3ds",
+    "stl_asset_url": "/open-biosphere/assets/parts/PART-FAB-AUGER-PETG-50P/print.stl",
+    "step_asset_url": "/open-biosphere/assets/parts/PART-FAB-AUGER-PETG-50P/cad.step",
+    "drawing_asset_url": "/open-biosphere/assets/parts/PART-FAB-AUGER-PETG-50P/dimensional-drawing.svg",
+    "photo_url": "/open-biosphere/assets/parts/PART-FAB-AUGER-PETG-50P/photo.webp"
+  },
+  "procurement": [
+    {
+      "supplier_name": "In-House 3D Print (PETG Filament)",
+      "sku": "FAB-PETG-1KG",
+      "direct_url": "https://www.matterhackers.com/",
+      "unit_price_usd": 8.75,
+      "moq": 1,
+      "lead_time_days": 0
+    }
+  ],
+  "used_by": [
+    {
+      "machine_slug": "fluidic-skimmer-loop",
+      "stage": 0,
+      "quantity_required": 1
+    }
+  ]
+}
+```
+
+---
+
+## 4. Machine Stage BOM Linking Specification
+
+In each machine's `stage-X.mdx` document, BOM tables are updated to bind directly to the registry:
+1. **Canonical ID**: Links to the part specification page (`PART-MECH-WEDGE-150U`).
+2. **Part Name & Description**: Links to `/open-biosphere/parts/<category>/<part_id>/`.
+3. **Supplier & SKU**: Links to primary COTS supplier.
+4. **Fabrication Type**: Stock COTS, 3D Print, or Custom Fabrication.
+5. **Quantity & Pricing**: Unit cost, stage quantity, and extended line cost.
+6. **CAD Asset Link**: One-click download button for 3D model / dimensional drawing.
+
+---
+
+## 5. Security, Sourcing Integrity & Verification
+
+- **Multi-Vendor Redundancy**: Every COTS component specifies at least one domestic/rapid supplier (e.g. McMaster-Carr, Amazon, DigiKey, Adafruit) and one direct-manufacturer source (e.g. AliExpress, StepperOnline, LCSC) to protect against localized supply chain bottlenecks.
+- **Air-Gapped Local Assets**: All CAD models, vector drawings, and print files are stored locally in the repository under `public/assets/parts/`—zero external CDN dependencies.

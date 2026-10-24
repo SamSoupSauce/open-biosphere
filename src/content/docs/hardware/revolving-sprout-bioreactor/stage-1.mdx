@@ -29,22 +29,21 @@ The Stage 1 electromechanical pack motorizes the **Revolving Sprout Bioreactor D
 
 ## Part 3: Isolated Stage 1 Bill of Materials (BOM)
 
+
 ### Add-On 1 Bill of Materials (BOM)
 
-| Item | Component Description | Sourcing / Part Reference | Qty | Unit Cost | Total Cost |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| **A1-01** | NEMA 17 Planetary Geared Stepper (5.18:1, 1.8 N·m) | Standard motion supplier | 1 | $24.00 | $24.00 |
-| **A1-02** | GT2 60T/20T Aluminum Pulley Set + 6mm Neoprene Belt | 3D printer drive hardware | 1 | $9.00 | $9.00 |
-| **A1-03** | Axial Spring-Loaded Dog Clutch Sliding Mechanism | Machined aluminum / 3D PETG | 1 | $14.00 | $14.00 |
-| **A1-04** | 24V DC 100 PSI Diaphragm Mist Pump (1.2 L/min) | Hydroponics mist supplier | 1 | $32.00 | $32.00 |
-| **A1-05** | Brass 0.3mm Atomizing Misting Nozzles + 1/4" Fittings | High-pressure fogging kit | 2 | $5.00 | $10.00 |
-| **A1-06** | Strict Two-Control Enclosure (Master DC Switch + SD Reset + Micro-SD Module + 0.91" OLED) | Electrical enclosure kit | 1 | $22.00 | $22.00 |
-| **A1-07** | ESP32 BLE Virtual Panel Controller + TMC2209 Driver | Standard maker electronics | 1 | $18.00 | $18.00 |
-| **A1-08** | 24V 2.5A (60W) Desktop Industrial Power Supply | Mean Well or equivalent | 1 | $18.00 | $18.00 |
-| **Total** | **Add-On 1 Electromechanical Pack** | **Retrofits directly to Base** | | | **+$147.00** |
-| **Cumul.** | **Operational Semi-Autonomous Bioreactor** | **Base ($145) + Add-On 1 ($147)** | | | **$292.00** |
-
----
+| Item | Part ID & Registry Link | Component & Specification | Sourcing / Supplier | Fab Type | Qty | Unit Cost | CAD Asset | Total Cost |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **A1-01** | [`PART-ELEC-NEMA17-PLANET`](/open-biosphere/parts/electrical/PART-ELEC-NEMA17-PLANET/) | NEMA 17 Planetary Geared Stepper (5.18:1, 1.8 N·m) | [Standard motion supplier](https://omc-stepperonline.com) | Stock Motor | 1 | $24.00 | [Download .3DS](/open-biosphere/assets/parts/PART-ELEC-NEMA17-PLANET/model.3ds) | $24.00 |
+| **A1-02** | [`PART-MECH-PULLEY-GT2-SET`](/open-biosphere/parts/mechanical/PART-MECH-PULLEY-GT2-SET/) | GT2 60T/20T Aluminum Pulley Set + 6mm Neoprene Belt | [3D printer drive hardware](https://amazon.com) | Stock Motion Hardware | 1 | $9.00 | [Download .3DS](/open-biosphere/assets/parts/PART-MECH-PULLEY-GT2-SET/model.3ds) | $9.00 |
+| **A1-03** | [`PART-MECH-CLUTCH-DOG-AXIAL`](/open-biosphere/parts/mechanical/PART-MECH-CLUTCH-DOG-AXIAL/) | Axial Spring-Loaded Dog Clutch Sliding Mechanism | [Machined aluminum / 3D PETG](https://open-biosphere.org) | CNC Machined Aluminum / Delrin | 1 | $14.00 | [Download .3DS](/open-biosphere/assets/parts/PART-MECH-CLUTCH-DOG-AXIAL/model.3ds) | $14.00 |
+| **A1-04** | [`PART-FLUID-PUMP-MIST-100P`](/open-biosphere/parts/fluidic/PART-FLUID-PUMP-MIST-100P/) | 24V DC 100 PSI Diaphragm Mist Pump (1.2 L/min) | [Hydroponics mist supplier](https://seaflo.com) | Stock Pump | 1 | $32.00 | [Download .3DS](/open-biosphere/assets/parts/PART-FLUID-PUMP-MIST-100P/model.3ds) | $32.00 |
+| **A1-05** | [`PART-FLUID-NOZZLE-BRASS-03`](/open-biosphere/parts/fluidic/PART-FLUID-NOZZLE-BRASS-03/) | Brass 0.3mm Atomizing Misting Nozzles + 1/4" Fittings | [High-pressure fogging kit](https://mistcooling.com) | Precision Nozzle | 2 | $5.00 | [Download .3DS](/open-biosphere/assets/parts/PART-FLUID-NOZZLE-BRASS-03/model.3ds) | $10.00 |
+| **A1-06** | [`PART-ELEC-TWO-CTRL-PACK`](/open-biosphere/parts/electrical/PART-ELEC-TWO-CTRL-PACK/) | Strict Two-Control Enclosure (Master DC Switch + SD Reset + Micro-SD Module + 0.91" OLED) | [Electrical enclosure kit](https://open-biosphere.org/parts/PART-ELEC-TWO-CTRL-PACK) | 3D Print / Assembly | 1 | $22.00 | [Download .3DS](/open-biosphere/assets/parts/PART-ELEC-TWO-CTRL-PACK/model.3ds) | $22.00 |
+| **A1-07** | [`PART-ELEC-TMC2209-DVR`](/open-biosphere/parts/electrical/PART-ELEC-TMC2209-DVR/) | ESP32 BLE Virtual Panel Controller + TMC2209 Driver | [Standard maker electronics](https://bigtree-tech.com) | Stock Electronics | 1 | $18.00 | [Download .3DS](/open-biosphere/assets/parts/PART-ELEC-TMC2209-DVR/model.3ds) | $18.00 |
+| **A1-08** | [`PART-ELEC-PSU-24V-60W`](/open-biosphere/parts/electrical/PART-ELEC-PSU-24V-60W/) | 24V 2.5A (60W) Desktop Industrial Power Supply | [Mean Well or equivalent](https://mouser.com) | Stock Power Supply | 1 | $18.00 | [Download .3DS](/open-biosphere/assets/parts/PART-ELEC-PSU-24V-60W/model.3ds) | $18.00 |
+| **Total** | **Add-On 1 Electromechanical Pack** | **Retrofits directly to Base** | | | | | | **+$147.00** |
+| **Cumul.** | **Operational Semi-Autonomous Bioreactor** | **Base ($145) + Add-On 1 ($147)** | | | | | | **$292.00** |
 
 ---
 

@@ -148,6 +148,16 @@ export default defineConfig({
           ],
         },
         {
+          label: 'Global Part Registry',
+          items: [
+            { label: 'Canonical Part Catalog', slug: 'parts/catalog' },
+            { label: 'Mechanical Components', slug: 'parts/mechanical' },
+            { label: 'Electrical & Compute', slug: 'parts/electrical' },
+            { label: 'Fluidic & Pneumatic', slug: 'parts/fluidic' },
+            { label: 'Custom Fabricated', slug: 'parts/custom-fab' },
+          ],
+        },
+        {
           label: 'Specifications & RFCs',
           items: [
             { label: 'RFC Kanban Board', slug: 'rfcs/board' },
@@ -158,6 +168,7 @@ export default defineConfig({
             { label: 'RFC-0005: Hardware Interlocks & BLE Virtual Panel', slug: 'rfcs/rfc-0005-hardware-interlocks-ble-virtual-panel' },
             { label: 'RFC-0006: Agnostic Controller Runtime', slug: 'rfcs/rfc-0006-agnostic-controller-runtime' },
             { label: 'RFC-0007: Multi-Stage Machine Sub-Page Architecture', slug: 'rfcs/rfc-0007-multi-stage-sub-page-architecture' },
+            { label: 'RFC-0008: Global Part Registry & BOM Schema', slug: 'rfcs/rfc-0008-global-part-registry-bom-schema' },
           ],
         },
       ],

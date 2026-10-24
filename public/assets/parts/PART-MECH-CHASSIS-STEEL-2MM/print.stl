@@ -1,0 +1,9 @@
+solid PART-MECH-CHASSIS-STEEL-2MM
+facet normal 0 0 1
+outer loop
+vertex 0 0 0
+vertex 1 0 0
+vertex 0 1 0
+endloop
+endfacet
+endsolid PART-MECH-CHASSIS-STEEL-2MM

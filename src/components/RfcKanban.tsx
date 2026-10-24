@@ -84,6 +84,16 @@ const RFC_LIST: RFCItem[] = [
     summary: 'Decomposition of monolithic machine catalog specifications into modular index and stage-0, stage-1, stage-2 sub-pages with isolated BOMs and dedicated vector SVG blueprints.',
     docSlug: '/rfcs/rfc-0007-multi-stage-sub-page-architecture',
   },
+  {
+    id: 'RFC-0008',
+    title: 'Global Part Registry & Shared Bill of Materials Schema',
+    author: 'Physical Systems & Supply Chain Architecture Team',
+    targetType: 'Hardware',
+    status: 'Implemented',
+    date: '2026-10-24',
+    summary: 'Centralized canonical part registry (parts.json) with discrete CAD assets, procurement links, and cross-machine BOM linking.',
+    docSlug: '/rfcs/rfc-0008-global-part-registry-bom-schema',
+  },
 ];
 
 export default function RfcKanban() {

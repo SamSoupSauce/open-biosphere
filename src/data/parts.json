@@ -1,0 +1,4641 @@
+[
+  {
+    "name": "ESP32-S3 Dual-Core Xtensa LX7 Node Controller (8MB PSRAM)",
+    "category": "electrical",
+    "summary": "Central machine node controller with native USB, Wi-Fi 4, BLE 5.0, and 8MB Octal PSRAM for local sensor arbitration and CNT deadman loops.",
+    "dimensions": {
+      "length_mm": 51.0,
+      "width_mm": 28.0,
+      "thickness_mm": 8.5,
+      "tolerance_mm": "\u00b10.2",
+      "weight_grams": 14.5
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Electronics",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-ESP32-S3-NODE/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-ESP32-S3-NODE/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-ELEC-ESP32-S3-NODE/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Espressif Direct / Mouser",
+        "sku": "ESP32-S3-DevKitC-1-N8R8",
+        "direct_url": "https://mouser.com/espressif",
+        "unit_price_usd": 14.0,
+        "moq": 1,
+        "lead_time_days": 3
+      }
+    ],
+    "part_id": "PART-ELEC-ESP32-S3-NODE",
+    "used_by": [
+      {
+        "machine_slug": "aerial-pollination-drone",
+        "stage": 2,
+        "quantity_required": 1
+      },
+      {
+        "machine_slug": "ground-track-agv",
+        "stage": 2,
+        "quantity_required": 1
+      },
+      {
+        "machine_slug": "mantis-branch-crawler",
+        "stage": 2,
+        "quantity_required": 1
+      },
+      {
+        "machine_slug": "microclimate-dosing-array",
+        "stage": 2,
+        "quantity_required": 1
+      },
+      {
+        "machine_slug": "overhead-gantry-system",
+        "stage": 2,
+        "quantity_required": 1
+      },
+      {
+        "machine_slug": "revolving-sprout-bioreactor",
+        "stage": 2,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "ESP32-C3 RISC-V Modular Edge Tool Controller (4MB Flash)",
+    "category": "electrical",
+    "summary": "Sub-millisecond latency peripheral tool controller running deterministic 250ms hardware watchdog loops over native UART/RS-485.",
+    "dimensions": {
+      "length_mm": 21.0,
+      "width_mm": 18.0,
+      "thickness_mm": 4.5,
+      "tolerance_mm": "\u00b10.2",
+      "weight_grams": 4.2
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Electronics",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-ESP32-C3-TOOL/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-ESP32-C3-TOOL/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-ELEC-ESP32-C3-TOOL/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Seeed Studio / Adafruit",
+        "sku": "XIAO-ESP32-C3",
+        "direct_url": "https://seeedstudio.com",
+        "unit_price_usd": 5.0,
+        "moq": 1,
+        "lead_time_days": 3
+      }
+    ],
+    "part_id": "PART-ELEC-ESP32-C3-TOOL",
+    "used_by": [
+      {
+        "machine_slug": "aerial-pollination-drone",
+        "stage": 2,
+        "quantity_required": 2
+      },
+      {
+        "machine_slug": "mantis-branch-crawler",
+        "stage": 2,
+        "quantity_required": 3
+      },
+      {
+        "machine_slug": "microclimate-dosing-array",
+        "stage": 2,
+        "quantity_required": 3
+      },
+      {
+        "machine_slug": "overhead-gantry-system",
+        "stage": 2,
+        "quantity_required": 3
+      },
+      {
+        "machine_slug": "revolving-sprout-bioreactor",
+        "stage": 2,
+        "quantity_required": 2
+      },
+      {
+        "machine_slug": "tps-root-chamber",
+        "stage": 2,
+        "quantity_required": 2
+      }
+    ]
+  },
+  {
+    "name": "Strict Two-Control Physical Interlock & SD Recovery Pack",
+    "category": "electrical",
+    "summary": "Standardized physical control enclosure interface containing a single high-visibility Master DC Power Switch, a recessed SD Reset button, Micro-SD carrier, and 0.91-inch status OLED.",
+    "dimensions": {
+      "length_mm": 115.0,
+      "width_mm": 65.0,
+      "thickness_mm": 40.0,
+      "tolerance_mm": "\u00b10.5",
+      "weight_grams": 135.0
+    },
+    "fabrication": {
+      "is_custom_fab": true,
+      "is_3d_printed": true,
+      "print_spec": {
+        "material": "PETG-ESD",
+        "nozzle_diameter_mm": 0.4,
+        "layer_height_mm": 0.2,
+        "perimeters": 4,
+        "infill_percentage": 30,
+        "infill_pattern": "gyroid",
+        "print_time_hours": 3.8,
+        "filament_weight_grams": 95.0
+      },
+      "fab_type": "3D Print / Assembly",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-TWO-CTRL-PACK/model.3ds",
+      "stl_asset_url": "/open-biosphere/assets/parts/PART-ELEC-TWO-CTRL-PACK/print.stl",
+      "step_asset_url": "/open-biosphere/assets/parts/PART-ELEC-TWO-CTRL-PACK/cad.step",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-TWO-CTRL-PACK/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-ELEC-TWO-CTRL-PACK/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "In-House Open-Biosphere Fab",
+        "sku": "OB-PACK-TWOCTRL-V1",
+        "direct_url": "https://open-biosphere.org/parts/PART-ELEC-TWO-CTRL-PACK",
+        "unit_price_usd": 22.0,
+        "moq": 1,
+        "lead_time_days": 1
+      }
+    ],
+    "part_id": "PART-ELEC-TWO-CTRL-PACK",
+    "used_by": [
+      {
+        "machine_slug": "aerial-pollination-drone",
+        "stage": 1,
+        "quantity_required": 1
+      },
+      {
+        "machine_slug": "ground-track-agv",
+        "stage": 1,
+        "quantity_required": 1
+      },
+      {
+        "machine_slug": "mantis-branch-crawler",
+        "stage": 1,
+        "quantity_required": 1
+      },
+      {
+        "machine_slug": "microclimate-dosing-array",
+        "stage": 1,
+        "quantity_required": 1
+      },
+      {
+        "machine_slug": "overhead-gantry-system",
+        "stage": 1,
+        "quantity_required": 1
+      },
+      {
+        "machine_slug": "revolving-sprout-bioreactor",
+        "stage": 1,
+        "quantity_required": 1
+      },
+      {
+        "machine_slug": "tps-root-chamber",
+        "stage": 1,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "0.91-Inch 128x32 Monochrome I2C OLED Display Module",
+    "category": "electrical",
+    "summary": "Ultra-low-power SSD1306 monochrome display providing high-contrast localized telemetry, IP/BLE pairing PINs, and CNT tool state.",
+    "dimensions": {
+      "length_mm": 38.0,
+      "width_mm": 12.0,
+      "thickness_mm": 4.0,
+      "tolerance_mm": "\u00b10.2",
+      "weight_grams": 3.5
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Electronics",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-OLED-091-I2C/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-OLED-091-I2C/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-ELEC-OLED-091-I2C/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Adafruit / SparkFun",
+        "sku": "SSD1306-091-I2C",
+        "direct_url": "https://adafruit.com",
+        "unit_price_usd": 4.5,
+        "moq": 1,
+        "lead_time_days": 2
+      }
+    ],
+    "part_id": "PART-ELEC-OLED-091-I2C",
+    "used_by": [
+      {
+        "machine_slug": "microclimate-dosing-array",
+        "stage": 1,
+        "quantity_required": 1
+      },
+      {
+        "machine_slug": "tps-root-chamber",
+        "stage": 1,
+        "quantity_required": 1
+      },
+      {
+        "machine_slug": "tps-root-chamber",
+        "stage": 2,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "0.42-Inch 72x40 Micro I2C OLED Display Module",
+    "category": "electrical",
+    "summary": "Sub-miniature status display dedicated to individual edge toolheads for immediate verification of 250ms deadman watchdog heartbeat and local fault codes.",
+    "dimensions": {
+      "length_mm": 18.0,
+      "width_mm": 12.0,
+      "thickness_mm": 3.2,
+      "tolerance_mm": "\u00b10.1",
+      "weight_grams": 1.8
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Electronics",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-OLED-042-TOOL/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-OLED-042-TOOL/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-ELEC-OLED-042-TOOL/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Waveshare Direct",
+        "sku": "WS-042-OLED-7240",
+        "direct_url": "https://waveshare.com",
+        "unit_price_usd": 3.5,
+        "moq": 1,
+        "lead_time_days": 4
+      }
+    ],
+    "part_id": "PART-ELEC-OLED-042-TOOL",
+    "used_by": []
+  },
+  {
+    "name": "NEMA 23 High-Torque Bipolar Stepper Motor (2.8 N\u00b7m, 2.8A)",
+    "category": "electrical",
+    "summary": "Heavy-duty bipolar 2-phase stepper motor engineered for high-tension gantry traversal, heavy-duty auger compression, and high-load mechanical axes.",
+    "dimensions": {
+      "length_mm": 76.0,
+      "width_mm": 57.0,
+      "thickness_mm": 57.0,
+      "tolerance_mm": "\u00b10.3",
+      "weight_grams": 1050.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Motor",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-NEMA23-28NM/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-NEMA23-28NM/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-ELEC-NEMA23-28NM/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "StepperOnline",
+        "sku": "23HS30-2804S",
+        "direct_url": "https://omc-stepperonline.com",
+        "unit_price_usd": 22.0,
+        "moq": 1,
+        "lead_time_days": 3
+      }
+    ],
+    "part_id": "PART-ELEC-NEMA23-28NM",
+    "used_by": [
+      {
+        "machine_slug": "overhead-gantry-system",
+        "stage": 1,
+        "quantity_required": 3
+      }
+    ]
+  },
+  {
+    "name": "NEMA 17 Planetary Geared Stepper Motor (5.18:1 Ratio, 1.8 N\u00b7m)",
+    "category": "electrical",
+    "summary": "Compact geared stepper delivering high holding torque and low backlash for continuous drum rotation and high-precision fluid metering.",
+    "dimensions": {
+      "length_mm": 68.0,
+      "width_mm": 42.0,
+      "thickness_mm": 42.0,
+      "tolerance_mm": "\u00b10.2",
+      "weight_grams": 480.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Motor",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-NEMA17-PLANET/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-NEMA17-PLANET/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-ELEC-NEMA17-PLANET/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "StepperOnline",
+        "sku": "17HS15-1504S-PG5",
+        "direct_url": "https://omc-stepperonline.com",
+        "unit_price_usd": 24.0,
+        "moq": 1,
+        "lead_time_days": 3
+      }
+    ],
+    "part_id": "PART-ELEC-NEMA17-PLANET",
+    "used_by": [
+      {
+        "machine_slug": "revolving-sprout-bioreactor",
+        "stage": 1,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "NEMA 14 Planetary Pancake Stepper (10:1 Ratio, 5mm Shaft)",
+    "category": "electrical",
+    "summary": "Ultra-lightweight pancake stepper with all-metal epicyclic gearbox designed for branch crawlers and compact robotic end-effectors.",
+    "dimensions": {
+      "length_mm": 44.0,
+      "width_mm": 35.0,
+      "thickness_mm": 35.0,
+      "tolerance_mm": "\u00b10.2",
+      "weight_grams": 210.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Motor",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-NEMA14-PANCAKE/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-NEMA14-PANCAKE/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-ELEC-NEMA14-PANCAKE/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "LDO Motors / StepperOnline",
+        "sku": "14HM11-1004S-PG10",
+        "direct_url": "https://omc-stepperonline.com",
+        "unit_price_usd": 16.0,
+        "moq": 1,
+        "lead_time_days": 3
+      }
+    ],
+    "part_id": "PART-ELEC-NEMA14-PANCAKE",
+    "used_by": [
+      {
+        "machine_slug": "mantis-branch-crawler",
+        "stage": 1,
+        "quantity_required": 2
+      }
+    ]
+  },
+  {
+    "name": "TB6600 4.0A Microstepping Bipolar Stepper Motor Driver",
+    "category": "electrical",
+    "summary": "Optically isolated industrial microstepping driver supporting up to 40V DC and 4.0A peak current with selectable step division (1 to 32).",
+    "dimensions": {
+      "length_mm": 96.0,
+      "width_mm": 71.0,
+      "thickness_mm": 37.0,
+      "tolerance_mm": "\u00b10.5",
+      "weight_grams": 130.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Electronics",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-TB6600-DVR/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-TB6600-DVR/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-ELEC-TB6600-DVR/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "DFRobot / StepperOnline",
+        "sku": "TB6600-4A-V1",
+        "direct_url": "https://dfrobot.com",
+        "unit_price_usd": 11.0,
+        "moq": 1,
+        "lead_time_days": 3
+      }
+    ],
+    "part_id": "PART-ELEC-TB6600-DVR",
+    "used_by": [
+      {
+        "machine_slug": "overhead-gantry-system",
+        "stage": 1,
+        "quantity_required": 3
+      }
+    ]
+  },
+  {
+    "name": "Trinamic TMC2209 SilentStepStick Stepper Driver (UART/StallGuard)",
+    "category": "electrical",
+    "summary": "Ultra-silent motor driver featuring StealthChop2, SpreadCycle, sensorless homing via StallGuard4, and hardware thermal protection.",
+    "dimensions": {
+      "length_mm": 20.0,
+      "width_mm": 15.0,
+      "thickness_mm": 12.0,
+      "tolerance_mm": "\u00b10.2",
+      "weight_grams": 8.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Electronics",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-TMC2209-DVR/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-TMC2209-DVR/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-ELEC-TMC2209-DVR/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "BigTreeTech / Watterott",
+        "sku": "BTT-TMC2209-V1.3",
+        "direct_url": "https://bigtree-tech.com",
+        "unit_price_usd": 8.0,
+        "moq": 1,
+        "lead_time_days": 3
+      }
+    ],
+    "part_id": "PART-ELEC-TMC2209-DVR",
+    "used_by": [
+      {
+        "machine_slug": "mantis-branch-crawler",
+        "stage": 2,
+        "quantity_required": 1
+      },
+      {
+        "machine_slug": "overhead-gantry-system",
+        "stage": 2,
+        "quantity_required": 1
+      },
+      {
+        "machine_slug": "revolving-sprout-bioreactor",
+        "stage": 1,
+        "quantity_required": 1
+      },
+      {
+        "machine_slug": "revolving-sprout-bioreactor",
+        "stage": 2,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "MeanWell LRS-150-24 Industrial Enclosed Switching Power Supply (24V 6.5A)",
+    "category": "electrical",
+    "summary": "Convection-cooled enclosed industrial switching power supply with short circuit, overload, over-voltage, and over-temperature protections.",
+    "dimensions": {
+      "length_mm": 159.0,
+      "width_mm": 97.0,
+      "thickness_mm": 30.0,
+      "tolerance_mm": "\u00b10.5",
+      "weight_grams": 480.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Power Supply",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-PSU-24V-150W/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-PSU-24V-150W/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-ELEC-PSU-24V-150W/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Mean Well / Mouser",
+        "sku": "LRS-150-24",
+        "direct_url": "https://mouser.com/meanwell",
+        "unit_price_usd": 22.0,
+        "moq": 1,
+        "lead_time_days": 2
+      }
+    ],
+    "part_id": "PART-ELEC-PSU-24V-150W",
+    "used_by": []
+  },
+  {
+    "name": "MeanWell LRS-250-24 Industrial Power Supply (24V 10.4A, 250W)",
+    "category": "electrical",
+    "summary": "High-current 250W regulated 24V supply for 2-axis high-speed overhead gantry gantries and multi-stepper Cartesian rigs.",
+    "dimensions": {
+      "length_mm": 215.0,
+      "width_mm": 115.0,
+      "thickness_mm": 30.0,
+      "tolerance_mm": "\u00b10.5",
+      "weight_grams": 760.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Power Supply",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-PSU-24V-250W/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-PSU-24V-250W/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-ELEC-PSU-24V-250W/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Mean Well / DigiKey",
+        "sku": "LRS-250-24",
+        "direct_url": "https://digikey.com",
+        "unit_price_usd": 32.0,
+        "moq": 1,
+        "lead_time_days": 2
+      }
+    ],
+    "part_id": "PART-ELEC-PSU-24V-250W",
+    "used_by": [
+      {
+        "machine_slug": "overhead-gantry-system",
+        "stage": 1,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "24V 2.5A (60W) Desktop Industrial Power Supply",
+    "category": "electrical",
+    "summary": "Compact isolated desktop power supply for revolving drum bioreactors and lower-wattage electro-mechanical subsystems.",
+    "dimensions": {
+      "length_mm": 110.0,
+      "width_mm": 50.0,
+      "thickness_mm": 32.0,
+      "tolerance_mm": "\u00b10.5",
+      "weight_grams": 250.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Power Supply",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-PSU-24V-60W/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-PSU-24V-60W/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-ELEC-PSU-24V-60W/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Mean Well / Amazon",
+        "sku": "GST60A24-P1J",
+        "direct_url": "https://mouser.com",
+        "unit_price_usd": 18.0,
+        "moq": 1,
+        "lead_time_days": 2
+      }
+    ],
+    "part_id": "PART-ELEC-PSU-24V-60W",
+    "used_by": [
+      {
+        "machine_slug": "revolving-sprout-bioreactor",
+        "stage": 1,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "24V 3A (72W) DC Desktop Industrial Power Supply",
+    "category": "electrical",
+    "summary": "Regulated high-surge desktop power adapter designed for high-pressure booster diaphragm pumps in aeroponic root zones.",
+    "dimensions": {
+      "length_mm": 125.0,
+      "width_mm": 55.0,
+      "thickness_mm": 35.0,
+      "tolerance_mm": "\u00b10.5",
+      "weight_grams": 310.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Power Supply",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-PSU-24V-72W/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-PSU-24V-72W/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-ELEC-PSU-24V-72W/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Mean Well / Mouser",
+        "sku": "GST90A24-P1M",
+        "direct_url": "https://mouser.com",
+        "unit_price_usd": 19.0,
+        "moq": 1,
+        "lead_time_days": 2
+      }
+    ],
+    "part_id": "PART-ELEC-PSU-24V-72W",
+    "used_by": [
+      {
+        "machine_slug": "tps-root-chamber",
+        "stage": 1,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "MeanWell LRS-50-12 Industrial Power Supply (12V 5A, 60W)",
+    "category": "electrical",
+    "summary": "Low-noise 12V DC power supply dedicated to peristaltic dosing pumps, solenoids, and edge cameras.",
+    "dimensions": {
+      "length_mm": 99.0,
+      "width_mm": 82.0,
+      "thickness_mm": 30.0,
+      "tolerance_mm": "\u00b10.5",
+      "weight_grams": 230.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Power Supply",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-PSU-12V-60W/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-PSU-12V-60W/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-ELEC-PSU-12V-60W/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Mean Well / DigiKey",
+        "sku": "LRS-50-12",
+        "direct_url": "https://digikey.com",
+        "unit_price_usd": 15.0,
+        "moq": 1,
+        "lead_time_days": 2
+      }
+    ],
+    "part_id": "PART-ELEC-PSU-12V-60W",
+    "used_by": [
+      {
+        "machine_slug": "microclimate-dosing-array",
+        "stage": 1,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "Sony IMX519 16MP / 4K Optical Camera Module with 850nm NIR Bandpass",
+    "category": "electrical",
+    "summary": "High-resolution autofocus camera module with switchable NIR cut filter for multi-spectral crop inspection, flower detection, and visual odometry.",
+    "dimensions": {
+      "length_mm": 25.0,
+      "width_mm": 24.0,
+      "thickness_mm": 9.0,
+      "tolerance_mm": "\u00b10.2",
+      "weight_grams": 8.5
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Sensor",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-CAM-4K-IMX519/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-CAM-4K-IMX519/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-ELEC-CAM-4K-IMX519/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Arducam Direct",
+        "sku": "B0371-IMX519-AF",
+        "direct_url": "https://arducam.com",
+        "unit_price_usd": 25.0,
+        "moq": 1,
+        "lead_time_days": 3
+      }
+    ],
+    "part_id": "PART-ELEC-CAM-4K-IMX519",
+    "used_by": [
+      {
+        "machine_slug": "overhead-gantry-system",
+        "stage": 2,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "RunCam Split HD Micro RGB-NIR Camera Module with Wi-Fi Link",
+    "category": "electrical",
+    "summary": "Micro-footprint 1080p60 / 4K micro FPV camera board engineered for ultra-low aerial payloads and remote flower canopy spotters.",
+    "dimensions": {
+      "length_mm": 29.0,
+      "width_mm": 29.0,
+      "thickness_mm": 11.0,
+      "tolerance_mm": "\u00b10.2",
+      "weight_grams": 10.2
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Sensor",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-CAM-RUNCAM-HD/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-CAM-RUNCAM-HD/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-ELEC-CAM-RUNCAM-HD/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "RunCam / GetFPV",
+        "sku": "RC-SPLIT-HD-MIC",
+        "direct_url": "https://getfpv.com",
+        "unit_price_usd": 32.0,
+        "moq": 1,
+        "lead_time_days": 4
+      }
+    ],
+    "part_id": "PART-ELEC-CAM-RUNCAM-HD",
+    "used_by": [
+      {
+        "machine_slug": "aerial-pollination-drone",
+        "stage": 2,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "Dual Micro RGB-NIR Stereo Cameras with Wi-Fi RTSP Transmitter",
+    "category": "electrical",
+    "summary": "Stereo binocular camera pairing for depth estimation, 3D point cloud generation, and obstacle avoidance in dense foliage.",
+    "dimensions": {
+      "length_mm": 60.0,
+      "width_mm": 24.0,
+      "thickness_mm": 12.0,
+      "tolerance_mm": "\u00b10.3",
+      "weight_grams": 18.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Sensor",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-CAM-STEREO-NIR/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-CAM-STEREO-NIR/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-ELEC-CAM-STEREO-NIR/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Arducam Direct",
+        "sku": "B0265-STEREO-CAM",
+        "direct_url": "https://arducam.com",
+        "unit_price_usd": 38.0,
+        "moq": 1,
+        "lead_time_days": 4
+      }
+    ],
+    "part_id": "PART-ELEC-CAM-STEREO-NIR",
+    "used_by": [
+      {
+        "machine_slug": "mantis-branch-crawler",
+        "stage": 2,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "Sensirion SHT40 High-Accuracy Temperature & Relative Humidity Probe",
+    "category": "electrical",
+    "summary": "Digital I2C temperature and humidity sensor with PTFE sintered filter membrane protecting against water condensation and spray droplets.",
+    "dimensions": {
+      "length_mm": 35.0,
+      "width_mm": 12.0,
+      "thickness_mm": 12.0,
+      "tolerance_mm": "\u00b10.2",
+      "weight_grams": 6.8
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Sensor",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-SHT40/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-SHT40/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-SHT40/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Sensirion / Adafruit",
+        "sku": "SHT40-DIS-B",
+        "direct_url": "https://adafruit.com/product/4885",
+        "unit_price_usd": 15.0,
+        "moq": 1,
+        "lead_time_days": 2
+      }
+    ],
+    "part_id": "PART-ELEC-SNS-SHT40",
+    "used_by": [
+      {
+        "machine_slug": "revolving-sprout-bioreactor",
+        "stage": 2,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "Sensirion SCD41 Photoacoustic NDIR CO2, Temperature & RH Sensor",
+    "category": "electrical",
+    "summary": "Miniature photoacoustic CO2 sensor with 400\u20135000 ppm measurement range for closed-loop enclosure microclimate regulation.",
+    "dimensions": {
+      "length_mm": 10.1,
+      "width_mm": 10.1,
+      "thickness_mm": 6.5,
+      "tolerance_mm": "\u00b10.1",
+      "weight_grams": 1.2
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Sensor",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-SCD41-NDIR/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-SCD41-NDIR/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-SCD41-NDIR/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Sensirion / DigiKey",
+        "sku": "SCD41-DIS",
+        "direct_url": "https://digikey.com",
+        "unit_price_usd": 38.0,
+        "moq": 1,
+        "lead_time_days": 2
+      }
+    ],
+    "part_id": "PART-ELEC-SNS-SCD41-NDIR",
+    "used_by": [
+      {
+        "machine_slug": "microclimate-dosing-array",
+        "stage": 2,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "Melexis MLX90614 Non-Contact Infrared Root Temperature Sensor",
+    "category": "electrical",
+    "summary": "Medical-grade factory calibrated IR pyrometer for non-invasive root surface temperature measurement inside dark aeroponic mist chambers.",
+    "dimensions": {
+      "length_mm": 18.0,
+      "width_mm": 14.0,
+      "thickness_mm": 7.5,
+      "tolerance_mm": "\u00b10.2",
+      "weight_grams": 3.8
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Sensor",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-MLX90614/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-MLX90614/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-MLX90614/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Melexis / SparkFun",
+        "sku": "SEN-09570",
+        "direct_url": "https://sparkfun.com",
+        "unit_price_usd": 16.0,
+        "moq": 1,
+        "lead_time_days": 3
+      }
+    ],
+    "part_id": "PART-ELEC-SNS-MLX90614",
+    "used_by": [
+      {
+        "machine_slug": "tps-root-chamber",
+        "stage": 2,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "JSN-SR04T Waterproof Ultrasonic Distance Sensor (20-600cm)",
+    "category": "electrical",
+    "summary": "Sealed industrial ultrasonic transducer probe designed for continuous liquid depth monitoring in sump tanks and biomass reservoirs.",
+    "dimensions": {
+      "length_mm": 25.0,
+      "width_mm": 25.0,
+      "thickness_mm": 18.0,
+      "tolerance_mm": "\u00b10.5",
+      "weight_grams": 42.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Sensor",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-USONIC-JSN/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-USONIC-JSN/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-USONIC-JSN/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "DFRobot Direct",
+        "sku": "SEN0207",
+        "direct_url": "https://dfrobot.com",
+        "unit_price_usd": 12.0,
+        "moq": 1,
+        "lead_time_days": 3
+      }
+    ],
+    "part_id": "PART-ELEC-SNS-USONIC-JSN",
+    "used_by": []
+  },
+  {
+    "name": "360-Degree 2D LiDAR Scanner (RPLiDAR C1 / LD06)",
+    "category": "electrical",
+    "summary": "Compact Time-of-Flight laser range scanner (12m range, 5000Hz sample rate) for autonomous ground AGV navigation and obstacle avoidance.",
+    "dimensions": {
+      "length_mm": 55.6,
+      "width_mm": 59.8,
+      "thickness_mm": 41.3,
+      "tolerance_mm": "\u00b10.3",
+      "weight_grams": 110.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Sensor",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-LIDAR-C1-2D/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-LIDAR-C1-2D/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-ELEC-LIDAR-C1-2D/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Slamtec / Seeed Studio",
+        "sku": "RPLIDAR-C1",
+        "direct_url": "https://slamtec.com",
+        "unit_price_usd": 75.0,
+        "moq": 1,
+        "lead_time_days": 5
+      }
+    ],
+    "part_id": "PART-ELEC-LIDAR-C1-2D",
+    "used_by": [
+      {
+        "machine_slug": "ground-track-agv",
+        "stage": 2,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "AS5600 12-bit High-Resolution Magnetic Rotary Encoder",
+    "category": "electrical",
+    "summary": "Contactless magnetic rotary position sensor delivering 4096 counts per revolution over I2C or analog output for closed-loop gantry and crawler joints.",
+    "dimensions": {
+      "length_mm": 16.0,
+      "width_mm": 15.0,
+      "thickness_mm": 3.0,
+      "tolerance_mm": "\u00b10.2",
+      "weight_grams": 2.1
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Sensor",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-ENC-AS5600-MAG/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-ENC-AS5600-MAG/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-ELEC-ENC-AS5600-MAG/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "AMS OSRAM / Mouser",
+        "sku": "AS5600-SO_EK_AB",
+        "direct_url": "https://mouser.com",
+        "unit_price_usd": 6.5,
+        "moq": 1,
+        "lead_time_days": 2
+      }
+    ],
+    "part_id": "PART-ELEC-ENC-AS5600-MAG",
+    "used_by": [
+      {
+        "machine_slug": "overhead-gantry-system",
+        "stage": 2,
+        "quantity_required": 3
+      }
+    ]
+  },
+  {
+    "name": "120W Magnetic Inductive Wireless Charging Receiver Module",
+    "category": "electrical",
+    "summary": "High-efficiency inductive power transfer receiver coil and regulator allowing ground AGVs to dock and recharge autonomously without exposed metal contacts.",
+    "dimensions": {
+      "length_mm": 85.0,
+      "width_mm": 85.0,
+      "thickness_mm": 12.0,
+      "tolerance_mm": "\u00b10.5",
+      "weight_grams": 165.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Electronics",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-WLESS-CHG-120W/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-WLESS-CHG-120W/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-ELEC-WLESS-CHG-120W/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Wurth Elektronik / DigiKey",
+        "sku": "WE-WPCC-120W",
+        "direct_url": "https://digikey.com",
+        "unit_price_usd": 42.0,
+        "moq": 1,
+        "lead_time_days": 4
+      }
+    ],
+    "part_id": "PART-ELEC-WLESS-CHG-120W",
+    "used_by": [
+      {
+        "machine_slug": "ground-track-agv",
+        "stage": 2,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "24V 250W Brushed DC Planetary Gearmotor (18:1 Ratio)",
+    "category": "electrical",
+    "summary": "High-torque industrial planetary DC gearmotor (450 RPM output, 12 N\u00b7m stall torque) for all-terrain rubber track drive trains.",
+    "dimensions": {
+      "length_mm": 145.0,
+      "width_mm": 60.0,
+      "thickness_mm": 60.0,
+      "tolerance_mm": "\u00b10.5",
+      "weight_grams": 1380.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Motor",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-MTR-DC-250W-GEAR/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-MTR-DC-250W-GEAR/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-ELEC-MTR-DC-250W-GEAR/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "AmpFlow / Robotzone",
+        "sku": "AF-MTR-24V-250W",
+        "direct_url": "https://ampflow.com",
+        "unit_price_usd": 38.0,
+        "moq": 2,
+        "lead_time_days": 4
+      }
+    ],
+    "part_id": "PART-ELEC-MTR-DC-250W-GEAR",
+    "used_by": [
+      {
+        "machine_slug": "ground-track-agv",
+        "stage": 1,
+        "quantity_required": 2
+      }
+    ]
+  },
+  {
+    "name": "Dual-Channel 15A Smart DC Motor Driver Board",
+    "category": "electrical",
+    "summary": "Dual H-bridge controller with optoisolated PWM/DIR inputs, regenerative braking, and current-limiting feedback for dual track AGVs.",
+    "dimensions": {
+      "length_mm": 82.0,
+      "width_mm": 55.0,
+      "thickness_mm": 20.0,
+      "tolerance_mm": "\u00b10.3",
+      "weight_grams": 72.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Electronics",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-DVR-DC-15A-DUAL/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-DVR-DC-15A-DUAL/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-ELEC-DVR-DC-15A-DUAL/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Cytron / RobotShop",
+        "sku": "MDD10A-DUAL",
+        "direct_url": "https://robotshop.com",
+        "unit_price_usd": 24.0,
+        "moq": 1,
+        "lead_time_days": 3
+      }
+    ],
+    "part_id": "PART-ELEC-DVR-DC-15A-DUAL",
+    "used_by": [
+      {
+        "machine_slug": "ground-track-agv",
+        "stage": 1,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "24V 15Ah LiFePO4 Battery Pack with Built-In BMS",
+    "category": "electrical",
+    "summary": "Deep-cycle Lithium Iron Phosphate battery module providing over 3000 charge cycles at 100% DoD with integrated thermal and short-circuit protection.",
+    "dimensions": {
+      "length_mm": 180.0,
+      "width_mm": 120.0,
+      "thickness_mm": 90.0,
+      "tolerance_mm": "\u00b11.0",
+      "weight_grams": 3200.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Battery",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-BAT-LIFEPO4-24V15A/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-BAT-LIFEPO4-24V15A/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-ELEC-BAT-LIFEPO4-24V15A/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Ampere Time / Bioenno Power",
+        "sku": "BLF-2415A",
+        "direct_url": "https://bioennopower.com",
+        "unit_price_usd": 125.0,
+        "moq": 1,
+        "lead_time_days": 5
+      }
+    ],
+    "part_id": "PART-ELEC-BAT-LIFEPO4-24V15A",
+    "used_by": [
+      {
+        "machine_slug": "ground-track-agv",
+        "stage": 1,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "2S 450mAh 75C High-Discharge LiPo Batteries (4x Pack)",
+    "category": "electrical",
+    "summary": "Ultra-lightweight micro LiPo pack with JST-PH 2.0 connectors engineered for sustained high-amperage bursts on aerial pollination drones.",
+    "dimensions": {
+      "length_mm": 60.0,
+      "width_mm": 15.0,
+      "thickness_mm": 12.0,
+      "tolerance_mm": "\u00b10.5",
+      "weight_grams": 26.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Battery",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-BAT-LIPO-2S450/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-BAT-LIPO-2S450/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-ELEC-BAT-LIPO-2S450/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Tattu / BetaFPV",
+        "sku": "TAT-2S-450-75C",
+        "direct_url": "https://gensace.de",
+        "unit_price_usd": 24.0,
+        "moq": 1,
+        "lead_time_days": 3
+      }
+    ],
+    "part_id": "PART-ELEC-BAT-LIPO-2S450",
+    "used_by": [
+      {
+        "machine_slug": "aerial-pollination-drone",
+        "stage": 1,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "1103 10,000KV Brushless Outrunner Motors + Props (4x Set)",
+    "category": "electrical",
+    "summary": "Precision balanced micro brushless motors equipped with dual ball bearings and 40mm 4-blade ducted micro props.",
+    "dimensions": {
+      "length_mm": 14.5,
+      "width_mm": 14.5,
+      "thickness_mm": 14.0,
+      "tolerance_mm": "\u00b10.1",
+      "weight_grams": 3.8
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Motor",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-MTR-BLDC-1103/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-MTR-BLDC-1103/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-ELEC-MTR-BLDC-1103/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "BetaFPV Direct",
+        "sku": "BF-1103-10000KV",
+        "direct_url": "https://betafpv.com",
+        "unit_price_usd": 36.0,
+        "moq": 1,
+        "lead_time_days": 4
+      }
+    ],
+    "part_id": "PART-ELEC-MTR-BLDC-1103",
+    "used_by": [
+      {
+        "machine_slug": "aerial-pollination-drone",
+        "stage": 1,
+        "quantity_required": 4
+      }
+    ]
+  },
+  {
+    "name": "STM32F4 AIO Flight Controller + 4-in-1 12A ESC",
+    "category": "electrical",
+    "summary": "All-in-one drone flight computer featuring STM32F411 MCU, BMI270 6-axis gyro/accelerometer, and 4x BLHeli_S 12A ESCs.",
+    "dimensions": {
+      "length_mm": 26.0,
+      "width_mm": 26.0,
+      "thickness_mm": 5.0,
+      "tolerance_mm": "\u00b10.2",
+      "weight_grams": 5.4
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Electronics",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-FC-STM32F4-AIO/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-FC-STM32F4-AIO/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-ELEC-FC-STM32F4-AIO/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "BetaFPV / Happymodel",
+        "sku": "F411-12A-AIO",
+        "direct_url": "https://betafpv.com",
+        "unit_price_usd": 42.0,
+        "moq": 1,
+        "lead_time_days": 3
+      }
+    ],
+    "part_id": "PART-ELEC-FC-STM32F4-AIO",
+    "used_by": [
+      {
+        "machine_slug": "aerial-pollination-drone",
+        "stage": 1,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "27mm Piezo Acoustic Vibration Transducer + FET Driver",
+    "category": "electrical",
+    "summary": "Calibrated piezoelectric bender transducer driven at exact 310 Hz resonance frequency to induce tomato, pepper, and wasabi blossom pollen release.",
+    "dimensions": {
+      "length_mm": 27.0,
+      "width_mm": 27.0,
+      "thickness_mm": 1.2,
+      "tolerance_mm": "\u00b10.1",
+      "weight_grams": 2.4
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Component",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-PZO-BUZZ-27MM/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-PZO-BUZZ-27MM/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-ELEC-PZO-BUZZ-27MM/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Murata / Mouser",
+        "sku": "7BB-27-4L0",
+        "direct_url": "https://mouser.com",
+        "unit_price_usd": 4.5,
+        "moq": 1,
+        "lead_time_days": 2
+      }
+    ],
+    "part_id": "PART-ELEC-PZO-BUZZ-27MM",
+    "used_by": [
+      {
+        "machine_slug": "aerial-pollination-drone",
+        "stage": 1,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "PMW3901 Optical Flow Breakout + VL53L1X Laser ToF Sensor",
+    "category": "electrical",
+    "summary": "Combined ground texture tracking optical flow camera and 4-meter infrared laser time-of-flight sensor for GPS-denied indoor hovering.",
+    "dimensions": {
+      "length_mm": 25.0,
+      "width_mm": 19.0,
+      "thickness_mm": 4.5,
+      "tolerance_mm": "\u00b10.2",
+      "weight_grams": 3.8
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Sensor",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-PMW3901-FLOW/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-PMW3901-FLOW/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-PMW3901-FLOW/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Bitcraze / Pimoroni",
+        "sku": "PIM358-OPT-FLOW",
+        "direct_url": "https://pimoroni.com",
+        "unit_price_usd": 28.0,
+        "moq": 1,
+        "lead_time_days": 3
+      }
+    ],
+    "part_id": "PART-ELEC-SNS-PMW3901-FLOW",
+    "used_by": [
+      {
+        "machine_slug": "aerial-pollination-drone",
+        "stage": 2,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "12V High-Force 25N Push-Pull Latch Solenoid",
+    "category": "electrical",
+    "summary": "Continuous duty electromechanical push-pull actuator with 10mm stroke for automated pod release and mechanical deadman disconnects.",
+    "dimensions": {
+      "length_mm": 45.0,
+      "width_mm": 26.0,
+      "thickness_mm": 20.0,
+      "tolerance_mm": "\u00b10.3",
+      "weight_grams": 95.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Actuator",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-SOL-LATCH-25N/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-SOL-LATCH-25N/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-ELEC-SOL-LATCH-25N/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "SparkFun / Adafruit",
+        "sku": "ROB-11015",
+        "direct_url": "https://sparkfun.com",
+        "unit_price_usd": 14.0,
+        "moq": 1,
+        "lead_time_days": 3
+      }
+    ],
+    "part_id": "PART-ELEC-SOL-LATCH-25N",
+    "used_by": [
+      {
+        "machine_slug": "ground-track-agv",
+        "stage": 1,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "5-Channel Magnetic Track Induction Sensor Array",
+    "category": "electrical",
+    "summary": "Precision magnetic line-following array sensitive to floor-embedded magnetic guidance strips with 1mm tracking accuracy.",
+    "dimensions": {
+      "length_mm": 80.0,
+      "width_mm": 25.0,
+      "thickness_mm": 6.0,
+      "tolerance_mm": "\u00b10.3",
+      "weight_grams": 18.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Sensor",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-MAG-TRACK-5CH/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-MAG-TRACK-5CH/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-MAG-TRACK-5CH/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Roboteq / RobotShop",
+        "sku": "MGS1600GY",
+        "direct_url": "https://robotshop.com",
+        "unit_price_usd": 35.0,
+        "moq": 1,
+        "lead_time_days": 4
+      }
+    ],
+    "part_id": "PART-ELEC-SNS-MAG-TRACK-5CH",
+    "used_by": [
+      {
+        "machine_slug": "ground-track-agv",
+        "stage": 2,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "3-Axis Mini Articulated Arm Kit + Digital Metal-Gear Servos",
+    "category": "electrical",
+    "summary": "Machined aluminum articulated mini-arm kit with 3x high-torque 25kg\u00b7cm metal gear digital servos for pod docking and coupling.",
+    "dimensions": {
+      "length_mm": 220.0,
+      "width_mm": 70.0,
+      "thickness_mm": 70.0,
+      "tolerance_mm": "\u00b10.5",
+      "weight_grams": 420.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Robotics",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-ARM-3AXIS-KIT/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-ARM-3AXIS-KIT/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-ELEC-ARM-3AXIS-KIT/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Waveshare / DFRobot",
+        "sku": "ROB-ARM-3AX-ALUM",
+        "direct_url": "https://waveshare.com",
+        "unit_price_usd": 55.0,
+        "moq": 1,
+        "lead_time_days": 4
+      }
+    ],
+    "part_id": "PART-ELEC-ARM-3AXIS-KIT",
+    "used_by": [
+      {
+        "machine_slug": "ground-track-agv",
+        "stage": 2,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "Universal 18V Tool Battery Adapter Shoe + Fuse Block",
+    "category": "electrical",
+    "summary": "Quick-swap terminal shoe accepting standard DeWalt/Makita/Milwaukee 18V/20V cordless power tool batteries with inline 15A fuse.",
+    "dimensions": {
+      "length_mm": 90.0,
+      "width_mm": 75.0,
+      "thickness_mm": 30.0,
+      "tolerance_mm": "\u00b10.5",
+      "weight_grams": 85.0
+    },
+    "fabrication": {
+      "is_custom_fab": true,
+      "is_3d_printed": true,
+      "print_spec": {
+        "material": "PETG",
+        "nozzle_diameter_mm": 0.4,
+        "layer_height_mm": 0.2,
+        "perimeters": 5,
+        "infill_percentage": 50,
+        "infill_pattern": "grid",
+        "print_time_hours": 2.5,
+        "filament_weight_grams": 65.0
+      },
+      "fab_type": "3D Print / Assembly",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-BAT-ADAPT-18V/model.3ds",
+      "stl_asset_url": "/open-biosphere/assets/parts/PART-ELEC-BAT-ADAPT-18V/print.stl",
+      "step_asset_url": "/open-biosphere/assets/parts/PART-ELEC-BAT-ADAPT-18V/cad.step",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-BAT-ADAPT-18V/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-ELEC-BAT-ADAPT-18V/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "In-House Open-Biosphere Fab",
+        "sku": "OB-SHOE-18V-V1",
+        "direct_url": "https://open-biosphere.org",
+        "unit_price_usd": 12.0,
+        "moq": 1,
+        "lead_time_days": 1
+      }
+    ],
+    "part_id": "PART-ELEC-BAT-ADAPT-18V",
+    "used_by": [
+      {
+        "machine_slug": "mantis-branch-crawler",
+        "stage": 1,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "12V Coreless 12,000 RPM Micro-Shear Motor + 15mm Blade",
+    "category": "electrical",
+    "summary": "Ultra-lightweight coreless micro-motor coupled to high-speed hardened steel rotary shears for rapid stem harvesting.",
+    "dimensions": {
+      "length_mm": 32.0,
+      "width_mm": 12.0,
+      "thickness_mm": 12.0,
+      "tolerance_mm": "\u00b10.1",
+      "weight_grams": 16.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Motor",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-MTR-CORELESS-12V/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-MTR-CORELESS-12V/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-ELEC-MTR-CORELESS-12V/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Pololu Robotics",
+        "sku": "POL-12V-CORELESS",
+        "direct_url": "https://pololu.com",
+        "unit_price_usd": 14.0,
+        "moq": 1,
+        "lead_time_days": 2
+      }
+    ],
+    "part_id": "PART-ELEC-MTR-CORELESS-12V",
+    "used_by": [
+      {
+        "machine_slug": "mantis-branch-crawler",
+        "stage": 1,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "20 N Miniature Bending Beam Load Cell + HX711 24-bit ADC",
+    "category": "electrical",
+    "summary": "Precision strain gauge force sensor calibrated for measuring stem clamping friction, fruit pull force, and branch deflection.",
+    "dimensions": {
+      "length_mm": 45.0,
+      "width_mm": 9.0,
+      "thickness_mm": 6.0,
+      "tolerance_mm": "\u00b10.1",
+      "weight_grams": 12.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Sensor",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-LOADCELL-20N/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-LOADCELL-20N/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-LOADCELL-20N/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "SparkFun / Phidgets",
+        "sku": "SEN-14727",
+        "direct_url": "https://sparkfun.com",
+        "unit_price_usd": 14.0,
+        "moq": 1,
+        "lead_time_days": 3
+      }
+    ],
+    "part_id": "PART-ELEC-SNS-LOADCELL-20N",
+    "used_by": [
+      {
+        "machine_slug": "mantis-branch-crawler",
+        "stage": 2,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "5V 5A High-Efficiency Step-Down DC-DC Power Module",
+    "category": "electrical",
+    "summary": "Synchronous step-down buck converter (input 9\u201336V, output 5.1V at 5A, 96% efficiency) for powering microcontrollers and edge cameras.",
+    "dimensions": {
+      "length_mm": 45.0,
+      "width_mm": 20.0,
+      "thickness_mm": 14.0,
+      "tolerance_mm": "\u00b10.3",
+      "weight_grams": 22.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Electronics",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-VR-5V5A-STEPDOWN/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-VR-5V5A-STEPDOWN/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-ELEC-VR-5V5A-STEPDOWN/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Pololu / DigiKey",
+        "sku": "D24V50F5",
+        "direct_url": "https://pololu.com",
+        "unit_price_usd": 12.0,
+        "moq": 1,
+        "lead_time_days": 2
+      }
+    ],
+    "part_id": "PART-ELEC-VR-5V5A-STEPDOWN",
+    "used_by": [
+      {
+        "machine_slug": "mantis-branch-crawler",
+        "stage": 2,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "12V 200mg/h Corona Ozone Generator + Diffuser Stone",
+    "category": "electrical",
+    "summary": "Compact cold corona discharge ozone tube for automated sanitization flushes and pathogen eradication in germination drums.",
+    "dimensions": {
+      "length_mm": 90.0,
+      "width_mm": 40.0,
+      "thickness_mm": 35.0,
+      "tolerance_mm": "\u00b10.5",
+      "weight_grams": 145.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Sanitizer",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-GEN-OZONE-12V/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-GEN-OZONE-12V/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-ELEC-GEN-OZONE-12V/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Enaly / Amazon Industrial",
+        "sku": "O3-GEN-200MG-12V",
+        "direct_url": "https://amazon.com",
+        "unit_price_usd": 19.0,
+        "moq": 1,
+        "lead_time_days": 3
+      }
+    ],
+    "part_id": "PART-ELEC-GEN-OZONE-12V",
+    "used_by": [
+      {
+        "machine_slug": "revolving-sprout-bioreactor",
+        "stage": 2,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "Neodymium Magnetic Alignment Docking Latch + Solenoid Disengage",
+    "category": "electrical",
+    "summary": "High-strength N52 kinematic magnetic docking coupling with integrated 12V pulse release solenoid for toolheads.",
+    "dimensions": {
+      "length_mm": 40.0,
+      "width_mm": 35.0,
+      "thickness_mm": 25.0,
+      "tolerance_mm": "\u00b10.2",
+      "weight_grams": 82.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Robotics",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-LATCH-MAG-ALIGN/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-LATCH-MAG-ALIGN/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-ELEC-LATCH-MAG-ALIGN/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "K&J Magnetics / Roboteq",
+        "sku": "MAG-DOCK-SOL-V1",
+        "direct_url": "https://kjmagnetics.com",
+        "unit_price_usd": 14.0,
+        "moq": 1,
+        "lead_time_days": 3
+      }
+    ],
+    "part_id": "PART-ELEC-LATCH-MAG-ALIGN",
+    "used_by": [
+      {
+        "machine_slug": "revolving-sprout-bioreactor",
+        "stage": 2,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "Dual Optical Liquid Level Sensors (Infrared Prism)",
+    "category": "electrical",
+    "summary": "Solid-state optical infrared level sensor with polysulfone housing providing clean high/low digital level detection without moving floats.",
+    "dimensions": {
+      "length_mm": 35.0,
+      "width_mm": 18.0,
+      "thickness_mm": 18.0,
+      "tolerance_mm": "\u00b10.2",
+      "weight_grams": 15.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Sensor",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-OPT-LEVEL/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-OPT-LEVEL/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-OPT-LEVEL/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "SST Sensing / DigiKey",
+        "sku": "LLC210D3SH",
+        "direct_url": "https://digikey.com",
+        "unit_price_usd": 18.0,
+        "moq": 1,
+        "lead_time_days": 2
+      }
+    ],
+    "part_id": "PART-ELEC-SNS-OPT-LEVEL",
+    "used_by": [
+      {
+        "machine_slug": "tps-root-chamber",
+        "stage": 2,
+        "quantity_required": 2
+      }
+    ]
+  },
+  {
+    "name": "Optocoupled 8-Channel High-Side MOSFET Driver Board",
+    "category": "electrical",
+    "summary": "Industrial high-side switching module engineered for driving 24V solenoids, aeration valves, and mist valves with built-in inductive flyback clamping.",
+    "dimensions": {
+      "length_mm": 95.0,
+      "width_mm": 60.0,
+      "thickness_mm": 18.0,
+      "tolerance_mm": "\u00b10.3",
+      "weight_grams": 65.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Electronics",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-DVR-MOSFET-8CH/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-DVR-MOSFET-8CH/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-ELEC-DVR-MOSFET-8CH/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Industrial Shields / Tindie",
+        "sku": "MOSFET-8CH-ISO-24V",
+        "direct_url": "https://tindie.com",
+        "unit_price_usd": 28.0,
+        "moq": 1,
+        "lead_time_days": 3
+      }
+    ],
+    "part_id": "PART-ELEC-DVR-MOSFET-8CH",
+    "used_by": [
+      {
+        "machine_slug": "microclimate-dosing-array",
+        "stage": 2,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "12V Micro Linear Actuator (50mm Stroke, 64N Force)",
+    "category": "electrical",
+    "summary": "Compact electromechanical piston with integrated internal limit switches for automated weir gate regulation.",
+    "dimensions": {
+      "length_mm": 115.0,
+      "width_mm": 20.0,
+      "thickness_mm": 20.0,
+      "tolerance_mm": "\u00b10.5",
+      "weight_grams": 110.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Actuator",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-ACTUATOR-LIN-12V/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-ACTUATOR-LIN-12V/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-ELEC-ACTUATOR-LIN-12V/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Actuonix / RobotShop",
+        "sku": "L12-50-50-12-I",
+        "direct_url": "https://robotshop.com",
+        "unit_price_usd": 32.0,
+        "moq": 1,
+        "lead_time_days": 3
+      }
+    ],
+    "part_id": "PART-ELEC-ACTUATOR-LIN-12V",
+    "used_by": []
+  },
+  {
+    "name": "IP65 ABS Weatherproof Wall-Mount Enclosure with Cable Glands",
+    "category": "electrical",
+    "summary": "Molded ABS enclosure with silicone perimeter gasket, pre-drilled PG-7 cable glands, and hinged transparent smoked acrylic lid.",
+    "dimensions": {
+      "length_mm": 200.0,
+      "width_mm": 150.0,
+      "thickness_mm": 75.0,
+      "tolerance_mm": "\u00b11.0",
+      "weight_grams": 320.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Enclosure",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-ENC-WEATHER-IP65/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-ENC-WEATHER-IP65/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-ELEC-ENC-WEATHER-IP65/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Bud Industries / Mouser",
+        "sku": "NBF-32014",
+        "direct_url": "https://mouser.com",
+        "unit_price_usd": 22.0,
+        "moq": 1,
+        "lead_time_days": 2
+      }
+    ],
+    "part_id": "PART-ELEC-ENC-WEATHER-IP65",
+    "used_by": [
+      {
+        "machine_slug": "microclimate-dosing-array",
+        "stage": 2,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "316L Stainless Steel Wedge-Wire Screen Panel (150\u00b5m Slot, 300x400mm)",
+    "category": "fluidic",
+    "summary": "Continuous slot V-wire dewatering filter panel engineered for non-clogging aquatic biomass separation (Wolffia, Lemna).",
+    "dimensions": {
+      "length_mm": 400.0,
+      "width_mm": 300.0,
+      "thickness_mm": 6.5,
+      "tolerance_mm": "\u00b10.5",
+      "weight_grams": 820.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Precision Filtration Panel",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-WEDGE-150U/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-FLUID-WEDGE-150U/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-FLUID-WEDGE-150U/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Hendrick Screen / Industrial Wire",
+        "sku": "WW-316L-150U-300400",
+        "direct_url": "https://hendrickscreen.com",
+        "unit_price_usd": 48.0,
+        "moq": 1,
+        "lead_time_days": 7
+      }
+    ],
+    "part_id": "PART-FLUID-WEDGE-150U",
+    "used_by": []
+  },
+  {
+    "name": "24V DC Brushless Magnetic Drive Circulation Pump (55 GPM, 80W)",
+    "category": "fluidic",
+    "summary": "Sealless magnetic coupling pump preventing chemical leakage and bearing seizure during continuous aquatic nutrient circulation.",
+    "dimensions": {
+      "length_mm": 175.0,
+      "width_mm": 95.0,
+      "thickness_mm": 105.0,
+      "tolerance_mm": "\u00b10.5",
+      "weight_grams": 1150.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Pump",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-PUMP-MAG-24V/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-FLUID-PUMP-MAG-24V/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-FLUID-PUMP-MAG-24V/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Pan World / US Solar Pumps",
+        "sku": "NH-50PX-24V",
+        "direct_url": "https://ussolarpumps.com",
+        "unit_price_usd": 68.0,
+        "moq": 1,
+        "lead_time_days": 3
+      }
+    ],
+    "part_id": "PART-FLUID-PUMP-MAG-24V",
+    "used_by": []
+  },
+  {
+    "name": "24V DC High-Pressure Diaphragm Booster Pump (120 PSI, 1.2 GPM)",
+    "category": "fluidic",
+    "summary": "Self-priming 3-chamber diaphragm pump with built-in thermal switch engineered for ultra-fine aeroponic droplet atomization (30\u201360\u00b5m).",
+    "dimensions": {
+      "length_mm": 190.0,
+      "width_mm": 100.0,
+      "thickness_mm": 105.0,
+      "tolerance_mm": "\u00b10.5",
+      "weight_grams": 1850.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Pump",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-PUMP-BOOST-120P/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-FLUID-PUMP-BOOST-120P/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-FLUID-PUMP-BOOST-120P/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Aquatec / Shurflo",
+        "sku": "AQ-8800-24V",
+        "direct_url": "https://aquatec.com",
+        "unit_price_usd": 48.0,
+        "moq": 1,
+        "lead_time_days": 3
+      }
+    ],
+    "part_id": "PART-FLUID-PUMP-BOOST-120P",
+    "used_by": [
+      {
+        "machine_slug": "tps-root-chamber",
+        "stage": 1,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "24V DC 100 PSI Diaphragm Mist Pump (1.2 L/min)",
+    "category": "fluidic",
+    "summary": "Compact low-noise positive displacement pump for sprout drum humidification and localized micro-misting.",
+    "dimensions": {
+      "length_mm": 160.0,
+      "width_mm": 88.0,
+      "thickness_mm": 92.0,
+      "tolerance_mm": "\u00b10.5",
+      "weight_grams": 1200.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Pump",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-PUMP-MIST-100P/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-FLUID-PUMP-MIST-100P/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-FLUID-PUMP-MIST-100P/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Seaflo / Hydrozone",
+        "sku": "SFDP1-012-100-21",
+        "direct_url": "https://seaflo.com",
+        "unit_price_usd": 32.0,
+        "moq": 1,
+        "lead_time_days": 3
+      }
+    ],
+    "part_id": "PART-FLUID-PUMP-MIST-100P",
+    "used_by": [
+      {
+        "machine_slug": "revolving-sprout-bioreactor",
+        "stage": 1,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "12V DC Brushed Peristaltic Dosing Pump (100 mL/min)",
+    "category": "fluidic",
+    "summary": "Self-priming positive displacement peristaltic pump with 3-roller rotor and food-grade silicone tubing for pH and nutrient dosing.",
+    "dimensions": {
+      "length_mm": 65.0,
+      "width_mm": 40.0,
+      "thickness_mm": 40.0,
+      "tolerance_mm": "\u00b10.2",
+      "weight_grams": 115.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Pump",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-PUMP-PERI-12V/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-FLUID-PUMP-PERI-12V/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-FLUID-PUMP-PERI-12V/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Kamoer / Adafruit",
+        "sku": "KAS-12V-100ML",
+        "direct_url": "https://kamoer.com",
+        "unit_price_usd": 12.0,
+        "moq": 1,
+        "lead_time_days": 3
+      }
+    ],
+    "part_id": "PART-FLUID-PUMP-PERI-12V",
+    "used_by": [
+      {
+        "machine_slug": "microclimate-dosing-array",
+        "stage": 1,
+        "quantity_required": 6
+      }
+    ]
+  },
+  {
+    "name": "Brass Anti-Drip Atomizing Misting Nozzles (0.3mm Orifice, 15 PSI Check)",
+    "category": "fluidic",
+    "summary": "Precision CNC brass nozzle with stainless steel orifice core and spring-loaded ball check valve preventing post-spray drip.",
+    "dimensions": {
+      "length_mm": 20.0,
+      "width_mm": 9.5,
+      "thickness_mm": 9.5,
+      "tolerance_mm": "\u00b10.05",
+      "weight_grams": 12.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Precision Nozzle",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-NOZZLE-BRASS-03/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-FLUID-NOZZLE-BRASS-03/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-FLUID-NOZZLE-BRASS-03/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "MistCooling Inc / McMaster",
+        "sku": "MC-NOZ-03-BR",
+        "direct_url": "https://mistcooling.com",
+        "unit_price_usd": 3.5,
+        "moq": 4,
+        "lead_time_days": 2
+      }
+    ],
+    "part_id": "PART-FLUID-NOZZLE-BRASS-03",
+    "used_by": [
+      {
+        "machine_slug": "revolving-sprout-bioreactor",
+        "stage": 1,
+        "quantity_required": 2
+      },
+      {
+        "machine_slug": "tps-root-chamber",
+        "stage": 1,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "12V DC Normally-Closed Brass CO2 Solenoid Valve with Manual Override",
+    "category": "fluidic",
+    "summary": "Direct-acting bubble-tight brass solenoid valve designed for gas injection and emergency manual flow override lever.",
+    "dimensions": {
+      "length_mm": 55.0,
+      "width_mm": 32.0,
+      "thickness_mm": 68.0,
+      "tolerance_mm": "\u00b10.5",
+      "weight_grams": 240.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Valve",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-SOLENOID-CO2/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-FLUID-SOLENOID-CO2/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-FLUID-SOLENOID-CO2/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "U.S. Solid / Amazon",
+        "sku": "USS-SV00055",
+        "direct_url": "https://ussolid.com",
+        "unit_price_usd": 18.0,
+        "moq": 1,
+        "lead_time_days": 2
+      }
+    ],
+    "part_id": "PART-FLUID-SOLENOID-CO2",
+    "used_by": []
+  },
+  {
+    "name": "Manual 3-Way L-Port Diverter Ball Valve (1/4\" Barb)",
+    "category": "fluidic",
+    "summary": "Corrosion-resistant PVDF 3-way diverter valve with high-visibility indicator lever for zero-power gravity routing.",
+    "dimensions": {
+      "length_mm": 60.0,
+      "width_mm": 45.0,
+      "thickness_mm": 35.0,
+      "tolerance_mm": "\u00b10.5",
+      "weight_grams": 45.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Valve",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-VALVE-3WAY-L/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-FLUID-VALVE-3WAY-L/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-FLUID-VALVE-3WAY-L/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Cole-Parmer / McMaster",
+        "sku": "CP-3WAY-L-025",
+        "direct_url": "https://coleparmer.com",
+        "unit_price_usd": 8.5,
+        "moq": 1,
+        "lead_time_days": 2
+      }
+    ],
+    "part_id": "PART-FLUID-VALVE-3WAY-L",
+    "used_by": [
+      {
+        "machine_slug": "microclimate-dosing-array",
+        "stage": 0,
+        "quantity_required": 6
+      }
+    ]
+  },
+  {
+    "name": "3/4\" Brass Full-Port Manual Ball Valve",
+    "category": "fluidic",
+    "summary": "Heavy-duty forged brass full-port ball valve with PTFE seals and vinyl-grip steel handle for sump drainage.",
+    "dimensions": {
+      "length_mm": 62.0,
+      "width_mm": 42.0,
+      "thickness_mm": 58.0,
+      "tolerance_mm": "\u00b10.5",
+      "weight_grams": 210.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Valve",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-VALVE-BALL-34B/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-FLUID-VALVE-BALL-34B/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-FLUID-VALVE-BALL-34B/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Apollo Valves / Home Depot",
+        "sku": "AP-70-100-34",
+        "direct_url": "https://homedepot.com",
+        "unit_price_usd": 8.0,
+        "moq": 1,
+        "lead_time_days": 1
+      }
+    ],
+    "part_id": "PART-FLUID-VALVE-BALL-34B",
+    "used_by": [
+      {
+        "machine_slug": "revolving-sprout-bioreactor",
+        "stage": 0,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "1-Inch PVC Threaded Bulkhead + Full-Port Ball Valve",
+    "category": "fluidic",
+    "summary": "Schedule 80 PVC bulkhead fitting with EPDM gasket coupled to full-port ball valve for high-volume aeroponic root tank drain.",
+    "dimensions": {
+      "length_mm": 95.0,
+      "width_mm": 70.0,
+      "thickness_mm": 70.0,
+      "tolerance_mm": "\u00b10.5",
+      "weight_grams": 180.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Plumbing",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-VALVE-BALL-1IN/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-FLUID-VALVE-BALL-1IN/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-FLUID-VALVE-BALL-1IN/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Spears Manufacturing / SupplyHouse",
+        "sku": "SP-80-BH-100",
+        "direct_url": "https://supplyhouse.com",
+        "unit_price_usd": 9.0,
+        "moq": 1,
+        "lead_time_days": 2
+      }
+    ],
+    "part_id": "PART-FLUID-VALVE-BALL-1IN",
+    "used_by": [
+      {
+        "machine_slug": "tps-root-chamber",
+        "stage": 0,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "24V DC Fast-Bleed Solenoid Depressurization Valve",
+    "category": "fluidic",
+    "summary": "Normally-open fast-exhaust 24V solenoid valve providing instantaneous depressurization of aeroponic lines upon pump power cutoff.",
+    "dimensions": {
+      "length_mm": 50.0,
+      "width_mm": 28.0,
+      "thickness_mm": 58.0,
+      "tolerance_mm": "\u00b10.3",
+      "weight_grams": 175.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Valve",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-SOLENOID-BLEED-24V/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-FLUID-SOLENOID-BLEED-24V/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-FLUID-SOLENOID-BLEED-24V/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "SMC Pneumatics / McMaster",
+        "sku": "SMC-V100-24V-NO",
+        "direct_url": "https://mcmaster.com",
+        "unit_price_usd": 16.0,
+        "moq": 1,
+        "lead_time_days": 2
+      }
+    ],
+    "part_id": "PART-FLUID-SOLENOID-BLEED-24V",
+    "used_by": [
+      {
+        "machine_slug": "tps-root-chamber",
+        "stage": 2,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "Food-Grade Silicone Sump Tray + 3/4\" Bulkhead Fitting",
+    "category": "fluidic",
+    "summary": "Flexible platinum-cured silicone catchment pan with pre-molded sloped drainage sump and 3/4\" brass bulkhead fitting.",
+    "dimensions": {
+      "length_mm": 520.0,
+      "width_mm": 380.0,
+      "thickness_mm": 45.0,
+      "tolerance_mm": "\u00b11.5",
+      "weight_grams": 640.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Sump",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-SUMP-SILICONE-34/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-FLUID-SUMP-SILICONE-34/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-FLUID-SUMP-SILICONE-34/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "BakeWare Lab / McMaster",
+        "sku": "SIL-SUMP-5238",
+        "direct_url": "https://mcmaster.com",
+        "unit_price_usd": 12.0,
+        "moq": 1,
+        "lead_time_days": 2
+      }
+    ],
+    "part_id": "PART-FLUID-SUMP-SILICONE-34",
+    "used_by": [
+      {
+        "machine_slug": "revolving-sprout-bioreactor",
+        "stage": 0,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "2-Gallon Hand-Pump Pressure Garden Sprayer + Brass Wand",
+    "category": "fluidic",
+    "summary": "Durable UV-resistant polyethylene tank with manual ergonomic piston pump, pressure relief valve, and adjustable brass cone nozzle.",
+    "dimensions": {
+      "length_mm": 480.0,
+      "width_mm": 210.0,
+      "thickness_mm": 210.0,
+      "tolerance_mm": "\u00b12.0",
+      "weight_grams": 1250.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Appliance",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-SPRAYER-HAND-2G/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-FLUID-SPRAYER-HAND-2G/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-FLUID-SPRAYER-HAND-2G/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Chapin / Home Depot",
+        "sku": "CHP-20000-2G",
+        "direct_url": "https://homedepot.com",
+        "unit_price_usd": 18.0,
+        "moq": 1,
+        "lead_time_days": 1
+      }
+    ],
+    "part_id": "PART-FLUID-SPRAYER-HAND-2G",
+    "used_by": [
+      {
+        "machine_slug": "tps-root-chamber",
+        "stage": 0,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "Rotary Vane Flow Meter with Hall Sensor (1/2\" Barb)",
+    "category": "fluidic",
+    "summary": "Precision turbine flow sensor outputting clean TTL pulses proportional to fluid flow rate (1\u201330 L/min).",
+    "dimensions": {
+      "length_mm": 62.0,
+      "width_mm": 36.0,
+      "thickness_mm": 36.0,
+      "tolerance_mm": "\u00b10.5",
+      "weight_grams": 58.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Sensor",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-MTR-FLOW-HALL/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-FLUID-MTR-FLOW-HALL/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-FLUID-MTR-FLOW-HALL/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Seeed Studio / Adafruit",
+        "sku": "YF-S201",
+        "direct_url": "https://seeedstudio.com",
+        "unit_price_usd": 9.5,
+        "moq": 1,
+        "lead_time_days": 3
+      }
+    ],
+    "part_id": "PART-FLUID-MTR-FLOW-HALL",
+    "used_by": []
+  },
+  {
+    "name": "Fine-Bubble Micro-Pore Ceramic Aeration Tube (200mm)",
+    "category": "fluidic",
+    "summary": "High-purity alumina ceramic tube generating uniform 10\u201350\u00b5m micro-bubbles for maximum dissolved oxygen absorption.",
+    "dimensions": {
+      "length_mm": 200.0,
+      "width_mm": 25.0,
+      "thickness_mm": 25.0,
+      "tolerance_mm": "\u00b10.5",
+      "weight_grams": 160.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Diffuser",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-DIFFUSER-CERAMIC/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-FLUID-DIFFUSER-CERAMIC/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-FLUID-DIFFUSER-CERAMIC/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Pentair Aquatic Eco-Systems",
+        "sku": "AS8L-CERAMIC",
+        "direct_url": "https://pentairaes.com",
+        "unit_price_usd": 12.0,
+        "moq": 1,
+        "lead_time_days": 3
+      }
+    ],
+    "part_id": "PART-FLUID-DIFFUSER-CERAMIC",
+    "used_by": []
+  },
+  {
+    "name": "4-Channel Dial-A-Dose Graduated Acrylic Manifold",
+    "category": "fluidic",
+    "summary": "Clear cast acrylic distribution manifold with 4 independent precision needle valves and laser-etched mL/hr graduated scales.",
+    "dimensions": {
+      "length_mm": 180.0,
+      "width_mm": 50.0,
+      "thickness_mm": 35.0,
+      "tolerance_mm": "\u00b10.5",
+      "weight_grams": 195.0
+    },
+    "fabrication": {
+      "is_custom_fab": true,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "CNC Milled Acrylic",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-MANIFOLD-4CH-GRAD/model.3ds",
+      "stl_asset_url": "/open-biosphere/assets/parts/PART-FLUID-MANIFOLD-4CH-GRAD/print.stl",
+      "step_asset_url": "/open-biosphere/assets/parts/PART-FLUID-MANIFOLD-4CH-GRAD/cad.step",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-FLUID-MANIFOLD-4CH-GRAD/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-FLUID-MANIFOLD-4CH-GRAD/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "In-House Acrylic Fab",
+        "sku": "OB-MANI-4CH-V1",
+        "direct_url": "https://open-biosphere.org",
+        "unit_price_usd": 28.0,
+        "moq": 1,
+        "lead_time_days": 2
+      }
+    ],
+    "part_id": "PART-FLUID-MANIFOLD-4CH-GRAD",
+    "used_by": []
+  },
+  {
+    "name": "Medical-Grade Silicone Dosing Tubing (3mm ID x 5mm OD, 10m)",
+    "category": "fluidic",
+    "summary": "Platinum-cured food/medical grade flexible tubing resistant to high-concentration acid, base, and micro-nutrient salts.",
+    "dimensions": {
+      "length_mm": 10000.0,
+      "width_mm": 5.0,
+      "thickness_mm": 5.0,
+      "tolerance_mm": "\u00b10.2",
+      "weight_grams": 220.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Tubing",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-TUBE-SILICONE-MED/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-FLUID-TUBE-SILICONE-MED/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-FLUID-TUBE-SILICONE-MED/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Saint-Gobain / McMaster",
+        "sku": "TYGON-3350-10M",
+        "direct_url": "https://mcmaster.com",
+        "unit_price_usd": 14.0,
+        "moq": 1,
+        "lead_time_days": 2
+      }
+    ],
+    "part_id": "PART-FLUID-TUBE-SILICONE-MED",
+    "used_by": []
+  },
+  {
+    "name": "Food-Grade Heavy-Duty Opaque Black HDPE Tote (160L)",
+    "category": "fluidic",
+    "summary": "UV-resistant food-safe high-density polyethylene reservoir blocking 100% of photosynthetically active radiation to prevent root algae growth.",
+    "dimensions": {
+      "length_mm": 800.0,
+      "width_mm": 500.0,
+      "thickness_mm": 400.0,
+      "tolerance_mm": "\u00b12.0",
+      "weight_grams": 4200.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Reservoir",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-TOTE-HDPE-160L/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-FLUID-TOTE-HDPE-160L/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-FLUID-TOTE-HDPE-160L/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Uline / Global Industrial",
+        "sku": "S-19525BL",
+        "direct_url": "https://uline.com",
+        "unit_price_usd": 45.0,
+        "moq": 1,
+        "lead_time_days": 2
+      }
+    ],
+    "part_id": "PART-FLUID-TOTE-HDPE-160L",
+    "used_by": [
+      {
+        "machine_slug": "tps-root-chamber",
+        "stage": 0,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "Pre-Slit 2-Inch Neoprene Cloning Collars (24x Pack)",
+    "category": "fluidic",
+    "summary": "Non-toxic closed-cell neoprene foam plant support discs for suspending potato, wasabi, and goldenberry stems in aeroponic lids.",
+    "dimensions": {
+      "length_mm": 50.0,
+      "width_mm": 50.0,
+      "thickness_mm": 19.0,
+      "tolerance_mm": "\u00b10.5",
+      "weight_grams": 4.5
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Foam Discs",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-COLLAR-NEOPRENE-2IN/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-FLUID-COLLAR-NEOPRENE-2IN/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-FLUID-COLLAR-NEOPRENE-2IN/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "EZ-Clone / Hydrobuilder",
+        "sku": "EZ-CC-2IN-24PK",
+        "direct_url": "https://hydrobuilder.com",
+        "unit_price_usd": 12.0,
+        "moq": 1,
+        "lead_time_days": 2
+      }
+    ],
+    "part_id": "PART-FLUID-COLLAR-NEOPRENE-2IN",
+    "used_by": [
+      {
+        "machine_slug": "tps-root-chamber",
+        "stage": 0,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "High-Density EPDM Foam Weatherstripping + Silicone Flaps",
+    "category": "fluidic",
+    "summary": "Chemical-resistant continuous EPDM sponge rubber gasket preventing light and mist vapor escape from root zone lids.",
+    "dimensions": {
+      "length_mm": 5000.0,
+      "width_mm": 15.0,
+      "thickness_mm": 8.0,
+      "tolerance_mm": "\u00b10.5",
+      "weight_grams": 140.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Gasket",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-SEAL-EPDM-WEATHER/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-FLUID-SEAL-EPDM-WEATHER/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-FLUID-SEAL-EPDM-WEATHER/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Trim-Lok / McMaster",
+        "sku": "TL-EPDM-1508",
+        "direct_url": "https://mcmaster.com",
+        "unit_price_usd": 8.0,
+        "moq": 1,
+        "lead_time_days": 1
+      }
+    ],
+    "part_id": "PART-FLUID-SEAL-EPDM-WEATHER",
+    "used_by": [
+      {
+        "machine_slug": "tps-root-chamber",
+        "stage": 0,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "K1 Micro Moving Bed Biofilm Filter Media (10 Liters)",
+    "category": "fluidic",
+    "summary": "Virgin HDPE engineered bio-media with 950 m2/m3 protected surface area for rapid nitrification and biological water conditioning.",
+    "dimensions": {
+      "length_mm": 10.0,
+      "width_mm": 10.0,
+      "thickness_mm": 7.0,
+      "tolerance_mm": "\u00b10.5",
+      "weight_grams": 1800.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Bio-Media",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-MEDIA-K1-10L/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-FLUID-MEDIA-K1-10L/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-FLUID-MEDIA-K1-10L/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Evolution Aqua / PondGuys",
+        "sku": "EA-K1-MICRO-10L",
+        "direct_url": "https://thepondguy.com",
+        "unit_price_usd": 24.0,
+        "moq": 1,
+        "lead_time_days": 2
+      }
+    ],
+    "part_id": "PART-FLUID-MEDIA-K1-10L",
+    "used_by": []
+  },
+  {
+    "name": "24V 5015 Centrifugal Vacuum Blower + TPU Funnel Pod",
+    "category": "fluidic",
+    "summary": "High-static-pressure dual-ball-bearing blower fan with custom 3D-printed TPU vacuum funnel for gathering delicate detached flowers and berries.",
+    "dimensions": {
+      "length_mm": 51.5,
+      "width_mm": 51.5,
+      "thickness_mm": 15.0,
+      "tolerance_mm": "\u00b10.3",
+      "weight_grams": 32.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Fan + Fab Pod",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-BLOWER-5015-24V/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-FLUID-BLOWER-5015-24V/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-FLUID-BLOWER-5015-24V/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Sunon / DigiKey",
+        "sku": "MF50152VX-1000U-A99",
+        "direct_url": "https://digikey.com",
+        "unit_price_usd": 15.0,
+        "moq": 1,
+        "lead_time_days": 2
+      }
+    ],
+    "part_id": "PART-FLUID-BLOWER-5015-24V",
+    "used_by": [
+      {
+        "machine_slug": "mantis-branch-crawler",
+        "stage": 1,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "2020 T-Slot Black Anodized Aluminum Extrusion (6-Meter Stock)",
+    "category": "mechanical",
+    "summary": "Structural modular aluminum profile with 6mm center slot for machine frames, gantry tracks, and mounting brackets.",
+    "dimensions": {
+      "length_mm": 6000.0,
+      "width_mm": 20.0,
+      "thickness_mm": 20.0,
+      "tolerance_mm": "\u00b10.2",
+      "weight_grams": 3120.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Extrusion",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-ALUM-2020-6M/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-ALUM-2020-6M/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-MECH-ALUM-2020-6M/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "80/20 Inc / OpenBuilds",
+        "sku": "OB-2020-BLK-6M",
+        "direct_url": "https://openbuildspartstore.com",
+        "unit_price_usd": 28.0,
+        "moq": 1,
+        "lead_time_days": 3
+      }
+    ],
+    "part_id": "PART-MECH-ALUM-2020-6M",
+    "used_by": [
+      {
+        "machine_slug": "ground-track-agv",
+        "stage": 1,
+        "quantity_required": 1
+      },
+      {
+        "machine_slug": "mantis-branch-crawler",
+        "stage": 1,
+        "quantity_required": 2
+      },
+      {
+        "machine_slug": "mantis-branch-crawler",
+        "stage": 1,
+        "quantity_required": 1
+      },
+      {
+        "machine_slug": "mantis-branch-crawler",
+        "stage": 2,
+        "quantity_required": 1
+      },
+      {
+        "machine_slug": "microclimate-dosing-array",
+        "stage": 0,
+        "quantity_required": 1
+      },
+      {
+        "machine_slug": "microclimate-dosing-array",
+        "stage": 0,
+        "quantity_required": 6
+      },
+      {
+        "machine_slug": "microclimate-dosing-array",
+        "stage": 0,
+        "quantity_required": 1
+      },
+      {
+        "machine_slug": "microclimate-dosing-array",
+        "stage": 0,
+        "quantity_required": 1
+      },
+      {
+        "machine_slug": "microclimate-dosing-array",
+        "stage": 1,
+        "quantity_required": 1
+      },
+      {
+        "machine_slug": "microclimate-dosing-array",
+        "stage": 1,
+        "quantity_required": 1
+      },
+      {
+        "machine_slug": "microclimate-dosing-array",
+        "stage": 2,
+        "quantity_required": 1
+      },
+      {
+        "machine_slug": "revolving-sprout-bioreactor",
+        "stage": 0,
+        "quantity_required": 8
+      }
+    ]
+  },
+  {
+    "name": "2040 V-Slot Aluminum Rails (3000mm Segment)",
+    "category": "mechanical",
+    "summary": "Heavy-duty dual-track linear rail profile engineered for high rigidity and zero-deflection overhead gantry traversal.",
+    "dimensions": {
+      "length_mm": 3000.0,
+      "width_mm": 40.0,
+      "thickness_mm": 20.0,
+      "tolerance_mm": "\u00b10.3",
+      "weight_grams": 2750.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Extrusion",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-ALUM-2040-3M/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-ALUM-2040-3M/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-MECH-ALUM-2040-3M/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "OpenBuilds / Rat Rig",
+        "sku": "OB-2040-VSLOT-3M",
+        "direct_url": "https://openbuildspartstore.com",
+        "unit_price_usd": 38.0,
+        "moq": 1,
+        "lead_time_days": 3
+      }
+    ],
+    "part_id": "PART-MECH-ALUM-2040-3M",
+    "used_by": [
+      {
+        "machine_slug": "overhead-gantry-system",
+        "stage": 0,
+        "quantity_required": 4
+      }
+    ]
+  },
+  {
+    "name": "4040 V-Slot Aluminum Bridge Beam (3048mm Length)",
+    "category": "mechanical",
+    "summary": "Ultra-rigid transverse bridge beam profile engineered to support dynamic toolhead payloads with under 0.2mm center sag across a 10-foot span.",
+    "dimensions": {
+      "length_mm": 3048.0,
+      "width_mm": 40.0,
+      "thickness_mm": 40.0,
+      "tolerance_mm": "\u00b10.3",
+      "weight_grams": 4450.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Extrusion",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-ALUM-4040-3M/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-ALUM-4040-3M/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-MECH-ALUM-4040-3M/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "OpenBuilds / Misumi",
+        "sku": "HFS5-4040-3048",
+        "direct_url": "https://misumi.com",
+        "unit_price_usd": 52.0,
+        "moq": 1,
+        "lead_time_days": 3
+      }
+    ],
+    "part_id": "PART-MECH-ALUM-4040-3M",
+    "used_by": [
+      {
+        "machine_slug": "overhead-gantry-system",
+        "stage": 0,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "GT2 9mm Steel-Core Neoprene Timing Belt (20m Spool) + 20T Pulleys",
+    "category": "mechanical",
+    "summary": "Non-stretching steel-reinforced 2mm pitch timing belt kit for high-acceleration gantry motion without thermal elongation.",
+    "dimensions": {
+      "length_mm": 20000.0,
+      "width_mm": 9.0,
+      "thickness_mm": 1.38,
+      "tolerance_mm": "\u00b10.05",
+      "weight_grams": 480.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Motion Hardware",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-BELT-GT2-9MM/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-BELT-GT2-9MM/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-MECH-BELT-GT2-9MM/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Gates / Powge",
+        "sku": "GT2-9MM-STEEL-20M",
+        "direct_url": "https://gates.com",
+        "unit_price_usd": 32.0,
+        "moq": 1,
+        "lead_time_days": 3
+      }
+    ],
+    "part_id": "PART-MECH-BELT-GT2-9MM",
+    "used_by": [
+      {
+        "machine_slug": "overhead-gantry-system",
+        "stage": 1,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "GT2 60T/20T Aluminum Pulley Set + 6mm Neoprene Belt",
+    "category": "mechanical",
+    "summary": "Precision CNC machined 3:1 reduction timing gear set with set screws and 200mm closed-loop neoprene belt.",
+    "dimensions": {
+      "length_mm": 45.0,
+      "width_mm": 45.0,
+      "thickness_mm": 17.0,
+      "tolerance_mm": "\u00b10.1",
+      "weight_grams": 85.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Motion Hardware",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-PULLEY-GT2-SET/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-PULLEY-GT2-SET/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-MECH-PULLEY-GT2-SET/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Trianglelab / Amazon",
+        "sku": "TL-GT2-6020-SET",
+        "direct_url": "https://amazon.com",
+        "unit_price_usd": 9.0,
+        "moq": 1,
+        "lead_time_days": 2
+      }
+    ],
+    "part_id": "PART-MECH-PULLEY-GT2-SET",
+    "used_by": [
+      {
+        "machine_slug": "revolving-sprout-bioreactor",
+        "stage": 1,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "Axial Spring-Loaded Dog Clutch Sliding Mechanism (1/2\" Hex)",
+    "category": "mechanical",
+    "summary": "Mechanical face-gear interlock allowing instant manual disconnect between motor gearbox and drive shaft.",
+    "dimensions": {
+      "length_mm": 55.0,
+      "width_mm": 38.0,
+      "thickness_mm": 38.0,
+      "tolerance_mm": "\u00b10.2",
+      "weight_grams": 175.0
+    },
+    "fabrication": {
+      "is_custom_fab": true,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "CNC Machined Aluminum / Delrin",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-CLUTCH-DOG-AXIAL/model.3ds",
+      "stl_asset_url": "/open-biosphere/assets/parts/PART-MECH-CLUTCH-DOG-AXIAL/print.stl",
+      "step_asset_url": "/open-biosphere/assets/parts/PART-MECH-CLUTCH-DOG-AXIAL/cad.step",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-CLUTCH-DOG-AXIAL/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-MECH-CLUTCH-DOG-AXIAL/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "In-House Machine Shop",
+        "sku": "OB-CLUTCH-DOG-05",
+        "direct_url": "https://open-biosphere.org",
+        "unit_price_usd": 14.0,
+        "moq": 1,
+        "lead_time_days": 2
+      }
+    ],
+    "part_id": "PART-MECH-CLUTCH-DOG-AXIAL",
+    "used_by": [
+      {
+        "machine_slug": "revolving-sprout-bioreactor",
+        "stage": 1,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "Sliding Steel Dog Clutch Neutral Hubs & Levers",
+    "category": "mechanical",
+    "summary": "Hardened 4140 steel engagement dogs with quick-release over-center lever for disengaging AGV track drives into free-wheeling neutral.",
+    "dimensions": {
+      "length_mm": 65.0,
+      "width_mm": 45.0,
+      "thickness_mm": 45.0,
+      "tolerance_mm": "\u00b10.1",
+      "weight_grams": 340.0
+    },
+    "fabrication": {
+      "is_custom_fab": true,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "CNC Steel / Machined",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-CLUTCH-DOG-STEEL/model.3ds",
+      "stl_asset_url": "/open-biosphere/assets/parts/PART-MECH-CLUTCH-DOG-STEEL/print.stl",
+      "step_asset_url": "/open-biosphere/assets/parts/PART-MECH-CLUTCH-DOG-STEEL/cad.step",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-CLUTCH-DOG-STEEL/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-MECH-CLUTCH-DOG-STEEL/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "In-House Machine Shop",
+        "sku": "OB-CLUTCH-STEEL-AGV",
+        "direct_url": "https://open-biosphere.org",
+        "unit_price_usd": 28.0,
+        "moq": 1,
+        "lead_time_days": 3
+      }
+    ],
+    "part_id": "PART-MECH-CLUTCH-DOG-STEEL",
+    "used_by": [
+      {
+        "machine_slug": "ground-track-agv",
+        "stage": 0,
+        "quantity_required": 2
+      }
+    ]
+  },
+  {
+    "name": "608-2RS Deep-Groove Sealed Skate Bearings (8x22x7mm, 8x Pack)",
+    "category": "mechanical",
+    "summary": "Chromium steel deep-groove ball bearings with dual rubber lip seals protecting against humidity and dirt ingress.",
+    "dimensions": {
+      "length_mm": 22.0,
+      "width_mm": 22.0,
+      "thickness_mm": 7.0,
+      "tolerance_mm": "\u00b10.01",
+      "weight_grams": 12.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Bearings",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-BEARING-6082RS/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-BEARING-6082RS/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-MECH-BEARING-6082RS/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Bones Bearings / Fastenal",
+        "sku": "BB-608-2RS-8PK",
+        "direct_url": "https://fastenal.com",
+        "unit_price_usd": 6.0,
+        "moq": 1,
+        "lead_time_days": 1
+      }
+    ],
+    "part_id": "PART-MECH-BEARING-6082RS",
+    "used_by": [
+      {
+        "machine_slug": "revolving-sprout-bioreactor",
+        "stage": 0,
+        "quantity_required": 4
+      }
+    ]
+  },
+  {
+    "name": "F608ZZ Flanged Deep Groove Ball Bearings (8x22x7mm, 10x Pack)",
+    "category": "mechanical",
+    "summary": "Flanged outer-ring ball bearings for axial retention on sheet metal chassis and 3D printed bearing blocks.",
+    "dimensions": {
+      "length_mm": 25.0,
+      "width_mm": 25.0,
+      "thickness_mm": 7.0,
+      "tolerance_mm": "\u00b10.01",
+      "weight_grams": 14.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Bearings",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-BEARING-FLANGED/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-BEARING-FLANGED/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-MECH-BEARING-FLANGED/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Uxcell / Amazon",
+        "sku": "UX-F608ZZ-10PK",
+        "direct_url": "https://amazon.com",
+        "unit_price_usd": 7.5,
+        "moq": 1,
+        "lead_time_days": 1
+      }
+    ],
+    "part_id": "PART-MECH-BEARING-FLANGED",
+    "used_by": []
+  },
+  {
+    "name": "Polycarbonate Solid V-Wheels & Dual 625-2RS Bearings (8x Kit)",
+    "category": "mechanical",
+    "summary": "High-wear clear polycarbonate V-wheels with precision ground bearings for smooth, low-friction rolling along V-slot profiles.",
+    "dimensions": {
+      "length_mm": 24.4,
+      "width_mm": 24.4,
+      "thickness_mm": 11.0,
+      "tolerance_mm": "\u00b10.05",
+      "weight_grams": 15.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Motion Hardware",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-VWHEEL-KIT-PC/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-VWHEEL-KIT-PC/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-MECH-VWHEEL-KIT-PC/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "OpenBuilds Direct",
+        "sku": "OB-SOLID-V-WHL-KIT",
+        "direct_url": "https://openbuildspartstore.com",
+        "unit_price_usd": 24.0,
+        "moq": 1,
+        "lead_time_days": 2
+      }
+    ],
+    "part_id": "PART-MECH-VWHEEL-KIT-PC",
+    "used_by": [
+      {
+        "machine_slug": "overhead-gantry-system",
+        "stage": 0,
+        "quantity_required": 16
+      }
+    ]
+  },
+  {
+    "name": "8 mm Precision Ground D-Profile Stainless Axle Shaft (550mm)",
+    "category": "mechanical",
+    "summary": "Case-hardened 304 stainless steel shaft with single flat D-profile preventing pulley and gear slippage under reversing torques.",
+    "dimensions": {
+      "length_mm": 550.0,
+      "width_mm": 8.0,
+      "thickness_mm": 7.5,
+      "tolerance_mm": "\u00b10.02",
+      "weight_grams": 215.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Precision Shaft",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-SHAFT-SS-8MM/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-SHAFT-SS-8MM/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-MECH-SHAFT-SS-8MM/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Misumi / McMaster",
+        "sku": "SFJD8-550",
+        "direct_url": "https://misumi.com",
+        "unit_price_usd": 14.0,
+        "moq": 1,
+        "lead_time_days": 2
+      }
+    ],
+    "part_id": "PART-MECH-SHAFT-SS-8MM",
+    "used_by": [
+      {
+        "machine_slug": "revolving-sprout-bioreactor",
+        "stage": 0,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "304 Stainless Steel Perforated Sheet (1.5mm Holes, 300x450mm)",
+    "category": "mechanical",
+    "summary": "Precision punched 304 stainless sheet with 1.5mm staggered hole pattern (38% open area) for sprout seed aeration drums.",
+    "dimensions": {
+      "length_mm": 450.0,
+      "width_mm": 300.0,
+      "thickness_mm": 0.8,
+      "tolerance_mm": "\u00b10.3",
+      "weight_grams": 620.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Perforated Metal",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-SHEET-SS304-PERF/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-SHEET-SS304-PERF/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-MECH-SHEET-SS304-PERF/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "McMaster-Carr",
+        "sku": "9255T41",
+        "direct_url": "https://mcmaster.com",
+        "unit_price_usd": 42.0,
+        "moq": 1,
+        "lead_time_days": 2
+      }
+    ],
+    "part_id": "PART-MECH-SHEET-SS304-PERF",
+    "used_by": [
+      {
+        "machine_slug": "revolving-sprout-bioreactor",
+        "stage": 0,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "Welded 2mm Steel Tracked Chassis Box & Bulkheads",
+    "category": "mechanical",
+    "summary": "Heavy-duty laser-cut and welded 2mm cold-rolled steel tub providing rigid structural mounting for dual track drives and 300 lb payload.",
+    "dimensions": {
+      "length_mm": 520.0,
+      "width_mm": 360.0,
+      "thickness_mm": 140.0,
+      "tolerance_mm": "\u00b10.5",
+      "weight_grams": 4800.0
+    },
+    "fabrication": {
+      "is_custom_fab": true,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Laser-Cut / Welded Steel",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-CHASSIS-STEEL-2MM/model.3ds",
+      "stl_asset_url": "/open-biosphere/assets/parts/PART-MECH-CHASSIS-STEEL-2MM/print.stl",
+      "step_asset_url": "/open-biosphere/assets/parts/PART-MECH-CHASSIS-STEEL-2MM/cad.step",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-CHASSIS-STEEL-2MM/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-MECH-CHASSIS-STEEL-2MM/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "In-House Metal Fab / SendCutSend",
+        "sku": "OB-CHASSIS-AGV-01",
+        "direct_url": "https://sendcutsend.com",
+        "unit_price_usd": 85.0,
+        "moq": 1,
+        "lead_time_days": 5
+      }
+    ],
+    "part_id": "PART-MECH-CHASSIS-STEEL-2MM",
+    "used_by": [
+      {
+        "machine_slug": "ground-track-agv",
+        "stage": 0,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "Continuous Rubber Track Treads (50mm W x 38-Link Pair)",
+    "category": "mechanical",
+    "summary": "High-traction Kevlar-reinforced synthetic rubber continuous treads engineered for high grip on wet greenhouse concrete and soil.",
+    "dimensions": {
+      "length_mm": 640.0,
+      "width_mm": 50.0,
+      "thickness_mm": 18.0,
+      "tolerance_mm": "\u00b11.0",
+      "weight_grams": 650.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Molded Rubber",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-TREAD-RUBBER-50MM/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-TREAD-RUBBER-50MM/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-MECH-TREAD-RUBBER-50MM/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "RobotShop / Lynxflex",
+        "sku": "RB-TRACK-50X38",
+        "direct_url": "https://robotshop.com",
+        "unit_price_usd": 38.0,
+        "moq": 1,
+        "lead_time_days": 3
+      }
+    ],
+    "part_id": "PART-MECH-TREAD-RUBBER-50MM",
+    "used_by": [
+      {
+        "machine_slug": "ground-track-agv",
+        "stage": 0,
+        "quantity_required": 2
+      }
+    ]
+  },
+  {
+    "name": "Bogie Suspension Arms + Die Springs + Polyurethane Wheels",
+    "category": "mechanical",
+    "summary": "Independent pivoting suspension bogie set with high-compression die springs and 60mm cast polyurethane dual-bearing road wheels.",
+    "dimensions": {
+      "length_mm": 120.0,
+      "width_mm": 45.0,
+      "thickness_mm": 65.0,
+      "tolerance_mm": "\u00b10.3",
+      "weight_grams": 420.0
+    },
+    "fabrication": {
+      "is_custom_fab": true,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Machined Aluminum + Die Spring",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-SUSP-BOGIE-ARM/model.3ds",
+      "stl_asset_url": "/open-biosphere/assets/parts/PART-MECH-SUSP-BOGIE-ARM/print.stl",
+      "step_asset_url": "/open-biosphere/assets/parts/PART-MECH-SUSP-BOGIE-ARM/cad.step",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-SUSP-BOGIE-ARM/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-MECH-SUSP-BOGIE-ARM/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "In-House Fab / McMaster",
+        "sku": "OB-SUSP-BOGIE-KIT",
+        "direct_url": "https://open-biosphere.org",
+        "unit_price_usd": 32.0,
+        "moq": 1,
+        "lead_time_days": 3
+      }
+    ],
+    "part_id": "PART-MECH-SUSP-BOGIE-ARM",
+    "used_by": [
+      {
+        "machine_slug": "ground-track-agv",
+        "stage": 0,
+        "quantity_required": 8
+      }
+    ]
+  },
+  {
+    "name": "Fold-Out 22mm Tubular Steel Tiller Handle + Grips",
+    "category": "mechanical",
+    "summary": "Ergonomic folding steering handle with dual quick-release locking pins allowing seamless human towing and manual steering.",
+    "dimensions": {
+      "length_mm": 850.0,
+      "width_mm": 380.0,
+      "thickness_mm": 45.0,
+      "tolerance_mm": "\u00b11.0",
+      "weight_grams": 1150.0
+    },
+    "fabrication": {
+      "is_custom_fab": true,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Tubular Steel Fabrication",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-HANDLE-TILLER-22MM/model.3ds",
+      "stl_asset_url": "/open-biosphere/assets/parts/PART-MECH-HANDLE-TILLER-22MM/print.stl",
+      "step_asset_url": "/open-biosphere/assets/parts/PART-MECH-HANDLE-TILLER-22MM/cad.step",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-HANDLE-TILLER-22MM/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-MECH-HANDLE-TILLER-22MM/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "In-House Metal Fab",
+        "sku": "OB-TILLER-22MM",
+        "direct_url": "https://open-biosphere.org",
+        "unit_price_usd": 22.0,
+        "moq": 1,
+        "lead_time_days": 2
+      }
+    ],
+    "part_id": "PART-MECH-HANDLE-TILLER-22MM",
+    "used_by": [
+      {
+        "machine_slug": "ground-track-agv",
+        "stage": 0,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "Mechanical Foot-Pedal Spring Cam Clamp Assembly",
+    "category": "mechanical",
+    "summary": "Over-center foot-operated mechanical toggle latch providing 400 N clamping force onto pod carrier transport rails.",
+    "dimensions": {
+      "length_mm": 140.0,
+      "width_mm": 65.0,
+      "thickness_mm": 55.0,
+      "tolerance_mm": "\u00b10.5",
+      "weight_grams": 380.0
+    },
+    "fabrication": {
+      "is_custom_fab": true,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Laser Steel / Spring Clamp",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-CLAMP-FOOT-CAM/model.3ds",
+      "stl_asset_url": "/open-biosphere/assets/parts/PART-MECH-CLAMP-FOOT-CAM/print.stl",
+      "step_asset_url": "/open-biosphere/assets/parts/PART-MECH-CLAMP-FOOT-CAM/cad.step",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-CLAMP-FOOT-CAM/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-MECH-CLAMP-FOOT-CAM/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Carr Lane / McMaster",
+        "sku": "CL-FOOT-CLAMP-01",
+        "direct_url": "https://mcmaster.com",
+        "unit_price_usd": 18.0,
+        "moq": 1,
+        "lead_time_days": 2
+      }
+    ],
+    "part_id": "PART-MECH-CLAMP-FOOT-CAM",
+    "used_by": [
+      {
+        "machine_slug": "ground-track-agv",
+        "stage": 0,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "Telescopic 3-Section Carbon-Fiber Pole (1.2\u20132.4m)",
+    "category": "mechanical",
+    "summary": "Lightweight high-modulus 3k carbon fiber pole with twist-lock friction collars and standardized 1/4\"-20 botanical tool mount.",
+    "dimensions": {
+      "length_mm": 2400.0,
+      "width_mm": 32.0,
+      "thickness_mm": 32.0,
+      "tolerance_mm": "\u00b11.0",
+      "weight_grams": 480.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Carbon Fiber",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-POLE-CF-TELESCOPIC/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-POLE-CF-TELESCOPIC/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-MECH-POLE-CF-TELESCOPIC/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "ProMaster / B&H Photo",
+        "sku": "CF-POLE-24M",
+        "direct_url": "https://bhphotovideo.com",
+        "unit_price_usd": 42.0,
+        "moq": 1,
+        "lead_time_days": 2
+      }
+    ],
+    "part_id": "PART-MECH-POLE-CF-TELESCOPIC",
+    "used_by": [
+      {
+        "machine_slug": "aerial-pollination-drone",
+        "stage": 0,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "Telescopic Fiberglass/Aluminum Extension Pole (1.8\u20133.6m)",
+    "category": "mechanical",
+    "summary": "Dielectric non-conductive telescoping pole with external cam lever locks for manual fruit and branch positioning.",
+    "dimensions": {
+      "length_mm": 3600.0,
+      "width_mm": 38.0,
+      "thickness_mm": 38.0,
+      "tolerance_mm": "\u00b11.0",
+      "weight_grams": 820.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Fiberglass Pole",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-POLE-FIBERGLASS-EXT/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-POLE-FIBERGLASS-EXT/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-MECH-POLE-FIBERGLASS-EXT/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Unger / Home Depot",
+        "sku": "UNG-TELE-POLE-12FT",
+        "direct_url": "https://homedepot.com",
+        "unit_price_usd": 28.0,
+        "moq": 1,
+        "lead_time_days": 1
+      }
+    ],
+    "part_id": "PART-MECH-POLE-FIBERGLASS-EXT",
+    "used_by": [
+      {
+        "machine_slug": "mantis-branch-crawler",
+        "stage": 0,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "310 Hz Calibrated Acoustic Tuning Fork + Silicone Dip",
+    "category": "mechanical",
+    "summary": "Medical-grade aluminum tuning fork calibrated to 310 Hz (\u00b12 Hz) with food-grade silicone-dipped tines for manual sonic sonication.",
+    "dimensions": {
+      "length_mm": 175.0,
+      "width_mm": 24.0,
+      "thickness_mm": 8.0,
+      "tolerance_mm": "\u00b10.1",
+      "weight_grams": 75.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Calibrated Instrument",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-FORK-ACOUSTIC-310HZ/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-FORK-ACOUSTIC-310HZ/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-MECH-FORK-ACOUSTIC-310HZ/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "OmniTuning / Amazon",
+        "sku": "TF-310HZ-SIL",
+        "direct_url": "https://amazon.com",
+        "unit_price_usd": 14.0,
+        "moq": 1,
+        "lead_time_days": 2
+      }
+    ],
+    "part_id": "PART-MECH-FORK-ACOUSTIC-310HZ",
+    "used_by": [
+      {
+        "machine_slug": "aerial-pollination-drone",
+        "stage": 0,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "Swiveling Ball-Joint Convex Inspection Mirror (50mm)",
+    "category": "mechanical",
+    "summary": "Stainless steel 360-degree swiveling ball-joint arm with 50mm convex optical mirror for zero-power visual inspection.",
+    "dimensions": {
+      "length_mm": 110.0,
+      "width_mm": 52.0,
+      "thickness_mm": 15.0,
+      "tolerance_mm": "\u00b10.5",
+      "weight_grams": 65.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Tool",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-MIRROR-CONVEX-BALL/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-MIRROR-CONVEX-BALL/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-MECH-MIRROR-CONVEX-BALL/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Ullman Devices / McMaster",
+        "sku": "ULL-HTS-2",
+        "direct_url": "https://mcmaster.com",
+        "unit_price_usd": 9.0,
+        "moq": 1,
+        "lead_time_days": 1
+      }
+    ],
+    "part_id": "PART-MECH-MIRROR-CONVEX-BALL",
+    "used_by": [
+      {
+        "machine_slug": "aerial-pollination-drone",
+        "stage": 0,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "Natural Camel-Hair Botanical Dusting Brush + Gooseneck",
+    "category": "mechanical",
+    "summary": "Ultra-soft static-free camel hair dusting brush on 150mm flexible brass gooseneck for manual cross-pollination.",
+    "dimensions": {
+      "length_mm": 220.0,
+      "width_mm": 18.0,
+      "thickness_mm": 18.0,
+      "tolerance_mm": "\u00b10.5",
+      "weight_grams": 35.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Botanical Tool",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-BRUSH-CAMEL-HAIR/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-BRUSH-CAMEL-HAIR/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-MECH-BRUSH-CAMEL-HAIR/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Ted Pella / Amazon",
+        "sku": "TP-CAMEL-118",
+        "direct_url": "https://tedpella.com",
+        "unit_price_usd": 7.0,
+        "moq": 1,
+        "lead_time_days": 2
+      }
+    ],
+    "part_id": "PART-MECH-BRUSH-CAMEL-HAIR",
+    "used_by": [
+      {
+        "machine_slug": "aerial-pollination-drone",
+        "stage": 0,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "Bowden Cable Assembly (2.5m Stainless + Lined Housing)",
+    "category": "mechanical",
+    "summary": "Low-friction Teflon-lined compressionless brake housing with 1.5mm stainless steel inner wire and barrel end.",
+    "dimensions": {
+      "length_mm": 2500.0,
+      "width_mm": 5.0,
+      "thickness_mm": 5.0,
+      "tolerance_mm": "\u00b11.0",
+      "weight_grams": 110.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Cable Assembly",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-CABLE-BOWDEN-25M/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-CABLE-BOWDEN-25M/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-MECH-CABLE-BOWDEN-25M/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Jagwire / Jenson USA",
+        "sku": "JW-CBL-25M",
+        "direct_url": "https://jensonusa.com",
+        "unit_price_usd": 8.0,
+        "moq": 1,
+        "lead_time_days": 2
+      }
+    ],
+    "part_id": "PART-MECH-CABLE-BOWDEN-25M",
+    "used_by": [
+      {
+        "machine_slug": "mantis-branch-crawler",
+        "stage": 0,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "Ergonomic Aluminum Bicycle Hand Brake Squeeze Lever",
+    "category": "mechanical",
+    "summary": "Forged aluminum 2-finger hand brake lever with integrated cable tension barrel adjuster and return spring.",
+    "dimensions": {
+      "length_mm": 145.0,
+      "width_mm": 85.0,
+      "thickness_mm": 25.0,
+      "tolerance_mm": "\u00b10.5",
+      "weight_grams": 95.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Hardware",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-LEVER-BRAKE-ALUM/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-LEVER-BRAKE-ALUM/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-MECH-LEVER-BRAKE-ALUM/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Shimano / Tektro",
+        "sku": "TEK-CL520",
+        "direct_url": "https://universalcycles.com",
+        "unit_price_usd": 12.0,
+        "moq": 1,
+        "lead_time_days": 2
+      }
+    ],
+    "part_id": "PART-MECH-LEVER-BRAKE-ALUM",
+    "used_by": [
+      {
+        "machine_slug": "mantis-branch-crawler",
+        "stage": 0,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "Carbon Steel Spring-Loaded Bypass Micro-Snip Blades",
+    "category": "mechanical",
+    "summary": "Precision ground carbon steel cutting jaws with return spring for clean botanical stem detachment without tissue crush.",
+    "dimensions": {
+      "length_mm": 115.0,
+      "width_mm": 40.0,
+      "thickness_mm": 12.0,
+      "tolerance_mm": "\u00b10.2",
+      "weight_grams": 65.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Tool Blades",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-SNIP-BYPASS-STEEL/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-SNIP-BYPASS-STEEL/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-MECH-SNIP-BYPASS-STEEL/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Fiskars / ARS Edge",
+        "sku": "ARS-300-L",
+        "direct_url": "https://ars-edge.com",
+        "unit_price_usd": 16.0,
+        "moq": 1,
+        "lead_time_days": 2
+      }
+    ],
+    "part_id": "PART-MECH-SNIP-BYPASS-STEEL",
+    "used_by": [
+      {
+        "machine_slug": "mantis-branch-crawler",
+        "stage": 0,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "Manual Carbon-Fiber Tool Wand + Bowden Bicycle Lever",
+    "category": "mechanical",
+    "summary": "Rigid 1.5-meter carbon-fiber wand with internally routed Bowden cable and hand squeeze trigger for manual gantry end-effector actuation.",
+    "dimensions": {
+      "length_mm": 1500.0,
+      "width_mm": 35.0,
+      "thickness_mm": 35.0,
+      "tolerance_mm": "\u00b11.0",
+      "weight_grams": 320.0
+    },
+    "fabrication": {
+      "is_custom_fab": true,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Composite Assembly",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-WAND-CF-BOWDEN/model.3ds",
+      "stl_asset_url": "/open-biosphere/assets/parts/PART-MECH-WAND-CF-BOWDEN/print.stl",
+      "step_asset_url": "/open-biosphere/assets/parts/PART-MECH-WAND-CF-BOWDEN/cad.step",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-WAND-CF-BOWDEN/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-MECH-WAND-CF-BOWDEN/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "In-House Open-Biosphere Fab",
+        "sku": "OB-WAND-CF-15M",
+        "direct_url": "https://open-biosphere.org",
+        "unit_price_usd": 24.0,
+        "moq": 1,
+        "lead_time_days": 2
+      }
+    ],
+    "part_id": "PART-MECH-WAND-CF-BOWDEN",
+    "used_by": [
+      {
+        "machine_slug": "overhead-gantry-system",
+        "stage": 0,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "Hand-Crank Planetary Winch & Spool (4:1 Ratio)",
+    "category": "mechanical",
+    "summary": "Enclosed manual cable winch with 4:1 internal epicyclic gearing, friction brake, and 15m stainless aircraft cable.",
+    "dimensions": {
+      "length_mm": 160.0,
+      "width_mm": 120.0,
+      "thickness_mm": 110.0,
+      "tolerance_mm": "\u00b10.5",
+      "weight_grams": 850.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Winch",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-WINCH-CRANK-PLANET/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-WINCH-CRANK-PLANET/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-MECH-WINCH-CRANK-PLANET/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Dutton-Lainson / Northern Tool",
+        "sku": "DL-B1200",
+        "direct_url": "https://northerntool.com",
+        "unit_price_usd": 38.0,
+        "moq": 1,
+        "lead_time_days": 2
+      }
+    ],
+    "part_id": "PART-MECH-WINCH-CRANK-PLANET",
+    "used_by": []
+  },
+  {
+    "name": "Detachable Hand Crank + Ratchet Wheel & Delrin Pawl",
+    "category": "mechanical",
+    "summary": "Ergonomic 120mm radius aluminum hand crank with spring-loaded Delrin pawl and 36-tooth anti-reversal ratchet wheel.",
+    "dimensions": {
+      "length_mm": 165.0,
+      "width_mm": 80.0,
+      "thickness_mm": 35.0,
+      "tolerance_mm": "\u00b10.3",
+      "weight_grams": 220.0
+    },
+    "fabrication": {
+      "is_custom_fab": true,
+      "is_3d_printed": true,
+      "print_spec": {
+        "material": "PETG / Delrin",
+        "nozzle_diameter_mm": 0.4,
+        "layer_height_mm": 0.2,
+        "perimeters": 5,
+        "infill_percentage": 60,
+        "infill_pattern": "cubic",
+        "print_time_hours": 3.2,
+        "filament_weight_grams": 110.0
+      },
+      "fab_type": "3D Print / CNC Pawl",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-CRANK-RATCHET-DELRIN/model.3ds",
+      "stl_asset_url": "/open-biosphere/assets/parts/PART-MECH-CRANK-RATCHET-DELRIN/print.stl",
+      "step_asset_url": "/open-biosphere/assets/parts/PART-MECH-CRANK-RATCHET-DELRIN/cad.step",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-CRANK-RATCHET-DELRIN/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-MECH-CRANK-RATCHET-DELRIN/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "In-House Open-Biosphere Fab",
+        "sku": "OB-CRANK-RATCHET-01",
+        "direct_url": "https://open-biosphere.org",
+        "unit_price_usd": 11.0,
+        "moq": 1,
+        "lead_time_days": 1
+      }
+    ],
+    "part_id": "PART-MECH-CRANK-RATCHET-DELRIN",
+    "used_by": [
+      {
+        "machine_slug": "revolving-sprout-bioreactor",
+        "stage": 0,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "Fasteners (M5 T-Nuts, M5 Corner Brackets, M4 Tie Rods)",
+    "category": "mechanical",
+    "summary": "Assorted pack of 50x drop-in M5 roll-in T-nuts, 20x cast 90-degree aluminum corner brackets, and 4x M4 threaded tie rods.",
+    "dimensions": {
+      "length_mm": 100.0,
+      "width_mm": 100.0,
+      "thickness_mm": 50.0,
+      "tolerance_mm": "\u00b10.1",
+      "weight_grams": 480.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Hardware Pack",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-FASTENER-M5-PACK/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-FASTENER-M5-PACK/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-MECH-FASTENER-M5-PACK/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "OpenBuilds / BoltDepot",
+        "sku": "OB-FASTENER-KIT-M5",
+        "direct_url": "https://boltdepot.com",
+        "unit_price_usd": 12.0,
+        "moq": 1,
+        "lead_time_days": 1
+      }
+    ],
+    "part_id": "PART-MECH-FASTENER-M5-PACK",
+    "used_by": [
+      {
+        "machine_slug": "revolving-sprout-bioreactor",
+        "stage": 0,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "15x30mm Heavy-Duty Nylon Drag Chains (8m Total)",
+    "category": "mechanical",
+    "summary": "Open-style reinforced nylon cable carrier chain protecting power, stepper, and air lines during repetitive Cartesian motion.",
+    "dimensions": {
+      "length_mm": 1000.0,
+      "width_mm": 38.0,
+      "thickness_mm": 22.0,
+      "tolerance_mm": "\u00b10.5",
+      "weight_grams": 380.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Cable Carrier",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-DRAGCHAIN-15X30/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-DRAGCHAIN-15X30/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-MECH-DRAGCHAIN-15X30/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "IGUS / Amazon Industrial",
+        "sku": "IGUS-15-30-8M",
+        "direct_url": "https://igus.com",
+        "unit_price_usd": 28.0,
+        "moq": 1,
+        "lead_time_days": 2
+      }
+    ],
+    "part_id": "PART-MECH-DRAGCHAIN-15X30",
+    "used_by": [
+      {
+        "machine_slug": "overhead-gantry-system",
+        "stage": 1,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "Counterweighted Hand Lever & Delrin Pivot Pin for Overflow Weir",
+    "category": "mechanical",
+    "summary": "Machined Delrin pivot bracket with lead counterweight arm for effortless fine-tuning of basin skimmer weir depth.",
+    "dimensions": {
+      "length_mm": 210.0,
+      "width_mm": 60.0,
+      "thickness_mm": 45.0,
+      "tolerance_mm": "\u00b10.3",
+      "weight_grams": 420.0
+    },
+    "fabrication": {
+      "is_custom_fab": true,
+      "is_3d_printed": true,
+      "print_spec": {
+        "material": "PETG / Delrin",
+        "nozzle_diameter_mm": 0.4,
+        "layer_height_mm": 0.2,
+        "perimeters": 5,
+        "infill_percentage": 50,
+        "infill_pattern": "grid",
+        "print_time_hours": 3.5,
+        "filament_weight_grams": 130.0
+      },
+      "fab_type": "3D Print / CNC Delrin",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-LEVER-WEIR-GATE/model.3ds",
+      "stl_asset_url": "/open-biosphere/assets/parts/PART-MECH-LEVER-WEIR-GATE/print.stl",
+      "step_asset_url": "/open-biosphere/assets/parts/PART-MECH-LEVER-WEIR-GATE/cad.step",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-LEVER-WEIR-GATE/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-MECH-LEVER-WEIR-GATE/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "In-House Open-Biosphere Fab",
+        "sku": "OB-WEIR-LEVER-01",
+        "direct_url": "https://open-biosphere.org",
+        "unit_price_usd": 15.0,
+        "moq": 1,
+        "lead_time_days": 1
+      }
+    ],
+    "part_id": "PART-MECH-LEVER-WEIR-GATE",
+    "used_by": []
+  },
+  {
+    "name": "Kinematic Magnetic Toolhead Base (N52 Magnets & Steel Balls)",
+    "category": "mechanical",
+    "summary": "Kelvin kinematic coupling base using 3x hardened stainless balls and 3x pairs of N52 magnets for sub-10\u00b5m repeatable tool locking.",
+    "dimensions": {
+      "length_mm": 80.0,
+      "width_mm": 80.0,
+      "thickness_mm": 22.0,
+      "tolerance_mm": "\u00b10.05",
+      "weight_grams": 190.0
+    },
+    "fabrication": {
+      "is_custom_fab": true,
+      "is_3d_printed": true,
+      "print_spec": {
+        "material": "CF-PETG",
+        "nozzle_diameter_mm": 0.4,
+        "layer_height_mm": 0.2,
+        "perimeters": 5,
+        "infill_percentage": 50,
+        "infill_pattern": "honeycomb",
+        "print_time_hours": 3.8,
+        "filament_weight_grams": 115.0
+      },
+      "fab_type": "3D Print / Hardware",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-BASE-MAG-KINEMATIC/model.3ds",
+      "stl_asset_url": "/open-biosphere/assets/parts/PART-MECH-BASE-MAG-KINEMATIC/print.stl",
+      "step_asset_url": "/open-biosphere/assets/parts/PART-MECH-BASE-MAG-KINEMATIC/cad.step",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-BASE-MAG-KINEMATIC/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-MECH-BASE-MAG-KINEMATIC/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "In-House Open-Biosphere Fab",
+        "sku": "OB-TOOL-MAG-BASE",
+        "direct_url": "https://open-biosphere.org",
+        "unit_price_usd": 22.0,
+        "moq": 1,
+        "lead_time_days": 2
+      }
+    ],
+    "part_id": "PART-MECH-BASE-MAG-KINEMATIC",
+    "used_by": [
+      {
+        "machine_slug": "overhead-gantry-system",
+        "stage": 0,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "Dewatering Continuous Flight Press Auger (50mm Pitch, PETG)",
+    "category": "custom-fab",
+    "summary": "Progressive pitch dewatering flight auger for duckweed cake compression against wedge-wire screens with 1/2\" hex core.",
+    "dimensions": {
+      "length_mm": 280.0,
+      "outer_diameter_mm": 85.0,
+      "core_diameter_mm": 20.0,
+      "hex_bore_inch": 0.5,
+      "weight_grams": 340.0
+    },
+    "fabrication": {
+      "is_custom_fab": true,
+      "is_3d_printed": true,
+      "print_spec": {
+        "material": "PETG or CF-PETG",
+        "nozzle_diameter_mm": 0.6,
+        "layer_height_mm": 0.28,
+        "perimeters": 5,
+        "infill_percentage": 40,
+        "infill_pattern": "gyroid",
+        "print_time_hours": 7.5,
+        "filament_weight_grams": 350.0
+      },
+      "fab_type": "3D Print FDM",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-AUGER-PETG-50P/model.3ds",
+      "stl_asset_url": "/open-biosphere/assets/parts/PART-FAB-AUGER-PETG-50P/print.stl",
+      "step_asset_url": "/open-biosphere/assets/parts/PART-FAB-AUGER-PETG-50P/cad.step",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-FAB-AUGER-PETG-50P/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-FAB-AUGER-PETG-50P/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "In-House FDM Print",
+        "sku": "FAB-PETG-1KG",
+        "direct_url": "https://matterhackers.com",
+        "unit_price_usd": 18.0,
+        "moq": 1,
+        "lead_time_days": 0
+      }
+    ],
+    "part_id": "PART-FAB-AUGER-PETG-50P",
+    "used_by": []
+  },
+  {
+    "name": "Shore 40A Silicone Pinch Rollers & Mold Assembly",
+    "category": "custom-fab",
+    "summary": "Cast Shore 40A platinum silicone hourglass rollers mounted on dual sealed bearings for climbing live trellised vine stems.",
+    "dimensions": {
+      "length_mm": 65.0,
+      "outer_diameter_mm": 45.0,
+      "waist_diameter_mm": 22.0,
+      "hex_bore_mm": 8.0,
+      "weight_grams": 85.0
+    },
+    "fabrication": {
+      "is_custom_fab": true,
+      "is_3d_printed": true,
+      "print_spec": {
+        "material": "Smooth-On Mold Star 15 + Platinum Silicone",
+        "nozzle_diameter_mm": 0.4,
+        "layer_height_mm": 0.16,
+        "perimeters": 4,
+        "infill_percentage": 100,
+        "infill_pattern": "solid",
+        "print_time_hours": 4.0,
+        "filament_weight_grams": 90.0
+      },
+      "fab_type": "3D Mold + Silicone Cast",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-ROLLER-SILICONE-40A/model.3ds",
+      "stl_asset_url": "/open-biosphere/assets/parts/PART-FAB-ROLLER-SILICONE-40A/print.stl",
+      "step_asset_url": "/open-biosphere/assets/parts/PART-FAB-ROLLER-SILICONE-40A/cad.step",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-FAB-ROLLER-SILICONE-40A/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-FAB-ROLLER-SILICONE-40A/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Smooth-On / Reynolds",
+        "sku": "MOLDSTAR-15S",
+        "direct_url": "https://smooth-on.com",
+        "unit_price_usd": 15.0,
+        "moq": 1,
+        "lead_time_days": 2
+      }
+    ],
+    "part_id": "PART-FAB-ROLLER-SILICONE-40A",
+    "used_by": [
+      {
+        "machine_slug": "mantis-branch-crawler",
+        "stage": 0,
+        "quantity_required": 2
+      }
+    ]
+  },
+  {
+    "name": "3D-Printed Conical Perch Funnel with Concentric Brass Wiper Contacts",
+    "category": "custom-fab",
+    "summary": "Funnel alignment landing nest with concentric brass spring contacts for automated drone docking and high-amperage battery recharging.",
+    "dimensions": {
+      "length_mm": 110.0,
+      "width_mm": 110.0,
+      "thickness_mm": 75.0,
+      "tolerance_mm": "\u00b10.3",
+      "weight_grams": 145.0
+    },
+    "fabrication": {
+      "is_custom_fab": true,
+      "is_3d_printed": true,
+      "print_spec": {
+        "material": "PETG",
+        "nozzle_diameter_mm": 0.4,
+        "layer_height_mm": 0.2,
+        "perimeters": 4,
+        "infill_percentage": 25,
+        "infill_pattern": "grid",
+        "print_time_hours": 4.5,
+        "filament_weight_grams": 125.0
+      },
+      "fab_type": "3D Print + Brass Contacts",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-PERCH-CONICAL-DOCK/model.3ds",
+      "stl_asset_url": "/open-biosphere/assets/parts/PART-FAB-PERCH-CONICAL-DOCK/print.stl",
+      "step_asset_url": "/open-biosphere/assets/parts/PART-FAB-PERCH-CONICAL-DOCK/cad.step",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-FAB-PERCH-CONICAL-DOCK/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-FAB-PERCH-CONICAL-DOCK/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "In-House Open-Biosphere Fab",
+        "sku": "OB-PERCH-DOCK-V1",
+        "direct_url": "https://open-biosphere.org",
+        "unit_price_usd": 18.0,
+        "moq": 1,
+        "lead_time_days": 1
+      }
+    ],
+    "part_id": "PART-FAB-PERCH-CONICAL-DOCK",
+    "used_by": [
+      {
+        "machine_slug": "aerial-pollination-drone",
+        "stage": 2,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "Laser-Cut 4mm 6061-T6 Aluminum Gantry Wheel End-Plates (4x Set)",
+    "category": "custom-fab",
+    "summary": "Precision CNC laser-cut aluminum end plates with counterbored mounting holes for eccentric spacers, dual V-wheels, and belt clips.",
+    "dimensions": {
+      "length_mm": 140.0,
+      "width_mm": 90.0,
+      "thickness_mm": 4.0,
+      "tolerance_mm": "\u00b10.1",
+      "weight_grams": 240.0
+    },
+    "fabrication": {
+      "is_custom_fab": true,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "CNC Laser Cut Aluminum",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-PLATES-GANTRY-6061/model.3ds",
+      "stl_asset_url": "/open-biosphere/assets/parts/PART-FAB-PLATES-GANTRY-6061/print.stl",
+      "step_asset_url": "/open-biosphere/assets/parts/PART-FAB-PLATES-GANTRY-6061/cad.step",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-FAB-PLATES-GANTRY-6061/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-FAB-PLATES-GANTRY-6061/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "SendCutSend / Xometry",
+        "sku": "SCS-GANTRY-PLATE-4MM",
+        "direct_url": "https://sendcutsend.com",
+        "unit_price_usd": 34.0,
+        "moq": 1,
+        "lead_time_days": 3
+      }
+    ],
+    "part_id": "PART-FAB-PLATES-GANTRY-6061",
+    "used_by": [
+      {
+        "machine_slug": "overhead-gantry-system",
+        "stage": 0,
+        "quantity_required": 4
+      }
+    ]
+  },
+  {
+    "name": "Laser-Cut 2mm 5052 Aluminum Scissor Chassis Plates",
+    "category": "custom-fab",
+    "summary": "Dual-articulated scissor arm chassis plates providing rigid cantilever support for roller climbing arms.",
+    "dimensions": {
+      "length_mm": 160.0,
+      "width_mm": 70.0,
+      "thickness_mm": 2.0,
+      "tolerance_mm": "\u00b10.1",
+      "weight_grams": 110.0
+    },
+    "fabrication": {
+      "is_custom_fab": true,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "CNC Laser Cut Aluminum",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-PLATES-MANTIS-5052/model.3ds",
+      "stl_asset_url": "/open-biosphere/assets/parts/PART-FAB-PLATES-MANTIS-5052/print.stl",
+      "step_asset_url": "/open-biosphere/assets/parts/PART-FAB-PLATES-MANTIS-5052/cad.step",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-FAB-PLATES-MANTIS-5052/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-FAB-PLATES-MANTIS-5052/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "SendCutSend Direct",
+        "sku": "SCS-MANTIS-5052-2MM",
+        "direct_url": "https://sendcutsend.com",
+        "unit_price_usd": 22.0,
+        "moq": 1,
+        "lead_time_days": 3
+      }
+    ],
+    "part_id": "PART-FAB-PLATES-MANTIS-5052",
+    "used_by": [
+      {
+        "machine_slug": "mantis-branch-crawler",
+        "stage": 0,
+        "quantity_required": 2
+      }
+    ]
+  },
+  {
+    "name": "3D-Printed PETG Bioreactor Drum End Flanges & Axle Hubs",
+    "category": "custom-fab",
+    "summary": "Heavy-duty circular end caps with 8mm D-shaft locking hubs, internal perforated sheet retaining rim, and quick-latch loading port.",
+    "dimensions": {
+      "length_mm": 220.0,
+      "width_mm": 220.0,
+      "thickness_mm": 35.0,
+      "tolerance_mm": "\u00b10.3",
+      "weight_grams": 320.0
+    },
+    "fabrication": {
+      "is_custom_fab": true,
+      "is_3d_printed": true,
+      "print_spec": {
+        "material": "PETG (Food-Grade)",
+        "nozzle_diameter_mm": 0.6,
+        "layer_height_mm": 0.24,
+        "perimeters": 5,
+        "infill_percentage": 40,
+        "infill_pattern": "cubic",
+        "print_time_hours": 6.8,
+        "filament_weight_grams": 310.0
+      },
+      "fab_type": "3D Print FDM",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-DRUM-FLANGES-PETG/model.3ds",
+      "stl_asset_url": "/open-biosphere/assets/parts/PART-FAB-DRUM-FLANGES-PETG/print.stl",
+      "step_asset_url": "/open-biosphere/assets/parts/PART-FAB-DRUM-FLANGES-PETG/cad.step",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-FAB-DRUM-FLANGES-PETG/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-FAB-DRUM-FLANGES-PETG/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "In-House Open-Biosphere Fab",
+        "sku": "OB-DRUM-FLANGE-PETG",
+        "direct_url": "https://open-biosphere.org",
+        "unit_price_usd": 12.0,
+        "moq": 1,
+        "lead_time_days": 1
+      }
+    ],
+    "part_id": "PART-FAB-DRUM-FLANGES-PETG",
+    "used_by": [
+      {
+        "machine_slug": "revolving-sprout-bioreactor",
+        "stage": 0,
+        "quantity_required": 2
+      }
+    ]
+  },
+  {
+    "name": "85mm Ducted Polycarbonate Whoop Airframe + Ducts",
+    "category": "custom-fab",
+    "summary": "High-durability injection-molded/custom-routed polycarbonate ducted frame with prop guards for safe navigation within dense foliage.",
+    "dimensions": {
+      "length_mm": 115.0,
+      "width_mm": 115.0,
+      "thickness_mm": 38.0,
+      "tolerance_mm": "\u00b10.3",
+      "weight_grams": 22.0
+    },
+    "fabrication": {
+      "is_custom_fab": true,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Molded Polycarbonate Frame",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-FRAME-WHOOP-85MM/model.3ds",
+      "stl_asset_url": "/open-biosphere/assets/parts/PART-FAB-FRAME-WHOOP-85MM/print.stl",
+      "step_asset_url": "/open-biosphere/assets/parts/PART-FAB-FRAME-WHOOP-85MM/cad.step",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-FAB-FRAME-WHOOP-85MM/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-FAB-FRAME-WHOOP-85MM/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "BetaFPV Direct",
+        "sku": "BF-FRAME-METEOR85",
+        "direct_url": "https://betafpv.com",
+        "unit_price_usd": 14.0,
+        "moq": 1,
+        "lead_time_days": 3
+      }
+    ],
+    "part_id": "PART-FAB-FRAME-WHOOP-85MM",
+    "used_by": [
+      {
+        "machine_slug": "aerial-pollination-drone",
+        "stage": 1,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "3D-Printed PETG Funnel + Ripstop Nylon Gravity Drop Chute",
+    "category": "custom-fab",
+    "summary": "Low-friction wide-mouth collector funnel clamped to an ultra-light ripstop nylon vertical delivery tube for harvested berries.",
+    "dimensions": {
+      "length_mm": 1800.0,
+      "width_mm": 120.0,
+      "thickness_mm": 120.0,
+      "tolerance_mm": "\u00b12.0",
+      "weight_grams": 160.0
+    },
+    "fabrication": {
+      "is_custom_fab": true,
+      "is_3d_printed": true,
+      "print_spec": {
+        "material": "PETG + Ripstop Nylon",
+        "nozzle_diameter_mm": 0.4,
+        "layer_height_mm": 0.2,
+        "perimeters": 4,
+        "infill_percentage": 25,
+        "infill_pattern": "grid",
+        "print_time_hours": 3.0,
+        "filament_weight_grams": 85.0
+      },
+      "fab_type": "3D Print + Fabric Sewn",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-CHUTE-RIPSTOP-PETG/model.3ds",
+      "stl_asset_url": "/open-biosphere/assets/parts/PART-FAB-CHUTE-RIPSTOP-PETG/print.stl",
+      "step_asset_url": "/open-biosphere/assets/parts/PART-FAB-CHUTE-RIPSTOP-PETG/cad.step",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-FAB-CHUTE-RIPSTOP-PETG/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-FAB-CHUTE-RIPSTOP-PETG/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "In-House Open-Biosphere Fab",
+        "sku": "OB-CHUTE-RIPSTOP-01",
+        "direct_url": "https://open-biosphere.org",
+        "unit_price_usd": 14.0,
+        "moq": 1,
+        "lead_time_days": 1
+      }
+    ],
+    "part_id": "PART-FAB-CHUTE-RIPSTOP-PETG",
+    "used_by": [
+      {
+        "machine_slug": "mantis-branch-crawler",
+        "stage": 0,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "Saffron Micro-Tweezer Kinematic Toolhead (Coreless Servo)",
+    "category": "custom-fab",
+    "summary": "Ultra-precise compliant silicone-tipped micro-tweezers driven by 5V sub-micro servo for non-destructive saffron stigma harvesting.",
+    "dimensions": {
+      "length_mm": 85.0,
+      "width_mm": 45.0,
+      "thickness_mm": 35.0,
+      "tolerance_mm": "\u00b10.1",
+      "weight_grams": 62.0
+    },
+    "fabrication": {
+      "is_custom_fab": true,
+      "is_3d_printed": true,
+      "print_spec": {
+        "material": "SLA Tough Resin / CF-PETG",
+        "nozzle_diameter_mm": 0.25,
+        "layer_height_mm": 0.1,
+        "perimeters": 4,
+        "infill_percentage": 100,
+        "infill_pattern": "solid",
+        "print_time_hours": 4.5,
+        "filament_weight_grams": 45.0
+      },
+      "fab_type": "Precision SLA / FDM Hybrid",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-TOOL-TWEEZER-SAFFRON/model.3ds",
+      "stl_asset_url": "/open-biosphere/assets/parts/PART-FAB-TOOL-TWEEZER-SAFFRON/print.stl",
+      "step_asset_url": "/open-biosphere/assets/parts/PART-FAB-TOOL-TWEEZER-SAFFRON/cad.step",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-FAB-TOOL-TWEEZER-SAFFRON/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-FAB-TOOL-TWEEZER-SAFFRON/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "In-House Tool Fab",
+        "sku": "OB-TOOL-TWEEZER-01",
+        "direct_url": "https://open-biosphere.org",
+        "unit_price_usd": 28.0,
+        "moq": 1,
+        "lead_time_days": 2
+      }
+    ],
+    "part_id": "PART-FAB-TOOL-TWEEZER-SAFFRON",
+    "used_by": [
+      {
+        "machine_slug": "overhead-gantry-system",
+        "stage": 2,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "Purslane Reciprocating Lateral Shear Toolhead (12V Motor)",
+    "category": "custom-fab",
+    "summary": "Dual reciprocating surgical steel blade assembly with cam eccentric drive for clean cutting of fleshy succulent purslane foliage.",
+    "dimensions": {
+      "length_mm": 95.0,
+      "width_mm": 50.0,
+      "thickness_mm": 40.0,
+      "tolerance_mm": "\u00b10.1",
+      "weight_grams": 115.0
+    },
+    "fabrication": {
+      "is_custom_fab": true,
+      "is_3d_printed": true,
+      "print_spec": {
+        "material": "CF-PETG / Hardened Steel",
+        "nozzle_diameter_mm": 0.4,
+        "layer_height_mm": 0.16,
+        "perimeters": 5,
+        "infill_percentage": 60,
+        "infill_pattern": "cubic",
+        "print_time_hours": 5.0,
+        "filament_weight_grams": 75.0
+      },
+      "fab_type": "3D Print + Steel Blades",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-TOOL-SHEAR-PURSLANE/model.3ds",
+      "stl_asset_url": "/open-biosphere/assets/parts/PART-FAB-TOOL-SHEAR-PURSLANE/print.stl",
+      "step_asset_url": "/open-biosphere/assets/parts/PART-FAB-TOOL-SHEAR-PURSLANE/cad.step",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-FAB-TOOL-SHEAR-PURSLANE/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-FAB-TOOL-SHEAR-PURSLANE/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "In-House Tool Fab",
+        "sku": "OB-TOOL-SHEAR-01",
+        "direct_url": "https://open-biosphere.org",
+        "unit_price_usd": 32.0,
+        "moq": 1,
+        "lead_time_days": 2
+      }
+    ],
+    "part_id": "PART-FAB-TOOL-SHEAR-PURSLANE",
+    "used_by": [
+      {
+        "machine_slug": "overhead-gantry-system",
+        "stage": 2,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "Overhead Gantry Spring-Loaded Pogo-Pin Docking Shoe & Latch",
+    "category": "custom-fab",
+    "summary": "High-durability 8-pin spring-loaded gold pogo interface with magnetic kinematic self-aligning latches for toolhead swap-out.",
+    "dimensions": {
+      "length_mm": 55.0,
+      "width_mm": 45.0,
+      "thickness_mm": 20.0,
+      "tolerance_mm": "\u00b10.1",
+      "weight_grams": 48.0
+    },
+    "fabrication": {
+      "is_custom_fab": true,
+      "is_3d_printed": true,
+      "print_spec": {
+        "material": "PETG-ESD",
+        "nozzle_diameter_mm": 0.4,
+        "layer_height_mm": 0.16,
+        "perimeters": 4,
+        "infill_percentage": 40,
+        "infill_pattern": "grid",
+        "print_time_hours": 2.2,
+        "filament_weight_grams": 35.0
+      },
+      "fab_type": "3D Print + Pogo Contacts",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-DOCK-POGO-GANTRY/model.3ds",
+      "stl_asset_url": "/open-biosphere/assets/parts/PART-FAB-DOCK-POGO-GANTRY/print.stl",
+      "step_asset_url": "/open-biosphere/assets/parts/PART-FAB-DOCK-POGO-GANTRY/cad.step",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-FAB-DOCK-POGO-GANTRY/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-FAB-DOCK-POGO-GANTRY/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "In-House Open-Biosphere Fab",
+        "sku": "OB-DOCK-POGO-01",
+        "direct_url": "https://open-biosphere.org",
+        "unit_price_usd": 16.0,
+        "moq": 1,
+        "lead_time_days": 1
+      }
+    ],
+    "part_id": "PART-FAB-DOCK-POGO-GANTRY",
+    "used_by": [
+      {
+        "machine_slug": "mantis-branch-crawler",
+        "stage": 2,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "Custom Wire Harness & AprilTag Optical Alignment Plate",
+    "category": "custom-fab",
+    "summary": "Laser-etched rigid aluminum fiducial plate (AprilTag 36h11 family) bundled with 22 AWG silicone wiring harness for machine vision calibration.",
+    "dimensions": {
+      "length_mm": 60.0,
+      "width_mm": 60.0,
+      "thickness_mm": 3.0,
+      "tolerance_mm": "\u00b10.05",
+      "weight_grams": 28.0
+    },
+    "fabrication": {
+      "is_custom_fab": true,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Laser Etched Plate + Harness",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-TARGET-APRILTAG-HARNESS/model.3ds",
+      "stl_asset_url": "/open-biosphere/assets/parts/PART-FAB-TARGET-APRILTAG-HARNESS/print.stl",
+      "step_asset_url": "/open-biosphere/assets/parts/PART-FAB-TARGET-APRILTAG-HARNESS/cad.step",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-FAB-TARGET-APRILTAG-HARNESS/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-FAB-TARGET-APRILTAG-HARNESS/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "In-House Fab",
+        "sku": "OB-APRILTAG-36H11",
+        "direct_url": "https://open-biosphere.org",
+        "unit_price_usd": 5.0,
+        "moq": 1,
+        "lead_time_days": 1
+      }
+    ],
+    "part_id": "PART-FAB-TARGET-APRILTAG-HARNESS",
+    "used_by": [
+      {
+        "machine_slug": "revolving-sprout-bioreactor",
+        "stage": 2,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "Food-Grade 1/4-Inch Acrylic & Polycarbonate Flume Body Sump Chamber",
+    "category": "custom-fab",
+    "summary": "Optically clear CNC-routed acrylic flume raceway and sump basin with food-safe silicone sealed corners for aquatic skimmers.",
+    "dimensions": {
+      "length_mm": 800.0,
+      "width_mm": 450.0,
+      "thickness_mm": 250.0,
+      "tolerance_mm": "\u00b10.5",
+      "weight_grams": 4200.0
+    },
+    "fabrication": {
+      "is_custom_fab": true,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "CNC Milled Acrylic / Solvent Welded",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-FLUME-HDPE-ACRYLIC/model.3ds",
+      "stl_asset_url": "/open-biosphere/assets/parts/PART-FAB-FLUME-HDPE-ACRYLIC/print.stl",
+      "step_asset_url": "/open-biosphere/assets/parts/PART-FAB-FLUME-HDPE-ACRYLIC/cad.step",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-FAB-FLUME-HDPE-ACRYLIC/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-FAB-FLUME-HDPE-ACRYLIC/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "In-House Plastic Fab",
+        "sku": "OB-FLUME-RACER-01",
+        "direct_url": "https://open-biosphere.org",
+        "unit_price_usd": 65.0,
+        "moq": 1,
+        "lead_time_days": 3
+      }
+    ],
+    "part_id": "PART-FAB-FLUME-HDPE-ACRYLIC",
+    "used_by": []
+  }
+]

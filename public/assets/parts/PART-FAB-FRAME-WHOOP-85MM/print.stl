@@ -1,0 +1,9 @@
+solid PART-FAB-FRAME-WHOOP-85MM
+facet normal 0 0 1
+outer loop
+vertex 0 0 0
+vertex 1 0 0
+vertex 0 1 0
+endloop
+endfacet
+endsolid PART-FAB-FRAME-WHOOP-85MM

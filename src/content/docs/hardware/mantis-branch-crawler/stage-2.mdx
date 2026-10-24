@@ -29,22 +29,21 @@ The Stage 2 agentic pack elevates the **Mantis Branch-Crawler Robot** into a ful
 
 ## Part 3: Isolated Stage 2 Bill of Materials (BOM)
 
+
 ### Add-On 2 Bill of Materials (BOM)
 
-| Item | Component Description | Sourcing / Part Reference | Qty | Unit Cost | Total Cost |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| **A2-01** | Mantis Machine Node: ESP32-S3 (8MB PSRAM) + 0.96" OLED + Master DC Cut + SD Reset & Micro-SD Module | Espressif distributor | 1 | 6.00 | 6.00 |
-| **A2-02** | Dual Micro RGB-NIR Stereo Cameras with Wi-Fi RTSP Transmitter | Camera sensor supplier | 1 | 2.00 | 2.00 |
-| **A2-03** | 3x ESP32-C3 Modular Tools with 0.42" OLEDs & 250ms Watchdogs (Rollers, Clamp, Shears) | Microcontroller supplier | 3 | .00 | 1.00 |
-| **A2-04** | 20 N Miniature Bending Beam Load Cell + HX711 24-bit ADC | Precision scale sensor shop | 1 | 4.00 | 4.00 |
-| **A2-05** | 5V 5A High-Efficiency Step-Down DC-DC Power Module + Power Tap | Power electronics supplier | 1 | 4.00 | 4.00 |
-| **A2-06** | Overhead Gantry Spring-Loaded Pogo-Pin Docking Shoe & Latch | Custom 3D + spring pins | 1 | 8.00 | 8.00 |
-| **A2-07** | Dual TMC2209 Drivers & Actuator Interface Pack | 3D printer electronics supplier | 1 | 6.00 | 6.00 |
-| **A2-08** | Custom Lightweight Carbon Chassis Harness & Enclosure | Robotics carbon hardware | 1 | 6.00 | 6.00 |
-| **Total** | **Add-On 2 Agentic Autonomous Pack (CNT Standard)** | **Expands Base + Add-On 1** | | | **+77.00** |
-| **Full Build** | **Complete Autonomous Trellis Harvester Robot** | **Base + Add-On 1 + Add-On 2** | | | **05.00** |
-
----
+| Item | Part ID & Registry Link | Component & Specification | Sourcing / Supplier | Fab Type | Qty | Unit Cost | CAD Asset | Total Cost |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **A2-01** | [`PART-ELEC-ESP32-S3-NODE`](/open-biosphere/parts/electrical/PART-ELEC-ESP32-S3-NODE/) | Mantis Machine Node: ESP32-S3 (8MB PSRAM) + 0.96" OLED + Master DC Cut + SD Reset & Micro-SD Module | [Espressif distributor](https://mouser.com/espressif) | Stock Electronics | 1 | 6.00 | [Download .3DS](/open-biosphere/assets/parts/PART-ELEC-ESP32-S3-NODE/model.3ds) | 6.00 |
+| **A2-02** | [`PART-ELEC-CAM-STEREO-NIR`](/open-biosphere/parts/electrical/PART-ELEC-CAM-STEREO-NIR/) | Dual Micro RGB-NIR Stereo Cameras with Wi-Fi RTSP Transmitter | [Camera sensor supplier](https://arducam.com) | Stock Sensor | 1 | 2.00 | [Download .3DS](/open-biosphere/assets/parts/PART-ELEC-CAM-STEREO-NIR/model.3ds) | 2.00 |
+| **A2-03** | [`PART-ELEC-ESP32-C3-TOOL`](/open-biosphere/parts/electrical/PART-ELEC-ESP32-C3-TOOL/) | 3x ESP32-C3 Modular Tools with 0.42" OLEDs & 250ms Watchdogs (Rollers, Clamp, Shears) | [Microcontroller supplier](https://seeedstudio.com) | Stock Electronics | 3 | .00 | [Download .3DS](/open-biosphere/assets/parts/PART-ELEC-ESP32-C3-TOOL/model.3ds) | 1.00 |
+| **A2-04** | [`PART-ELEC-SNS-LOADCELL-20N`](/open-biosphere/parts/electrical/PART-ELEC-SNS-LOADCELL-20N/) | 20 N Miniature Bending Beam Load Cell + HX711 24-bit ADC | [Precision scale sensor shop](https://sparkfun.com) | Stock Sensor | 1 | 4.00 | [Download .3DS](/open-biosphere/assets/parts/PART-ELEC-SNS-LOADCELL-20N/model.3ds) | 4.00 |
+| **A2-05** | [`PART-ELEC-VR-5V5A-STEPDOWN`](/open-biosphere/parts/electrical/PART-ELEC-VR-5V5A-STEPDOWN/) | 5V 5A High-Efficiency Step-Down DC-DC Power Module + Power Tap | [Power electronics supplier](https://pololu.com) | Stock Electronics | 1 | 4.00 | [Download .3DS](/open-biosphere/assets/parts/PART-ELEC-VR-5V5A-STEPDOWN/model.3ds) | 4.00 |
+| **A2-06** | [`PART-FAB-DOCK-POGO-GANTRY`](/open-biosphere/parts/custom-fab/PART-FAB-DOCK-POGO-GANTRY/) | Overhead Gantry Spring-Loaded Pogo-Pin Docking Shoe & Latch | [Custom 3D + spring pins](https://open-biosphere.org) | 3D Print + Pogo Contacts | 1 | 8.00 | [Download .3DS](/open-biosphere/assets/parts/PART-FAB-DOCK-POGO-GANTRY/model.3ds) | 8.00 |
+| **A2-07** | [`PART-ELEC-TMC2209-DVR`](/open-biosphere/parts/electrical/PART-ELEC-TMC2209-DVR/) | Dual TMC2209 Drivers & Actuator Interface Pack | [3D printer electronics supplier](https://bigtree-tech.com) | Stock Electronics | 1 | 6.00 | [Download .3DS](/open-biosphere/assets/parts/PART-ELEC-TMC2209-DVR/model.3ds) | 6.00 |
+| **A2-08** | [`PART-MECH-ALUM-2020-6M`](/open-biosphere/parts/mechanical/PART-MECH-ALUM-2020-6M/) | Custom Lightweight Carbon Chassis Harness & Enclosure | [Robotics carbon hardware](https://openbuildspartstore.com) | Stock Extrusion | 1 | 6.00 | [Download .3DS](/open-biosphere/assets/parts/PART-MECH-ALUM-2020-6M/model.3ds) | 6.00 |
+| **Total** | **Add-On 2 Agentic Autonomous Pack (CNT Standard)** | **Expands Base + Add-On 1** | | | | | | **+77.00** |
+| **Full Build** | **Complete Autonomous Trellis Harvester Robot** | **Base + Add-On 1 + Add-On 2** | | | | | | **05.00** |
 
 ---
 

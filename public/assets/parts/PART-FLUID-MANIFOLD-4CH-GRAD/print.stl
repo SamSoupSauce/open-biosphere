@@ -1,0 +1,9 @@
+solid PART-FLUID-MANIFOLD-4CH-GRAD
+facet normal 0 0 1
+outer loop
+vertex 0 0 0
+vertex 1 0 0
+vertex 0 1 0
+endloop
+endfacet
+endsolid PART-FLUID-MANIFOLD-4CH-GRAD
