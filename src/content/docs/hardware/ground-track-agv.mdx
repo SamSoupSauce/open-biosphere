@@ -57,21 +57,55 @@ The ground AGV operates via physical push-tiller, tethered push-button pendant, 
 
 ---
 
-## 4. Accessible Bill of Materials (BOM)
+## 4. Staged Bill of Materials (BOM) — Manual, Semi-Auto, Agentic
 
-Built from standard tracked chassis kits, aluminum extrusions, and accessible maker motor drivers:
+The Ground Track AGV pod carrier scales from a **sturdy manual push cart and foot-latch transporter**, to a **pendant-steered motorized tug**, to a **fully autonomous ROS2 / LiDAR robotics platform**:
+
+### Stage 1: Manual BOM (Push-Tiller Utility Cart & Foot Pedal)
+*Welded metal tracked chassis with rubber treads, neutral freewheel dog clutch, fold-out push tiller, and mechanical foot cam latch.*
 
 | Item Category | Component Name & Description | Sourcing / Standard Part | Est. Cost (USD) |
 | :--- | :--- | :--- | :--- |
-| **Track Drive Kit** | All-Metal Tracked Chassis with Rubber Treads & Dual DC Planetary Motors | Off-the-shelf robotics tank chassis | $75.00 |
-| **Drive Electronics**| Dual Channel 15A Smart DC Motor Driver (Cytron / Sabertooth) | Standard robotics motor controller | $38.00 |
-| **Line / Tape Sensor**| 5-Channel Infrared / Magnetic Induction Track Follower Sensor | Off-the-shelf robotics sensor | $12.00 |
-| **LiDAR (Optional)** | 360-degree 2D LiDAR (RPLiDAR C1 / LD06, 12m range) | Maker LiDAR sensor | $68.00 |
-| **Battery** | 24V 15Ah LiFePO4 Battery Pack with Integrated BMS | Electric bike / solar battery pack | $85.00 |
-| **Cargo Latch** | 12V Compact Solenoid / Pneumatic Cam Latch | Standard cabinet / automation latch | $18.00 |
-| **Harvest Arm (Opt)**| 3-Axis Servo Articulated Arm + Coreless Metal-Gear Servos | Open-source 3D printed arm kit | $45.00 |
-| **Compute & Micro** | ESP32-S3 microcontroller + Buck Regulators | Open-source maker hardware | $22.00 |
-| **Total Build Cost**| Base Autonomous Carrier Unit | Readily sourced hardware | **~$250.00** |
+| **Tracked Chassis** | Welded All-Metal Chassis Frame + Rubber Treads & Dual Drive Sprockets | Off-the-shelf robotics chassis kit | $55.00 |
+| **Push Tiller** | Fold-Out Ergonomic Steel Tubular Push Handle with Dual Grips | Hardware store metal stock | $22.00 |
+| **Neutral Disengage**| Mechanical Dog-Clutch Release Levers (Disengages drive gears for free roll) | Machined / 3D printed dog clutch | $14.00 |
+| **Foot Cam Latch** | Mechanical Foot-Pedal Spring Cam Clamp for Canister Locking/Ejection | Cabinet / gate hardware | $16.00 |
+| **Guide Rollers** | Polyurethane Perimeter Guide Rollers with Bearings (4x) | Roller hardware supplier | $12.00 |
+| **Stage 1 Total** | **Zero-Electricity Push-Tiller Cart** | **Off-grid manual utility transporter** | **$119.00** |
+
+### Stage 2: Semi-Autonomous Add-On (Pendant-Driven Power Tug)
+*Adds dual 24V brushed planetary motors, smart motor controller, wired industrial 3-button pendant, and LiFePO4 battery pack.*
+
+| Item Category | Component Name & Description | Sourcing / Standard Part | Est. Cost (USD) |
+| :--- | :--- | :--- | :--- |
+| **Drive Motors** | Dual 24V 250W Brushed DC Planetary Gearmotors | Robotics drive supplier | $48.00 |
+| **Motor Controller**| Dual-Channel 15A Smart DC Motor Driver (Cytron / Sabertooth) | Standard robotics motor controller | $38.00 |
+| **Wired Pendant** | Heavy-Duty 3-Button Industrial Pendant (Fwd/Rev/Stop) with Speed Dial | Crane / hoist pendant supplier | $24.00 |
+| **Battery Pack** | 24V 15Ah LiFePO4 Battery Pack with Integrated BMS | Electric mobility / solar battery store | $85.00 |
+| **Solenoid Latch** | 12V High-Force Push-Pull Solenoid for Canister Locking | Industrial automation solenoid | $18.00 |
+| **Stage 2 Add-On** | **Motorized Electric Tug Upgrade** | **Adds to Stage 1 base** | **+$213.00** |
+| **Stage 2 Cumulative** | **Operational Pendant-Controlled Power Tug** | **Stage 1 + Stage 2** | **$332.00** |
+
+### Stage 3: Agentic Add-On (Autonomous LiDAR & Magnetic Line-Follower Rover)
+*Adds ESP32-S3 / ROS2 navigation, 360-degree 2D LiDAR scanner, magnetic line induction sensor, and inductive floor charging.*
+
+| Item Category | Component Name & Description | Sourcing / Standard Part | Est. Cost (USD) |
+| :--- | :--- | :--- | :--- |
+| **Robotics Brain** | ESP32-S3 Microcontroller Mainboard + CAN Bus Transceiver (ROS2 Micro-XRCE) | Open-source maker hardware | $18.00 |
+| **Line Guidance** | 5-Channel Magnetic Track Induction Guide Sensor Array | Robotics line sensor supplier | $16.00 |
+| **LiDAR Scanner** | 360-Degree 2D LiDAR Scanner (RPLiDAR C1 / LD06, 12m range) | Maker LiDAR supplier | $68.00 |
+| **Articulated Arm** | 3-Axis Mini Articulated Transfer Arm with Coreless Metal-Gear Servos | 3D printed arm kit + MG996R | $38.00 |
+| **Inductive Dock** | Floor Magnetic Inductive Wireless Receiver Coil + Auto-Charge Controller | Wireless power supplier | $25.00 |
+| **Stage 3 Add-On** | **Autonomous ROS2 & SLAM Navigation Upgrade** | **Adds to Stage 1 + 2** | **+$165.00** |
+| **Full Build Total** | **Complete Autonomous Biosphere AGV Carrier** | **Stage 1 + Stage 2 + Stage 3** | **$497.00** |
+
+### Cost & Upgrade Progression Summary
+
+| Build Stage | Operational Capability | Direct Stage Cost | Cumulative Investment |
+| :--- | :--- | :--- | :--- |
+| **Stage 1: Manual** | 100% mechanical manual push cart with neutral gearbox lever and foot-pedal clamp | $119.00 | **$119.00** |
+| **Stage 2: Semi-Auto** | Motorized planetary track drive with wired industrial jog pendant and LiFePO4 pack | +$213.00 | **$332.00** |
+| **Stage 3: Agentic** | Autonomous ROS2 SLAM, 2D LiDAR, magnetic line following, and inductive auto-charging | +$165.00 | **$497.00** |
 
 ---
 

@@ -56,21 +56,57 @@ The Cartesian gantry array transitions seamlessly between manual hand-positionin
 
 ---
 
-## 4. Accessible Bill of Materials (BOM)
+## 4. Staged Bill of Materials (BOM) — Manual, Semi-Auto, Agentic
 
-Engineered exclusively from standard, globally accessible open-hardware CNC and 3D printer components:
+The Overhead Gantry scales from a **zero-electricity free-gliding inspection bridge and manual toolhead wand**, to a **CNC jog-pendant Cartesian positioner**, to a **sub-millimeter autonomous vision and harvesting array**:
+
+### Stage 1: Manual BOM (Free-Gliding Inspection Carriage & Tool Shears)
+*2040 V-slot rails, laser-cut aluminum wheel plates, dual V-wheels, disengageable belt clamps, and hand-cable toolhead wand.*
 
 | Item Category | Component Name & Description | Sourcing / Standard Part | Est. Cost (USD) |
 | :--- | :--- | :--- | :--- |
-| **Linear Rails** | 2040 V-Slot Aluminum Extrusions (Black Anodized, standard lengths) | Standard extrusion supplier | $78.00 |
-| **Gantry Plates** | Laser-cut 4mm 6061 Aluminum Wheel Plates (4x) | OpenBuilds / SendCutSend | $32.00 |
+| **Linear Rails** | 2040 V-Slot Aluminum Extrusions (X & Y axis rails, standard lengths) | Standard extrusion supplier | $78.00 |
+| **Gantry Plates** | Laser-Cut 4mm 6061 Aluminum Wheel Gantry Plates (4x) | SendCutSend / OpenBuilds | $32.00 |
 | **Motion Hardware** | POM Dual V-Wheels with 625-2RS Bearings (16x) + Eccentric Spacers | 3D printer wheel kits | $22.00 |
-| **Belts & Pulleys**| GT2 9mm Steel-Core Timing Belts (20m) + 20-Tooth Pulleys (4x) | Standard 3D printer belt kit | $26.00 |
-| **Steppers** | NEMA 23 Closed-Loop Steppers with Integrated Drivers (3x) | Maker CNC stepper motors | $95.00 |
-| **Toolhead Mount** | 3D Printed PETG Kinematic Magnetic Base + Neodymium Magnets & Pogo Pins | Standard maker parts | $14.00 |
-| **Control Board** | BigTreeTech SKR Mini E3 or Octopus Pro running Klipper | 3D printer mainboard | $45.00 |
-| **Cable Management**| Heavy-duty 15x30mm Nylon Drag Chains (8m total) | CNC cable carrier chains | $24.00 |
-| **Total Build Cost**| Complete 2-Axis Precision Gantry | Readily sourced CNC parts | **~$336.00** |
+| **Quick-Release Clamps**| Belt-Clamp Tension Release Blocks (Allows sliding carriage freely by hand) | 3D printed PETG / CNC hardware | $16.00 |
+| **Manual Tool Wand** | Handheld Bowden-Cable Squeeze Trigger Wand for Toolhead Actuation | Bicycle cable + hand lever | $15.00 |
+| **Kinematic Dock Base**| 3D Printed PETG Magnetic Toolhead Base with N52 Neodymium Magnets | PETG printed + N52 magnets | $14.00 |
+| **Stage 1 Total** | **Zero-Electricity Free-Gliding Inspection Gantry** | **Off-grid manual carriage** | **$177.00** |
+
+### Stage 2: Semi-Autonomous Add-On (CNC Directional Jog Pendant Array)
+*Adds NEMA 23 stepper drives, steel-core belts, industrial 6-button directional CNC pendant, and nylon drag chains.*
+
+| Item Category | Component Name & Description | Sourcing / Standard Part | Est. Cost (USD) |
+| :--- | :--- | :--- | :--- |
+| **Timing Drive** | GT2 9mm Steel-Core Timing Belts (20m) + 20-Tooth Pulleys (4x) | Standard 3D printer belt kit | $26.00 |
+| **Stepper Motors** | NEMA 23 High-Torque Stepper Motors (3x: dual Y-axis, single X-axis) | Maker CNC stepper supplier | $68.00 |
+| **Jog Pendant** | Industrial 6-Button Directional CNC Pendant (X+/-, Y+/-, Feed Fast/Slow) | CNC pendant supplier | $28.00 |
+| **Motor Drivers** | Multi-Axis Stepper Driver Board (TB6600 x3) + Hardware Pulse Generator | Stepper driver supplier | $34.00 |
+| **Power Supply** | 24V 250W MeanWell Industrial Power Supply | Industrial electrical supply | $36.00 |
+| **Cable Management** | Heavy-Duty 15x30mm Nylon Drag Chains (8m total) | CNC cable carrier chains | $24.00 |
+| **Stage 2 Add-On** | **Electromechanical Motion Upgrade** | **Adds to Stage 1 base** | **+$216.00** |
+| **Stage 2 Cumulative** | **Operational CNC Jog-Pendant Gantry** | **Stage 1 + Stage 2** | **$393.00** |
+
+### Stage 3: Agentic Add-On (Autonomous Computer Vision & Kinematic Multi-Toolhead)
+*Adds Klipper CAN bus controller, down-facing 4K RGB/NIR macro camera, closed-loop optical encoders, and specialized micro-toolheads.*
+
+| Item Category | Component Name & Description | Sourcing / Standard Part | Est. Cost (USD) |
+| :--- | :--- | :--- | :--- |
+| **Motion Mainboard**| BigTreeTech Octopus Pro / SKR Mainboard Running Klipper with CAN Bus | 3D printer mainboard supplier | $55.00 |
+| **Down-Facing Vision**| Sony IMX519 4K RGB Macro Camera + 850nm NIR Ring Illuminator | Precision camera supplier | $42.00 |
+| **Closed-Loop Encoders**| Optical Rotary Encoders for Sub-0.05mm Position Verification | Optical encoder supplier | $45.00 |
+| **Saffron Toolhead** | Saffron Micro-Tweezer Silicone Toolhead (Micro-Servo + Pogo Pin Bus) | Custom micro-servo assembly | $26.00 |
+| **Shear Toolhead** | Purslane Reciprocating Lateral Shear Toolhead (Dual Oscillating Blades) | Micro-trimmer assembly | $28.00 |
+| **Stage 3 Add-On** | **Autonomous Edge Vision & Multi-Toolhead Upgrade**| **Adds to Stage 1 + 2** | **+$196.00** |
+| **Full Build Total** | **Complete Autonomous Biosphere Overhead Gantry** | **Stage 1 + Stage 2 + Stage 3** | **$589.00** |
+
+### Cost & Upgrade Progression Summary
+
+| Build Stage | Operational Capability | Direct Stage Cost | Cumulative Investment |
+| :--- | :--- | :--- | :--- |
+| **Stage 1: Manual** | 100% mechanical free-sliding carriage with manual squeeze wand & magnetic dock | $177.00 | **$177.00** |
+| **Stage 2: Semi-Auto** | Motorized Cartesian positioning via industrial 6-button CNC jog pendant & drag chains | +$216.00 | **$393.00** |
+| **Stage 3: Agentic** | Sub-millimeter Klipper CAN bus autonomy, 4K camera vision, and quick-swap toolheads | +$196.00 | **$589.00** |
 
 ---
 

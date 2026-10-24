@@ -58,22 +58,56 @@ The sprout bioreactor can be operated completely off-grid by hand, controlled wi
 
 ---
 
-## 4. Accessible Bill of Materials (BOM)
+## 4. Staged Bill of Materials (BOM) — Manual, Semi-Auto, Agentic
 
-Designed entirely from readily sourced, commercial off-the-shelf (COTS) components and standard 3D printed parts:
+The Sprout Bioreactor can be built as a **zero-electricity cabin tumbler**, upgraded with **push-button rotation and dial misting**, and expanded into a **fully automated 96-hour AI bioreactor with AGV docking**:
+
+### Stage 1: Manual BOM (Off-Grid Mechanical Tumbler)
+*Rigid aluminum extrusion chassis, perforated stainless drum, detachable hand crank, ratchet pawl, and manual gravity drainage.*
 
 | Item Category | Component Name & Description | Sourcing / Standard Part | Est. Cost (USD) |
 | :--- | :--- | :--- | :--- |
-| **Frame** | 2020 T-Slot Aluminum Extrusion (Black anodized) | Standard 400mm & 500mm lengths | $28.00 |
-| **Drum Core** | Food-Grade 304 Stainless Steel Perforated Mesh Cylinder | 1.5 mm hole diameter, 300mm dia | $42.00 |
-| **Drum Endcaps** | 3D Printed PETG / Polycarbonate Flanges with Ball Bearing Races | FDM 3D printed (0.28mm layer height) | $12.00 (filament) |
+| **Frame** | 2020 T-Slot Black Anodized Aluminum Extrusion (400mm & 500mm lengths) | Standard extrusion supplier | $28.00 |
+| **Drum Core** | Food-Grade 304 Stainless Steel Perforated Mesh Cylinder (300mm dia) | Metal mesh fabricator / eBay | $42.00 |
+| **Drum Flanges** | 3D Printed PETG / Polycarbonate Endcaps & Axle Spindles | FDM 3D printed (0.28mm layer height) | $12.00 |
 | **Bearings** | 608-2RS Sealed Deep Groove Ball Bearings (4x) | Standard skate bearings | $6.00 |
-| **Drive Train** | NEMA 17 Geared Stepper (5.18:1) + GT2 6mm Timing Belt & Pulleys | 3D printer aftermarket part | $24.00 |
-| **Fluidics** | 24V Diaphragm Mist Pump (100 PSI) + Quick-Connect Fittings | Standard RO / misting kit parts | $26.00 |
-| **Misting Nozzles**| Brass / Nickel-plated 0.3mm atomizing nozzles (2x) | Off-the-shelf terrarium/cooling nozzles | $8.00 |
-| **Sanitation** | 12V 200mg/h Ozone Generator Module | Compact aquarium ozone unit | $16.00 |
-| **Compute & Power**| ESP32-S3 NodeMCU board + TMC2209 Silent Stepper Driver + 24V PSU | Open-source standard hardware | $35.00 |
-| **Total Build Cost**| Complete Standalone Machine | Accessible COTS & 3D prints | **~$197.00** |
+| **Hand Drive** | Detachable Ergonomic Hand Crank with Spring-Loaded Ratchet Pawl | 3D printed + steel pivot pin | $14.00 |
+| **Gravity Drainage** | 3/4-inch Manual Brass Drain Ball Valve + Silicone Collection Funnel | Standard plumbing supply | $11.00 |
+| **Stage 1 Total** | **Zero-Electricity Mechanical Tumbler** | **Off-grid baseline appliance** | **$113.00** |
+
+### Stage 2: Semi-Autonomous Add-On (Push-Button Jog & Dial Mist)
+*Adds planetary stepper rotation, 100 PSI misting pump, rotary countdown timer, and panel jog push-buttons.*
+
+| Item Category | Component Name & Description | Sourcing / Standard Part | Est. Cost (USD) |
+| :--- | :--- | :--- | :--- |
+| **Drive Motor** | NEMA 17 Geared Planetary Stepper (5.18:1) + GT2 6mm Belt & Pulleys | 3D printer aftermarket part | $24.00 |
+| **Misting System** | 24V Diaphragm Mist Pump (100 PSI) + Brass 0.3mm Atomizing Nozzles (2x) | Hydroponics mist supplier | $34.00 |
+| **Hardware Timer** | Spring-Wound Mechanical Countdown Dial Timer (0–60 min mist interval) | Appliance component store | $15.00 |
+| **Panel Controls** | Green Momentary Jog Push-Button + Heavy-Duty Power Toggle Switch | Industrial electrical supply | $10.00 |
+| **Power Supply** | 24V 60W DC Desktop Power Supply with 2.1mm Barrel Jack | Standard electronics supply | $16.00 |
+| **Stage 2 Add-On** | **Electromechanical Power Upgrade** | **Adds to Stage 1 base** | **+$99.00** |
+| **Stage 2 Cumulative** | **Operational Semi-Autonomous Bioreactor** | **Stage 1 + Stage 2** | **$212.00** |
+
+### Stage 3: Agentic Add-On (Closed-Loop 96h Bioreactor with AGV Handshake)
+*Adds ESP32-S3 FreeRTOS automation, chamber humidity telemetry, corona ozone sanitization, and autonomous AGV docking.*
+
+| Item Category | Component Name & Description | Sourcing / Standard Part | Est. Cost (USD) |
+| :--- | :--- | :--- | :--- |
+| **Controller Node** | ESP32-S3 NodeMCU Mainboard with BLE/WiFi & FreeRTOS Schedule Engine | Open-source maker supplier | $14.00 |
+| **Silent Driver** | TMC2209 Ultra-Silent Stepper Driver with Sensorless Homing Support | 3D printer mainboard parts | $8.00 |
+| **Chamber Sensor** | Sensirion SHT40 High-Precision Temperature & Relative Humidity Probe | Precision sensor supplier | $12.00 |
+| **Auto-Sanitizer** | 12V 200mg/h Corona-Discharge Ozone Module + Gas Diffuser Stone | Compact aquarium ozone unit | $19.00 |
+| **AGV Interlock** | Magnetic Alignment Docking Latch + Optical Target + CAN Transceiver | Robotics maker hardware | $16.00 |
+| **Stage 3 Add-On** | **Autonomous Edge AI & Biosphere Interlock** | **Adds to Stage 1 + 2** | **+$69.00** |
+| **Full Build Total** | **Complete Autonomous Biosphere Bioreactor** | **Stage 1 + Stage 2 + Stage 3** | **$281.00** |
+
+### Cost & Upgrade Progression Summary
+
+| Build Stage | Operational Capability | Direct Stage Cost | Cumulative Investment |
+| :--- | :--- | :--- | :--- |
+| **Stage 1: Manual** | 100% mechanical zero-electricity benchtop tumbler with hand crank and ratchet | $113.00 | **$113.00** |
+| **Stage 2: Semi-Auto** | Motorized planetary rotation, pressurized misting, and analog dial countdown timer | +$99.00 | **$212.00** |
+| **Stage 3: Agentic** | Automated 96-hour growth schedule, ozone sanitizing wash, and AGV docking handshake | +$69.00 | **$281.00** |
 
 ---
 

@@ -56,20 +56,56 @@ The dosing and environmental array can be actuated by manual gravity valves, phy
 
 ---
 
-## 4. Accessible Bill of Materials (BOM)
+## 4. Staged Bill of Materials (BOM) — Manual, Semi-Auto, Agentic
 
-Built from accessible open-source electronics, standard lab peristaltic pumps, and plumbing:
+The Microclimate & Dosing Array scales from a **zero-electricity gravity-burette wall panel with manual bypass valves**, to a **push-button priming and potentiometer-calibrated dosing panel**, to a **fully autonomous 1 Hz closed-loop PID water chemistry and $CO_2$ regulator**:
+
+### Stage 1: Manual BOM (Gravity Burettes & Manual Valve Panel)
+*Acrylic backplane, 6 graduated wall burettes with PTFE stopcocks, 3-way manual bypass ball valves, and manual gas needle valve.*
 
 | Item Category | Component Name & Description | Sourcing / Standard Part | Est. Cost (USD) |
 | :--- | :--- | :--- | :--- |
-| **Peristaltic Pumps**| 12V DC Stepper / Brushed Peristaltic Dosing Pumps with Silicone Tubes (6x) | Standard aquarium dosing pumps | $48.00 |
-| **Dosing Drivers** | ULN2803A Darlington Transistor Array or TMC2208 Stepper Drivers | Maker electronics board | $12.00 |
-| **Water Chemistry**| Atlas Scientific / Gravity Analog Isolated pH & EC Sensor Probes & EZO chips | DFRobot / Atlas Scientific | $85.00 |
-| **Environment Sensor**| Sensirion SCD41 ($CO_2$, Temp, RH) NDIR Sensor Breakout | Maker environmental sensor | $28.00 |
-| **$CO_2$ Solenoid** | 12V DC Brass Electronic Solenoid Valve + Push-Fit Check Valve | Homebrew / aquarium $CO_2$ part | $18.00 |
-| **Compute Board** | ESP32-S3 Dev Board or Raspberry Pi Compute Module 4 with Carrier | Standard maker microcomputer | $35.00 |
-| **Enclosure & Power**| Wall-Mount NEMA ABS Weatherproof Enclosure + 12V/24V MeanWell PSU | Hardware electrical supply | $42.00 |
-| **Total Build Cost**| Complete 6-Channel Automated Controller | Readily sourced maker components | **~$268.00** |
+| **Mounting Backplane**| Wall-Mount Pre-Drilled Acrylic Backplane & Aluminum Bracketry | Plastics fabricator / maker shop | $22.00 |
+| **Graduated Burettes**| 250ml Graduated Glass / HDPE Wall Burettes with PTFE Stopcocks (6x) | Laboratory glassware supplier | $38.00 |
+| **Bypass Valves** | 3-Way Manual L-Port PVC Ball Valves (6x 1/4-inch NPT) | Standard plumbing supplier | $28.00 |
+| **$CO_2$ Needle Valve**| High-Precision Brass Micro-Metering Needle Valve for Gas Regulator | Welding / homebrew gas supply | $18.00 |
+| **Manual Test Kit** | Manual Colorimetric Liquid pH, GH/KH, and EC Chemical Test Drop Kit | Hydroponics test supply store | $16.00 |
+| **Stage 1 Total** | **Zero-Electricity Gravity-Fed Dosing Panel** | **Off-grid manual baseline** | **$122.00** |
+
+### Stage 2: Semi-Autonomous Add-On (Push-Button Priming & Dial Dosing Panel)
+*Adds 6 peristaltic pumps, momentary channel priming buttons, volume potentiometer dials, and 12V $CO_2$ solenoid.*
+
+| Item Category | Component Name & Description | Sourcing / Standard Part | Est. Cost (USD) |
+| :--- | :--- | :--- | :--- |
+| **Peristaltic Pumps**| 12V DC Brushed Peristaltic Dosing Pumps with Food-Grade Silicone Tubes (6x) | Aquarium dosing pump supplier | $48.00 |
+| **Momentary Buttons** | Waterproof Momentary Tactile Push-Buttons for Manual Priming (6x) | Electronics component store | $12.00 |
+| **Speed Dials** | Multi-Turn Analog Potentiometers for Calibration & Speed Control (6x) | Electronics component store | $16.00 |
+| **Transistor Drivers**| ULN2803A Darlington Transistor Array / Relay Driver Board | Standard maker electronics | $12.00 |
+| **Power Supply** | 12V 5A MeanWell Power Supply + Master Rocker Power Switch | Industrial electrical supplier | $24.00 |
+| **$CO_2$ Solenoid** | 12V DC Brass Electronic Solenoid Valve with Manual Override Push-Pin | Aquarium / beverage gas parts | $18.00 |
+| **Stage 2 Add-On** | **Electromechanical & Dial Control Upgrade** | **Adds to Stage 1 base** | **+$130.00** |
+| **Stage 2 Cumulative** | **Operational Dial-Calibrated Dosing Unit** | **Stage 1 + Stage 2** | **$252.00** |
+
+### Stage 3: Agentic Add-On (Closed-Loop PID Water Chemistry & CAN Telemetry)
+*Adds electrically isolated industrial pH/EC sensors, Sensirion SCD41 photoacoustic $CO_2$ sensor, ESP32-S3 brain, and CAN bus.*
+
+| Item Category | Component Name & Description | Sourcing / Standard Part | Est. Cost (USD) |
+| :--- | :--- | :--- | :--- |
+| **Water Chemistry** | Atlas Scientific / Gravity Isolated Industrial pH & EC Sensor Probes + EZO | Precision water sensor supplier | $85.00 |
+| **Ambient Gas Sensor**| Sensirion SCD41 Photoacoustic NDIR $CO_2$, Temperature & RH Sensor | Maker environmental sensor | $28.00 |
+| **Compute Board** | ESP32-S3 Dev Board or Raspberry Pi Compute Module 4 with Carrier | Embedded compute supplier | $35.00 |
+| **Industrial Bus** | Isolated RS-485 Modbus / CAN Bus Transceiver Interface Board | Industrial interface supplier | $14.00 |
+| **Sealed Enclosure** | IP65 ABS Weatherproof Wall-Mount Enclosure with Cable Glands | Electrical supply store | $22.00 |
+| **Stage 3 Add-On** | **Autonomous PID & CAN Bus Upgrade** | **Adds to Stage 1 + 2** | **+$184.00** |
+| **Full Build Total** | **Complete Autonomous Biosphere Water & Climate Brain** | **Stage 1 + Stage 2 + Stage 3** | **$436.00** |
+
+### Cost & Upgrade Progression Summary
+
+| Build Stage | Operational Capability | Direct Stage Cost | Cumulative Investment |
+| :--- | :--- | :--- | :--- |
+| **Stage 1: Manual** | 100% mechanical gravity burettes, manual 3-way L-port valves, and colorimetric drops | $122.00 | **$122.00** |
+| **Stage 2: Semi-Auto** | Motorized 6-channel peristaltic pumping, push-button priming, and potentiometer dials | +$130.00 | **$252.00** |
+| **Stage 3: Agentic** | 1 Hz closed-loop PID water chemistry, NDIR $CO_2$ injection, and CAN bus integration | +$184.00 | **$436.00** |
 
 ---
 

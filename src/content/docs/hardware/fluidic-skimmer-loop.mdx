@@ -57,20 +57,56 @@ The skimmer can be actuated completely by hand, operated with push-buttons and s
 
 ---
 
-## 4. Accessible Bill of Materials (BOM)
+## 4. Staged Bill of Materials (BOM) — Manual, Semi-Auto, Agentic
 
-Built using common plumbing components, aluminum extrusions, and off-the-shelf wedge wire:
+The Fluidic Skimmer is engineered to scale across three independent operational tiers. A builder can assemble the **zero-electricity manual base**, add **push-button electromechanical power**, and finish with **autonomous edge AI and closed-loop telemetry**:
+
+### Stage 1: Manual BOM (Zero-Power Mechanical Base)
+*Pure gravity skimming, counterweighted weir lever, hand-cranked auger dewatering press, and manual drain valves.*
 
 | Item Category | Component Name & Description | Sourcing / Standard Part | Est. Cost (USD) |
 | :--- | :--- | :--- | :--- |
-| **Flume Body** | Food-Grade 1/4-inch Acrylic / Polycarbonate Sheets or HDPE Tub | Hardware store / plastic supplier | $45.00 |
-| **Wedge-Wire Panel**| 316L Stainless Steel Wedge-Wire Screen (150µm slot, 300x400mm) | Industrial filtration supplier / eBay | $65.00 |
-| **Water Pump** | 24V DC Brushless Magnetic Drive Pump (80W–150W, 55 GPM) | Solar fountain / pond pump | $58.00 |
-| **Weir Actuator** | Micro Linear Actuator (50mm stroke, 12V with feedback) | Standard maker robotics actuator | $28.00 |
-| **Dewatering Press** | NEMA 23 High-Torque Stepper + 3D Printed PETG Auger Screw | 3D printed + 3D printer parts | $35.00 |
-| **Filter Media** | K1 Micro Filter Media (10 Liters) + 1.5-inch PVC pipe & valves | Standard pond / aquaculture supply | $24.00 |
-| **Electronics** | ESP32 board + 24V-to-12V buck converter + dual optical water sensors | Standard open-source maker parts | $25.00 |
-| **Total Build Cost**| Complete Standalone Harvesting Machine | Accessible COTS & 3D prints | **~$280.00** |
+| **Flume Body** | Food-Grade 1/4-inch Acrylic / Polycarbonate Sheets or HDPE Sump Chamber | Hardware store / plastic supplier | $45.00 |
+| **Wedge-Wire Screen** | 316L Stainless Steel Wedge-Wire Panel (150µm slot, 300x400mm) | Industrial filtration supplier / eBay | $65.00 |
+| **Weir Gate Lever** | Counterweighted Hand Lever & Delrin Pivot Pin for Overflow Weir | 3D printed PETG + Delrin pin | $16.00 |
+| **Dewatering Press** | Manual Dewatering Screw Press (3D Printed PETG Auger + Removable Hex Crank) | 3D printed + steel hex shaft | $22.00 |
+| **Plumbing & Drain** | 3-Way Manual L-Port PVC Bypass Ball Valve (1.5-inch) + Bulkhead Drain | Standard plumbing supply | $18.00 |
+| **Filter Media** | K1 Micro Filter Media (10 Liters) + Perforated Gravity Retention Screen | Aquaculture / pond supply | $14.00 |
+| **Stage 1 Total** | **Complete Zero-Electricity Manual Harvester** | **Off-grid mechanical baseline** | **$180.00** |
+
+### Stage 2: Semi-Autonomous Add-On (Electromechanical / Buttons & Dials)
+*Adds motorized pumping, electric auger dewatering drive, and local IP67 jog push-buttons without software.*
+
+| Item Category | Component Name & Description | Sourcing / Standard Part | Est. Cost (USD) |
+| :--- | :--- | :--- | :--- |
+| **Water Pump** | 24V DC Brushless Magnetic Drive Pump (80W–120W, 55 GPM) | Solar fountain / pond pump | $58.00 |
+| **Motorized Auger** | NEMA 23 High-Torque Geared Stepper Motor | 3D printer / CNC stepper supplier | $32.00 |
+| **Control Box** | Waterproof IP67 Enclosure with Fwd/Rev Momentary Jog Buttons + Speed Dial | Industrial electrical supply | $24.00 |
+| **Motor Drivers** | Dual-Channel TB6600 Stepper Driver + High-Current DC Pump Relay | Standard maker electronics | $18.00 |
+| **Power Supply** | 24V 150W MeanWell Industrial Power Supply + Inline Breaker Fuse | Standard electrical supply | $28.00 |
+| **Stage 2 Add-On** | **Electromechanical Power Upgrade** | **Adds to Stage 1 base** | **+$160.00** |
+| **Stage 2 Cumulative** | **Operational Semi-Autonomous Harvester** | **Stage 1 + Stage 2** | **$340.00** |
+
+### Stage 3: Agentic Add-On (Autonomous Edge AI & Closed-Loop Telemetry)
+*Integrates overhead computer vision frond scanning, linear actuator weir control, and master CAN bus telemetry.*
+
+| Item Category | Component Name & Description | Sourcing / Standard Part | Est. Cost (USD) |
+| :--- | :--- | :--- | :--- |
+| **Canopy Scanner** | Overhead Sony IMX219 NIR/RGB Camera for Frond Mat Thickness Profiling | Raspberry Pi / camera module | $25.00 |
+| **Controller Node** | ESP32-S3 Dual-Core Microcontroller with CAN Bus Transceiver (FreeRTOS) | Open-source maker hardware | $18.00 |
+| **Level Telemetry** | Waterproof Ultrasonic Sump Level Sensor (JSN-SR04T) + Optical Float Switches | Maker electronics | $14.00 |
+| **Linear Actuator** | 12V Micro Linear Actuator (50mm stroke with analog position feedback) | Robotics actuator supplier | $28.00 |
+| **Interlock Harness** | IP67 M12 Quick-Disconnect CAN / RS-485 Biosphere Telemetry Harness | Industrial automation supplier | $12.00 |
+| **Stage 3 Add-On** | **Autonomous Edge AI & Vision Upgrade** | **Adds to Stage 1 + 2** | **+$97.00** |
+| **Full Build Total** | **Complete Autonomous Closed-Loop Biosphere Skimmer** | **Stage 1 + Stage 2 + Stage 3** | **$437.00** |
+
+### Cost & Upgrade Progression Summary
+
+| Build Stage | Operational Capability | Direct Stage Cost | Cumulative Investment |
+| :--- | :--- | :--- | :--- |
+| **Stage 1: Manual** | 100% mechanical, zero-power off-grid harvesting with hand levers & cranks | $180.00 | **$180.00** |
+| **Stage 2: Semi-Auto** | Motorized pumping & auger pressing with waterproof panel buttons & dials | +$160.00 | **$340.00** |
+| **Stage 3: Agentic** | Full edge computer vision, automated weir positioning, and CAN bus interlock | +$97.00 | **$437.00** |
 
 ---
 

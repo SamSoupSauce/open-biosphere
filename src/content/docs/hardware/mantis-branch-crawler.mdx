@@ -57,20 +57,56 @@ The crawler supports manual pole-mounted actuation, direct push-button/joystick 
 
 ---
 
-## 4. Accessible Bill of Materials (BOM)
+## 4. Staged Bill of Materials (BOM) — Manual, Semi-Auto, Agentic
 
-Engineered from accessible open-source 3D printer parts, custom FDM-printed brackets, and cast silicone:
+The Mantis Crawler scales from an **inexpensive pole-mounted manual pruner and fruit snip**, to a **tethered radio-controlled harvester**, up to a **fully autonomous YOLOv8 vision-guided robotic climber**:
+
+### Stage 1: Manual BOM (Pole-Mounted Extension Snip & Gripper)
+*Shore 40A silicone pinch rollers, lightweight aluminum chassis, telescopic pole, Bowden squeeze clamp, and gravity harvest chute.*
 
 | Item Category | Component Name & Description | Sourcing / Standard Part | Est. Cost (USD) |
 | :--- | :--- | :--- | :--- |
-| **Climbing Rollers**| Cast Silicone Pinch Rollers (Shore 40A, molded in 3D printed molds) | 2-part platinum silicone kit | $18.00 |
-| **Pinch Actuation** | NEMA 14 Pancake Steppers (2x) with planetary gearboxes | Standard 3D printer extruder steppers | $36.00 |
-| **Harvest Shear** | High-speed 12V micro-rotary hobby tool motor + surgical scalpel disc | Standard coreless micro-motor | $15.00 |
-| **Vacuum Funnel** | 3D Printed TPU Funnel + 24V Miniature Centrifugal Blower Fan | 5015 blower fan or 24V mini-vacuum pump | $18.00 |
-| **Chassis** | Laser-cut 3mm Carbon Fiber / Aluminum Plates + PETG 3D prints | SendCutSend / local CNC or 3D print | $35.00 |
-| **Clamping Sensor**| Current-sensing driver (TMC2209) + micro-load cell for grip feedback | Standard 3D printer driver | $12.00 |
-| **Compute & Vision**| Raspberry Pi 5 (4GB) + Hailo-8L M.2 AI HAT + Dual IMX219 Cameras | Raspberry Pi official ecosystem | $125.00 |
-| **Total Build Cost**| Complete Robotic Branch Climber | Maker-accessible robotics hardware | **~$259.00** |
+| **Pinch Rollers** | Cast Shore 40A Platinum Silicone Rollers (Molded in 3D printed molds) | 2-part platinum silicone kit | $18.00 |
+| **Extension Pole** | Telescopic Lightweight Fiberglass / Aluminum Extension Pole (1.8m to 3.6m) | Hardware store tool | $24.00 |
+| **Manual Clamp** | Bowden-Cable Hand Squeeze Clamp Lever & Cable Linkage | Bicycle brake lever / cable | $14.00 |
+| **Gravity Chute** | Spring-Loaded Bypass Micro-Snips & 3D Printed PETG Collection Funnel | Bonsai tools + 3D print | $19.00 |
+| **Chassis** | Laser-Cut 2mm Aluminum Frame Plates + 3D Printed PETG Brackets | SendCutSend / local CNC | $18.00 |
+| **Stage 1 Total** | **Zero-Electricity Pole-Mounted Harvester** | **Off-grid manual tool** | **$93.00** |
+
+### Stage 2: Semi-Autonomous Add-On (Tethered RC Joystick Harvester)
+*Adds planetary pancake steppers, high-speed rotary pedicel shears, active vacuum collection pod, and 2.4 GHz RC controls.*
+
+| Item Category | Component Name & Description | Sourcing / Standard Part | Est. Cost (USD) |
+| :--- | :--- | :--- | :--- |
+| **Drive Steppers** | NEMA 14 Pancake Steppers with Planetary Gearboxes (2x) | 3D printer extruder steppers | $36.00 |
+| **Motorized Shear** | High-Speed 12V Coreless Rotary Micro-Shear Tool Motor | Micro-robotics supplier | $15.00 |
+| **Active Vacuum** | 24V Miniature Centrifugal Blower Fan + Flexible TPU Funnel Pod | 5015 blower fan supplier | $18.00 |
+| **RC Controller** | 2.4 GHz 4-Channel RC Transmitter & Receiver (or Wired 4-Button Pendant) | Hobby RC supplier | $28.00 |
+| **Motor Drivers** | Dual TMC2208 Stepper Driver Module + DC Motor Relay Board | Standard maker electronics | $16.00 |
+| **Power Tether** | 4S 1500mAh LiPo Battery or 24V Umbilical DC Gantry Drop Line | Battery / electronics store | $22.00 |
+| **Stage 2 Add-On** | **Electromechanical & Remote Control Upgrade** | **Adds to Stage 1 base** | **+$135.00** |
+| **Stage 2 Cumulative** | **Operational Remote-Controlled Crawler** | **Stage 1 + Stage 2** | **$228.00** |
+
+### Stage 3: Agentic Add-On (Autonomous YOLO Vision Branch Harvester)
+*Adds Raspberry Pi 5 + Hailo-8L neural accelerator, stereo RGB-NIR cameras for pedicel triangulation, and load-cell torque sensing.*
+
+| Item Category | Component Name & Description | Sourcing / Standard Part | Est. Cost (USD) |
+| :--- | :--- | :--- | :--- |
+| **Edge AI Compute** | Raspberry Pi 5 (4GB) + Hailo-8L M.2 AI Acceleration HAT | Raspberry Pi ecosystem | $95.00 |
+| **Stereo Vision** | Dual Sony IMX219 Stereo RGB-NIR Cameras for 3D Pedicel Triangulation | Camera module supplier | $35.00 |
+| **Clamping Feedback**| Micro-Load Cell Clamping Sensor (8.5N Limit) + HX711 Amplifier | Maker load cell parts | $14.00 |
+| **Power Regulation** | Dual 5V/5A & 12V/3A DC-DC Buck Regulators with Protection | Power electronics supplier | $15.00 |
+| **Biosphere Dock** | Overhead Gantry Slip-Ring Auto-Dock Latch & Drop-Chute Transfer Port | 3D printed + pogo pins | $18.00 |
+| **Stage 3 Add-On** | **Autonomous Edge Vision & AI Upgrade** | **Adds to Stage 1 + 2** | **+$177.00** |
+| **Full Build Total** | **Complete Autonomous Trellis Harvester Robot** | **Stage 1 + Stage 2 + Stage 3** | **$405.00** |
+
+### Cost & Upgrade Progression Summary
+
+| Build Stage | Operational Capability | Direct Stage Cost | Cumulative Investment |
+| :--- | :--- | :--- | :--- |
+| **Stage 1: Manual** | 100% mechanical pole-mounted pruner and squeeze clamp with gravity collection | $93.00 | **$93.00** |
+| **Stage 2: Semi-Auto** | Motorized pinch climb, vacuum fruit funnel, and handheld RC radio joystick steering | +$135.00 | **$228.00** |
+| **Stage 3: Agentic** | On-device YOLOv8 neural pedicel detection, 8.5N grip limiting, and auto-harvesting | +$177.00 | **$405.00** |
 
 ---
 
