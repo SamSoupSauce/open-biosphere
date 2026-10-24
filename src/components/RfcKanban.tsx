@@ -94,6 +94,16 @@ const RFC_LIST: RFCItem[] = [
     summary: 'Centralized canonical part registry (parts.json) with discrete CAD assets, procurement links, and cross-machine BOM linking.',
     docSlug: '/rfcs/rfc-0008-global-part-registry-bom-schema',
   },
+  {
+    id: 'RFC-0009',
+    title: 'Universal Helical Shutter Solar Roof & Passive Thermal Collector Standard',
+    author: 'Optics & Thermal Systems Engineering Team',
+    targetType: 'Hardware',
+    status: 'Implemented',
+    date: '2026-10-24',
+    summary: 'Decoupled solar PAR collection assembly combining keyed static exterior mirror spokes, concentric rotary helical pipe shutter, and zero-plastic optical path.',
+    docSlug: '/rfcs/rfc-0009-helical-shutter-solar-roof',
+  },
 ];
 
 export default function RfcKanban() {

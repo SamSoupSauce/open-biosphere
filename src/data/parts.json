@@ -4637,5 +4637,320 @@
     ],
     "part_id": "PART-FAB-FLUME-HDPE-ACRYLIC",
     "used_by": []
+  },
+  {
+    "part_id": "PART-OPT-MIRROR-FLOAT-GLASS",
+    "name": "Flat Back-Silvered Float Glass Mirror Tiles (150x200mm)",
+    "category": "mechanical",
+    "summary": "High-reflectivity (94% specular reflectance) low-iron float glass mirror tiles with epoxy sealant backing for solar collector spoke arrays.",
+    "dimensions": {
+      "length_mm": 200.0,
+      "width_mm": 150.0,
+      "thickness_mm": 3.0,
+      "tolerance_mm": "\u00b10.5",
+      "weight_grams": 225.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Precision Float Glass",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-OPT-MIRROR-FLOAT-GLASS/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-OPT-MIRROR-FLOAT-GLASS/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-OPT-MIRROR-FLOAT-GLASS/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Edmund Optics / First Surface Mirror",
+        "sku": "EO-MIR-150200-3MM",
+        "direct_url": "https://edmundoptics.com",
+        "unit_price_usd": 12.5,
+        "moq": 4,
+        "lead_time_days": 3
+      }
+    ],
+    "used_by": [
+      {
+        "machine_slug": "fluidic-skimmer-loop",
+        "stage": 1,
+        "quantity_required": 16
+      },
+      {
+        "machine_slug": "tps-root-chamber",
+        "stage": 1,
+        "quantity_required": 16
+      }
+    ]
+  },
+  {
+    "part_id": "PART-OPT-WINDOW-BOROSILICATE-50MM",
+    "name": "High-Transmission Borosilicate Glass Porthole Discs (\u00d850mm x 3mm)",
+    "category": "mechanical",
+    "summary": "Ultra-low thermal expansion borosilicate 3.3 optical flat discs (92% PAR transmission) engineered for sealed tower shutter portholes.",
+    "dimensions": {
+      "length_mm": 50.0,
+      "width_mm": 50.0,
+      "outer_diameter_mm": 50.0,
+      "thickness_mm": 3.0,
+      "tolerance_mm": "\u00b10.1",
+      "weight_grams": 13.2
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Borosilicate Glass Optical Disc",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-OPT-WINDOW-BOROSILICATE-50MM/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-OPT-WINDOW-BOROSILICATE-50MM/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-OPT-WINDOW-BOROSILICATE-50MM/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "McMaster-Carr / Corning",
+        "sku": "8477K12",
+        "direct_url": "https://mcmaster.com",
+        "unit_price_usd": 4.8,
+        "moq": 8,
+        "lead_time_days": 2
+      }
+    ],
+    "used_by": [
+      {
+        "machine_slug": "fluidic-skimmer-loop",
+        "stage": 1,
+        "quantity_required": 16
+      },
+      {
+        "machine_slug": "tps-root-chamber",
+        "stage": 1,
+        "quantity_required": 16
+      }
+    ]
+  },
+  {
+    "part_id": "PART-MECH-SPOKE-KEYED-ALUM16",
+    "name": "Keyed Stamped 5052 Aluminum Spoke Bracket Set (16x Radial Rim)",
+    "category": "custom-fab",
+    "summary": "Set of 16 indexed laser-cut and stamped aluminum spoke brackets with factory-bent detents for zero-alignment exterior mirror mounting.",
+    "dimensions": {
+      "length_mm": 380.0,
+      "width_mm": 45.0,
+      "thickness_mm": 3.0,
+      "tolerance_mm": "\u00b10.2",
+      "weight_grams": 1650.0
+    },
+    "fabrication": {
+      "is_custom_fab": true,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "CNC Laser Cut / Stamped 5052-H32 Aluminum",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-SPOKE-KEYED-ALUM16/model.3ds",
+      "stl_asset_url": "/open-biosphere/assets/parts/PART-MECH-SPOKE-KEYED-ALUM16/print.stl",
+      "step_asset_url": "/open-biosphere/assets/parts/PART-MECH-SPOKE-KEYED-ALUM16/cad.step",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-SPOKE-KEYED-ALUM16/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-MECH-SPOKE-KEYED-ALUM16/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "SendCutSend / In-House Metal Fab",
+        "sku": "SCS-SPOKE-ALUM-16SET",
+        "direct_url": "https://sendcutsend.com",
+        "unit_price_usd": 48.0,
+        "moq": 1,
+        "lead_time_days": 4
+      }
+    ],
+    "used_by": [
+      {
+        "machine_slug": "fluidic-skimmer-loop",
+        "stage": 1,
+        "quantity_required": 1
+      },
+      {
+        "machine_slug": "tps-root-chamber",
+        "stage": 1,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "part_id": "PART-MECH-TUBE-SHUTTER-ALUM100",
+    "name": "Drawn Aluminum Concentric Shutter Tubing Pair (Outer \u00d8100mm, Inner \u00d895mm)",
+    "category": "mechanical",
+    "summary": "Precision-drawn 6061-T6 seamless aluminum concentric pipe pair with CNC-milled 360-degree helical window ports.",
+    "dimensions": {
+      "length_mm": 650.0,
+      "outer_diameter_mm": 100.0,
+      "inner_diameter_mm": 95.0,
+      "thickness_mm": 2.5,
+      "tolerance_mm": "\u00b10.15",
+      "weight_grams": 2400.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Precision Drawn Seamless Aluminum",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-TUBE-SHUTTER-ALUM100/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-TUBE-SHUTTER-ALUM100/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-MECH-TUBE-SHUTTER-ALUM100/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Midwest Tube Mills / OnlineMetals",
+        "sku": "OM-TUBE-6061-100MM",
+        "direct_url": "https://onlinemetals.com",
+        "unit_price_usd": 38.0,
+        "moq": 1,
+        "lead_time_days": 3
+      }
+    ],
+    "used_by": [
+      {
+        "machine_slug": "fluidic-skimmer-loop",
+        "stage": 1,
+        "quantity_required": 1
+      },
+      {
+        "machine_slug": "tps-root-chamber",
+        "stage": 1,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "part_id": "PART-ELEC-SERVO-MG-WP-180",
+    "name": "180\u00b0 Metal-Gear Waterproof High-Torque Servo Motor (25kg\u00b7cm)",
+    "category": "electrical",
+    "summary": "IP67 sealed metal-gear rotary actuator with brass/steel gear train and dual ball bearings for 0\u00b0\u201390\u00b0 rotary helical shutter positioning.",
+    "dimensions": {
+      "length_mm": 40.5,
+      "width_mm": 20.0,
+      "thickness_mm": 40.0,
+      "tolerance_mm": "\u00b10.2",
+      "weight_grams": 68.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Sealed Servo Motor",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-SERVO-MG-WP-180/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-SERVO-MG-WP-180/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-ELEC-SERVO-MG-WP-180/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "DSSERVO / DFRobot",
+        "sku": "DS3225-180-WP",
+        "direct_url": "https://dfrobot.com",
+        "unit_price_usd": 16.5,
+        "moq": 1,
+        "lead_time_days": 2
+      }
+    ],
+    "used_by": [
+      {
+        "machine_slug": "fluidic-skimmer-loop",
+        "stage": 1,
+        "quantity_required": 1
+      },
+      {
+        "machine_slug": "tps-root-chamber",
+        "stage": 1,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "part_id": "PART-OPT-CONE-DIFFUSER-PYRAMID",
+    "name": "Inverted Polished Specular Aluminum 45\u00b0 Pyramid Deflector",
+    "category": "custom-fab",
+    "summary": "Four-sided specular reflective aluminum optical pyramid with 45-degree facets and central apex aperture for supplemental hybrid LED puck.",
+    "dimensions": {
+      "length_mm": 180.0,
+      "width_mm": 180.0,
+      "thickness_mm": 90.0,
+      "tolerance_mm": "\u00b10.2",
+      "weight_grams": 340.0
+    },
+    "fabrication": {
+      "is_custom_fab": true,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "CNC Milled & Specular Polished Aluminum",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-OPT-CONE-DIFFUSER-PYRAMID/model.3ds",
+      "stl_asset_url": "/open-biosphere/assets/parts/PART-OPT-CONE-DIFFUSER-PYRAMID/print.stl",
+      "step_asset_url": "/open-biosphere/assets/parts/PART-OPT-CONE-DIFFUSER-PYRAMID/cad.step",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-OPT-CONE-DIFFUSER-PYRAMID/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-OPT-CONE-DIFFUSER-PYRAMID/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "In-House Machine Shop / Xometry",
+        "sku": "OB-OPT-PYRAMID-45",
+        "direct_url": "https://xometry.com",
+        "unit_price_usd": 36.0,
+        "moq": 1,
+        "lead_time_days": 4
+      }
+    ],
+    "used_by": [
+      {
+        "machine_slug": "fluidic-skimmer-loop",
+        "stage": 1,
+        "quantity_required": 1
+      },
+      {
+        "machine_slug": "tps-root-chamber",
+        "stage": 1,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "part_id": "PART-ELEC-LED-HYBRID-PUCK-50W",
+    "name": "Recessed 50W Full-Spectrum High-CRI Supplemental LED Puck",
+    "category": "electrical",
+    "summary": "COB LED module (Samsung LM301H + Osram 660nm deep red) mounted on passive finned aluminum heatsink for zero-fixture hybrid illumination.",
+    "dimensions": {
+      "length_mm": 75.0,
+      "width_mm": 75.0,
+      "outer_diameter_mm": 75.0,
+      "thickness_mm": 45.0,
+      "tolerance_mm": "\u00b10.5",
+      "weight_grams": 280.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock High-Efficiency Horticulture LED",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-LED-HYBRID-PUCK-50W/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-LED-HYBRID-PUCK-50W/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-ELEC-LED-HYBRID-PUCK-50W/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "Bridgelux / RapidLED",
+        "sku": "BXEB-L0280Z-50W",
+        "direct_url": "https://rapidled.com",
+        "unit_price_usd": 28.0,
+        "moq": 1,
+        "lead_time_days": 2
+      }
+    ],
+    "used_by": [
+      {
+        "machine_slug": "fluidic-skimmer-loop",
+        "stage": 2,
+        "quantity_required": 1
+      },
+      {
+        "machine_slug": "tps-root-chamber",
+        "stage": 2,
+        "quantity_required": 1
+      }
+    ]
   }
 ]
