@@ -54,105 +54,61 @@ The Stage 1 electromechanical pack motorizes the **TPS Aeroponic Root-Zone Chamb
 
 ## Part 5: Step-by-Step Retrofit, Wiring & Operating Protocol
 
-Under [RFC-0005](/rfcs/rfc-0005-hardware-interlocks-ble-virtual-panel), physical control panels with dedicated countdown dials, potentiometers, and push-button switches are banned across all machine tiers to eliminate water ingress and control priority contention.
+The following 5 sequential assembly steps guide the physical fabrication, mounting, and wiring of the TPS Aeroponic Root-Zone Chamber (1). Each procedural step is directly anchored by an isolated, reverse-deconstructed vector blueprint adhering to RFC-0010.
 
-Add-On 1 motorizes aeroponic misting governed by the **Strict Two-Control Physical Standard**:
-1. **Master Hardware DC Power Switch**: Heavy-duty inline toggle switch directly isolating the 24V DC booster pump power line.
-2. **"Nuke & Pave" SD Factory Restore Button**: Dedicated recessed tactile switch wired to trigger an automatic secondary bootloader re-flash from micro-SD storage.
+### Step 1.1: 24V DC 120 PSI High-Pressure Booster Pump Mounting
 
-All mist duty cycle adjustments, manual mist pulse triggers, and pump priming are conducted via the **Flutter Companion App Virtual Panel** over direct local BLE GATT.
+![Step 1.1 Technical Blueprint](/open-biosphere/hardware/tps-root-chamber/assets/stage-1/step-1-booster-pump-mount.svg)
 
-### Electromechanical Actuation Architecture & Decoupling
-- **High-Pressure Booster Pump**: 24V DC diaphragm pump generating 120 PSI, atomizing nutrient water into a 30 to 50 µm fog that remains suspended in the root chamber for minutes.
-- **Anti-Drip Atomizing Manifold**: Six 0.3 mm brass misting nozzles with spring-loaded silicone check valves (15 PSI crack pressure) mounted on a 1/4" push-connect loop, preventing nozzle dripping between cycles.
-- **Strict Two-Control Enclosure**: An IP65 waterproof ABS enclosure mounted on the front corner rail contains:
-  - Heavy-duty toggle switch directly isolating the 24V DC supply line.
-  - Recessed tactile button next to the 0.91" I2C OLED display (`[ROOT-A1 | BLE READY]`) for 5-second SD recovery reflash.
-  - Micro-SD card slot module pre-loaded with golden recovery `firmware.bin` and `config.default`.
-- **Ephemeral BLE Virtual Panel**: When nearby, an operator opens the Flutter companion app on mobile device. The app auto-discovers the root chamber over BLE GATT and displays real-time virtual touch controls: Mist Duration Slider (1 to 60 sec), Interval Timer (1 to 30 min), and a manual Instant Mist burst pad.
-- **Mechanical Decoupling**: The Base sidewall silicone grommets remain open. If power is lost, the manual garden wand slides right back in, providing zero-downtime manual backup without altering the electric plumbing.
+1. **Alignment & Positioning:** PRESSURE: 120 PSI | FLOW: 1.2 GPM | POWER: 60W
+2. **Mechanical & Electrical Execution:** Self-priming 3-chamber diaphragm pump mounted on vibration rubber dampening feet.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
 
-```
-       ELECTROMECHANICAL WIRING & BLE VIRTUAL MISTING SCHEMATIC
-  =================================================================
-  [24V 3A DC Desktop Power Supply]
-         |
-         +----[Master DC Switch]----+----(OLED: [ROOT-A1 | BLE READY])
-                                    |
-         +--------------------------+
-         |
-         v
-  [ESP32 BLE Controller]
-  (Recessed SD Reset Button + Micro-SD Golden Bin)
-         |
-         v (Relay / MOSFET Output)
-  [24V 120 PSI Booster Pump]
-         |
-         v (120 PSI Line)
-  +------+------+
-  |             |
-  v             v
-  [Anti-Drip Manifold]  [Anti-Drip Manifold]
-  (3x 0.3mm Brass)      (3x 0.3mm Brass)
-         \             /
-          v           v
-      [Suspended 50 um Aeroponic Fog]
-         ^
-         : Direct BLE GATT (No Contention)
-         v
-  [Flutter Companion App Virtual Panel]
-  (Virtual Mist Duration Slider, Interval Selector, Instant Burst Pad)
-```
 
-### Step-by-Step Retrofit Protocol
+### Step 1.2: Internal Brass Anti-Drip Misting Nozzle Manifold
 
-#### Step 2.1: 120 PSI Booster Pump Mounting
-1. Bolt the 24V DC booster pump to the external rear wall of the tote using M4 stainless bolts and thick rubber vibration isolators.
-2. Plumb the pump inlet to the nutrient reservoir using 3/8" reinforced braided silicone tubing and an inline 100-mesh suction strainer.
-3. Plumb the pump discharge line to the internal mist manifold using 1/4" high-pressure nylon tubing.
+![Step 1.2 Technical Blueprint](/open-biosphere/hardware/tps-root-chamber/assets/stage-1/step-2-nozzle-manifold-assembly.svg)
 
-#### Step 2.2: Internal Nozzle Manifold Assembly
-1. Bend two parallel 1/4" polyethylene misting lines running along both long inner walls at $Z = 300$ mm height.
-2. Install three 0.3 mm brass anti-drip misting nozzles per side (6 total) angled 30° upward directly toward the suspended root mass.
-3. Secure tubing with stainless P-clips bolted through the tub sidewalls with silicone sealing washers.
+1. **Alignment & Positioning:** NOZZLE COUNT: 6x | DROPLET SIZE: 30 - 50 µm
+2. **Mechanical & Electrical Execution:** Stainless braided line connecting 6x brass atomizing misting nozzles (0.3mm orifice).
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
 
-#### Step 2.3: Two-Control Enclosure Assembly
-1. Mount a compact weatherproof ABS junction box (120 × 120 × 60 mm) on the front corner rail.
-2. Install the heavy-duty inline 24V master switch, recessed SD reset tactile button, micro-SD slot module, and 0.91" I2C OLED display.
-3. Mount the ESP32 BLE peripheral controller and high-current solid-state relay inside the box.
-4. Snap an inline 5A thermal fuse into the 24V positive power lead.
 
-#### Step 2.4: Point-to-Point Electrical Wiring
-1. Wire 24V DC positive through the master switch, thermal fuse, and relay contacts directly to the booster pump motor.
-2. Connect pump negative to 24V DC negative.
-3. Flash the ESP32 with the Root Chamber Virtual Panel peripheral profile; verify OLED displays `[ROOT-A1 | BLE READY]`.
+### Step 1.3: Two-Control Physical Enclosure Pack Assembly
 
-#### Step 2.5: High-Pressure Leak & Atomization Test
-1. Fill reservoir with clean water. Open mobile companion app over BLE; tap the Instant Mist burst pad for 5 seconds.
-2. The booster pump starts immediately, pressurizing the line to 110 PSI.
-3. Verify that all six nozzles produce a dense, uniform 40 µm fog cone with zero dripping or spurting when the pump stops.
+![Step 1.3 Technical Blueprint](/open-biosphere/hardware/tps-root-chamber/assets/stage-1/step-3-two-control-box.svg)
 
-```mermaid
-flowchart LR
-    A[Flutter Companion App: Virtual Panel] -->|BLE GATT Packets| B[ESP32 BLE Peripheral Controller]
-    B -->|Relay Trigger| C[24V Solid-State Relay]
-    D[24V 3A Power Supply] -->|Master DC Switch| C
-    C --> E[24V 120 PSI Booster Pump]
-    E --> F[6x Brass Anti-Drip Nozzles]
-    F --> G[Ultra-Fine 30-50 um Fog Blanket]
-    G --> H[Rapid Nutrient Root Uptake]
-```
+1. **Alignment & Positioning:** STANDARD: RFC-0005 | HOUSING: ABS Flange Box
+2. **Mechanical & Electrical Execution:** Master 24V DC power switch, recessed SD recovery button, Micro-SD slot, and 0.91" status OLED.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
 
-### Step-by-Step BLE Virtual Panel Operating Runbook
 
-1. **Morning Inspection & Reservoir Check**: Verify the external nutrient reservoir contains at least 3 gallons of balanced water (EC 1.6 mS/cm, pH 5.8).
-2. **Master Power Engagement**: Flip the master 24V DC toggle switch ON. The onboard 0.91" OLED illuminates: `[ROOT-A1 | BLE READY]`.
-3. **Walk-Up BLE Virtual Panel Connection**: Open the Flutter companion app on mobile device. Select `ROOT-A1` from discovered BLE peripherals. The app instantly renders the Aeroponic Virtual Panel.
-4. **Setting Mist Cycle Duration**: Drag the virtual mist duration slider to 15 seconds, and interval timer to 180 seconds. Tap "Apply Duty Cycle". The 120 PSI booster pump engages smoothly on schedule.
-5. **Instant Root Hydration Burst**: When inspecting root health, tap the virtual "Instant Mist Burst" pad for a 5-second test pulse.
-6. **"Nuke & Pave" SD Recovery Protocol**: If timer settings deadhead or controller locks up, hold the physical recessed reset button for 5 seconds during power-on. The secondary bootloader reflashes factory baseline firmware from micro-SD in 4 seconds.
-7. **Side-Hatch Inspection**: Slide your hand through the baffled side hatch to feel roots. Roots should remain moist and cool without being dripping soaked.
-8. **Zero-Power Backup Mode**: In the event of a power outage, grab the manual 2-gallon garden sprayer from Base, slide the wand into the side grommet, and resume manual misting immediately.
+### Step 1.4: Point-to-Point Electrical Wiring & Power Supply
+
+![Step 1.4 Technical Blueprint](/open-biosphere/hardware/tps-root-chamber/assets/stage-1/step-4-electrical-wiring.svg)
+
+1. **Alignment & Positioning:** POWER SUPPLY: 24V 3A (72W) | WIRING: 18 AWG Silicone
+2. **Mechanical & Electrical Execution:** Wiring MeanWell 24V 3A power adapter, pump relay driver, and ESP32 Virtual Panel controller.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
+
+
+### Step 1.5: 120 PSI Hydrostatic Leak Check & Atomization Test
+
+![Step 1.5 Technical Blueprint](/open-biosphere/hardware/tps-root-chamber/assets/stage-1/step-5-pressure-leak-test.svg)
+
+1. **Alignment & Positioning:** TEST DURATION: 10 min | SHUTOFF CHECK: 15 PSI Ball Seal
+2. **Mechanical & Electrical Execution:** Pressurizing manifold to 120 PSI; verifying instant shutoff with zero post-mist nozzle dripping.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
+
+
+### Step-by-Step Operating & Commissioning Runbook
+
+1. **Pre-Flight Mechanical Inspection:** Verify all fasteners are torqued finger-tight or to engineering specification; inspect structural clearances against Datum Z=0.00.
+2. **Electrical & Signal Continuity:** Check wiring harnesses for polarity alignment; ensure physical Master DC Switch is in the OFF position prior to power connection.
+3. **Two-Control Power Sequence (RFC-0005):** Switch Master DC switch to ON; observe 0.91" status OLED initialization sequence displaying firmware build and BLE advertising state.
+4. **Virtual Panel Commissioning:** Open the Open Biosphere companion app, pair via local BLE GATT, and exercise manual jog sliders through full travel envelopes.
+5. **250ms Deadman Watchdog Verification:** Confirm all actuators trip to safe de-energized states immediately upon intentional signal cutoff or emergency power disconnect.
+
 
 ---
 

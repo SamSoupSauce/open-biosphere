@@ -51,82 +51,52 @@ The Stage 0 baseline build of the **Aerial Spotter & Pollination Drone** is a **
 
 ## Part 5: Step-by-Step Assembly & Operating Protocol
 
-The foundational build of the Aerial Pollination Drone ecosystem is a **100% mechanical, zero-power acoustic pollination wand and canopy inspection loupe**. Requiring no batteries, electronics, or flight clearance, it utilizes an acoustic tuning fork tip (310 Hz resonance calibrated to *Capsicum* and *Solanum* flower anthers), a swiveling mirror, and a fine camel-hair brush to buzz-pollinate blossoms by hand with 100% off-grid reliability.
+The following 5 sequential assembly steps guide the physical fabrication, mounting, and wiring of the Aerial Spotter & Pollinator Drone (0). Each procedural step is directly anchored by an isolated, reverse-deconstructed vector blueprint adhering to RFC-0010.
 
-### Mechanical Architecture & Decoupling Standard
-1. **Telescopic Carbon Wand**: A rigid 1.2 m to 2.4 m multi-stage carbon-fiber extension pole allows reaching into dense trellis foliage and high canopies without disturbing plant stems.
-2. **Acoustic Resonant Fork Tip**: A calibrated aluminum tuning fork ground to 310 Hz induces resonant acoustic pollen shedding when tapped against stems, matching the exact natural flight-muscle buzz frequency of bumblebees (*Bombus* spp.).
-3. **Swiveling Inspection Mirror**: A ball-joint mounted convex mirror and 10x optical jeweler's loupe allow the operator to inspect flower anthesis (pollen readiness) on downward-facing blossom cups.
-4. **Mechanical Decoupling Standard**: The carbon wand tip features a standardized 1/4"-20 brass threaded socket. When the electric micro-drone is constructed in subsequent tiers, its landing skid snaps directly into this wand socket, enabling manual pole-mounted vibration sweeping even if the drone's batteries are completely flat.
+### Step 1.1: Carbon-Fiber Wand Assembly & Collar Fitting
 
-```
-       ACOUSTIC POLLINATION WAND — BASE MECHANICAL ELEVATION
-  =================================================================
-             [Target Solanaceous Flower Cup (Peppers)]
-                           \       /
-                            ( \ / )
-                             \ | /
-                               v [Pollen Anther Cloud]
-                               
-               +---------------+---------------+
-               |   [310 Hz Resonant Fork Tip]  |
-               |     (Acoustic Vibration)      |
-               +---------------+---------------+
-                               |
-                   [1/4"-20 Brass Quick-Snap]
-                               |
-               +---------------+---------------+
-               | [Swiveling Inspection Mirror] |
-               |     (Ball-Joint Convex)       |
-               +---------------+---------------+
-                               |
-               [Camel-Hair Cross-Dusting Brush]
-                               |
-               +===============================+
-               |  Carbon-Fiber Telescopic Wand |
-               |     (1.2 m to 2.4 m Reach)    |
-               +===============================+
-                               |
-                     (Ergonomic Foam Grip)
-```
+![Step 1.1 Technical Blueprint](/open-biosphere/hardware/aerial-pollination-drone/assets/stage-0/step-1-carbon-fiber-wand.svg)
 
-### Step-by-Step Fabrication & Assembly Protocol
+1. **Alignment & Positioning:** TORQUE: 1.2 N·m | AXIAL CLEARANCE: 0.2mm
+2. **Mechanical & Electrical Execution:** Rigid 3k carbon-fiber telescopic shaft with twist-lock friction collars and 1/4"-20 base mount.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
 
-#### Step 1.1: Carbon-Fiber Wand Assembly & Collar Fitting
-1. Obtain a 3-section telescopic carbon-fiber tube set (outer diameters 25 mm, 22 mm, 19 mm; collapsed length 800 mm, extended length 2,400 mm).
-2. Deburr cut edges and install nylon quick-cam compression locking collars at each joint.
-3. Glue a turned aluminum 1/4"-20 threaded male head stud into the 19 mm tip using structural epoxy (24-hour cure).
-4. Slide a 200 mm high-density EVA foam handle grip onto the base section.
 
-#### Step 1.2: Acoustic Tuning Fork Tip Fabrication (310 Hz)
-1. Select a standard 320 Hz aluminum alloy acoustic tuning fork.
-2. File the fork tines down progressively while checking frequency with an audio spectrum analyzer smartphone app until resonant frequency strikes exactly 310 Hz ± 2 Hz.
-3. Thread the fork base stem to 1/4"-20 female thread and screw tightly onto the carbon wand stud.
-4. Dip the fork tines into food-grade liquid silicone rubber to create a soft, non-damaging contact tip.
+### Step 1.2: Acoustic Tuning Fork Tip Fabrication (310 Hz)
 
-#### Step 1.3: Swiveling Inspection Mirror & Loupe Mounting
-1. Mount a 50 mm convex glass mirror onto a miniature stainless steel ball-and-socket swivel clamp.
-2. Clamp the ball swivel to the carbon pole 100 mm below the tuning fork tip.
-3. Tighten the knurled thumbscrew so the mirror maintains its tilt angle while allowing manual repositioning with one finger.
+![Step 1.2 Technical Blueprint](/open-biosphere/hardware/aerial-pollination-drone/assets/stage-0/step-2-acoustic-tuning-fork.svg)
 
-#### Step 1.4: Camel-Hair Cross-Dusting Brush Rigging
-1. Mount a fan-shaped natural camel-hair botanical dusting brush (width 25 mm) on a flexible copper gooseneck arm.
-2. Clamp the gooseneck to the carbon wand opposite the inspection mirror.
-3. Bend the gooseneck so the brush hairs sit 15 mm behind the tuning fork tines, automatically catching falling pollen clouds during vibration.
+1. **Alignment & Positioning:** RESONANCE: 310 Hz ± 2 Hz | SILICONE DIP DEPTH: 12mm
+2. **Mechanical & Electrical Execution:** Calibrated 310 Hz aluminum tuning fork dipped in medical silicone tip for non-destructive flower sonication.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
 
-#### Step 1.5: Drone Skid Quick-Snap Cradle Assembly
-1. 3D-print a lightweight carbon-PETG cradle with dual spring clips that match the landing skids of the 85mm whoop airframe.
-2. Embed a 1/4"-20 brass threaded nut in the cradle base.
-3. Verify that the empty cradle mounts rigidly onto the wand tip, ready to receive the electric drone airframe in later tiers.
 
-```mermaid
-flowchart TD
-    A[Step 1.1: Telescopic Carbon Wand Assembly] --> B[Step 1.2: Calibrate 310 Hz Tuning Fork Tip]
-    B --> C[Step 1.3: Mount Swiveling Inspection Mirror]
-    C --> D[Step 1.4: Rig Camel-Hair Dusting Brush]
-    D --> E[Step 1.5: Install Drone Skid Quick-Snap Cradle]
-    E --> F[Verification: Acoustic Strike Yields Visible Pollen Dust]
-```
+### Step 1.3: Swiveling Ball-Joint Inspection Mirror Mounting
+
+![Step 1.3 Technical Blueprint](/open-biosphere/hardware/aerial-pollination-drone/assets/stage-0/step-3-inspection-mirror-loupe.svg)
+
+1. **Alignment & Positioning:** SWIVEL RANGE: 360° | GLASS DIAMETER: Ø50.0mm
+2. **Mechanical & Electrical Execution:** 50mm optical inspection mirror on 360° stainless ball-joint for underside blossom inspection.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
+
+
+### Step 1.4: Natural Camel-Hair Botanical Dusting Brush Rigging
+
+![Step 1.4 Technical Blueprint](/open-biosphere/hardware/aerial-pollination-drone/assets/stage-0/step-4-dusting-brush-rigging.svg)
+
+1. **Alignment & Positioning:** GOOSENECK LENGTH: 150mm | BRISTLE SPREAD: Ø18mm
+2. **Mechanical & Electrical Execution:** Static-free camel-hair brush mounted to flexible gooseneck for manual cross-pollination transfer.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
+
+
+### Step 1.5: Drone Skid Quick-Snap Cradle Assembly
+
+![Step 1.5 Technical Blueprint](/open-biosphere/hardware/aerial-pollination-drone/assets/stage-0/step-5-quick-snap-cradle.svg)
+
+1. **Alignment & Positioning:** RETENTION FORCE: 8.5 N | WEIGHT: 14.5g
+2. **Mechanical & Electrical Execution:** Snap-fit lightweight mounting cradle for resting and securing wand on drone skids.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
+
 
 ### Step-by-Step Operating Runbook (Manual Mode)
 
@@ -137,6 +107,8 @@ flowchart TD
 5. **Cross-Pollination Swabbing**: Swirl the camel-hair dusting brush across the blossom face to deposit collected pollen grains directly onto the central pistil stigma.
 6. **Row-by-Row Progression**: Step along the planting bed, spending 4 to 6 seconds per open flower cluster.
 7. **Post-Pollination Maintenance**: Wipe the fork tip and camel-hair brush with a 70% ethanol swab between crop varieties to prevent cross-contamination.
+
+---
 
 ---
 

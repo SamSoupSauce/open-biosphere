@@ -104,6 +104,16 @@ const RFC_LIST: RFCItem[] = [
     summary: 'Decoupled solar PAR collection assembly combining keyed static exterior mirror spokes, concentric rotary helical pipe shutter, and zero-plastic optical path.',
     docSlug: '/rfcs/rfc-0009-helical-shutter-solar-roof',
   },
+  {
+    id: 'RFC-0010',
+    title: 'Stepwise Reverse-Deconstructed Blueprint Standard',
+    author: 'Documentation & Visual Systems Engineering Team',
+    targetType: 'Documentation',
+    status: 'Implemented',
+    date: '2026-10-24',
+    summary: 'Mandates 1:1 blueprint-to-step pairing across all machine stage assembly procedures with persistent viewing perspective, spatial datum anchoring, and layer-by-layer reverse inspection.',
+    docSlug: '/rfcs/rfc-0010-stepwise-reverse-deconstructed-blueprints',
+  },
 ];
 
 export default function RfcKanban() {

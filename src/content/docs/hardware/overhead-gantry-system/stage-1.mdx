@@ -55,100 +55,61 @@ The Stage 1 electromechanical pack motorizes the **2-Axis Overhead Precision Gan
 
 ## Part 5: Step-by-Step Retrofit, Wiring & Operating Protocol
 
-Under [RFC-0005](/rfcs/rfc-0005-hardware-interlocks-ble-virtual-panel), physical control panels with dedicated jog buttons, dials, potentiometers, and wired CNC pendants are banned across all machine tiers to eliminate water ingress and control priority contention.
+The following 5 sequential assembly steps guide the physical fabrication, mounting, and wiring of the 2-Axis Overhead Gantry Array (1). Each procedural step is directly anchored by an isolated, reverse-deconstructed vector blueprint adhering to RFC-0010.
 
-Add-On 1 motorizes Cartesian locomotion governed by the **Strict Two-Control Physical Standard**:
-1. **Master Hardware DC Power Switch**: Heavy-duty inline toggle switch directly isolating the 24V DC power rail.
-2. **"Nuke & Pave" SD Factory Restore Button**: Dedicated recessed tactile switch wired to trigger an automatic secondary bootloader re-flash from micro-SD storage.
+### Step 1.1: NEMA 23 High-Torque Stepper Motor Mounting
 
-All manual jogging ($X+, X-, Y+, Y-, Z+, Z-$), feed-rate adjustments, and toolhead solenoid test pulses are conducted via the **Flutter Companion App Virtual Panel** over direct local BLE GATT.
+![Step 1.1 Technical Blueprint](/open-biosphere/hardware/overhead-gantry-system/assets/stage-1/step-1-nema23-brackets.svg)
 
-### Electromechanical Actuation Architecture & Decoupling
-- **Drive Powertrain**: Three NEMA 23 high-torque stepper motors (2.8 N·m holding torque, 2.8A RMS) driving GT2 9 mm steel-reinforced timing belts (20T pulleys, 40 mm travel per revolution).
-- **Dual Y-Axis Synchronization**: Both longitudinal sides are driven by independent NEMA 23 motors electronically locked in phase to prevent gantry racking.
-- **Mechanical Decoupling**: Quick-release belt clamp blocks on both end plates allow releasing belt tension with a single lever flip, enabling 100% manual hand sliding if power is unavailable.
-- **Strict Two-Control Enclosure**: An IP65 sealed enclosure mounted at the South datum post contains:
-  - Heavy-duty 2-pole master toggle switch directly breaking the 24V positive supply line.
-  - Recessed tactile button next to the 0.91" I2C OLED display (`[GANTRY-A1 | BLE READY]`) for 5-second SD recovery reflash.
-  - Micro-SD card slot module pre-loaded with golden recovery `firmware.bin` and `config.default`.
-- **Ephemeral BLE Virtual Panel**: When nearby, an operator opens the Flutter companion app on their phone or tablet. The app auto-discovers the gantry over BLE GATT and displays real-time virtual touch controls: 6-way directional D-pad, feed-rate slider (10 to 150 mm/s), and toolhead solenoid test trigger.
+1. **Alignment & Positioning:** HOLDING TORQUE: 2.8 N·m | SHAFT: 8mm D-Profile
+2. **Mechanical & Electrical Execution:** Dual Y-axis and single X-axis NEMA 23 stepper motor brackets with slotted belt tensioners.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
 
-```
-       ELECTROMECHANICAL WIRING & BLE VIRTUAL PANEL SCHEMATIC
-  =================================================================
-  [24V 250W MeanWell PSU]
-         |
-         +----[Master DC Switch 15A]----+----(OLED: [GANTRY-A1 | BLE READY])
-                                        |
-         +------------------------------+---------------------------+
-         |                              |                           |
-         v                              v                           v
-  [TB6600 Driver Y1]             [TB6600 Driver Y2]          [TB6600 Driver X]
-         |                              |                           |
-         v                              v                           v
-  [NEMA 23 Motor Y1]             [NEMA 23 Motor Y2]          [NEMA 23 Motor X]
-  (Left Rail Drive)              (Right Rail Drive)          (Carriage Drive)
-         ^                              ^                           ^
-         |                              |                           |
-         +------------------------------+---------------------------+
-                                        |
-                     [ESP32 BLE Peripheral Controller]
-                     (Recessed SD Reset Button + Micro-SD Golden Bin)
-                                        ^
-                                        : Direct BLE GATT (No Contention)
-                                        v
-                     [Flutter Companion App Virtual Panel]
-                     (Virtual 6-Way D-Pad, Feed-Rate Slider, Aux Fire)
-```
 
-### Step-by-Step Retrofit Protocol
+### Step 1.2: Steel-Core GT2 9mm Timing Belt Installation
 
-#### Step 2.1: NEMA 23 Motor Bracket Installation
-1. Bolt cast aluminum NEMA 23 motor mounting brackets to the outer faces of both Y-axis gantry end plates.
-2. Mount the X-axis motor bracket atop the central carriage plate.
-3. Install 20T GT2 9 mm aluminum pulleys onto the 6.35 mm motor D-shafts, tightening dual M4 set screws on the flats.
+![Step 1.2 Technical Blueprint](/open-biosphere/hardware/overhead-gantry-system/assets/stage-1/step-2-gt2-timing-belts.svg)
 
-#### Step 2.2: Steel-Core GT2 Timing Belt Installation
-1. Route 9 mm steel-reinforced neoprene timing belts along both 6-meter Y-axis extrusions and across the 3-meter X-bridge.
-2. Anchor belt ends to the extrusion ends using slotted aluminum belt tensioning clamps.
-3. Tension belts until fundamental resonance vibrates at 65 Hz (approx 150 N static belt tension).
+1. **Alignment & Positioning:** BELT WIDTH: 9.0mm | PITCH: 2.0mm GT2 | TENSION: 45 N
+2. **Mechanical & Electrical Execution:** 20m continuous steel-reinforced neoprene timing belt routed over 20T aluminum drive pulleys.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
 
-#### Step 2.3: Heavy-Duty Drag Chain Cable Management
-1. Mount 15 × 30 mm nylon drag chains along the outer Y-rail and across the X-bridge beam.
-2. Route 18 AWG 4-conductor shielded motor cables through the drag chains to the central electronics box.
-3. Ensure adequate loop bend radius (R ≥ 45 mm) to prevent internal copper fatigue over thousands of cycles.
 
-#### Step 2.4: Two-Control Enclosure & TB6600 Driver Carrier
-1. Mount an IP65 ventilated steel enclosure (300 × 250 × 120 mm) at the South datum post.
-2. Install the heavy-duty inline 24V master switch, recessed SD reset tactile button, micro-SD slot module, and 0.91" I2C OLED display.
-3. Install three TB6600 microstepping drivers set to 8 microsteps (1,600 pulses/rev) and 2.8A peak current, wired to the ESP32 BLE peripheral controller.
-4. Wire the 24V 250W MeanWell power supply through the master switch.
+### Step 1.3: Heavy-Duty 15x30mm Nylon Drag Chain Routing
 
-#### Step 2.5: BLE Virtual Panel Pairing & Axis Verification
-1. Power on the gantry; verify the 0.91" OLED displays `[GANTRY-A1 | BLE READY]`.
-2. Open the Flutter companion app on mobile; select `GANTRY-A1` from discovered BLE peripherals.
-3. Verify jog response on the virtual D-pad: pressing $X+$ moves the carriage right; pressing $Y+$ moves the entire bridge forward smoothly with zero racking.
+![Step 1.3 Technical Blueprint](/open-biosphere/hardware/overhead-gantry-system/assets/stage-1/step-3-drag-chain-management.svg)
 
-```mermaid
-flowchart LR
-    A[Flutter Companion App: Virtual D-Pad] -->|BLE GATT Packets| B[ESP32 BLE Peripheral Controller]
-    B -->|STEP / DIR Pulses| C[Triple TB6600 Drivers]
-    D[24V 250W MeanWell PSU] -->|Master DC Switch| C
-    C --> E[Dual Y-Axis NEMA 23s: 6m Bridge Motion]
-    C --> F[Single X-Axis NEMA 23: 3m Carriage Motion]
-    E & F --> G[Smooth Sub-Millimeter Positioning]
-```
+1. **Alignment & Positioning:** INTERNAL DIM: 15x30mm | BEND RADIUS: R28mm
+2. **Mechanical & Electrical Execution:** Articulated nylon cable carriers protecting motor power, sensor lines, and pneumatic tubes.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
 
-### Step-by-Step BLE Virtual Panel Operating Runbook
 
-1. **Power Initialization**: Flip the heavy-duty 24V master DC power switch to ON. The onboard 0.91" OLED illuminates: `[GANTRY-A1 | BLE STANDBY]`.
-2. **Walk-Up BLE Virtual Panel Connection**: Open the Flutter companion app on mobile device. Select `GANTRY-A1` from discovered BLE peripherals. The app instantly renders the Cartesian Virtual Panel.
-3. **Feed-Rate Selection**: Adjust the virtual feed-rate slider in the app: set to RAPID ($120$ mm/s) for long travel across beds, or CREEP ($8$ mm/s) for final alignment over delicate blooms.
-4. **Jogging to Target Bed**: Press and hold the virtual $Y+$ pad to motor the gantry bridge forward along the rails. Release pad to stop instantly (stepper holding torque locks position).
-5. **Carriage Traverse**: Tap $X+$ or $X-$ to center the magnetic toolhead directly over the target plant cluster.
-6. **Toolhead Action Trigger**: Tap the virtual AUX trigger button in the app; this fires an onboard 24V solenoid on the toolhead, executing a micro-snip or core sample.
-7. **"Nuke & Pave" SD Recovery Protocol**: If firmware hangs or configuration deadlocks, hold the physical recessed reset button for 5 seconds during power-on. The bootloader reflashes factory baseline firmware from micro-SD in 4 seconds.
-8. **Immediate Zero-Power Mechanical Fallback**: If power is severed, flip the quick-release cam levers on both gantry plates to slacken the belts. The bridge can immediately be pushed smoothly by hand.
+### Step 1.4: Two-Control Physical Enclosure & TB6600 Drivers
+
+![Step 1.4 Technical Blueprint](/open-biosphere/hardware/overhead-gantry-system/assets/stage-1/step-4-two-control-driver-box.svg)
+
+1. **Alignment & Positioning:** SUPPLY: 24V 10.4A (250W) | STANDARD: RFC-0005
+2. **Mechanical & Electrical Execution:** Master DC switch, recessed SD reset, 4x TB6600 4.0A drivers, and 24V 250W power supply.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
+
+
+### Step 1.5: BLE Virtual Panel Pairing & Cartesian Axis Jogging
+
+![Step 1.5 Technical Blueprint](/open-biosphere/hardware/overhead-gantry-system/assets/stage-1/step-5-ble-axis-verification.svg)
+
+1. **Alignment & Positioning:** JOG VELOCITY: 150 mm/s | RESOLUTION: 0.05 mm/step
+2. **Mechanical & Electrical Execution:** Pairing Flutter companion app and executing manual axis jogs and boundary limit checks.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
+
+
+### Step-by-Step Operating & Commissioning Runbook
+
+1. **Pre-Flight Mechanical Inspection:** Verify all fasteners are torqued finger-tight or to engineering specification; inspect structural clearances against Datum Z=0.00.
+2. **Electrical & Signal Continuity:** Check wiring harnesses for polarity alignment; ensure physical Master DC Switch is in the OFF position prior to power connection.
+3. **Two-Control Power Sequence (RFC-0005):** Switch Master DC switch to ON; observe 0.91" status OLED initialization sequence displaying firmware build and BLE advertising state.
+4. **Virtual Panel Commissioning:** Open the Open Biosphere companion app, pair via local BLE GATT, and exercise manual jog sliders through full travel envelopes.
+5. **250ms Deadman Watchdog Verification:** Confirm all actuators trip to safe de-energized states immediately upon intentional signal cutoff or emergency power disconnect.
+
 
 ---
 

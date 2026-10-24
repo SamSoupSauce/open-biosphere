@@ -95,93 +95,61 @@ Strict Two-Control Physical Standard (RFC-0005) with Ephemeral Flutter BLE Contr
 
 ## Part 5: Step-by-Step Retrofit, Wiring & Operating Protocol
 
-Under [RFC-0005](/rfcs/rfc-0005-hardware-interlocks-ble-virtual-panel), physical control boxes, rotary potentiometers, and tethered industrial pendants are banned across all machine tiers to eliminate cable snagging, moisture ingress, and priority contention. 
+The following 5 sequential assembly steps guide the physical fabrication, mounting, and wiring of the Ground Track AGV Pod Carrier (1). Each procedural step is directly anchored by an isolated, reverse-deconstructed vector blueprint adhering to RFC-0010.
 
-The **Semi-Autonomous Pack** converts the manual push cart into a heavy-duty motorized power tug governed by the **Strict Two-Control Physical Standard**:
-1. **Master Hardware DC Power Switch**: Inline high-current switch mechanically isolating the 24V LiFePO4 battery pack.
-2. **"Nuke & Pave" SD Factory Restore Button**: Dedicated recessed tactile switch that triggers an automatic hardware re-flash from micro-SD storage.
+### Step 1.1: Dual 24V 250W Planetary Gearmotor Installation
 
-All manual jogging, steering, speed regulation, and tote unlatching are performed via the **Flutter Companion App Virtual Panel** over direct local BLE.
+![Step 1.1 Technical Blueprint](/open-biosphere/hardware/ground-track-agv/assets/stage-1/step-1-gearmotors-brackets.svg)
 
-### Electromechanical Actuation Architecture & Decoupling
-- **Drive Powertrain**: Dual 24V 250W brushed DC planetary gearmotors (18:1 reduction, 14 N·m torque per track) driving the sprockets through heavy-duty #25 roller chain.
-- **Mechanical Decoupling**: The base sliding dog clutches are preserved intact. Flipping the red clutch levers disengages sprockets from motor chains, restoring 100% manual freewheel pushing in $< 2$ seconds.
-- **Smart Motor Driver**: Dual-channel 15A continuous (30A peak) motor controller (Cytron MDDS30 or Sabertooth 2x12) with regenerative electric braking and thermal cutoffs.
-- **Strict Two-Control Enclosure**: An IP65 aluminum electronics enclosure inside the battery deck contains:
-  - Heavy-duty toggle switch directly isolating positive battery power.
-  - Recessed tactile button next to the 0.91" I2C OLED display for 5-second SD recovery reflash.
-  - Micro-SD card slot module pre-loaded with golden recovery `firmware.bin` and `config.default`.
-- **Ephemeral BLE Virtual Panel**: Operators connect using the Flutter companion app on mobile device: Virtual Directional Drive Pad (Forward / Reverse / Differential Pivot), Drive Speed Touch Slider (0.1 to 0.8 m/s), and Tote Latch Solenoid Toggle.
-
-### Step-by-Step Retrofit Protocol
-
-```text
-Step 2.1: Dual 250W Gearmotor Bracket Installation
-  ├── Bolt steel motor mounting brackets to inner chassis side walls with M6 grade 8.8 bolts.
-  ├── Mount two 24V 250W planetary gearmotors horizontally with drive shafts facing outward.
-  ├── Install 9T #25 hardened drive sprockets onto 10mm keyed motor output shafts.
-  └── Route #25 roller chains to 24T sprockets on dog clutch input hubs; tension to 6mm slack.
-
-Step 2.2: LiFePO4 Battery & BMS Installation
-  ├── Secure steel battery tray in lowest center section of chassis between track wells.
-  ├── Seat 24V 15Ah LiFePO4 battery pack, clamping down with rubber-padded quick-release strap.
-  └── Install inline 40A MIDI fuse block directly off positive battery terminal.
-
-Step 2.3: Motor Controller & Solenoid Latch Wiring
-  ├── Mount dual-channel 15A motor controller on aluminum standoffs against rear bulkhead.
-  ├── Wire battery positive through master DC disconnect switch to controller B+ terminal.
-  ├── Connect motor power leads using 12 AWG high-flex silicone wire.
-  └── Replace manual foot latch with 12V 25N high-force push-pull solenoid wired through relay.
-
-Step 2.4: Two-Control Enclosure Assembly
-  ├── Mount IP65 enclosure above battery deck with master DC toggle and recessed SD reset button.
-  ├── Insert micro-SD slot module pre-loaded with golden recovery firmware.bin and config.default.
-  ├── Mount 0.91" I2C OLED display showing [AGV-A1 | BLE READY].
-  └── Wire dual-channel motor controller PWM/DIR lines to ESP32 BLE peripheral controller.
-
-Step 2.5: Differential Drive Calibration
-  ├── Elevate AGV chassis on jackstands so rubber tracks clear the bench.
-  ├── Turn master DC power switch ON. Open Flutter companion app and connect to AGV-A1 over BLE.
-  ├── Test Virtual Drive Pad: verify forward, reverse, and pivot steering respond smoothly.
-  └── Test dog clutch: flipping levers disengages motors, allowing effortless manual pushing.
-```
-
-### Step-by-Step BLE Virtual Panel Operating Runbook
-
-1. **Power-On & BLE Check**: Flip the master DC power switch ON (blue status LED illuminates). The 0.91" OLED displays: `[AGV-A1 | BLE STANDBY]`.
-2. **Engaging Drive Gearboxes**: Push both red mechanical dog clutch levers inward until drive teeth mesh solidly with sprockets.
-3. **Walk-Up BLE Virtual Panel Connection**: Open Flutter companion app on mobile device. Connect to `AGV-A1`. The app displays the AGV Virtual Panel.
-4. **Speed Regulation via Virtual Slider**: Set virtual speed slider to 30% for indoor walking pace ($0.3$ m/s).
-5. **Motorized Material Hauling**: Walk alongside or behind AGV. Press and hold the **Virtual Forward Drive Pad** in app to traverse aisles. Release pad to engage regenerative electric braking (stops within 150 mm).
-6. **Electronic Latch Actuation**: To unload cargo, tap the **Virtual Latch Toggle** in app; the 12V solenoid retracts latch wedge, allowing tote to slide onto transfer shelf.
-7. **"Nuke & Pave" SD Recovery Protocol**: If firmware hangs, hold the physical recessed reset button for 5 seconds during power-on to restore factory baseline from micro-SD.
-8. **Emergency Neutral Freewheeling**: If battery level drops below 10%, disengage both dog clutch levers to push the AGV by hand back to charging dock.
+1. **Alignment & Positioning:** POWER: 2x 250W | GEAR RATIO: 18:1 | TORQUE: 12 N·m
+2. **Mechanical & Electrical Execution:** High-torque industrial planetary DC gearmotors bolted to slotted tensioning motor plates.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
 
 
-### Add-On 1 Signal & Override Flow
+### Step 1.2: 24V 15Ah LiFePO4 Battery & BMS Installation
 
-```mermaid
-flowchart LR
-    subgraph S2_Electrical["Add-On 1: Electromechanical & BLE Virtual Panel (RFC-0005)"]
-        Bat["24V LiFePO4 Battery"] --> MasterSW["Master DC Power Switch"]
-        MasterSW --> Box["Strict Two-Control Enclosure"]
-        
-        App["Flutter Companion App (Virtual Panel)"] <-->|"Ephemeral BLE GATT"| BLE["ESP32 BLE Peripheral"]
-        Box -.->|"5s Reset Hold"| SDReset["Micro-SD Golden Reflash"]
-        
-        BLE -->|"Virtual Drive Pad & Slider"| Driver["Dual 15A Motor Driver"]
-        Driver --> M1["Left 250W Motor"]
-        Driver --> M2["Right 250W Motor"]
-        M1 --> C1["Left Dog Clutch"]
-        M2 --> C2["Right Dog Clutch"]
-        C1 --> T1["Left Track"]
-        C2 --> T2["Right Track"]
-        
-        BLE -->|"Virtual Latch Toggle"| Sol["12V Latch Solenoid"]
-        
-        ManualTiller["Manual Push Tiller"] -.->|"Mechanical Override (Disengage Clutches)"| T1 & T2
-    end
-```
+![Step 1.2 Technical Blueprint](/open-biosphere/hardware/ground-track-agv/assets/stage-1/step-2-lifepo4-battery-pack.svg)
+
+1. **Alignment & Positioning:** CAPACITY: 24V 15Ah (360 Wh) | BMS CUTOFF: 30A
+2. **Mechanical & Electrical Execution:** Deep-cycle lithium iron phosphate battery pack secured in shock-dampened bottom tray.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
+
+
+### Step 1.3: Dual 15A Smart Motor Driver & Latch Wiring
+
+![Step 1.3 Technical Blueprint](/open-biosphere/hardware/ground-track-agv/assets/stage-1/step-3-motor-driver-solenoids.svg)
+
+1. **Alignment & Positioning:** DRIVER CURRENT: 15A Cont / 30A Peak | PWM: 20 kHz
+2. **Mechanical & Electrical Execution:** Dual H-bridge controller wired with regenerative braking and 25N push-pull latch solenoids.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
+
+
+### Step 1.4: Two-Control Physical Interlock & BLE Virtual Panel
+
+![Step 1.4 Technical Blueprint](/open-biosphere/hardware/ground-track-agv/assets/stage-1/step-4-two-control-enclosure.svg)
+
+1. **Alignment & Positioning:** STANDARD: RFC-0005 | OLED: 128x32 I2C
+2. **Mechanical & Electrical Execution:** Master DC battery disconnect switch, recessed SD reset, Micro-SD slot, and 0.91" OLED.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
+
+
+### Step 1.5: Differential Drive Skid-Steering Calibration
+
+![Step 1.5 Technical Blueprint](/open-biosphere/hardware/ground-track-agv/assets/stage-1/step-5-differential-calibration.svg)
+
+1. **Alignment & Positioning:** SPEED MAX: 1.2 m/s | TURN RADIUS: 0.0m (Zero-Turn)
+2. **Mechanical & Electrical Execution:** Dual-motor speed matching, current limit calibration, and Bluetooth companion app testing.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
+
+
+### Step-by-Step Operating & Commissioning Runbook
+
+1. **Pre-Flight Mechanical Inspection:** Verify all fasteners are torqued finger-tight or to engineering specification; inspect structural clearances against Datum Z=0.00.
+2. **Electrical & Signal Continuity:** Check wiring harnesses for polarity alignment; ensure physical Master DC Switch is in the OFF position prior to power connection.
+3. **Two-Control Power Sequence (RFC-0005):** Switch Master DC switch to ON; observe 0.91" status OLED initialization sequence displaying firmware build and BLE advertising state.
+4. **Virtual Panel Commissioning:** Open the Open Biosphere companion app, pair via local BLE GATT, and exercise manual jog sliders through full travel envelopes.
+5. **250ms Deadman Watchdog Verification:** Confirm all actuators trip to safe de-energized states immediately upon intentional signal cutoff or emergency power disconnect.
+
 
 ---
 

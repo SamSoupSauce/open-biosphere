@@ -55,102 +55,61 @@ The Stage 1 electromechanical pack motorizes the **Aerial Spotter & Pollination 
 
 ## Part 5: Step-by-Step Retrofit, Wiring & Operating Protocol
 
-Under [RFC-0005](/rfcs/rfc-0005-hardware-interlocks-ble-virtual-panel), physical control panels, dedicated button boxes, rotary dials, and bulky handheld RC transmitters with mechanical switches are banned across all machine tiers to eliminate water ingress and control priority contention.
+The following 5 sequential assembly steps guide the physical fabrication, mounting, and wiring of the Aerial Spotter & Pollinator Drone (1). Each procedural step is directly anchored by an isolated, reverse-deconstructed vector blueprint adhering to RFC-0010.
 
-Add-On 1 introduces powered aerial locomotion governed by the **Strict Two-Control Physical Standard**:
-1. **Master Hardware DC Power Switch**: Inline mechanical disconnect directly isolating the 2S LiPo battery and charging bus.
-2. **"Nuke & Pave" SD Factory Restore Button**: Dedicated recessed tactile switch on the ground bench module/node wired to trigger an automatic secondary bootloader re-flash from micro-SD storage.
+### Step 1.1: Whoop Airframe & Motor Installation
 
-All manual flight trim calibration, virtual stick steering, motor test pulses, and acoustic buzz pollination triggers are conducted via the **Flutter Companion App Virtual Panel** over direct local BLE GATT.
+![Step 1.1 Technical Blueprint](/open-biosphere/hardware/aerial-pollination-drone/assets/stage-1/step-1-airframe-motors.svg)
 
-### Electromechanical Actuation Architecture & Decoupling
-- **Airframe**: 85 mm wheelbase ducted whoop frame molded in high-impact polycarbonate. Enclosed duct guards ensure props cannot cut plant leaves or vines on accidental contact.
-- **Powertrain**: Four 1103 10,000KV brushless outrunner motors spinning 2.0-inch tri-blade polycarbonate propellers, generating 240 g total thrust ($3.5:1$ thrust-to-weight ratio).
-- **Acoustic Downwash Generation**: Prop downwash velocity measures 2.2 m/s at 150 mm below the ducts, sufficient to flutter blossoms and vibrate pollen free without physical contact.
-- **Strict Two-Control Enclosure & Dock**: A benchtop charging station and drone power harness feature:
-  - Inline mechanical DC cut switch directly isolating the battery lead with zero soft-switch leakage.
-  - Recessed tactile button next to the 0.91" I2C OLED display (`[DRONE-A1 | BLE READY]`) for 5-second SD recovery reflash.
-  - Micro-SD card slot module pre-loaded with golden recovery `firmware.bin` and `config.default`.
-- **Ephemeral BLE Virtual Panel**: When nearby, an operator opens the Flutter companion app on mobile device. The app auto-discovers the drone over BLE GATT and displays real-time virtual touch flight pads: virtual twin gimbals, Altitude Hold toggle, and Acoustic Buzz burst button.
-- **Mechanical Decoupling**: If battery is depleted, the entire whoop drone snaps into the Base carbon wand socket, instantly reverting to manual sweep pollination.
+1. **Alignment & Positioning:** MOTOR MOUNT: 3x M1.4 | DUCT CLEARANCE: 1.2mm
+2. **Mechanical & Electrical Execution:** 85mm ducted polycarbonate frame with 1103 10,000KV brushless outrunners and micro 4-blade props.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
 
-```
-       ELECTROMECHANICAL WIRING & BLE VIRTUAL INTERFACE SCHEMATIC
-  =================================================================
-  [2S 450mAh LiPo Battery (7.4V / 8.4V Peak)]
-         |
-         +----[Master DC Cut Switch]----+----(XT30 Connector)
-                                        |
-         +------------------------------+---------------------------+
-         |                                                          |
-         v                                                          v
-  [STM32F411 AIO Flight Controller]                  [4-in-1 12A BLHeli_S ESC]
-  (BLE Peripheral Bridge + OLED + SD Reset)                 |
-         |                                   +--------------+--------------+
-         | I2C / UART                        |       |              |      |
-         v                                   v       v              v      v
-  [0.91" I2C OLED Status Display]          [M1]    [M2]           [M3]   [M4]
-  [Micro-SD Slot + Recovery Bin ]          (1103 Brushless Motors - 10,000KV)
-         |
-         v GPIO
-  [High-Frequency Piezo Transducer]
-  (Acoustic Stems Vibration: 310 Hz)
-         ^
-         : Direct BLE GATT (No Contention)
-         v
-  [Flutter Companion App Virtual Panel]
-  (Virtual Flight Sticks, Alt-Hold Toggle, Buzz Pollinate Burst)
-```
 
-### Step-by-Step Retrofit Protocol
+### Step 1.2: AIO Flight Controller & ESC Mounting
 
-#### Step 2.1: Whoop Airframe & Motor Installation
-1. Press-fit four 1103 10,000KV brushless motors into the 85 mm polycarbonate ducted whoop frame.
-2. Fasten each motor using three M2 × 4 mm grade 10.9 hex screws with blue threadlocker.
-3. Install 2020 4-blade or 2023 3-blade propellers. Set rotation direction: Props-Out configuration to deflect greenhouse foliage away from camera lens.
+![Step 1.2 Technical Blueprint](/open-biosphere/hardware/aerial-pollination-drone/assets/stage-1/step-2-flight-controller-esc.svg)
 
-#### Step 2.2: AIO Flight Controller & ESC Mounting
-1. Mount the STM32F411 All-in-One flight controller board on soft silicone anti-vibration grommets in the center bay.
-2. Solder the three motor phase wires from each corner directly to the corresponding ESC solder pads.
-3. Solder an XT30 battery lead through the heavy-duty inline master DC switch with a 16V 220µF low-ESR capacitor.
+1. **Alignment & Positioning:** BUS: DShot300 | GYRO SAMPLE: 8 kHz
+2. **Mechanical & Electrical Execution:** STM32F411 AIO flight controller with 4-in-1 12A ESCs and vibration dampening silicone grommets.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
 
-#### Step 2.3: BLE Peripheral Integration & Two-Control Dock
-1. Wire the ESP32 BLE peripheral bridge to UART2 on the flight controller (TX, RX, 5V, GND).
-2. Wire the recessed tactile SD recovery button and micro-SD card slot module pre-loaded with golden `firmware.bin` and `config.default`.
-3. Connect 0.91" I2C OLED display showing `[DRONE-A1 | BLE READY]`.
 
-#### Step 2.4: Piezo Acoustic Vibration Transducer Rigging
-1. Mount a 27 mm brass-backed piezoelectric ceramic transducer to the underside carbon battery tray.
-2. Wire the piezo disc through a miniature N-channel FET driven by a spare PWM output (LED pad).
-3. Program flight controller to trigger 310 Hz square-wave oscillation when the Virtual Panel BUZZ command is received over BLE.
+### Step 1.3: Two-Control Physical Interlock & BLE Virtual Panel
 
-#### Step 2.5: Bench Flight Calibration
-1. Connect flight controller to configuration software; calibrate onboard 6-axis gyroscope/accelerometer on a dead-level surface.
-2. Connect mobile companion app over BLE; verify virtual sticks move flight channels smoothly with zero latency jitter.
-3. Set motor idle speed to 5.5% and verify smooth motor spin-up with zero vibration resonance.
+![Step 1.3 Technical Blueprint](/open-biosphere/hardware/aerial-pollination-drone/assets/stage-1/step-3-two-control-dock.svg)
 
-```mermaid
-flowchart LR
-    A[Flutter Companion App: Virtual Panel] -->|BLE GATT Packets| B[Onboard BLE Receiver Bridge]
-    B -->|CRSF / MSP Protocol| C[STM32F4 AIO Flight Controller]
-    D[2S LiPo Battery] -->|Master DC Switch| C
-    C -->|DShot300 Signals| E[4-in-1 12A ESC]
-    C -->|PWM Oscillation| F[310 Hz Piezo Transducer]
-    E --> G[Four 1103 Motors: 2.2 m/s Prop Downwash]
-    F --> H[Acoustic Resonance on Stems]
-    G & H --> I[Contactless Buzz Pollination]
-```
+1. **Alignment & Positioning:** STANDARD: RFC-0005 | WATCHDOG: 250ms
+2. **Mechanical & Electrical Execution:** Master DC slide switch, recessed SD reset button, Micro-SD carrier, and 0.91" I2C status OLED.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
 
-### Step-by-Step BLE Virtual Panel Operating Runbook
 
-1. **Pre-Flight Battery Check**: Verify 2S 450mAh LiPo battery voltage reads 8.40 V (4.20 V/cell) on a digital battery checker. Slide pack into silicone battery strap; connect XT30 plug.
-2. **Master Power Engagement**: Flip the inline master DC switch to ON. The onboard 0.91" OLED illuminates: `[DRONE-A1 | BLE READY]`.
-3. **Walk-Up BLE Virtual Panel Connection**: Open the Flutter companion app on mobile device. Select `DRONE-A1` from discovered BLE peripherals. The app instantly renders the Flight Virtual Panel.
-4. **Arming the Quadcopter**: Place the drone on a flat, clear section of the greenhouse path. Tap the virtual ARM button in the app (props idle at 5.5% RPM).
-5. **Canopy Hover & Traverse**: Raise the virtual throttle slider to 45% hover. Fly along the trellised crop row at 0.5 m/s, maintaining 150 mm to 300 mm clearance directly above blooming pepper clusters.
-6. **Engaging Buzz Pollination**: Position the drone directly above an open flower cluster. Tap the virtual BUZZ button in the app. The flight controller holds altitude while pulsing throttle $\pm 8\%$ and oscillating the piezo transducer at 310 Hz for 2 seconds. The combined prop-wash and acoustic vibration releases pollen clouds instantly.
-7. **"Nuke & Pave" SD Recovery Protocol**: If flight firmware locks up or parameter corruption occurs, hold the recessed SD reset button for 5 seconds during power-on. The bootloader reflashes golden firmware from micro-SD in 4 seconds.
-8. **Return & Battery Swap**: When battery voltage sags to 7.0V (3.5 V/cell under load), land on the path, disarm motors via virtual panel, flip master DC switch OFF, and swap in a fresh LiPo pack.
+### Step 1.4: Piezo Acoustic Vibration Transducer Rigging
+
+![Step 1.4 Technical Blueprint](/open-biosphere/hardware/aerial-pollination-drone/assets/stage-1/step-4-piezo-vibration-buzzer.svg)
+
+1. **Alignment & Positioning:** DRIVE VOLTAGE: 8.4V Peak | SOUND PRESSURE: 92 dB
+2. **Mechanical & Electrical Execution:** 27mm high-output piezoelectric transducer driven by dedicated MOSFET gate at 310 Hz resonance.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
+
+
+### Step 1.5: Bench Flight & BLE Companion Calibration
+
+![Step 1.5 Technical Blueprint](/open-biosphere/hardware/aerial-pollination-drone/assets/stage-1/step-5-bench-flight-calibration.svg)
+
+1. **Alignment & Positioning:** HOVER THROTTLE: 48% | BATTERY: 2S 450mAh 75C
+2. **Mechanical & Electrical Execution:** Hover thrust calibration, accelerometer trim, and companion app telemetry pairing.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
+
+
+### Step-by-Step Operating & Commissioning Runbook
+
+1. **Pre-Flight Mechanical Inspection:** Verify all fasteners are torqued finger-tight or to engineering specification; inspect structural clearances against Datum Z=0.00.
+2. **Electrical & Signal Continuity:** Check wiring harnesses for polarity alignment; ensure physical Master DC Switch is in the OFF position prior to power connection.
+3. **Two-Control Power Sequence (RFC-0005):** Switch Master DC switch to ON; observe 0.91" status OLED initialization sequence displaying firmware build and BLE advertising state.
+4. **Virtual Panel Commissioning:** Open the Open Biosphere companion app, pair via local BLE GATT, and exercise manual jog sliders through full travel envelopes.
+5. **250ms Deadman Watchdog Verification:** Confirm all actuators trip to safe de-energized states immediately upon intentional signal cutoff or emergency power disconnect.
+
 
 ---
 

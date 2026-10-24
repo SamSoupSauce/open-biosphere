@@ -98,92 +98,61 @@ Strict Two-Control Physical Standard (RFC-0005) with Ephemeral Flutter BLE Contr
 
 ## Part 5: Step-by-Step Retrofit, Wiring & Operating Protocol
 
-Under [RFC-0005](/rfcs/rfc-0005-hardware-interlocks-ble-virtual-panel), physical control panels with dedicated jog buttons, countdown dials, and switches are banned to prevent water ingress and control priority conflicts. 
+The following 5 sequential assembly steps guide the physical fabrication, mounting, and wiring of the Revolving Sprout Bioreactor Drum (1). Each procedural step is directly anchored by an isolated, reverse-deconstructed vector blueprint adhering to RFC-0010.
 
-The **Semi-Autonomous Pack** motorizes tumbling and misting under the **Strict Two-Control Physical Standard**:
-1. **Master Hardware DC Power Switch**: Mechanically disconnects 24V power.
-2. **"Nuke & Pave" SD Factory Restore Button**: Dedicated recessed tactile switch that triggers an automatic hardware re-flash from micro-SD storage.
+### Step 1.1: NEMA 17 Geared Stepper & Timing Belt Installation
 
-All manual jogging, inspection rotations, and mist timing adjustments are executed via the **Flutter Companion App Virtual Panel** over direct local BLE.
+![Step 1.1 Technical Blueprint](/open-biosphere/hardware/revolving-sprout-bioreactor/assets/stage-1/step-1-stepper-bracket-drive.svg)
 
-### Electromechanical Actuation Architecture & Decoupling
-- **Drive Motor**: NEMA 17 planetary geared stepper motor (5.18:1 ratio, 1.8 N·m output torque) driving a GT2 6 mm timing belt (60T drum pulley, 20T motor pulley).
-- **Mechanical Decoupling**: A spring-loaded dog clutch slides axially on the 8 mm D-shaft. Pulling the knurled collar disengages the motor drive dogs, allowing instant hand-crank manual operation without back-powering drivers.
-- **Pressurized Misting**: A 24V DC diaphragm pump pressurizes an inline manifold to 100 PSI, delivering a 50 µm atomized fog through two 0.3 mm brass orifice nozzles directly into the drum core.
-- **Strict Two-Control Enclosure**: An IP65 junction box on the frame rail contains:
-  - Heavy-duty toggle switch directly isolating 24V DC master power.
-  - Recessed tactile button next to the 0.91" I2C OLED display for 5-second SD recovery reflash.
-  - Micro-SD card slot module pre-loaded with golden recovery `firmware.bin` and `config.default`.
-- **Ephemeral BLE Virtual Panel**: Operators open the Flutter companion app on their phone or tablet. The app auto-discovers the bioreactor over BLE GATT and presents virtual touch controls: Drum Jog Touch Pad, Mist Pulse Duration slider (5 to 60 sec), and Tumble Interval slider (5 to 60 min).
-
-### Step-by-Step Retrofit Protocol
-
-```text
-Step 2.1: Stepper Motor & Belt Drive Bracket Mounting
-  ├── Bolt slotted NEMA 17 motor bracket to rear vertical 2020 extrusion using M5 drop-in T-nuts.
-  ├── Mount NEMA 17 planetary geared motor with its 20T GT2 aluminum pulley facing inward.
-  ├── Slide 60T GT2 drum pulley onto 8mm D-shaft between pillow block and drum endcap.
-  └── Route 6mm GT2 timing belt between pulleys; tension until 5mm deflection occurs at 2N pressure.
-
-Step 2.2: Dog Clutch Retrofit on Main D-Shaft
-  ├── Install sliding dog clutch sleeve between 60T pulley hub and axle shaft collar.
-  ├── Verify axial sliding action: when engaged, teeth lock pulley to shaft; when pulled, shaft spins freely.
-  └── Retain manual hand crank on outer shaft stub for instant mechanical fallback.
-
-Step 2.3: Diaphragm Misting Pump & Atomizing Manifold
-  ├── Mount 24V DC diaphragm mist pump (100 PSI, 1.2 L/min) to lower chassis rail with rubber grommets.
-  ├── Plumb 1/4" polyurethane pressure line to brass tee fitting inside top hood.
-  ├── Install two 0.3mm anti-drip brass atomizing misting nozzles angled at 45° across seed bed.
-  └── Plumb pump inlet to external water reservoir with inline 80-mesh stainless suction filter.
-
-Step 2.4: Two-Control Enclosure Assembly
-  ├── Mount IP65 electrical junction box to side frame rail.
-  ├── Install master heavy-duty DC power switch on positive power input lead.
-  ├── Install recessed tactile button wired to secondary bootloader recovery GPIO pin.
-  ├── Insert micro-SD slot module pre-loaded with golden firmware.bin and config.default.
-  └── Mount 0.91" I2C OLED display showing [SPROUT-A1 | BLE READY].
-
-Step 2.5: Driver, BLE Controller & Grounding Verification
-  ├── Wire TMC2209 silent stepper driver and mist pump relay to ESP32 BLE peripheral controller.
-  ├── Wire chassis aluminum frame to earth ground through fused IEC power inlet.
-  ├── Verify BLE GATT service advertises [SPROUT-VIRTUAL-PANEL] upon power-up.
-  └── Test dog clutch: pulling collar disengages motor, allowing smooth zero-power hand cranking.
-```
-
-### Step-by-Step BLE Virtual Panel Operating Runbook
-
-1. **System Power-Up**: Flip the master DC power toggle to ON. The 0.91" OLED illuminates: `[SPROUT-A1 | BLE STANDBY]`.
-2. **Walk-Up BLE Virtual Panel Connection**: Open Flutter companion app on mobile device. Connect to `SPROUT-A1`. The app renders the Bioreactor Virtual Panel.
-3. **Drum Loading via Virtual Jog Pad**: Open drum access hatch. Tap and hold the **Virtual Jog Pad** to rotate drum until hatch faces vertically upward. Release pad (drum stops instantly). Load 800 g soaked seeds and latch hatch.
-4. **Automated Tumbling & Misting Configuration**: Adjust virtual sliders in Flutter app: set Tumble Interval to 15 minutes, set Mist Duration to 30 seconds. The controller commits schedule to local memory.
-5. **Mid-Cycle Observation Jog**: To inspect sprout development, open Flutter app and tap the Jog Pad to rotate inspection port into view without resetting cycle timers.
-6. **"Nuke & Pave" SD Recovery Protocol**: If firmware hangs, hold the physical recessed reset button for 5 seconds during power-on. The bootloader reflashes factory baseline firmware from micro-SD in 4 seconds.
-7. **Zero-Power Fallback Override**: If off-grid power is lost, pull dog clutch collar outward and slide hand crank onto shaft. Resume manual tumbling and misting without dismounting motor or belt.
+1. **Alignment & Positioning:** GEAR RATIO: 5.18:1 | PULLEY REDUCTION: 3:1 | TOTAL: 15.54:1
+2. **Mechanical & Electrical Execution:** Planetary geared NEMA 17 stepper (5.18:1 ratio) with GT2 60T/20T reduction pulleys.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
 
 
-### Add-On 1 Signal & Override Flow
+### Step 1.2: Axial Dog Clutch Sliding Retrofit on Main D-Shaft
 
-```mermaid
-flowchart LR
-    subgraph S2_Electrical["Add-On 1: Electromechanical & BLE Virtual Panel (RFC-0005)"]
-        PSU["24V DC Power Supply"] --> MasterSW["Master DC Power Switch"]
-        MasterSW --> Box["Strict Two-Control Enclosure"]
-        
-        App["Flutter Companion App (Virtual Panel)"] <-->|"Ephemeral BLE GATT"| BLE["ESP32 BLE Peripheral"]
-        Box -.->|"5s Reset Hold"| SDReset["Micro-SD Golden Reflash"]
-        
-        BLE -->|"Virtual Mist Sliders"| Relay["Pump Relay"]
-        Relay --> Pump["24V Diaphragm Mist Pump"]
-        Pump --> Nozzles["Brass Atomizing Nozzles"]
-        
-        BLE -->|"Virtual Drum Jog Pad"| TMC["TMC2209 Stepper Driver"]
-        TMC --> NEMA17["NEMA 17 Geared Stepper"]
-        NEMA17 --> Clutch["Axial Dog Clutch"]
-        Clutch --> Drum["Perforated Drum Cylinder"]
-        
-        HandCrank["Manual Hand Crank"] -.->|"Mechanical Override (Disengages Clutch)"| Drum
-    end
-```
+![Step 1.2 Technical Blueprint](/open-biosphere/hardware/revolving-sprout-bioreactor/assets/stage-1/step-2-axial-dog-clutch.svg)
+
+1. **Alignment & Positioning:** ENGAGEMENT: Face Dogs | OVERRIDE: Zero-Disassembly
+2. **Mechanical & Electrical Execution:** Spring-loaded sliding dog clutch mechanism allowing instant hand-crank manual override.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
+
+
+### Step 1.3: 24V 100 PSI Diaphragm Misting Pump Installation
+
+![Step 1.3 Technical Blueprint](/open-biosphere/hardware/revolving-sprout-bioreactor/assets/stage-1/step-3-misting-pump-manifold.svg)
+
+1. **Alignment & Positioning:** PRESSURE: 100 PSI | NOZZLES: 2x 0.3mm Brass Anti-Drip
+2. **Mechanical & Electrical Execution:** Diaphragm mist pump plumbed to internal 0.3mm atomizing nozzles through drum axle bore.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
+
+
+### Step 1.4: Strict Two-Control Enclosure Assembly
+
+![Step 1.4 Technical Blueprint](/open-biosphere/hardware/revolving-sprout-bioreactor/assets/stage-1/step-4-two-control-box.svg)
+
+1. **Alignment & Positioning:** STANDARD: RFC-0005 | IP RATING: IP65 Enclosure
+2. **Mechanical & Electrical Execution:** Master DC switch, recessed SD reset, Micro-SD slot, and 0.91" status OLED module.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
+
+
+### Step 1.5: TMC2209 Driver, BLE Peripheral & Grounding Verification
+
+![Step 1.5 Technical Blueprint](/open-biosphere/hardware/revolving-sprout-bioreactor/assets/stage-1/step-5-driver-ble-wiring.svg)
+
+1. **Alignment & Positioning:** SUPPLY: 24V 2.5A (60W) | ROTATION SPEED: 0.5 - 4.0 RPM
+2. **Mechanical & Electrical Execution:** Silent TMC2209 driver wiring, 24V 60W power supply, and companion app speed slider pairing.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
+
+
+### Step-by-Step Operating & Commissioning Runbook
+
+1. **Pre-Flight Mechanical Inspection:** Verify all fasteners are torqued finger-tight or to engineering specification; inspect structural clearances against Datum Z=0.00.
+2. **Electrical & Signal Continuity:** Check wiring harnesses for polarity alignment; ensure physical Master DC Switch is in the OFF position prior to power connection.
+3. **Two-Control Power Sequence (RFC-0005):** Switch Master DC switch to ON; observe 0.91" status OLED initialization sequence displaying firmware build and BLE advertising state.
+4. **Virtual Panel Commissioning:** Open the Open Biosphere companion app, pair via local BLE GATT, and exercise manual jog sliders through full travel envelopes.
+5. **250ms Deadman Watchdog Verification:** Confirm all actuators trip to safe de-energized states immediately upon intentional signal cutoff or emergency power disconnect.
+
 
 ---
 

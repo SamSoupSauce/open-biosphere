@@ -56,83 +56,52 @@ The Stage 0 baseline build of the **Revolving Sprout Bioreactor Drum** is a **10
 
 ## Part 5: Step-by-Step Assembly & Operating Protocol
 
-The foundational build of the Revolving Sprout Bioreactor requires **zero electricity, zero microcontrollers, and zero firmware**. It relies strictly on mechanical leverage, sealed ball bearings, a spring-loaded ratchet pawl, and manual gravity drainage. Anyone with basic hand tools can construct, operate, and harvest fresh protein off-grid.
+The following 5 sequential assembly steps guide the physical fabrication, mounting, and wiring of the Revolving Sprout Bioreactor Drum (0). Each procedural step is directly anchored by an isolated, reverse-deconstructed vector blueprint adhering to RFC-0010.
 
-### Mechanical Architecture & Decoupling Standard
-1. **Perforated Cylinder & Flanges**: A 300 mm diameter by 450 mm long food-grade 304 stainless steel mesh cylinder (1.5 mm perforations) rotates inside an open 2020 T-slot aluminum frame.
-2. **Bearing Support**: Both ends of the drum rest on grease-packed 608-2RS skate bearings housed in rigid pillow blocks, allowing effortless hand spinning even with a 4.0 kg saturated seed load.
-3. **Ratchet Pawl Mechanism**: A 12-tooth mechanical ratchet wheel and spring-loaded Delrin pawl lock the drum against counter-rotation and hold it steadily at 45° tilt angles for optimal gravity drainage.
-4. **Mechanical Decoupling**: The 8 mm precision ground D-shaft features an integrated ball-detent dog clutch. When motor add-ons are installed later, pulling the clutch pin completely disconnects the motor gearbox, allowing instant zero-drag hand cranking.
+### Step 1.1: Chassis Cutting & 2020 Aluminum Extrusion Assembly
 
-```
-       REVOLVING SPROUT BIOREACTOR — BASE MECHANICAL ELEVATION
-  =================================================================
-                    Top Removable Lightproof Hood
-         +---------------------------------------------------+
-         |                                                   |
-         |         [Perforated 304 SS Mesh Drum]             |
-         |               (300 mm OD x 450 mm L)              |
-         |        .---------------------------------.        |
-         |       /                                   \       |
-  [Hand] |======|    *   *   *   *   *   *   *   *    |======| [608-2RS]
-  Crank  |  ||  |  *   *   (Seed Mass)   *   *   *   |  ||  | Bearing
-  Pawl   |--++-- \                                   / --++--| Pillow
-  Lock   |        '---------------------------------'        | Block
-         |                         |                         |
-         |                         v Droplets                |
-         |           \---------------------------/           |
-         |             \   Silicone Sump Basin /             |
-         |               \                   /               |
-         |                 +-------+-------+                 |
-         |                         |                         |
-         |                   [3/4" Brass]                    |
-         |                    Ball Valve                     |
-         |                         |                         |
-         +-------------------------+-------------------------+
-                              Gravity Drain
-```
+![Step 1.1 Technical Blueprint](/open-biosphere/hardware/revolving-sprout-bioreactor/assets/stage-0/step-1-extrusion-chassis.svg)
 
-### Step-by-Step Fabrication & Assembly Protocol
+1. **Alignment & Positioning:** PROFILE: 2020 Black Anodized | FOOTPRINT: 500x400mm
+2. **Mechanical & Electrical Execution:** Rigid rectangular base frame assembled with 2020 extrusions, corner brackets, and leveling feet.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
 
-#### Step 1.1: Chassis Cutting & Extrusion Assembly
-1. Cut eight segments of 2020 black-anodized aluminum extrusion: four longitudinal rails at 500 mm and four upright stanchions at 400 mm.
-2. Deburr all cut ends and tap center holes to M5 thread depth 15 mm.
-3. Assemble the rectangular box chassis using 90° cast aluminum corner brackets and M5 button-head cap screws with roll-in T-nuts. Torque to 4.2 N·m.
-4. Verify rectangular squareness using a machinist square across all internal corners ($< 0.5$ mm diagonal variance).
 
-#### Step 1.2: Perforated Mesh Cylinder & Flange Assembly
-1. Roll a 304 stainless steel 1.5 mm perforated mesh sheet into a 300 mm outer diameter cylinder (length 450 mm).
-2. Lap the seam by 12 mm and secure with 316 stainless steel blind pop rivets spaced every 30 mm.
-3. 3D-print or CNC-rout two 300 mm circular end flanges in PETG or food-grade HDPE with a 15 mm perimeter groove.
-4. Seat the mesh cylinder into the endcap perimeter grooves using food-grade silicone RTV gasket sealant. Clamp longitudinally with four M4 threaded stainless tie-rods until cured (24 hours).
-5. Cut a 150 mm × 100 mm access hatch in the mesh cylinder wall, installing two stainless steel miniature draw latches and a flexible silicone sealing gasket.
+### Step 1.2: 304 Stainless Perforated Drum & End Flange Assembly
 
-#### Step 1.3: Axle Spindle & 608-2RS Bearing Installation
-1. Press-fit dual 608-2RS sealed ball bearings into machined aluminum pillow blocks mounted atop the 400 mm upright frame rails.
-2. Slide an 8 mm precision-ground stainless steel D-profile shaft through the center flanged hubs of both drum endcaps.
-3. Lock the shaft to the drum flanges using M4 stainless grub screws biting directly into the D-flat.
-4. Slide shaft ends into the pillow-block bearings and clamp with 8 mm shaft collars, ensuring zero axial play while maintaining effortless rotational spin ($< 0.05$ N·m break-away torque).
+![Step 1.2 Technical Blueprint](/open-biosphere/hardware/revolving-sprout-bioreactor/assets/stage-0/step-2-perforated-drum.svg)
 
-#### Step 1.4: Hand Crank & Ratchet Pawl Alignment
-1. Mount the 12-tooth Delrin ratchet wheel onto the drive-side D-shaft stub protruding 40 mm past the pillow block.
-2. Pivot-mount the spring-loaded Delrin pawl onto the upper aluminum frame rail using an M5 shoulder bolt and torsion spring.
-3. Attach the ergonomic detachable hand crank with internal ball-detent collar onto the 8 mm shaft stub.
-4. Test crank rotation: clockwise motion must rotate smoothly with audible ratchet clicks; counter-clockwise rotation must lock solidly within 30° of travel.
+1. **Alignment & Positioning:** SHEET: 304 SS 1.5mm Holes | DRUM VOLUME: 32 Liters
+2. **Mechanical & Electrical Execution:** 1.5mm perforated stainless steel sheet rolled and clamped into food-grade PETG end flanges.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
 
-#### Step 1.5: Sump Funnel & Gravity Drain Installation
-1. Form a food-grade silicone or heat-molded PETG catch pan beneath the drum, angled at a 15° slope toward a central sump.
-2. Drill a 26 mm hole at the lowest point and install a 3/4" bulkhead fitting with EPDM washers.
-3. Thread a 3/4" manual brass full-port ball valve onto the bulkhead fitting.
-4. Plumb a short length of food-grade 3/4" braided silicone tubing from the valve outlet to gravity-discharge into a wastewater bucket or garden bed.
 
-```mermaid
-flowchart TD
-    A[Step 1.1: Frame Assembly] --> B[Step 1.2: SS Mesh Drum Fabrication]
-    B --> C[Step 1.3: 608-2RS Bearings & Axle Mounting]
-    C --> D[Step 1.4: Ratchet Pawl & Hand Crank Setup]
-    D --> E[Step 1.5: Sump Basin & Brass Drain Valve]
-    E --> F[Verification: Manual Spin & Gravity Drain Check]
-```
+### Step 1.3: 8mm D-Profile Axle Spindle & 608-2RS Bearing Seating
+
+![Step 1.3 Technical Blueprint](/open-biosphere/hardware/revolving-sprout-bioreactor/assets/stage-0/step-3-axle-bearings.svg)
+
+1. **Alignment & Positioning:** SHAFT: Ø8.0mm D-Profile | BEARINGS: 608-2RS Deep Groove
+2. **Mechanical & Electrical Execution:** Precision ground 8mm stainless D-shaft pressed through dual 608-2RS sealed skate bearings.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
+
+
+### Step 1.4: Detachable Hand Crank & Delrin Ratchet Pawl Alignment
+
+![Step 1.4 Technical Blueprint](/open-biosphere/hardware/revolving-sprout-bioreactor/assets/stage-0/step-4-crank-ratchet-pawl.svg)
+
+1. **Alignment & Positioning:** CRANK RADIUS: 120mm | RATCHET TEETH: 36T Delrin
+2. **Mechanical & Electrical Execution:** 120mm aluminum hand crank with spring-loaded Delrin pawl preventing reverse drum roll.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
+
+
+### Step 1.5: Silicone Catchment Sump & Manual Drain Ball Valve
+
+![Step 1.5 Technical Blueprint](/open-biosphere/hardware/revolving-sprout-bioreactor/assets/stage-0/step-5-sump-gravity-drain.svg)
+
+1. **Alignment & Positioning:** DRAIN VALVE: 3/4" Full-Port Brass | SUMP: Silicone
+2. **Mechanical & Electrical Execution:** Sloped food-grade silicone sump pan with 3/4" brass bulkhead and full-port manual drain valve.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
+
 
 ### Step-by-Step Operating Runbook (Manual Mode)
 
@@ -143,6 +112,8 @@ flowchart TD
 5. **Midday Inspection & Aeration**: Rotate the drum 3 revolutions at noon. The mechanical ratchet allows locking the drum at a 45° offset angle, promoting residual gravity drainage away from newly emerged shoots.
 6. **Evening Tumbling & Rinse**: Repeat Step 2 and Step 3 at 18:00 (5 revolutions + 2.0 L rinse + full gravity drain).
 7. **96-Hour Harvest Protocol**: On day 4, open the access hatch, position a clean food tote beneath the drum, rotate the drum 180° downward, and tap the mesh to release ~3.5 kg of crisp, sweet hypocotyls. Spray the empty drum with boiling water or 3% food-grade hydrogen peroxide before reloading.
+
+---
 
 ---
 

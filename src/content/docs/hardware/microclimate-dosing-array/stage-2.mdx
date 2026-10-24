@@ -55,120 +55,61 @@ The Stage 2 agentic pack elevates the **Microclimate & Automated Dosing Array** 
 
 ## Part 5: Step-by-Step Commissioning, Provisioning & Autonomous Runbook
 
-Under [RFC-0004](/rfcs/rfc-0004-controller-node-tool) and [RFC-0006](/rfcs/rfc-0006-agnostic-controller-runtime), the **Agentic Autonomous AI Pack** transforms the dosing panel into a 24/7 self-regulating **Controller-Node-Tool (CNT)** water chemistry orchestrator. It operates as a dedicated **Doser Node** commanding modular **Edge Tools** over BLE, receiving nutrient recipe ratios and 1 Hz closed-loop PID setpoints from the Central Biosphere Controller over Wi-Fi.
+The following 5 sequential assembly steps guide the physical fabrication, mounting, and wiring of the Microclimate & Automated Dosing Array (2). Each procedural step is directly anchored by an isolated, reverse-deconstructed vector blueprint adhering to RFC-0010.
 
-### Autonomous Vision & Telemetry Architecture
-- **Doser Machine Node (ESP32-S3)**: Dual-Core Xtensa LX7 (240 MHz, 8 MB PSRAM) mounted inside an IP65 enclosure governed by the **Strict Two-Control Physical Standard** (Master DC Power Switch and Recessed SD Reset Button alongside 0.96" I2C OLED `[NODE: DOSER-01 | LINK -> 4096]`). Uplinks to Central Controller via Wi-Fi; collects telemetry and downlinks to Tools via BLE Central.
-- **Galvanically Isolated Chemistry Probes**: Dual-junction sealed lab-grade pH probe and platinum dual-pin EC electrode connected via Atlas Scientific galvanic isolation circuits, eliminating ground-loop electrical noise from submersible pumps.
-- **Photoacoustic Ambient Gas Sensor**: Sensirion SCD41 photoacoustic NDIR sensor measuring atmospheric $CO_2$ (400 to 5,000 ppm $\pm 40$ ppm), air temperature (± 0.8°C), and relative humidity ($\pm 2\%$).
-- **Dedicated Modular Edge Tools (ESP32-C3)**: Driven 1:1 by micro ESP32-C3 controllers equipped with 0.42" micro OLED displays and **250ms hardware deadman watchdogs**:
-  - `DEV_PUMP_BANK1`: Micro ESP32-C3 with 0.42" OLED (`TOOL: PUMP_BANK1 | LINK: OK`) + 250ms watchdog driving peristaltic pumps 1–3 (N, P, K).
-  - `DEV_PUMP_BANK2`: Micro ESP32-C3 with 0.42" OLED (`TOOL: PUMP_BANK2 | LINK: OK`) + 250ms watchdog driving peristaltic pumps 4–6 (Micro, pH Down, pH Up).
-  - `DEV_WATER_SNS`: Micro ESP32-C3 with 0.42" OLED (`TOOL: WATER_SNS | LINK: OK`) reading isolated pH and EC telemetry.
-  - `DEV_GAS_CTL`: Micro ESP32-C3 with 0.42" OLED (`TOOL: GAS_CTL | LINK: OK`) + 250ms watchdog reading Sensirion SCD41 $CO_2$ and pulsing the 12V $CO_2$ solenoid valve.
-- **250ms Deadman Watchdog Fail-Safe**: If any Tool loses BLE connection to the Doser Node for $> 250$ ms, it drops immediately into high-Z safe state: all peristaltic pumps halt immediately and the $CO_2$ solenoid snaps closed, preventing catastrophic chemical dumping.
+### Step 2.1: Galvanically Isolated Sensor Carrier Assembly
 
-```text
-       CONTROLLER-NODE-TOOL (CNT) HIERARCHICAL EDGE ARCHITECTURE
-  =================================================================
-            CENTRAL BIOSPHERE CONTROLLER (Agnostic Runtime / POTFRM-4096)
-            • Emits Isolated Farm AP: SSID [POTFRM-4096] (192.168.42.0/24)
-            • Global 1 Hz PID Water Chemistry & Recipe Optimization
-                                  │
-                                  │ Isolated Farm Wi-Fi (192.168.42.0/24)
-                                  ▼
-             ┌─────────────────────────────────────────┐
-             │       DOSER MACHINE NODE (ESP32-S3)     │
-             │  • OLED Display: [NODE: DOSER-01]       │
-             │  • Setup Push-Button for Mobile BLE     │
-             │  • 1 Hz Telemetry & Chemical Sequencing │
-             └────────────────────┬────────────────────┘
-                                  │
-         ┌────────────────────────┼────────────────────────┐
-         │ BLE Downlink           │ BLE Downlink           │ BLE Downlink
-         ▼                        ▼                        ▼
- ┌───────────────┐        ┌───────────────┐        ┌───────────────┐
- │ TOOL:         │        │ TOOL:         │        │ TOOL:         │
- │ DEV_PUMP_BANK1│        │ DEV_PUMP_BANK2│        │ DEV_GAS_CTL   │
- │ ESP32-C3 Micro│        │ ESP32-C3 Micro│        │ ESP32-C3 Micro│
- │ 0.42" OLED    │        │ 0.42" OLED    │        │ 0.42" OLED    │
- │ 250ms Deadman │        │ 250ms Deadman │        │ 250ms Deadman │
- │ Pumps 1-3 NPK │        │ Pumps 4-6 pH  │        │ SCD41 NDIR CO2│
- │ Micro-Dosing  │        │ Micro-Dosing  │        │ Solenoid Valve│
- └───────────────┘        └───────────────┘        └───────────────┘
-                                  │
-                                  ▼ (BLE Downlink)
-                          ┌───────────────┐
-                          │ TOOL:         │
-                          │ DEV_WATER_SNS │
-                          │ ESP32-C3 Micro│
-                          │ 0.42" OLED    │
-                          │ Isolated pH/EC│
-                          │ Dual-Junction │
-                          └───────────────┘
-```
+![Step 2.1 Technical Blueprint](/open-biosphere/hardware/microclimate-dosing-array/assets/stage-2/step-1-sensor-isolators.svg)
 
-### Step-by-Step Sensor Commissioning & Edge AI Protocol
+1. **Alignment & Positioning:** ISOLATION: 2.5 kV RMS | BUS: I2C Fast Mode
+2. **Mechanical & Electrical Execution:** I2C optical isolators protecting analog nutrient probes from electrical ground loop noise.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
 
-#### Step 3.1: Galvanically Isolated Sensor Assembly (`DEV_WATER_SNS`)
-1. Mount the galvanic isolation carrier board inside the lower section of the enclosure.
-2. Connect the lab-grade pH probe (BNC connector) and platinum EC probe (BNC connector) to `DEV_WATER_SNS` tool (ESP32-C3).
-3. Calibrate probes using standard laboratory reference buffer solutions (pH 4.00, pH 7.00, EC 1,413 µS/cm). Save offsets to non-volatile EEPROM.
 
-#### Step 3.2: Sensirion SCD41 NDIR $CO_2$ & Gas Tool (`DEV_GAS_CTL`)
-1. Mount the Sensirion SCD41 sensor inside an aspirated, light-shielded duct adapter positioned at canopy level ($Z = 900$ mm).
-2. Wire sensor and 12V $CO_2$ solenoid to `DEV_GAS_CTL` tool board (ESP32-C3).
-3. Verify baseline reading in outdoor ambient air (must read 415 ppm ± 25 ppm).
+### Step 2.2: Sensirion SCD41 Photoacoustic NDIR CO2 Tool Rigging
 
-#### Step 3.3: Doser Node & Pump Bank Wiring
-1. Mount the ESP32-S3 Node with 0.96" I2C OLED display and physical setup push-button inside the IP65 enclosure.
-2. Mount `DEV_PUMP_BANK1` and `DEV_PUMP_BANK2` tool boards connected through optocoupled MOSFET drivers to trigger the six peristaltic pumps.
-3. Verify manual push-button priming remains fully functional in parallel with the MOSFET outputs.
+![Step 2.2 Technical Blueprint](/open-biosphere/hardware/microclimate-dosing-array/assets/stage-2/step-2-ndir-gas-tool.svg)
 
-#### Step 3.4: Closed-Loop Telemetry Tuning
-1. Configure Central Controller PID setpoints: pH target = 6.4 (Deadband $\pm 0.15$), EC target = 1.8 mS/cm (Deadband $\pm 0.1$), $CO_2$ target = 1,000 ppm (Deadband $\pm 50$ ppm).
-2. Tune proportional gain ($K_p = 0.45$) and integral time (T_i = 180 s) to prevent chemical overshooting in the recirculating reservoir.
+1. **Alignment & Positioning:** RANGE: 400-5000 ppm CO2 | ACCURACY: ±40 ppm
+2. **Mechanical & Electrical Execution:** Photoacoustic NDIR sensor and SHT40 temperature/humidity probe inside aspirated radiation shield.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
 
-#### Step 3.5: Provisioning & 250ms Watchdog Verification
-1. Power on Central Controller; verify active Cluster ID on OLED, terminal stdout, or BLE beacon (`POTFRM-4096`).
-2. Power on Doser Node; display shows `[NODE UNPAIRED - PAIR VIA BLE]`.
-3. Press physical setup button on Node; connect via mobile companion app over BLE, enter `4096`.
-4. Node commits credentials to NVS, links to `POTFRM-4096`, registers at `ws://192.168.42.1:8443/register`, and updates display to `[ONLINE | LINK -> 4096]`.
-5. Verify Node auto-discovers and binds all four BLE Tools.
-6. Test fail-safe watchdog: drop BLE link to `DEV_PUMP_BANK2`; verify acid pump stops immediately in $< 250$ ms.
 
-```mermaid
-stateDiagram-v2
-    [*] --> Continuous_Sensing: Power On & Sensor Poll
-    
-    state Continuous_Sensing {
-        [*] --> Read_pH_EC: 1 Hz Galvanic Sample (DEV_WATER_SNS)
-        Read_pH_EC --> Read_CO2_NDIR: SCD41 Photoacoustic (DEV_GAS_CTL)
-        Read_CO2_NDIR --> Stream_Controller: Wi-Fi Telemetry to Central Brain
-    }
+### Step 2.3: Doser Node & Closed-Loop Relay Harness Wiring
 
-    Continuous_Sensing --> Chemical_Microdose: Central Controller Triggers Dosing
-    
-    state Chemical_Microdose {
-        [*] --> Calculate_Pulse: Vol = Kp * Error (0.1ml to 5ml)
-        Calculate_Pulse --> Fire_Peristaltic: Node Commands DEV_PUMP_BANK
-        Fire_Peristaltic --> Mixing_Delay: Wait 180s for Mixing
-    }
+![Step 2.3 Technical Blueprint](/open-biosphere/hardware/microclimate-dosing-array/assets/stage-2/step-3-doser-node-wiring.svg)
 
-    Chemical_Microdose --> Continuous_Sensing: Loop Settled
+1. **Alignment & Positioning:** CHANNELS: 4 Pump + 2 Gas | WATCHDOG: Hardware Deadman
+2. **Mechanical & Electrical Execution:** ESP32-S3 node controller wiring to nutrient, pH up, pH down, and CO2 injection banks.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
 
-    Continuous_Sensing --> CO2_Pulse_Inject: CO2 < 950 ppm & PAR > 200
-    CO2_Pulse_Inject --> Continuous_Sensing: Solenoid Closed (Target Reached)
-```
 
-### Step-by-Step Autonomous Multi-Agent Runbook
+### Step 2.4: PID Closed-Loop Microclimate Algorithm Tuning
 
-1. **Continuous 1 Hz Telemetry Polling**: Every second, the Doser Node polls `DEV_WATER_SNS` and `DEV_GAS_CTL`. Data is streamed over Wi-Fi to the Central Controller sliding average filter to eliminate pump electrical noise.
-2. **Autonomous Closed-Loop pH Dosing**: If pH drifts above 6.55, the Central Controller calculates required acid volume. It dispatches a micro-pulse command to the Doser Node, which signals `DEV_PUMP_BANK2` (Pump 5: pH Down) for 0.8 mL, followed by a 180-second mixing delay.
-3. **Automated EC Nutrient Metering**: If EC falls below 1.70 mS/cm, the Central Controller signals `DEV_PUMP_BANK1` to pulse Pumps 1, 2, and 3 in calibrated ratios (3:1:2 for N:P:K) to restore electrical conductivity automatically.
-4. **Daytime $CO_2$ Atmospheric Enrichment**: When lighting is active, the Central Controller signals `DEV_GAS_CTL` to pulse the 12V $CO_2$ solenoid to maintain atmospheric carbon dioxide between 950 and 1,050 ppm.
-5. **Dynamic Fault Protection & 250ms Watchdogs**: If pH readings drop below 5.2 or jump above 8.0, the firmware engages an emergency lockout. If BLE communication between Node and any pump tool drops for $> 250$ ms, pumps halt instantly.
-6. **Central Biosphere Datalogging**: The Node streams water temperature, pH, EC, and chemical usage logs over Wi-Fi to the central database down to 0.1 mL precision.
+![Step 2.4 Technical Blueprint](/open-biosphere/hardware/microclimate-dosing-array/assets/stage-2/step-4-closed-loop-tuning.svg)
+
+1. **Alignment & Positioning:** VPD TARGET: 0.8 - 1.2 kPa | HYSTERESIS: ±25 ppm
+2. **Mechanical & Electrical Execution:** Calibrating target VPD (Vapor Pressure Deficit) and automated ppm setpoint tracking.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
+
+
+### Step 2.5: 250ms Watchdog & Chemical Shutoff Verification
+
+![Step 2.5 Technical Blueprint](/open-biosphere/hardware/microclimate-dosing-array/assets/stage-2/step-5-watchdog-verification.svg)
+
+1. **Alignment & Positioning:** TIMEOUT: 250ms | FAIL-SAFE: 100% Valves Closed
+2. **Mechanical & Electrical Execution:** Verifying all peristaltic pumps and gas solenoids trip closed within 250ms of heartbeat loss.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
+
+
+### Step-by-Step Operating & Commissioning Runbook
+
+1. **Pre-Flight Mechanical Inspection:** Verify all fasteners are torqued finger-tight or to engineering specification; inspect structural clearances against Datum Z=0.00.
+2. **Electrical & Signal Continuity:** Check wiring harnesses for polarity alignment; ensure physical Master DC Switch is in the OFF position prior to power connection.
+3. **Two-Control Power Sequence (RFC-0005):** Switch Master DC switch to ON; observe 0.91" status OLED initialization sequence displaying firmware build and BLE advertising state.
+4. **Virtual Panel Commissioning:** Open the Open Biosphere companion app, pair via local BLE GATT, and exercise manual jog sliders through full travel envelopes.
+5. **250ms Deadman Watchdog Verification:** Confirm all actuators trip to safe de-energized states immediately upon intentional signal cutoff or emergency power disconnect.
+
 
 ---
 

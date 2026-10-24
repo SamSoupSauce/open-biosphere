@@ -89,91 +89,61 @@ Strict Two-Control Physical Standard (RFC-0005) with Ephemeral Flutter BLE Contr
 
 ## Part 5: Step-by-Step Retrofit, Wiring & Operating Protocol
 
-Under [RFC-0005](/rfcs/rfc-0005-hardware-interlocks-ble-virtual-panel), physical control panels with dedicated jog buttons, dials, and potentiometers are banned across all machine tiers to eliminate water ingress and control priority contention. 
+The following 5 sequential assembly steps guide the physical fabrication, mounting, and wiring of the Fluidic Skimmer & Dewatering Separator (1). Each procedural step is directly anchored by an isolated, reverse-deconstructed vector blueprint adhering to RFC-0010.
 
-Add-On 1 introduces **motorized pumping and electric auger pressing** governed by the **Strict Two-Control Physical Standard**:
-1. **Master Hardware DC Power Switch**: Mechanically disconnects 24V power.
-2. **"Nuke & Pave" SD Factory Restore Button**: Dedicated recessed tactile switch wired to trigger an automatic re-flash from micro-SD storage.
+### Step 1.1: 24V DC Magnetic Circulation Pump Installation
 
-All manual jogging, auger jam clearing, and pump speed adjustments are executed via the **Flutter Companion App Virtual Panel** over direct local BLE.
+![Step 1.1 Technical Blueprint](/open-biosphere/hardware/fluidic-skimmer-loop/assets/stage-1/step-1-pump-plumbing.svg)
 
-### Electromechanical Actuation & Controls
-- **Motorized Circulation**: A 24V DC brushless magnetic-drive pump (55 GPM) circulates water across the weir flume without manual siphoning.
-- **Electric Auger Drive**: A high-torque NEMA 23 stepper motor couples to the auger shaft via an inline spring-loaded friction slip-clutch. If the auger jams or power is cut, an operator can insert the manual hand crank and turn the auger without back-driving or damaging the stepper.
-- **Strict Two-Control Enclosure**: An IP67 waterproof junction box mounted on the side flume contains:
-  - Heavy-duty toggle switch directly isolating the 24V DC supply line.
-  - Recessed tactile button next to the 0.91" I2C OLED display for 5-second SD recovery reflash.
-  - Micro-SD card slot module pre-loaded with golden recovery `firmware.bin` and `config.default`.
-- **Ephemeral BLE Virtual Panel**: When nearby, an operator opens the Flutter companion app on their phone or tablet. The app auto-discovers the skimmer over BLE GATT and displays real-time virtual touch pads: Forward Jog, Reverse Jam Purge, and a Pump Flow Rate slider (45 to 75 GPM).
-
-### Step-by-Step Retrofit & Electromechanical Wiring Protocol
-
-```text
-Step 2.1: 24V Circulation Pump Plumbing Installation
-  ├── Mount 24V brushless magnetic-drive pump onto vibration-damping silicone isolator pads.
-  ├── Connect pump suction port to sump outlet via 1.5" flexible reinforced PVC hose.
-  ├── Plumb pump discharge into flume circulation manifold with an inline check valve.
-  └── Install manual isolation ball valve on pump suction to enable pump servicing without draining.
-
-Step 2.2: NEMA 23 Stepper & Slip-Clutch Mechanical Coupling
-  ├── Bolt 4:1 planetary reduction NEMA 23 stepper motor onto 3D-printed PETG side motor bracket.
-  ├── Install spring-loaded friction slip-clutch (calibrated to 4.8 N·m) onto 8mm motor output shaft.
-  ├── Mate clutch output hub directly to the auger 1/2" hex drive shaft using M6 cross-pin.
-  └── Verify hex hand crank still fits securely onto rear shaft stub for simultaneous manual override.
-
-Step 2.3: Two-Control Enclosure Assembly
-  ├── Mount IP67 polycarbonate junction box on outer coping rail.
-  ├── Install heavy-duty inline 24V DC toggle switch on the positive power entry lead.
-  ├── Install recessed tactile push-button wired to secondary bootloader recovery GPIO pin.
-  ├── Insert micro-SD card slot module preloaded with golden firmware.bin and config.default.
-  └── Mount 0.91" I2C OLED display showing [SKIMMER-A1 | BLE READY].
-
-Step 2.4: Driver, BLE Peripheral & Power Distribution Wiring
-  ├── Mount MeanWell 24V 150W power supply (LRS-150-24) inside sheltered enclosure with 10A fuse.
-  ├── Wire TB6600 stepper driver and high-current pump relay to ESP32 BLE peripheral controller.
-  ├── Verify BLE GATT service advertises [SKIMMER-VIRTUAL-PANEL] upon power-up.
-  └── Flash ESP32 firmware with Virtual Panel peripheral profile (supports touch jog and flow sliders).
-
-Step 2.5: Slip-Clutch Torque Verification
-  ├── Fix auger flight with a wooden block to simulate a heavy branch/debris jam.
-  ├── Trigger Forward Jog from Flutter mobile app; observe slip-clutch slipping smoothly without motor stalling.
-  ├── Insert manual speed-handle crank and rotate by hand against motor holding torque.
-  └── Clutch slips smoothly, verifying operator hand operation cannot back-feed or damage the motor.
-```
-
-### Step-by-Step BLE Virtual Panel Operating Runbook
-
-1. **Power Initialization**: Flip the heavy-duty 24V master DC power switch to ON. The onboard 0.91" OLED illuminates: `[SKIMMER-A1 | BLE STANDBY]`.
-2. **Walk-Up BLE Virtual Panel Connection**: Open the Flutter companion app on mobile device. Select `SKIMMER-A1` from discovered BLE peripherals. The app instantly renders the Skimmer Virtual Panel.
-3. **Circulation Flow Adjustment**: Drag the virtual flow slider in the Flutter app to set desired skimming flow (45 to 75 GPM). The brushless pump ramps smoothly to target speed.
-4. **On-Demand Dewatering Pressing**: When duckweed fronds accumulate against the wedge-wire screen, press and hold the **Virtual Forward Jog Pad** in the app. The auger rotates at 30 RPM, pressing protein paste out the nozzle. Release pad to stop.
-5. **Jam Clearing Recovery**: If debris jams the auger, tap the **Virtual Reverse Purge Button** in the app. The motor reverses 5 full turns, clearing the blockage. Tap Forward Jog to resume extrusion.
-6. **"Nuke & Pave" SD Recovery Protocol**: If firmware hangs or configuration deadlocks, hold the physical recessed reset button for 5 seconds during power-on. The bootloader reflashes factory baseline firmware from micro-SD in 4 seconds.
-7. **Immediate Manual Fallback**: If power is severed, insert the manual 1/2" hex hand crank and rotate manually—the friction slip-clutch slips smoothly at 4.8 N·m, enabling instant zero-electricity operation.
+1. **Alignment & Positioning:** FLOW: 55 GPM | PRESSURE: 18 PSI | RATED: 80W
+2. **Mechanical & Electrical Execution:** Brushless magnetic drive pump plumbed into lower sump bulkhead with vibration-isolation mounts.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
 
 
-### Add-On 1 Signal & Override Flow
+### Step 1.2: NEMA 23 Stepper & Dog Clutch Coupling
 
-```mermaid
-flowchart LR
-    subgraph S2_Electrical["Add-On 1: Electromechanical & BLE Virtual Panel (RFC-0005)"]
-        PSU["24V DC MeanWell PSU"] --> MasterSW["Master DC Power Switch"]
-        MasterSW --> Box["Strict Two-Control Enclosure"]
-        
-        App["Flutter Companion App (Virtual Panel)"] <-->|"Ephemeral BLE GATT"| BLE["ESP32 BLE Peripheral"]
-        Box -.->|"5s Reset Hold"| SDReset["Micro-SD Golden Reflash"]
-        
-        BLE -->|"Virtual Flow Slider"| Relay["Pump Relay / PWM"]
-        Relay --> MagPump["24V DC Magnetic Drive Pump"]
-        
-        BLE -->|"Virtual Jog Pads"| TB6600["TB6600 Stepper Driver"]
-        TB6600 --> NEMA23["NEMA 23 Geared Stepper"]
-        NEMA23 --> Clutch["Spring-Loaded Friction Slip-Clutch (4.8 N·m)"]
-        Clutch --> Auger["Dewatering Press Auger Shaft"]
-        
-        HandCrank["Manual Hex Hand Crank"] -.->|"Mechanical Override (Slips Clutch)"| Auger
-    end
-```
+![Step 1.2 Technical Blueprint](/open-biosphere/hardware/fluidic-skimmer-loop/assets/stage-1/step-2-motor-slipclutch.svg)
+
+1. **Alignment & Positioning:** HOLDING TORQUE: 2.8 N·m | SLIP LIMIT: 4.5 N·m
+2. **Mechanical & Electrical Execution:** NEMA 23 stepper motor bracket bolted to auger chassis with spring-loaded axial slip-clutch.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
+
+
+### Step 1.3: Strict Two-Control Enclosure Assembly
+
+![Step 1.3 Technical Blueprint](/open-biosphere/hardware/fluidic-skimmer-loop/assets/stage-1/step-3-two-control-box.svg)
+
+1. **Alignment & Positioning:** STANDARD: RFC-0005 | IP RATING: IP67 Weatherproof
+2. **Mechanical & Electrical Execution:** Heavy-duty IP67 box with Master 24V DC switch, recessed SD reset, Micro-SD slot, and 0.91" OLED.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
+
+
+### Step 1.4: TB6600 Driver Carrier & Power Distribution Wiring
+
+![Step 1.4 Technical Blueprint](/open-biosphere/hardware/fluidic-skimmer-loop/assets/stage-1/step-4-driver-wiring.svg)
+
+1. **Alignment & Positioning:** SUPPLY: 24V 6.5A (150W) | MICROSTEPPING: 1/8 Step
+2. **Mechanical & Electrical Execution:** Optoisolated 4.0A stepper driver, 24V 150W MeanWell power supply, and ESP32 BLE Virtual Panel.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
+
+
+### Step 1.5: Slip-Clutch Torque Verification & Manual Override
+
+![Step 1.5 Technical Blueprint](/open-biosphere/hardware/fluidic-skimmer-loop/assets/stage-1/step-5-torque-verification.svg)
+
+1. **Alignment & Positioning:** DISCONNECT: Mechanical Slip | OVERRIDE: Instant
+2. **Mechanical & Electrical Execution:** Verifying hand speed-crank rotates freely through slip-clutch while motor is energized.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
+
+
+### Step-by-Step Operating & Commissioning Runbook
+
+1. **Pre-Flight Mechanical Inspection:** Verify all fasteners are torqued finger-tight or to engineering specification; inspect structural clearances against Datum Z=0.00.
+2. **Electrical & Signal Continuity:** Check wiring harnesses for polarity alignment; ensure physical Master DC Switch is in the OFF position prior to power connection.
+3. **Two-Control Power Sequence (RFC-0005):** Switch Master DC switch to ON; observe 0.91" status OLED initialization sequence displaying firmware build and BLE advertising state.
+4. **Virtual Panel Commissioning:** Open the Open Biosphere companion app, pair via local BLE GATT, and exercise manual jog sliders through full travel envelopes.
+5. **250ms Deadman Watchdog Verification:** Confirm all actuators trip to safe de-energized states immediately upon intentional signal cutoff or emergency power disconnect.
+
 
 ---
 

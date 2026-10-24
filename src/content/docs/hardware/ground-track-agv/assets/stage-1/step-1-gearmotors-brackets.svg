@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" width="100%" height="100%">
+  <!-- Blueprint Background -->
+  <rect width="960" height="540" fill="#0b1120" />
+  
+  <defs>
+    <pattern id="grid-ground-track-agv-1-1" width="30" height="30" patternUnits="userSpaceOnUse">
+      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#1e293b" stroke-width="0.8"/>
+      <path d="M 150 0 L 0 0 0 150" fill="none" stroke="#334155" stroke-width="1.2" opacity="0.6"/>
+    </pattern>
+    <marker id="arrow-1" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8" />
+    </marker>
+  </defs>
+  
+  <rect width="960" height="540" fill="url(#grid-ground-track-agv-1-1)" />
+  
+  <!-- Outer Technical Blueprint Border -->
+  <rect x="25" y="25" width="910" height="490" fill="none" stroke="#334155" stroke-width="1.5" />
+  <rect x="30" y="30" width="900" height="480" fill="none" stroke="#1e293b" stroke-width="1" />
+  
+  <!-- Blueprint Title Header Block -->
+  <rect x="30" y="30" width="900" height="60" fill="#0f172a" opacity="0.95" />
+  <line x1="30" y1="90" x2="930" y2="90" stroke="#0ea5e9" stroke-width="2" />
+  
+  <text x="50" y="52" font-family="monospace" font-size="11" font-weight="bold" fill="#0ea5e9" letter-spacing="2">OPEN BIOSPHERE // RFC-0010 REVERSE-DECONSTRUCTED BLUEPRINT</text>
+  <text x="50" y="75" font-family="sans-serif" font-size="16" font-weight="700" fill="#f8fafc">Ground Track AGV Pod Carrier // STAGE 1</text>
+  
+  <rect x="670" y="42" width="240" height="34" rx="4" fill="#1e293b" stroke="#38bdf8" stroke-width="1.2" />
+  <text x="790" y="64" font-family="monospace" font-size="12" font-weight="bold" fill="#38bdf8" text-anchor="middle">STEP 1.1 // LAYER 1 OF 5</text>
+  
+  <!-- Datum Line -->
+  <line x1="60" y1="440" x2="900" y2="440" stroke="#64748b" stroke-width="1.2" stroke-dasharray="8 4" />
+  <text x="900" y="435" font-family="monospace" font-size="10" fill="#64748b" text-anchor="end">DATUM Z=0.00 (SOUTH COPING SURFACE)</text>
+  
+  <!-- Stepwise Geometry Layers -->
+
+  <!-- STEP 1: ACTIVE STRUCTURAL FOUNDATION -->
+  <rect x="120" y="320" width="720" height="90" rx="6" fill="#0369a1" fill-opacity="0.35" stroke="#38bdf8" stroke-width="2.5" />
+  <line x1="120" y1="365" x2="840" y2="365" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="6 3" />
+  <circle cx="160" cy="365" r="8" fill="#38bdf8" />
+  <circle cx="800" cy="365" r="8" fill="#38bdf8" />
+  <text x="480" y="370" font-family="monospace" font-size="13" font-weight="bold" fill="#e0f2fe" text-anchor="middle">PRIMARY STRUCTURAL CHASSIS &amp; MOUNTING DATUM</text>
+  
+  <!-- Dimension Callout -->
+  <line x1="120" y1="425" x2="840" y2="425" stroke="#38bdf8" stroke-width="1.2" marker-start="url(#arrow-1)" marker-end="url(#arrow-1)" />
+  <text x="480" y="420" font-family="monospace" font-size="11" fill="#38bdf8" text-anchor="middle">SPAN: 720.0 mm</text>
+
+  <!-- Step Instruction Callout Box -->
+  <rect x="40" y="445" width="880" height="65" rx="6" fill="#0f172a" stroke="#0ea5e9" stroke-width="1.5" />
+  <circle cx="65" cy="477" r="14" fill="#0ea5e9" />
+  <text x="65" y="482" font-family="sans-serif" font-size="13" font-weight="bold" fill="#0f172a" text-anchor="middle">1</text>
+  
+  <text x="95" y="468" font-family="sans-serif" font-size="13" font-weight="bold" fill="#f8fafc">STEP 1.1: Dual 24V 250W Planetary Gearmotor Installation</text>
+  <text x="95" y="487" font-family="monospace" font-size="10" fill="#94a3b8">High-torque industrial planetary DC gearmotors bolted to slotted tensioning motor plates.</text>
+  <text x="95" y="502" font-family="monospace" font-size="9" font-weight="bold" fill="#38bdf8">POWER: 2x 250W | GEAR RATIO: 18:1 | TORQUE: 12 N·m</text>
+</svg>

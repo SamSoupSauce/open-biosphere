@@ -56,119 +56,61 @@ The Stage 2 agentic pack elevates the **Revolving Sprout Bioreactor Drum** into 
 
 ## Part 5: Step-by-Step Commissioning, Provisioning & Autonomous Runbook
 
-Under [RFC-0004](/rfcs/rfc-0004-controller-node-tool) and [RFC-0006](/rfcs/rfc-0006-agnostic-controller-runtime), the **Agentic Autonomous AI Pack** transforms the bioreactor into a hierarchical **Controller-Node-Tool (CNT)** production cell. The bioreactor operates as a dedicated **Sprout Node** commanding modular **Edge Tools** over BLE, receiving automated 96-hour growth recipes and sanitization cycles from the Central Biosphere Controller over encrypted Wi-Fi.
+The following 5 sequential assembly steps guide the physical fabrication, mounting, and wiring of the Revolving Sprout Bioreactor Drum (2). Each procedural step is directly anchored by an isolated, reverse-deconstructed vector blueprint adhering to RFC-0010.
 
-### Autonomous Vision & Telemetry Architecture
-- **Sprout Machine Node (ESP32-S3)**: Dual-Core Xtensa LX7 (240 MHz, 8 MB PSRAM) with an onboard 0.96" I2C OLED screen (`[NODE: SPROUT-01 | LINK -> 4096]`) and physical setup button. It maintains a secure Wi-Fi client uplink to the Central Controller and acts as a local BLE Central manager.
-- **Dedicated Modular Edge Tools (ESP32-C3)**: Actuators and sensors are driven 1:1 by tiny ESP32-C3 micro-controllers equipped with 0.42" micro OLED displays and **250ms hardware deadman watchdogs**:
-  - `DEV_DRUM_STEP`: Micro ESP32-C3 with 0.42" OLED (`TOOL: DRUM_STEP | LINK: OK`) + 250ms watchdog driving a Trinamic TMC2209 silent driver in UART mode with Sensorless StallGuard homing.
-  - `DEV_MIST_SOL`: Micro ESP32-C3 with 0.42" OLED (`TOOL: MIST_SOL | LINK: OK`) + 250ms watchdog governing misting pump and gravity drain solenoids.
-  - `DEV_OZONE_GEN`: Micro ESP32-C3 with 0.42" OLED (`TOOL: OZONE_GEN | LINK: OK`) + 250ms watchdog driving the 12V 200 mg/h corona-discharge ozone generator.
-  - `DEV_CLIMATE_SNS`: Micro ESP32-C3 with 0.42" OLED (`TOOL: CLIMATE_SNS | LINK: OK`) reading the Sensirion SHT40 relative humidity ($\pm 1.5\%$) and temperature (± 0.1°C) exhaust probe.
-- **250ms Deadman Watchdog Fail-Safe**: If any Tool loses BLE connection to the Sprout Node for $> 250$ ms, it drops immediately into high-Z safe state: stepper current cuts to zero holding torque, solenoids snap closed, and the ozone generator shuts off immediately.
-- **Robotic Biosphere Interlock**: Magnetic alignment latch and retroreflective optical AprilTag fiducial marker for automated docking with the Ground Track AGV pod carrier.
+### Step 2.1: Sprout Machine Node & Tool Carrier Board Assembly
 
-```text
-       CONTROLLER-NODE-TOOL (CNT) HIERARCHICAL EDGE ARCHITECTURE
-  =================================================================
-            CENTRAL BIOSPHERE CONTROLLER (Agnostic Runtime / POTFRM-4096)
-            • Emits Isolated Farm AP: SSID [POTFRM-4096] (192.168.42.0/24)
-            • Global Growth Schedules & Multi-Agent AGV Logistics
-                                  │
-                                  │ Isolated Farm Wi-Fi (192.168.42.0/24)
-                                  ▼
-             ┌─────────────────────────────────────────┐
-             │       SPROUT MACHINE NODE (ESP32-S3)    │
-             │  • OLED Display: [NODE: SPROUT-01]     │
-             │  • Setup Push-Button for Mobile BLE     │
-             │  • FreeRTOS Subsystem Orchestrator      │
-             └────────────────────┬────────────────────┘
-                                  │
-         ┌────────────────────────┼────────────────────────┐
-         │ BLE Downlink           │ BLE Downlink           │ BLE Downlink
-         ▼                        ▼                        ▼
- ┌───────────────┐        ┌───────────────┐        ┌───────────────┐
- │ TOOL:         │        │ TOOL:         │        │ TOOL:         │
- │ DEV_DRUM_STEP │        │ DEV_MIST_SOL  │        │ DEV_OZONE_GEN │
- │ ESP32-C3 Micro│        │ ESP32-C3 Micro│        │ ESP32-C3 Micro│
- │ 0.42" OLED    │        │ 0.42" OLED    │        │ 0.42" OLED    │
- │ 250ms Deadman │        │ 250ms Deadman │        │ 250ms Deadman │
- │ TMC2209 Silent│        │ Mist Solenoid │        │ Corona Ozone  │
- └───────────────┘        └───────────────┘        └───────────────┘
-                                  │
-                                  ▼ (BLE Downlink)
-                          ┌───────────────┐
-                          │ TOOL:         │
-                          │ DEV_CLIMATE   │
-                          │ ESP32-C3 Micro│
-                          │ 0.42" OLED    │
-                          │ SHT40 Temp/RH │
-                          └───────────────┘
-```
+![Step 2.1 Technical Blueprint](/open-biosphere/hardware/revolving-sprout-bioreactor/assets/stage-2/step-1-sprout-node-assembly.svg)
 
-### Step-by-Step Sensor Commissioning & Edge AI Protocol
+1. **Alignment & Positioning:** MCU: ESP32-S3-WROOM-1 | MEMORY: 8MB PSRAM
+2. **Mechanical & Electrical Execution:** ESP32-S3 dual-core controller with 8MB PSRAM managing drum scheduling and sanitization cycles.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
 
-#### Step 3.1: Sprout Node & Tool Carrier Board Assembly
-1. Mount the ESP32-S3 Node with 0.96" I2C OLED and physical setup button onto the DIN rail carrier base inside the control enclosure.
-2. Mount the modular ESP32-C3 Edge Tool boards (`DEV_DRUM_STEP`, `DEV_MIST_SOL`, `DEV_OZONE_GEN`, `DEV_CLIMATE`) with 0.42" micro OLED screens on the lower rail.
-3. Wire the TMC2209 silent stepper driver to `DEV_DRUM_STEP` via UART (DIAG pin jumpered for sensorless StallGuard homing).
 
-#### Step 3.2: SHT40 Environmental Probe Integration
-1. Mount the Sensirion SHT40 probe inside an aspirated, lightproof flue adapter on the drum's exhaust vent.
-2. Wire SHT40 via shielded 4-wire cable to `DEV_CLIMATE_SNS` tool I2C bus with 4.7 kΩ pull-up resistors.
-3. Verify telemetry readings on tool OLED screen: ambient RH and temperature report accurately.
+### Step 2.2: Sensirion SHT40 Temperature/RH Probe Integration
 
-#### Step 3.3: Corona Ozone Generator & Diffusion Loop
-1. Mount the 12V 200 mg/h corona-discharge ozone generator module in an isolated compartment of the enclosure.
-2. Route silicone ozone-rated tubing from the ozone discharge port through a check valve into the mist water reservoir's ceramic diffuser stone.
-3. Wire the ozone module and internal aeration pump to `DEV_OZONE_GEN` tool output relay.
+![Step 2.2 Technical Blueprint](/open-biosphere/hardware/revolving-sprout-bioreactor/assets/stage-2/step-2-sht40-climate-tool.svg)
 
-#### Step 3.4: Magnetic AGV Docking Latch & Optical Target
-1. Bolt a neodymium magnetic alignment latch (150 N holding force) to the chassis front lower rail ($Z = 120$ mm datum).
-2. Install a high-contrast AprilTag 36h11 fiducial marker directly above the access hatch for AGV machine vision recognition.
-3. Wire the magnetic latch release solenoid to `DEV_MIST_SOL` tool secondary channel.
+1. **Alignment & Positioning:** ACCURACY: ±0.2°C / ±1.5% RH | PROTECTION: PTFE Sintered
+2. **Mechanical & Electrical Execution:** High-accuracy digital sensor with PTFE membrane measuring internal drum microclimate.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
 
-#### Step 3.5: Provisioning & 250ms Watchdog Verification
-1. Power on Central Controller; verify active Cluster ID on OLED, terminal stdout, or BLE beacon (`POTFRM-4096`).
-2. Power on Sprout Node; display shows `[NODE UNPAIRED - PAIR VIA BLE]`.
-3. Press physical setup button on Node; connect via mobile companion app over BLE, enter `4096`.
-4. Node commits credentials to NVS, links to `POTFRM-4096`, registers at `ws://192.168.42.1:8443/register`, and updates display to `[ONLINE | LINK -> 4096]`.
-5. Verify Node auto-discovers and binds all four BLE Tools.
-6. Test fail-safe watchdog: drop BLE link to `DEV_DRUM_STEP`; verify stepper current immediately cuts to 0.0A in $< 250$ ms.
 
-```mermaid
-stateDiagram-v2
-    [*] --> Standby_Homed: Power On & StallGuard Homing
-    Standby_Homed --> Germination_Phase: Seed Load Acknowledged (Hour 0)
-    
-    state Germination_Phase {
-        [*] --> High_Humidity_Mist
-        High_Humidity_Mist --> Low_RPM_Tumble: Every 20 min
-        Low_RPM_Tumble --> High_Humidity_Mist: RH > 95%
-    }
+### Step 2.3: 12V Corona Ozone Generator & Diffusion Loop
 
-    Germination_Phase --> Active_Elongation: Hour 24 (Radicle Emergence)
+![Step 2.3 Technical Blueprint](/open-biosphere/hardware/revolving-sprout-bioreactor/assets/stage-2/step-3-ozone-sanitizer-loop.svg)
 
-    state Active_Elongation {
-        [*] --> Environmental_Sentry
-        Environmental_Sentry --> Pulse_Mist: RH < 90%
-        Environmental_Sentry --> Gas_Exchange_Tumble: CO2 > 2500 ppm
-    }
+1. **Alignment & Positioning:** OUTPUT: 200 mg/h O3 | CYCLE TIME: 180s Automated Pulse
+2. **Mechanical & Electrical Execution:** 200mg/h cold corona discharge ozone tube for automated sprout batch sanitization flushes.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
 
-    Active_Elongation --> Harvest_Ready: Hour 96 (Biomass Complete)
-    Harvest_Ready --> AGV_Tote_Exchange: Wi-Fi Handshake to Controller
-    AGV_Tote_Exchange --> Ozonated_Sanitize: Drum Empty Confirmed
-    Ozonated_Sanitize --> Standby_Homed: 3-min Wash Done
-```
 
-### Step-by-Step Autonomous Multi-Agent Runbook
+### Step 2.4: Neodymium Magnetic Docking Latch & AprilTag Target
 
-1. **Pre-Flight Self-Test & StallGuard Homing**: On boot, the Sprout Node queries its bound BLE Tools. It commands `DEV_DRUM_STEP` to rotate the drum at 0.5 RPM until Trinamic StallGuard detects the mechanical stop, indexing the 150 mm hatch position precisely at $0.0^\circ$.
-2. **Day 1 Adaptive Germination**: For the first 24 hours, the Node executes the dark photophobic recipe from the Central Controller. It signals `DEV_MIST_SOL` to pulse misting for 12 seconds every 18 minutes, and commands `DEV_DRUM_STEP` to tumble 1 revolution to coat seeds uniformly in an ultra-fine water film.
-3. **Day 2–3 Closed-Loop Elongation Control**: `DEV_CLIMATE_SNS` continuously relays chamber humidity and transpiration rate. If relative humidity drops below 92%, the Node triggers immediate misting. If transpiration heat causes chamber temperature to rise > 24.5°C, the Node commands a 3-revolution tumble and opens the exhaust damper for evaporative cooling.
-4. **Automated AGV Handshake & Harvest**: At Hour 96, the Node flags harvest readiness to the Central Controller over Wi-Fi. The Central Controller dispatches the Ground Track AGV. When the AGV docks, the bioreactor rotates the hatch to $180^\circ$ (downward) and actuates the latch release solenoid, dumping ~3.5 kg of prime hypocotyls directly into the AGV transport tote.
-5. **Post-Harvest Ozonated Sanitation Wash**: Immediately following harvest confirmation, the Node signals `DEV_OZONE_GEN`, running the corona ozone generator and mist pump for 3 minutes. Ozonated water (0.4 ppm dissolved $O_3$) blankets every mesh pore, destroying fungal spores and bacteria with zero chemical residue.
-6. **250ms Fail-Safe Watchdog Protocol**: If BLE communication between Node and any Tool drops for $> 250$ ms, that Tool trips into high-Z safe state. If Wi-Fi link to Central Controller is lost, the Node continues the current 96-hour stage timer autonomously.
+![Step 2.4 Technical Blueprint](/open-biosphere/hardware/revolving-sprout-bioreactor/assets/stage-2/step-4-magnetic-dock-latch.svg)
+
+1. **Alignment & Positioning:** LATCH: N52 Magnetic Kinematic | FIDUCIAL: AprilTag 36h11
+2. **Mechanical & Electrical Execution:** Kinematic magnetic latch and optical AprilTag plate for autonomous AGV pod coupling.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
+
+
+### Step 2.5: 250ms Watchdog & Thermal Fail-Safe Verification
+
+![Step 2.5 Technical Blueprint](/open-biosphere/hardware/revolving-sprout-bioreactor/assets/stage-2/step-5-watchdog-verification.svg)
+
+1. **Alignment & Positioning:** TIMEOUT: 250ms | SAFE STATE: Gravity Drain Open
+2. **Mechanical & Electrical Execution:** Validating drum motor and misting pump high-Z cutoff within 250ms of beacon interruption.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
+
+
+### Step-by-Step Operating & Commissioning Runbook
+
+1. **Pre-Flight Mechanical Inspection:** Verify all fasteners are torqued finger-tight or to engineering specification; inspect structural clearances against Datum Z=0.00.
+2. **Electrical & Signal Continuity:** Check wiring harnesses for polarity alignment; ensure physical Master DC Switch is in the OFF position prior to power connection.
+3. **Two-Control Power Sequence (RFC-0005):** Switch Master DC switch to ON; observe 0.91" status OLED initialization sequence displaying firmware build and BLE advertising state.
+4. **Virtual Panel Commissioning:** Open the Open Biosphere companion app, pair via local BLE GATT, and exercise manual jog sliders through full travel envelopes.
+5. **250ms Deadman Watchdog Verification:** Confirm all actuators trip to safe de-energized states immediately upon intentional signal cutoff or emergency power disconnect.
+
 
 ---
 

@@ -47,48 +47,52 @@ The Stage 0 baseline build of the **Fluidic Skimmer & Dewatering Separator** is 
 
 ## Part 5: Step-by-Step Assembly & Operating Protocol
 
-The base Fluidic Skimmer is a **100% mechanical, zero-electricity, off-grid surface harvester and clarification unit**. It requires zero microcontrollers, zero software, and zero wiring—operating purely on gravity, manual hand levers, rotary cranks, and physical siphons. 
+The following 5 sequential assembly steps guide the physical fabrication, mounting, and wiring of the Fluidic Skimmer & Dewatering Separator (0). Each procedural step is directly anchored by an isolated, reverse-deconstructed vector blueprint adhering to RFC-0010.
 
-All builders assemble this base machine first. The subsequent tiers are modular add-on packs installed directly onto this foundation.
+### Step 1.1: Flume Chassis Fabrication & Solvent Welding
 
-### Mechanical Architecture & Decoupling
-- **Counterweighted Overflow Weir**: An external hand lever with an adjustable lead or steel counterweight balances the floating weir gate. Moving the lever raises or lowers the weir lip relative to the water line (0 mm to 25 mm skimming depth), allowing an operator to dial in surface draw by hand or pull it shut completely.
-- **Manual Dewatering Press**: The dewatering auger features a standard 1/2-inch hex head on its drive shaft. A removable aluminum speed-handle hand crank slots directly onto the shaft. Cranking clockwise advances duckweed and watermeal fronds against the stainless 316L wedge-wire screen, pressing free water back into the sump while extruding dense, 82% moisture protein paste out the discharge chute.
-- **Gravity Drainage & Manual Siphon**: A 1.5-inch 3-way manual L-port PVC ball valve allows operators to bypass electric pumps entirely, dumping water through the K1 moving bed media chamber and back into the main reservoir via gravity.
+![Step 1.1 Technical Blueprint](/open-biosphere/hardware/fluidic-skimmer-loop/assets/stage-0/step-1-flume-chassis.svg)
 
-### Step-by-Step Fabrication & Assembly Protocol
+1. **Alignment & Positioning:** WALL THICKNESS: 6.35mm | BASE LENGTH: 600mm
+2. **Mechanical & Electrical Execution:** 1/4" cast acrylic or HDPE flume chassis with 48mm drain bulkhead hole and weir pivot slots.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
 
-```text
-Step 1.1: Flume Chassis Fabrication
-  ├── Cut 1/4" cast acrylic or HDPE sheet into two 600mm x 400mm side plates, one 600mm x 300mm base.
-  ├── Mill 12mm pivot slots for the weir Delrin pin at X=80mm, Z=+120mm from intake lip.
-  ├── Drill a 48mm hole in the sump floor for the 1.5" PVC bulkhead fitting.
-  └── Solvent-weld acrylic seams using Weld-On 4, or bolt HDPE with M5 A4-stainless bolts & silicone.
 
-Step 1.2: Wedge-Wire Screen Installation
-  ├── Align 316L wedge-wire screen (150µm slot, 300mm x 400mm) at an exact 38° decline.
-  ├── Seat edges against 3mm EPDM closed-cell rubber sealing strips to prevent frond blow-by.
-  └── Fasten screen using 3D-printed PETG clamping rails and four M4 thumb-screws (toolless service).
+### Step 1.2: 316L Wedge-Wire Screen Installation
 
-Step 1.3: Counterweighted Weir Gate Mounting
-  ├── Fabricate hollow floating weir gate (PETG printed, 15% infill, 4 perimeters for buoyancy).
-  ├── Press-fit Ø12mm Delrin pivot pins into side flume bushings with 0.5mm axial clearance.
-  ├── Attach 450mm aluminum lever arm with threaded M10 rod for sliding 1.2 kg counterweight.
-  └── Adjust counterweight position until weir gate floats neutral at 2mm below calm water level.
+![Step 1.2 Technical Blueprint](/open-biosphere/hardware/fluidic-skimmer-loop/assets/stage-0/step-2-wedge-wire-mount.svg)
 
-Step 1.4: Manual Dewatering Screw Press Assembly
-  ├── 3D print PETG continuous flight auger screw (50mm pitch, 85mm outer diameter, Ø20mm core).
-  ├── Insert 1/2" zinc-plated steel hex drive shaft through auger core; secure with cross-drilled M5 roll pin.
-  ├── Slide auger into perforated stainless steel sleeve (1.0mm micro-perforations).
-  ├── Press dual 608-2RS sealed ball bearings into rear flange; slide 1/2" hex drive through.
-  └── Attach removable 1/2" socket speed-handle hand crank onto external hex stub.
+1. **Alignment & Positioning:** SLOT SIZE: 150µm | ANGLE: 38.0° DECLINE
+2. **Mechanical & Electrical Execution:** Stainless wedge-wire screen (150µm slot, 300x400mm) seated at 38° decline against EPDM seals.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
 
-Step 1.5: Biofilter & Manual Valve Plumbing
-  ├── Thread 1.5" PVC schedule 40 male adapter into sump bulkhead with PTFE thread tape.
-  ├── Glue 1.5" 3-way L-port PVC ball valve inline directly below bulkhead.
-  ├── Connect Port A to gravity drain manifold; connect Port B to recirculation return.
-  └── Pour 10 liters of K1 micro filter biomedia into sump and install slotted retention screen.
-```
+
+### Step 1.3: Counterweighted Floating Weir Gate Mounting
+
+![Step 1.3 Technical Blueprint](/open-biosphere/hardware/fluidic-skimmer-loop/assets/stage-0/step-3-weir-gate-pivot.svg)
+
+1. **Alignment & Positioning:** PIVOT PIN: Ø12.0mm Delrin | FLOAT OFFSET: -2.0mm
+2. **Mechanical & Electrical Execution:** Buoyant hollow weir gate with Ø12mm Delrin pivot pins and adjustable 1.2kg lead counterweight.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
+
+
+### Step 1.4: Manual Dewatering Screw Press Assembly
+
+![Step 1.4 Technical Blueprint](/open-biosphere/hardware/fluidic-skimmer-loop/assets/stage-0/step-4-auger-sleeve-pack.svg)
+
+1. **Alignment & Positioning:** CORE DIAMETER: 20mm | FLIGHT PITCH: 50mm
+2. **Mechanical & Electrical Execution:** PETG progressive pitch auger in perforated sleeve with dual 608-2RS bearings and 1/2" hex speed crank.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
+
+
+### Step 1.5: Biofilter Sump & 3-Way Manual Valve Plumbing
+
+![Step 1.5 Technical Blueprint](/open-biosphere/hardware/fluidic-skimmer-loop/assets/stage-0/step-5-valve-biofilter.svg)
+
+1. **Alignment & Positioning:** PORT: 1.5" NPT / Barb | BIOMEDIA: 10L K1 Micro
+2. **Mechanical & Electrical Execution:** 1.5" Schedule 40 bulkhead with 3-way L-port bypass valve and 10L K1 micro filter biomedia sump.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
+
 
 ### Step-by-Step Operating Runbook (Zero-Power Baseline)
 
@@ -172,6 +176,8 @@ flowchart TD
         MBBR -->|"Manual 3-Way L-Port Valve"| Ret["Gravity Pool Recirculation"]
     end
 ```
+
+---
 
 ---
 

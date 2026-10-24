@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" width="100%" height="100%">
+  <rect width="960" height="540" fill="#0b1120" />
+  <defs>
+    <pattern id="grid-master-overhead-gantry-system-0" width="30" height="30" patternUnits="userSpaceOnUse">
+      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#1e293b" stroke-width="0.8"/>
+      <path d="M 150 0 L 0 0 0 150" fill="none" stroke="#334155" stroke-width="1.2" opacity="0.6"/>
+    </pattern>
+  </defs>
+  <rect width="960" height="540" fill="url(#grid-master-overhead-gantry-system-0)" />
+  <rect x="25" y="25" width="910" height="490" fill="none" stroke="#38bdf8" stroke-width="1.5" />
+  <rect x="30" y="30" width="900" height="60" fill="#0f172a" opacity="0.95" />
+  <line x1="30" y1="90" x2="930" y2="90" stroke="#0ea5e9" stroke-width="2" />
+  
+  <text x="50" y="52" font-family="monospace" font-size="11" font-weight="bold" fill="#0ea5e9" letter-spacing="2">OPEN BIOSPHERE // RFC-0010 MASTER INTEGRATED ELEVATION</text>
+  <text x="50" y="75" font-family="sans-serif" font-size="16" font-weight="700" fill="#f8fafc">2-Axis Overhead Gantry Array // STAGE 0 FULL INTEGRATION</text>
+  
+  <!-- Datum Line -->
+  <line x1="60" y1="440" x2="900" y2="440" stroke="#64748b" stroke-width="1.2" stroke-dasharray="8 4" />
+  <text x="900" y="435" font-family="monospace" font-size="10" fill="#64748b" text-anchor="end">DATUM Z=0.00 (SOUTH COPING SURFACE)</text>
+  
+  <!-- Integrated Assembly Layers -->
+  <rect x="120" y="320" width="720" height="90" rx="6" fill="#0284c7" fill-opacity="0.3" stroke="#38bdf8" stroke-width="2" />
+  <rect x="180" y="210" width="460" height="110" rx="6" fill="#0369a1" fill-opacity="0.35" stroke="#38bdf8" stroke-width="2" />
+  <rect x="660" y="160" width="180" height="160" rx="6" fill="#0284c7" fill-opacity="0.4" stroke="#38bdf8" stroke-width="2" />
+  <rect x="220" y="130" width="380" height="80" rx="6" fill="#0ea5e9" fill-opacity="0.4" stroke="#38bdf8" stroke-width="2" />
+  <rect x="90" y="105" width="780" height="335" rx="10" fill="none" stroke="#38bdf8" stroke-width="1.8" stroke-dasharray="6 3" />
+  
+  <!-- Callout pointers -->
+  <line x1="200" y1="95" x2="250" y2="130" stroke="#38bdf8" stroke-width="1.5" />
+  <text x="190" y="90" font-family="monospace" font-size="11" fill="#38bdf8" text-anchor="end">LAYER 4: CONTROL / NODE</text>
+  
+  <line x1="750" y1="120" x2="750" y2="160" stroke="#38bdf8" stroke-width="1.5" />
+  <text x="750" y="115" font-family="monospace" font-size="11" fill="#38bdf8" text-anchor="middle">LAYER 3: ACTUATOR DRIVE</text>
+  
+  <line x1="860" y1="365" x2="900" y2="365" stroke="#38bdf8" stroke-width="1.5" />
+  <text x="905" y="369" font-family="monospace" font-size="11" fill="#38bdf8">LAYER 1: CHASSIS</text>
+  
+  <rect x="40" y="455" width="880" height="50" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1" />
+  <text x="480" y="485" font-family="monospace" font-size="11" fill="#94a3b8" text-anchor="middle">ALL 5 MECHANICAL &amp; ELECTRICAL LAYERS INTEGRATED // RFC-0010 REVERSE INSPECTION ANCHOR</text>
+</svg>

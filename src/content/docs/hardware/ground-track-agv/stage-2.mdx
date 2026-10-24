@@ -54,114 +54,61 @@ The Stage 2 agentic pack elevates the **Ground Track AGV Pod Carrier** into a fu
 
 ## Part 5: Step-by-Step Commissioning, Provisioning & Autonomous Runbook
 
-Under [RFC-0004](/rfcs/rfc-0004-controller-node-tool) and [RFC-0006](/rfcs/rfc-0006-agnostic-controller-runtime), the **Agentic Autonomous AI Pack** transforms the AGV into a hierarchical **Controller-Node-Tool (CNT)** autonomous logistics carrier. Operating as a dedicated **AGV Node** commanding modular **Edge Tools** over BLE, it receives route schedules from the Central Biosphere Controller over Wi-Fi, tracks magnetic floor tape, scans for obstacles via 2D LiDAR, and transfers harvest totes with 250ms watchdog safety.
+The following 5 sequential assembly steps guide the physical fabrication, mounting, and wiring of the Ground Track AGV Pod Carrier (2). Each procedural step is directly anchored by an isolated, reverse-deconstructed vector blueprint adhering to RFC-0010.
 
-### Autonomous Vision & Telemetry Architecture
-- **AGV Machine Node (ESP32-S3)**: Dual-Core Xtensa LX7 (240 MHz, 8 MB PSRAM) mounted in a protected central tray. Features an onboard 0.96" I2C OLED display (`[NODE: AGV-01 | LINK -> 4096]`) and setup push-button for mobile BLE provisioning. Uplinks to Central Controller via Wi-Fi; coordinates local kinematics and downlinks to Tools via BLE Central.
-- **Dedicated Modular Edge Tools (ESP32-C3)**: Driven 1:1 by micro ESP32-C3 controllers equipped with 0.42" micro OLED displays and **250ms hardware deadman watchdogs**:
-  - `DEV_TRACK_DRV`: Micro ESP32-C3 with 0.42" OLED (`TOOL: TRACK_DRV | LINK: OK`) + 250ms watchdog driving dual 24V track motor drivers (PWM/DIR) with current sensing.
-  - `DEV_NAV_SNS`: Micro ESP32-C3 with 0.42" OLED (`TOOL: NAV_SNS | LINK: OK`) reading the 5-channel magnetic induction guide sensor and 360° 2D LiDAR scanner.
-  - `DEV_ARM_ACT`: Micro ESP32-C3 with 0.42" OLED (`TOOL: ARM_ACT | LINK: OK`) + 250ms watchdog driving 3-axis articulated canister transfer arm servos.
-  - `DEV_CHARGE_CTL`: Micro ESP32-C3 with 0.42" OLED (`TOOL: CHARGE_CTL | LINK: OK`) regulating the 120W wireless inductive floor charging receiver.
-- **250ms Deadman Watchdog Fail-Safe**: If any Tool loses BLE connection to the AGV Node for $> 250$ ms, it drops immediately into high-Z safe state: track motors stop instantly and drop holding torque to zero, and the transfer arm freezes in place.
+### Step 2.1: AGV Master Machine Node & Power Board Rigging
 
-```text
-       CONTROLLER-NODE-TOOL (CNT) HIERARCHICAL EDGE ARCHITECTURE
-  =================================================================
-            CENTRAL BIOSPHERE CONTROLLER (Agnostic Runtime / POTFRM-4096)
-            • Emits Isolated Farm AP: SSID [POTFRM-4096] (192.168.42.0/24)
-            • Global Logistics Routing, Zone Scheduling & Multi-Agent Dispatch
-                                  │
-                                  │ Isolated Farm Wi-Fi (192.168.42.0/24)
-                                  ▼
-             ┌─────────────────────────────────────────┐
-             │         AGV MACHINE NODE (ESP32-S3)     │
-             │  • OLED Display: [NODE: AGV-01]         │
-             │  • Setup Push-Button for Mobile BLE     │
-             │  • Kinematics, PD Line Tracking & RTOS  │
-             └────────────────────┬────────────────────┘
-                                  │
-         ┌────────────────────────┼────────────────────────┐
-         │ BLE Downlink           │ BLE Downlink           │ BLE Downlink
-         ▼                        ▼                        ▼
- ┌───────────────┐        ┌───────────────┐        ┌───────────────┐
- │ TOOL:         │        │ TOOL:         │        │ TOOL:         │
- │ DEV_TRACK_DRV │        │ DEV_NAV_SNS   │        │ DEV_ARM_ACT   │
- │ ESP32-C3 Micro│        │ ESP32-C3 Micro│        │ ESP32-C3 Micro│
- │ 0.42" OLED    │        │ 0.42" OLED    │        │ 0.42" OLED    │
- │ 250ms Deadman │        │ 250ms Deadman │        │ 250ms Deadman │
- │ Dual 24V PWM  │        │ 5-Ch Magnetic │        │ 3-Axis Servos │
- │ Track Drive   │        │ 2D LiDAR Scnr │        │ Canister Arm  │
- └───────────────┘        └───────────────┘        └───────────────┘
-                                  │
-                                  ▼ (BLE Downlink)
-                          ┌───────────────┐
-                          │ TOOL:         │
-                          │ DEV_CHARGE_CTL│
-                          │ ESP32-C3 Micro│
-                          │ 0.42" OLED    │
-                          │ 120W Inductive│
-                          │ Battery BMS   │
-                          └───────────────┘
-```
+![Step 2.1 Technical Blueprint](/open-biosphere/hardware/ground-track-agv/assets/stage-2/step-1-agv-node-assembly.svg)
 
-### Step-by-Step Sensor Commissioning & Edge AI Protocol
+1. **Alignment & Positioning:** PROCESSOR: Dual LX7 240MHz | PSRAM: 8MB Octal
+2. **Mechanical & Electrical Execution:** ESP32-S3 dual-core node with 8MB PSRAM coordinating dead-reckoning and tool peripherals.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
 
-#### Step 3.1: AGV Node & Driver Assembly
-1. Mount the ESP32-S3 Node with 0.96" I2C OLED display and physical setup push-button in the electronics tray above the battery deck.
-2. Mount the `DEV_TRACK_DRV` tool board (ESP32-C3) and connect its PWM and DIR lines directly to the dual 15A motor driver inputs.
-3. Verify driver current sensing and stall detection under track load.
 
-#### Step 3.2: 5-Channel Magnetic Induction & LiDAR Integration
-1. Mount the 5-channel magnetic sensor bar beneath the front chassis bumper ($20$ mm road clearance).
-2. Mount the RPLiDAR C1 scanner on the elevated 150 mm center mast above the cargo bed.
-3. Wire both sensors to the `DEV_NAV_SNS` tool board (ESP32-C3); verify magnetic line tracking and obstacle point cloud over tool OLED.
+### Step 2.2: 5-Channel Magnetic Induction & 2D LiDAR Rigging
 
-#### Step 3.3: 3-Axis Articulated Transfer Arm Mounting
-1. Bolt the 3-axis mini transfer arm base to the front-right chassis corner.
-2. Connect the three metal-gear servos (base pan, shoulder pitch, gripper clamp) to `DEV_ARM_ACT` tool board (ESP32-C3).
-3. Program calibration positions: Stowed, Reaching, Gripping, and Lifted.
+![Step 2.2 Technical Blueprint](/open-biosphere/hardware/ground-track-agv/assets/stage-2/step-2-magnetic-track-lidar.svg)
 
-#### Step 3.4: Inductive Floor Charging Coil Installation
-1. Mount the 120W wireless power receiver coil under the rear chassis plate ($15$ mm air gap clearance).
-2. Wire the coil output through a synchronous rectifier and CC/CV charge controller directly into the LiFePO4 battery terminals via `DEV_CHARGE_CTL` tool.
-3. Test dock alignment: navigating onto the transmitter plate initiates 24V 4.5A charging within 1.5 seconds.
+1. **Alignment & Positioning:** LIDAR RANGE: 12m | SAMPLE: 5000 Hz | TRACK: 5-Channel
+2. **Mechanical & Electrical Execution:** Floor track magnetic follower sensor paired with RPLiDAR C1 360° laser obstacle scanner.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
 
-#### Step 3.5: Provisioning & 250ms Watchdog Verification
-1. Power on Central Controller; verify active Cluster ID on OLED, terminal stdout, or BLE beacon (`POTFRM-4096`).
-2. Power on AGV Node; display shows `[NODE UNPAIRED - PAIR VIA BLE]`.
-3. Press physical setup button on Node; connect via mobile companion app over BLE, enter `4096`.
-4. Node commits credentials to NVS, links to `POTFRM-4096`, registers at `ws://192.168.42.1:8443/register`, and updates display to `[ONLINE | LINK -> 4096]`.
-5. Verify Node auto-discovers and binds all four BLE Tools.
-6. Test fail-safe watchdog: drop BLE link to `DEV_TRACK_DRV`; verify track motors cut to 0.0A in $< 250$ ms.
 
-```mermaid
-stateDiagram-v2
-    [*] --> Magnetic_Patrol: Route Command Received via Wi-Fi
-    Magnetic_Patrol --> Obstacle_Hold: DEV_NAV_SNS LiDAR Detects Object (< 0.8m)
-    Obstacle_Hold --> Magnetic_Patrol: Path Cleared
-    
-    Magnetic_Patrol --> Bay_Docking: Station RFID Marker Detected
-    
-    state Bay_Docking {
-        [*] --> Creep_Align
-        Creep_Align --> Solenoid_Unlatch: In Position (< 5mm)
-        Solenoid_Unlatch --> Arm_Exchange: DEV_ARM_ACT Swaps Drum
-    }
+### Step 2.3: 3-Axis Mini Articulated Pod Coupling Arm
 
-    Bay_Docking --> Magnetic_Patrol: Exchange Complete
-    Magnetic_Patrol --> Inductive_Charge: Battery < 25% or Mission End
-    Inductive_Charge --> Magnetic_Patrol: Battery > 95%
-```
+![Step 2.3 Technical Blueprint](/open-biosphere/hardware/ground-track-agv/assets/stage-2/step-3-articulated-arm-dock.svg)
 
-### Step-by-Step Autonomous Multi-Agent Runbook
+1. **Alignment & Positioning:** DEGREES OF FREEDOM: 3-DOF | SERVO TORQUE: 25 kg·cm
+2. **Mechanical & Electrical Execution:** Aluminum mini articulated arm with metal gear servos for automatic crop pod hitching.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
 
-1. **Autonomous Route Initiation**: On receiving a harvest dispatch from the Central Controller over Wi-Fi, the AGV unlatches from the inductive charging dock, powers its sensor array, and accelerates to 0.4 m/s.
-2. **Magnetic Line-Tracking Loop**: The `DEV_NAV_SNS` tool runs a closed-loop PD steering algorithm at 100 Hz, centering the AGV over the magnetic floor tape with $< 4$ mm lateral drift.
-3. **LiDAR Sentry & Obstacle Avoidance**: The 2D LiDAR continuously scans at 10 Hz. If an obstacle enters within 0.8 m of the track, the robot decelerates smoothly to a complete stop, sounding an alert tone until the path clears.
-4. **Bioreactor Bay Precision Docking**: Upon sensing the magnetic RFID bay marker at the Revolving Sprout Bioreactor or Skimmer chute, the AGV drops speed to 0.05 m/s, using optical alignment to dock with $\pm 3$ mm precision.
-5. **Autonomous Canister Transfer**: The `DEV_ARM_ACT` tool extends the 3-axis arm, clamps the spent drum handle, and pulls it onto the cargo bed. The AGV shuttles the ripe drum directly to the wash station.
-6. **250ms Fail-Safe Watchdogs**: If BLE connection between Node and any Tool drops for $> 250$ ms, track motors halt and holding torque cuts to 0. If Wi-Fi link to Central Controller is lost, the AGV finishes its immediate local dock waypoint and halts in a safe siding.
+
+### Step 2.4: 120W Magnetic Inductive Charging Receiver Coil
+
+![Step 2.4 Technical Blueprint](/open-biosphere/hardware/ground-track-agv/assets/stage-2/step-4-wireless-charging-coil.svg)
+
+1. **Alignment & Positioning:** POWER: 120W Inductive | ALIGNMENT TOLERANCE: ±20mm
+2. **Mechanical & Electrical Execution:** Underside inductive power receiver coil for autonomous contact-free dock charging.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
+
+
+### Step 2.5: 250ms Watchdog & Track Fail-Safe Verification
+
+![Step 2.5 Technical Blueprint](/open-biosphere/hardware/ground-track-agv/assets/stage-2/step-5-watchdog-verification.svg)
+
+1. **Alignment & Positioning:** BRAKE TIME: < 180ms | WATCHDOG LIMIT: 250ms
+2. **Mechanical & Electrical Execution:** Validating automatic emergency deadman braking within 250ms of beacon signal drop.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
+
+
+### Step-by-Step Operating & Commissioning Runbook
+
+1. **Pre-Flight Mechanical Inspection:** Verify all fasteners are torqued finger-tight or to engineering specification; inspect structural clearances against Datum Z=0.00.
+2. **Electrical & Signal Continuity:** Check wiring harnesses for polarity alignment; ensure physical Master DC Switch is in the OFF position prior to power connection.
+3. **Two-Control Power Sequence (RFC-0005):** Switch Master DC switch to ON; observe 0.91" status OLED initialization sequence displaying firmware build and BLE advertising state.
+4. **Virtual Panel Commissioning:** Open the Open Biosphere companion app, pair via local BLE GATT, and exercise manual jog sliders through full travel envelopes.
+5. **250ms Deadman Watchdog Verification:** Confirm all actuators trip to safe de-energized states immediately upon intentional signal cutoff or emergency power disconnect.
+
 
 ---
 

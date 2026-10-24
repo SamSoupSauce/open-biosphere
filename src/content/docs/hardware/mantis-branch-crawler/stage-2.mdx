@@ -57,110 +57,61 @@ The Stage 2 agentic pack elevates the **Mantis Branch-Crawler Robot** into a ful
 
 ## Part 5: Step-by-Step Commissioning, Provisioning & Autonomous Runbook
 
-Under [RFC-0004](/rfcs/rfc-0004-controller-node-tool) and [RFC-0006](/rfcs/rfc-0006-agnostic-controller-runtime), the **Agentic Autonomous AI Pack** transforms the Mantis Crawler into a lightweight, hierarchical **Controller-Node-Tool (CNT)** harvesting robot. The crawler operates as a dedicated **Mantis Node** commanding modular **Edge Tools** over BLE, while heavy neural vision processing is offloaded to the Central Biosphere Controller over Wi-Fi.
+The following 5 sequential assembly steps guide the physical fabrication, mounting, and wiring of the Mantis Branch-Climbing Harvester (2). Each procedural step is directly anchored by an isolated, reverse-deconstructed vector blueprint adhering to RFC-0010.
 
-### Autonomous Vision & Telemetry Architecture
-- **Mantis Machine Node (ESP32-S3)**: Dual-Core Xtensa LX7 (240 MHz, 8 MB PSRAM) mounted on the spine in an ultra-light enclosure. Hosts an onboard 0.96" I2C OLED display (`[NODE: MANTIS-01 | LINK -> 4096]`) and setup push-button for mobile BLE provisioning. Uplinks to Central Controller via Wi-Fi; coordinates local motion and downlinks to Tools via BLE Central.
-- **Decoupled Stereo Vision & Neural Targeting**: Dual lightweight micro RGB-NIR camera modules (baseline 60 mm) stream video directly to the Central Controller (Agnostic Runtime, e.g. Raspberry Pi 5 + Hailo-8 or x86 Host) over Wi-Fi. The Central Controller runs YOLOv8 ripeness segmentation and stereo triangulation, returning 3D pedicel targeting vectors (, Y, Z$) to the Mantis Node.
-- **Dedicated Modular Edge Tools (ESP32-C3)**: Driven 1:1 by micro ESP32-C3 controllers equipped with 0.42" micro OLED displays and **250ms hardware deadman watchdogs**:
-  - `DEV_ROLLER_DRV`: Micro ESP32-C3 with 0.42" OLED (`TOOL: ROLLER_DRV | LINK: OK`) + 250ms watchdog driving NEMA 14 pinch rollers and traverse motors.
-  - `DEV_CLAMP_ACT`: Micro ESP32-C3 with 0.42" OLED (`TOOL: CLAMP_ACT | LINK: OK`) + 250ms watchdog reading the HX711 24-bit ADC micro-load cell, regulating limb clamp force between 2.0 N (traverse) and 8.5 N max (shear stability).
-  - `DEV_SHEAR_VAC`: Micro ESP32-C3 with 0.42" OLED (`TOOL: SHEAR_VAC | LINK: OK`) + 250ms watchdog pulsing the rotary saw blade and vacuum suction blower.
-- **250ms Deadman Watchdog Fail-Safe**: If any Tool loses BLE connection to the Mantis Node for $> 250$ ms, it drops immediately into high-Z safe state: roller steppers cut holding torque to zero, the clamp returns to safe passive spring position, and the saw blade and vacuum shut down within $< 250$ ms.
+### Step 2.1: Mantis Node & Synchronous Buck Regulator Rigging
 
-```text
-       CONTROLLER-NODE-TOOL (CNT) HIERARCHICAL EDGE ARCHITECTURE
-  =================================================================
-            CENTRAL BIOSPHERE CONTROLLER (Agnostic Runtime / POTFRM-4096)
-            • Emits Isolated Farm AP: SSID [POTFRM-4096] (192.168.42.0/24)
-            • YOLOv8 Stereo Ripeness Detection & 3D Pedicel Triangulation
-                                  │
-                                  │ Isolated Farm Wi-Fi (192.168.42.0/24)
-                                  ▼
-             ┌─────────────────────────────────────────┐
-             │       MANTIS MACHINE NODE (ESP32-S3)    │
-             │  • OLED Display: [NODE: MANTIS-01]      │
-             │  • Setup Push-Button for Mobile BLE     │
-             │  • Subsystem Navigation & Motion Bridge │
-             └────────────────────┬────────────────────┘
-                                  │
-         ┌────────────────────────┼────────────────────────┐
-         │ BLE Downlink           │ BLE Downlink           │ BLE Downlink
-         ▼                        ▼                        ▼
- ┌───────────────┐        ┌───────────────┐        ┌───────────────┐
- │ TOOL:         │        │ TOOL:         │        │ TOOL:         │
- │ DEV_ROLLER_DRV│        │ DEV_CLAMP_ACT │        │ DEV_SHEAR_VAC │
- │ ESP32-C3 Micro│        │ ESP32-C3 Micro│        │ ESP32-C3 Micro│
- │ 0.42" OLED    │        │ 0.42" OLED    │        │ 0.42" OLED    │
- │ 250ms Deadman │        │ 250ms Deadman │        │ 250ms Deadman │
- │ Dual NEMA 14  │        │ HX711 LoadCell│        │ Rotary Shear  │
- │ Pinch Rollers │        │ 8.5N Grip Max │        │ Vacuum Blower │
- └───────────────┘        └───────────────┘        └───────────────┘
-```
+![Step 2.1 Technical Blueprint](/open-biosphere/hardware/mantis-branch-crawler/assets/stage-2/step-1-mantis-node-assembly.svg)
 
-### Step-by-Step Sensor Commissioning & Edge AI Protocol
+1. **Alignment & Positioning:** INPUT: 18-24V DC | OUTPUT: 5.1V 5.0A Regulated
+2. **Mechanical & Electrical Execution:** ESP32-S3 node controller with high-efficiency 5V 5A step-down DC-DC buck converter.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
 
-#### Step 3.1: Mantis Node & Power Board Rigging
-1. Mount the ESP32-S3 Node with 0.96" I2C OLED display and physical setup push-button inside the spine enclosure.
-2. Connect power via an onboard 5V 5A synchronous step-down DC-DC converter tapped from the 24V bus rail.
-3. Verify power rail stability under full stepper load (< 45 mV ripple).
 
-#### Step 3.2: Stereo RGB-NIR Camera Rigging & RTSP Link
-1. Mount dual micro camera sensors in a rigid 3D-printed PETG crossbar with exactly 60 mm optical separation.
-2. Install 850 nm optical bandpass filters over both lenses to isolate chlorophyll reflection shifts.
-3. Configure camera transmitter to stream stereo frames over local Wi-Fi to the Central Controller.
+### Step 2.2: Stereo RGB-NIR Cameras & RTSP Video Transmitter
 
-#### Step 3.3: Micro-Load Cell Clamping Tool (`DEV_CLAMP_ACT`)
-1. Mount a 20 N miniature bending beam load cell between the scissor clamping arm and the tensioning actuator.
-2. Connect load cell leads to HX711 24-bit ADC module wired to `DEV_CLAMP_ACT` tool controller (ESP32-C3).
-3. Calibrate load cell reading; ensure tool firmware hard-clamps grip force at 8.5 N maximum to protect plant cambium.
+![Step 2.2 Technical Blueprint](/open-biosphere/hardware/mantis-branch-crawler/assets/stage-2/step-2-stereo-cameras-stream.svg)
 
-#### Step 3.4: Overhead Gantry Slip-Ring Auto-Dock Latch
-1. Install an overhead spring-loaded pogo-pin power shoe on top of the chassis.
-2. Align the pogo-pin shoe with the overhead gantry 24V DC bus line.
-3. Install an optical fiducial marker on the docking shoe for gantry camera alignment.
+1. **Alignment & Positioning:** RESOLUTION: 2x 1080p | NIR BANDPASS: 850nm
+2. **Mechanical & Electrical Execution:** Dual micro binocular cameras providing real-time 3D depth maps and fruit ripeness indexing.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
 
-#### Step 3.5: Provisioning & 250ms Watchdog Verification
-1. Power on Central Controller; verify active Cluster ID on OLED, terminal stdout, or BLE beacon (`POTFRM-4096`).
-2. Power on Mantis Node; display shows `[NODE UNPAIRED - PAIR VIA BLE]`.
-3. Press physical setup button on Node; connect via mobile companion app over BLE, enter `4096`.
-4. Node commits credentials to NVS, links to `POTFRM-4096`, registers at `ws://192.168.42.1:8443/register`, and updates display to `[ONLINE | LINK -> 4096]`.
-5. Verify Node auto-discovers and binds all three BLE Tools.
-6. Test fail-safe watchdog: drop BLE link to `DEV_ROLLER_DRV`; verify roller steppers drop holding torque to zero in $< 250$ ms.
 
-```mermaid
-stateDiagram-v2
-    [*] --> Wire_Patrol: Boot & Home
-    Wire_Patrol --> Cluster_Detected: Central Controller YOLO Detects Ripe Fruit
-    
-    state Cluster_Detected {
-        [*] --> Stereo_Triangulation
-        Stereo_Triangulation --> Clamp_Limb: Target Pedicel [X,Y,Z] via Wi-Fi
-        Clamp_Limb --> Torque_Hold: DEV_CLAMP_ACT Holds 6.0 N (Max 8.5 N)
-    }
+### Step 2.3: 20 N Micro-Load Cell Clamping Tool Integration
 
-    Cluster_Detected --> Harvest_Execution: Aligned (< 2mm error)
+![Step 2.3 Technical Blueprint](/open-biosphere/hardware/mantis-branch-crawler/assets/stage-2/step-3-load-cell-clamping-tool.svg)
 
-    state Harvest_Execution {
-        [*] --> Vacuum_Engage
-        Vacuum_Engage --> Blade_Spin: DEV_SHEAR_VAC Spins Blade
-        Blade_Spin --> Blade_Pulse: Cut 0.3s
-        Blade_Pulse --> Vacuum_Hold: Berry in Chute
-    }
+1. **Alignment & Positioning:** RANGE: 0 - 20 N | RESOLUTION: 0.01 N
+2. **Mechanical & Electrical Execution:** Sub-miniature bending beam strain gauge and HX711 ADC measuring branch grip firmness.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
 
-    Harvest_Execution --> Wire_Patrol: Harvest Successful
-    Wire_Patrol --> Gantry_Dock: Battery < 20% or Tote Full
-    Gantry_Dock --> Wire_Patrol: Payload Transferred to AGV
-```
 
-### Step-by-Step Autonomous Multi-Agent Runbook
+### Step 2.4: Overhead Gantry Slip-Ring Auto-Dock Latch
 
-1. **Autonomous Wakeup & Rail Scan**: On receiving a scheduled patrol command from the Central Controller over Wi-Fi, the Mantis crawler unlatches from its gantry docking shoe, signals `DEV_CLAMP_ACT` to clamp the trellis wire at 4.0 N, and traverses at 60 mm/s via `DEV_ROLLER_DRV`.
-2. **Central Controller Neural Detection**: The Central Controller Hailo-8 NPU continuously analyzes the stereo video feed. It identifies fruit clusters, classifies ripeness using NIR spectral absorption ratios, and calculates 3D pedicel targeting vectors.
-3. **Target Navigation**: The Mantis Node converts the pedicel coordinates into motor step counts, inching the chassis until the cutter head aligns with the fruit pedicel to $\pm 1.5$ mm accuracy.
-4. **Adaptive 8.5 N Branch Clamping**: `DEV_CLAMP_ACT` drives the clamp servo. The onboard HX711 load cell monitors contact force at 80 Hz; if force reaches 8.5 N, clamping halts instantly, securing the cutter rigidly without crushing plant tissue.
-5. **Vacuum Shear Execution**: The Mantis Node signals `DEV_SHEAR_VAC` over BLE; the 24V blower spins up; vacuum pulls the fruit into the TPU funnel; the rotary saw blade pulses for 300 ms, severing the pedicel cleanly into the internal hopper.
-6. **250ms Fail-Safe Watchdogs**: If BLE connection to `DEV_ROLLER_DRV`, `DEV_CLAMP_ACT`, or `DEV_SHEAR_VAC` drops for $> 250$ ms, each tool immediately trips into safe state. If Wi-Fi link to Central Controller is lost, the crawler clamps safely in place at 4.0 N and halts.
+![Step 2.4 Technical Blueprint](/open-biosphere/hardware/mantis-branch-crawler/assets/stage-2/step-4-pogo-dock-slipring.svg)
+
+1. **Alignment & Positioning:** CONTACTS: 8-Pin Pogo Gold | RATED: 24V 3A
+2. **Mechanical & Electrical Execution:** Gold spring pogo-pin dock interface allowing automatic recharge from overhead gantry.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
+
+
+### Step 2.5: 250ms CNT Watchdog & Fail-Safe Verification
+
+![Step 2.5 Technical Blueprint](/open-biosphere/hardware/mantis-branch-crawler/assets/stage-2/step-5-watchdog-verification.svg)
+
+1. **Alignment & Positioning:** TIMEOUT: 250ms | SAFE STATE: Mechanical Lock
+2. **Mechanical & Electrical Execution:** Branch-lock deadman verification; roller steppers freeze mechanically if signal is lost.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
+
+
+### Step-by-Step Operating & Commissioning Runbook
+
+1. **Pre-Flight Mechanical Inspection:** Verify all fasteners are torqued finger-tight or to engineering specification; inspect structural clearances against Datum Z=0.00.
+2. **Electrical & Signal Continuity:** Check wiring harnesses for polarity alignment; ensure physical Master DC Switch is in the OFF position prior to power connection.
+3. **Two-Control Power Sequence (RFC-0005):** Switch Master DC switch to ON; observe 0.91" status OLED initialization sequence displaying firmware build and BLE advertising state.
+4. **Virtual Panel Commissioning:** Open the Open Biosphere companion app, pair via local BLE GATT, and exercise manual jog sliders through full travel envelopes.
+5. **250ms Deadman Watchdog Verification:** Confirm all actuators trip to safe de-energized states immediately upon intentional signal cutoff or emergency power disconnect.
+
 
 ---
 

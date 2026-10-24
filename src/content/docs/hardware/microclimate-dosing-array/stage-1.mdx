@@ -55,97 +55,61 @@ The Stage 1 electromechanical pack motorizes the **Microclimate & Automated Dosi
 
 ## Part 5: Step-by-Step Retrofit, Wiring & Operating Protocol
 
-Under [RFC-0005](/rfcs/rfc-0005-hardware-interlocks-ble-virtual-panel), physical control panels with dedicated priming buttons, rotary dials, and multi-turn analog potentiometers are strictly banned across all machine tiers to eliminate liquid breach points and control priority contention.
+The following 5 sequential assembly steps guide the physical fabrication, mounting, and wiring of the Microclimate & Automated Dosing Array (1). Each procedural step is directly anchored by an isolated, reverse-deconstructed vector blueprint adhering to RFC-0010.
 
-Add-On 1 motorizes chemical delivery governed by the **Strict Two-Control Physical Standard**:
-1. **Master Hardware DC Power Switch**: Heavy-duty toggle switch directly isolating the 12V DC power bus.
-2. **"Nuke & Pave" SD Factory Restore Button**: Dedicated recessed tactile switch wired to trigger an automatic secondary bootloader re-flash from micro-SD storage.
+### Step 1.1: 12V Peristaltic Dosing Pump Bank Mounting
 
-All channel priming, calibrated pulse volume metering (0.1 to 30.0 mL), and atmospheric $CO_2$ solenoid pulsing are conducted via the **Flutter Companion App Virtual Panel** over direct local BLE GATT.
+![Step 1.1 Technical Blueprint](/open-biosphere/hardware/microclimate-dosing-array/assets/stage-1/step-1-peristaltic-pumps.svg)
 
-### Electromechanical Actuation Architecture & Decoupling
-- **Peristaltic Dosing Pumps**: Six 12V DC brushed peristaltic pumps with 3-roller rotors and food-grade PharMed BPT / silicone tubing ($0.15$ mL per rotor revolution, 100 mL/min peak).
-- **Mechanical Decoupling**: The 3-way L-port valves from the Base build connect to the pump outputs. Rotating the valve handle 90° isolates the peristaltic tubing completely, restoring instant gravity-drain burette operation if power fails.
-- **Strict Two-Control Enclosure**: An IP65 waterproof enclosure mounted beside the manifold contains:
-  - Heavy-duty toggle switch directly isolating the 12V DC supply line.
-  - Recessed tactile button next to the 0.91" I2C OLED display (`[DOSER-A1 | BLE READY]`) for 5-second SD recovery reflash.
-  - Micro-SD card slot module pre-loaded with golden recovery `firmware.bin` and `config.default`.
-- **Atmospheric Gas Solenoid**: 12V DC direct-acting brass $CO_2$ solenoid valve with a mechanical manual override thumb-pin, allowing gas to be locked on, pulsed electrically, or opened by hand.
-- **Ephemeral BLE Virtual Panel**: When nearby, an operator opens the Flutter companion app on mobile device. The app auto-discovers the doser over BLE GATT and displays real-time virtual touch controls: 6-channel momentary virtual prime pads, calibrated pulse volume sliders, and a $CO_2$ solenoid purge toggle.
+1. **Alignment & Positioning:** FLOW RATE: 100 mL/min | HEAD: 3 Roller Rotor
+2. **Mechanical & Electrical Execution:** 4x precision positive displacement peristaltic pumps bolted to vibration-dampened brackets.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
 
-```
-       ELECTROMECHANICAL WIRING & BLE VIRTUAL DOSING SCHEMATIC
-  =================================================================
-  [12V 5A MeanWell Power Supply]
-         |
-         +----[Master DC Switch]----+----(OLED: [DOSER-A1 | BLE READY])
-                                    |
-         +--------------------------+---------------------------+
-         |                          |                           |
-         v                          v                           v
-  [ESP32 BLE Controller]     [ULN2803A Driver CH1-6]     [12V CO2 Solenoid Relay]
-  (Recessed SD Reset Button)        |                           |
-  (Micro-SD Golden Recovery)        |                           v
-         |                          +---------------+    [12V Brass Valve]
-         |                          |               |           |
-         v                          v               v           v
-  [Peristaltic Pumps 1-3]    [Peristaltic Pumps 4-6]      (CO2 Gas Line)
-  (N, P, K Solutions)        (Micro, pH Down, pH Up)
-         ^
-         : Direct BLE GATT (No Contention)
-         v
-  [Flutter Companion App Virtual Panel]
-  (Virtual Priming Pads, Calibrated Dose Sliders, CO2 Pulse Toggle)
-```
 
-### Step-by-Step Retrofit Protocol
+### Step 1.2: Two-Control Enclosure & Driver Board Assembly
 
-#### Step 2.1: Peristaltic Pump Mounting
-1. Bolt six 12V peristaltic pump heads into the pre-drilled central holes on the acrylic backplane using M3 stainless screws.
-2. Plumb the suction tube of each pump directly into concentrated stock gallon jugs resting beneath the panel.
-3. Plumb the discharge tube of each pump into Port 3 (Side) of the corresponding 3-way L-port bypass valve.
+![Step 1.2 Technical Blueprint](/open-biosphere/hardware/microclimate-dosing-array/assets/stage-1/step-2-two-control-enclosure.svg)
 
-#### Step 2.2: Two-Control Enclosure & Driver Board Assembly
-1. Mount an IP65 sealed ABS junction box on the lower aluminum rail.
-2. Install the heavy-duty inline 12V master switch, recessed SD reset tactile button, micro-SD slot module, and 0.91" I2C OLED display.
-3. Mount the ULN2803A 8-channel Darlington driver board and ESP32 BLE peripheral controller inside the junction box.
-4. Wire driver outputs to the six peristaltic pump motor leads.
+1. **Alignment & Positioning:** STANDARD: RFC-0005 | MOSFETS: 8x Optoisolated
+2. **Mechanical & Electrical Execution:** Master DC switch, recessed SD reset, 8-channel MOSFET driver, and 0.91" I2C status OLED.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
 
-#### Step 2.3: 12V $CO_2$ Electronic Solenoid Installation
-1. Thread a 12V DC normally-closed brass solenoid valve inline between the gas regulator and the high-precision needle valve.
-2. Wire solenoid coil through driver channel 7 with flyback diode protection.
-3. Test manual override: press the spring-loaded brass pin on the solenoid body to verify gas flows even with power disconnected.
 
-#### Step 2.4: Power Distribution & BLE Firmware Flashing
-1. Mount the 12V 5A MeanWell power supply to the backplane base with an IEC fused power switch.
-2. Flash the ESP32 controller with the Doser Virtual Panel peripheral firmware; verify it advertises `[DOSER-A1]`.
-3. Verify onboard OLED renders `[DOSER-A1 | BLE READY]`.
+### Step 1.3: 12V DC Brass CO2 Solenoid Valve Installation
 
-#### Step 2.5: Volumetric Calibration Routine via Mobile App
-1. Place a 50 mL graduated cylinder under each pump discharge line.
-2. Open the Flutter companion app; tap the virtual prime pad for Channel 1 for exactly 10 seconds.
-3. Adjust calibration factor in app until 10-second pulse registers exactly 16.6 mL ± 0.2 mL. Repeat for all 6 channels.
+![Step 1.3 Technical Blueprint](/open-biosphere/hardware/microclimate-dosing-array/assets/stage-1/step-3-co2-solenoids.svg)
 
-```mermaid
-flowchart LR
-    A[Flutter Companion App: Virtual Panel] -->|BLE GATT Packets| B[ESP32 BLE Peripheral Controller]
-    B -->|Logic Signals| C[ULN2803A Darlington Driver]
-    D[12V 5A Power Supply] -->|Master DC Switch| C
-    C --> E[Six 12V Peristaltic Pumps: Calibrated Dosing]
-    C --> F[12V Brass Gas Solenoid]
-    E & F --> G[Nutrient & Carbon Dioxide Enrichment]
-```
+1. **Alignment & Positioning:** VOLTAGE: 12V DC | POWER: 6.5W | OVERRIDE: Mechanical
+2. **Mechanical & Electrical Execution:** Normally-closed direct-acting brass solenoid valve with manual override lever.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
 
-### Step-by-Step BLE Virtual Panel Operating Runbook
 
-1. **Power Initialization**: Flip master 12V DC toggle switch ON. The onboard 0.91" OLED illuminates: `[DOSER-A1 | BLE READY]`. Verify all six peristaltic lines are primed with zero bubbles.
-2. **Walk-Up BLE Virtual Panel Connection**: Open the Flutter companion app on mobile device. Select `DOSER-A1` from discovered BLE peripherals. The app instantly renders the 6-channel Dosing Virtual Panel.
-3. **Channel Priming**: If an air bubble is spotted in a suction line, tap and hold the corresponding virtual prime button in the app until solid liquid discharges into the manifold.
-4. **Setting Calibrated Doses**: Inspect current water EC and pH. Adjust virtual dose sliders in the app (e.g. Channel 1: 5.2 mL of Nitrogen stock; Channel 5: 3.0 mL of pH Down).
-5. **Triggering the Dosing Cycle**: Tap the virtual "Execute Dosing Cycle" button. The selected peristaltic pumps run for their calibrated durations, automatically delivering the exact chemical volumes before shutting off.
-6. **$CO_2$ Enrichment Toggle**: Toggle the virtual $CO_2$ switch ON in the app. The solenoid opens, releasing $CO_2$ through the pre-set needle valve at a steady 2 bubbles/second.
-7. **"Nuke & Pave" SD Recovery Protocol**: If calibration values corrupt or firmware locks up, hold the physical recessed reset button for 5 seconds during power-on. The secondary bootloader reflashes factory baseline firmware from micro-SD in 4 seconds.
-8. **Immediate Zero-Power Bypass Override**: If power fails during an outage, turn the 3-way L-port valves 90° to open the burette ports, fill burettes by hand, and resume manual gravity dosing.
+### Step 1.4: Power Distribution & BLE Firmware Flashing
+
+![Step 1.4 Technical Blueprint](/open-biosphere/hardware/microclimate-dosing-array/assets/stage-1/step-4-power-ble-wiring.svg)
+
+1. **Alignment & Positioning:** SUPPLY: 12V 5A (60W) | PROTOCOL: BLE GATT Characteristic
+2. **Mechanical & Electrical Execution:** MeanWell 12V 5A power supply wiring and Flutter BLE companion app peripheral pairing.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
+
+
+### Step 1.5: Mobile App Volumetric Pump Calibration Routine
+
+![Step 1.5 Technical Blueprint](/open-biosphere/hardware/microclimate-dosing-array/assets/stage-1/step-5-volume-calibration.svg)
+
+1. **Alignment & Positioning:** ACCURACY: ±0.5 mL | PULSE RESOLUTION: 10ms
+2. **Mechanical & Electrical Execution:** Executing single-stroke 50mL calibration pulses via virtual slider on companion app.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
+
+
+### Step-by-Step Operating & Commissioning Runbook
+
+1. **Pre-Flight Mechanical Inspection:** Verify all fasteners are torqued finger-tight or to engineering specification; inspect structural clearances against Datum Z=0.00.
+2. **Electrical & Signal Continuity:** Check wiring harnesses for polarity alignment; ensure physical Master DC Switch is in the OFF position prior to power connection.
+3. **Two-Control Power Sequence (RFC-0005):** Switch Master DC switch to ON; observe 0.91" status OLED initialization sequence displaying firmware build and BLE advertising state.
+4. **Virtual Panel Commissioning:** Open the Open Biosphere companion app, pair via local BLE GATT, and exercise manual jog sliders through full travel envelopes.
+5. **250ms Deadman Watchdog Verification:** Confirm all actuators trip to safe de-energized states immediately upon intentional signal cutoff or emergency power disconnect.
+
 
 ---
 

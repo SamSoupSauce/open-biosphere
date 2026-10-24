@@ -1,0 +1,117 @@
+---
+title: "RFC-0010: Stepwise Reverse-Deconstructed Blueprint Standard"
+description: "Mandates 1:1 blueprint-to-step pairing across all machine stage assembly procedures with persistent viewing perspective, spatial datum anchoring, and layer-by-layer reverse inspection."
+sidebar:
+  badge:
+    text: "STANDARD"
+    variant: "success"
+---
+
+import { Card, CardGrid, LinkButton } from '@astrojs/starlight/components';
+
+# RFC-0010: Stepwise Reverse-Deconstructed Blueprint Standard
+
+* **RFC ID:** `RFC-0010` (Supersedes `DOCS-002`)
+* **Author:** Documentation Systems, Technical CAD & Physical Assembly Engineering Team
+* **Status:** `Implemented / Canonical Standard`
+* **Target Classification:** Documentation / Technical Illustration / CAD Systems
+* **Applicable Scope:** All 24 Machine Stage Manuals (`hardware/<machine-slug>/stage-{0,1,2}.mdx`)
+
+---
+
+## 1. Executive Summary & Problem Statement
+
+A single static technical blueprint illustrating only the completed machine assembly leaves builders guessing regarding:
+* **Internal Fastener Access:** How to reach inner T-nuts, blind tapped holes, and retaining clips once outer panels are bolted on.
+* **Component Installation Order:** Critical assembly sequences where installing part B before part A creates mechanical interference and forces full disassembly.
+* **Tolerances & Clearances:** Shimming, belt tensioning, and bearing press-fit steps that must be verified before enclosing mechanisms.
+* **Field Service & Reverse Troubleshooting:** When a jam occurs, a technician needs to reverse the assembly sequence layer-by-layer to isolate failing sub-components without destroying surrounding assemblies.
+
+Standard CAD exploded views often explode parts radially into 3D space, which obscures the practical physical order of installation and hides tool clearance envelopes.
+
+**RFC-0010** mandates that **every machine stage (`stage-0.mdx`, `stage-1.mdx`, `stage-2.mdx`) must feature a stepwise sequence of vector blueprints (`.svg`)**. The visual protocol begins with the fully integrated stage assembly and strips away exactly one discrete mechanical/electrical layer per step in reverse order (or builds upward sequentially 1:1), directly paired with the corresponding procedural instructions.
+
+---
+
+## 2. Structural & Architectural Directives
+
+### 2.1 The "1:1 Blueprint-to-Step" Invariant
+1. Every procedural assembly step (`### Step X.Y`) in Part 5 of a stage manual must have a dedicated, matching visual blueprint:
+   `/open-biosphere/hardware/<machine-slug>/assets/stage-<N>/step-<Y>-<slug>.svg`.
+2. Generic placeholder diagrams, duplicate overview diagrams, or text-only assembly steps are strictly prohibited.
+3. If an assembly procedure has 5 sequential steps, it must contain exactly 5 distinct stepwise vector diagrams plus the master stage elevation overview.
+
+### 2.2 Visual Deconstruction Order & Orientation
+* **Persistent Orientation Anchor:** All stepwise SVGs for a given machine must preserve an identical viewing perspective (standard isometric, side elevation, or cross-section) and reference the canonical spatial datum ($Z=0.00$ at coping baseline).
+* **Stepwise Delta Highlighting:**
+  * **Active Step Components:** The specific parts being installed, bolted, or torqued in the current step must be rendered in high-contrast accent stroke (`#38bdf8`, `#0ea5e9`) with solid fills and vivid callout pointers.
+  * **Foundation Context Layers:** Previously installed structural foundations must be rendered in muted, low-contrast hairline outlines (`#334155`, `#1e293b`) with dashed lines to show internal positioning.
+  * **Future Unassembled Layers:** Components belonging to subsequent steps must not appear until their respective step is reached.
+* **Reverse Inspection Utility:** The sequence allows a builder to scroll in reverse to troubleshoot jams, locate internal fasteners, or plan retrofits without destructive disassembly.
+
+---
+
+## 3. Directory & Asset Hierarchy
+
+Assets are organized symmetrically in both the documentation source tree and the static public assets tree:
+
+```text
+src/content/docs/hardware/<machine-slug>/
+├── stage-0.mdx
+├── stage-1.mdx
+├── stage-2.mdx
+└── assets/
+    ├── stage-0/
+    │   ├── master-overview.svg
+    │   ├── step-1-<name>.svg
+    │   ├── step-2-<name>.svg
+    │   ├── step-3-<name>.svg
+    │   ├── step-4-<name>.svg
+    │   └── step-5-<name>.svg
+    ├── stage-1/
+    │   ├── master-overview.svg
+    │   └── step-*.svg
+    └── stage-2/
+        ├── master-overview.svg
+        └── step-*.svg
+```
+
+Public distribution mirror: `public/hardware/<machine-slug>/assets/stage-<N>/step-*.svg`.
+
+---
+
+## 4. Markdown Integration Pattern
+
+Each step block in Part 5 pairs its instructional breakdown directly with its isolated blueprint:
+
+```markdown
+### Step 1.2: Wedge-Wire Screen Installation
+
+![Step 1.2 Mechanical Alignment](/open-biosphere/hardware/fluidic-skimmer-loop/assets/stage-0/step-2-wedge-wire-mount.svg)
+
+1. **Alignment:** Seat the 316L wedge-wire screen (150µm slot, 300mm x 400mm) against the internal side flanges at an exact 38° decline.
+2. **Gasket Seating:** Lay 3mm EPDM closed-cell rubber sealing strips along the perimeter channel to prevent frond blow-by.
+3. **Clamping:** Secure the screen using four M4 thumb-screws through the clamping rails. Torque finger-tight (approx. 0.8 N·m) to prevent gasket over-compression.
+```
+
+---
+
+## 5. Implementation Status Across All 8 Machines
+
+All 24 machine stage documentation manuals across the 8 autonomous agricultural machines conform to the RFC-0010 Stepwise Reverse-Deconstructed Blueprint Standard:
+
+| Machine Platform | Stage 0 (Base) | Stage 1 (Semi-Auto) | Stage 2 (Agentic) | Total Stepwise SVGs |
+| :--- | :--- | :--- | :--- | :--- |
+| **Aerial Spotter & Pollinator Drone** | 5 Steps + Overview | 5 Steps + Overview | 5 Steps + Overview | 18 SVGs |
+| **Fluidic Skimmer & Dewatering Separator** | 5 Steps + Overview | 5 Steps + Overview | 5 Steps + Overview | 18 SVGs |
+| **Ground Track AGV Pod Carrier** | 5 Steps + Overview | 5 Steps + Overview | 5 Steps + Overview | 18 SVGs |
+| **Mantis Branch-Climbing Harvester** | 5 Steps + Overview | 5 Steps + Overview | 5 Steps + Overview | 18 SVGs |
+| **Microclimate & Automated Dosing Array** | 5 Steps + Overview | 5 Steps + Overview | 5 Steps + Overview | 18 SVGs |
+| **2-Axis Overhead Gantry Array** | 5 Steps + Overview | 5 Steps + Overview | 5 Steps + Overview | 18 SVGs |
+| **Revolving Sprout Bioreactor Drum** | 5 Steps + Overview | 5 Steps + Overview | 5 Steps + Overview | 18 SVGs |
+| **TPS Aeroponic Root-Zone Chamber** | 5 Steps + Overview | 5 Steps + Overview | 5 Steps + Overview | 18 SVGs |
+| **Total Blueprint Inventory** | **48 SVGs** | **48 SVGs** | **48 SVGs** | **144 SVGs** |
+
+---
+
+[Back to Specifications & RFCs](/open-biosphere/rfcs/board/)

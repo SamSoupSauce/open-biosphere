@@ -54,110 +54,61 @@ The Stage 2 agentic pack elevates the **TPS Aeroponic Root-Zone Chamber** into a
 
 ## Part 5: Step-by-Step Commissioning, Provisioning & Autonomous Runbook
 
-Under [RFC-0004](/rfcs/rfc-0004-controller-node-tool) and [RFC-0006](/rfcs/rfc-0006-agnostic-controller-runtime), the **Agentic Autonomous AI Pack** transforms the chamber into an automated **Controller-Node-Tool (CNT)** aeroponic production cell. Operating as a dedicated **Root Chamber Node** commanding modular **Edge Tools** over BLE, it dynamically regulates root hydration based on infrared transpiration telemetry and coordinates robotic mini-tuber extraction with the 2-Axis Overhead Gantry with 250ms watchdog protection.
+The following 5 sequential assembly steps guide the physical fabrication, mounting, and wiring of the TPS Aeroponic Root-Zone Chamber (2). Each procedural step is directly anchored by an isolated, reverse-deconstructed vector blueprint adhering to RFC-0010.
 
-### Autonomous Vision & Telemetry Architecture
-- **Root Chamber Node (ESP32-S3)**: Dual-Core Xtensa LX7 (240 MHz, 8 MB PSRAM) mounted inside an IP65 enclosure on the tub exterior governed by the **Strict Two-Control Physical Standard** (Master DC Power Switch and Recessed SD Reset Button alongside 0.96" I2C OLED `[NODE: ROOT-01 | LINK -> 4096]`). Uplinks to Central Controller via Wi-Fi; downlinks to Tools via BLE Central.
-- **Infrared Root Transpiration Sensing**: Melexis MLX90614 non-contact infrared pyrometer sensor mounted in the tub lid, measuring root-zone surface temperature to ± 0.2°C to detect crop transpiration stress in real time.
-- **Dedicated Modular Edge Tools (ESP32-C3)**: Driven 1:1 by micro ESP32-C3 controllers equipped with 0.42" micro OLED displays and **250ms hardware deadman watchdogs**:
-  - `DEV_PUMP_RELAY`: Micro ESP32-C3 with 0.42" OLED (`TOOL: PUMP_RELAY | LINK: OK`) + 250ms watchdog driving 24V 120 PSI booster pump and 24V fast-bleed depressurization solenoid with dry-run float interrupt.
-  - `DEV_ROOT_TELE`: Micro ESP32-C3 with 0.42" OLED (`TOOL: ROOT_TELE | LINK: OK`) reading the MLX90614 infrared root surface thermometer and dual optical liquid level sensors.
-  - `DEV_DOCK_LATCH`: Micro ESP32-C3 with 0.42" OLED (`TOOL: DOCK_LATCH | LINK: OK`) + 250ms watchdog governing the gantry harvest docking collar latch.
-- **250ms Deadman Watchdog Fail-Safe**: If `DEV_PUMP_RELAY` loses BLE connection to the Root Chamber Node for $> 250$ ms, it cuts pump power immediately and opens the bleed valve, preventing root saturation or pump burnout.
-- **Autonomous Gantry Docking Collar**: Molded silicone suction port on the tub lid, allowing the 2-Axis Overhead Gantry's tuber extraction toolhead to dock and pull mature mini-tubers non-destructively.
+### Step 2.1: Root Chamber Node & Fast-Bleed Solenoid Assembly
 
-```text
-       CONTROLLER-NODE-TOOL (CNT) HIERARCHICAL EDGE ARCHITECTURE
-  =================================================================
-            CENTRAL BIOSPHERE CONTROLLER (Agnostic Runtime / POTFRM-4096)
-            • Emits Isolated Farm AP: SSID [POTFRM-4096] (192.168.42.0/24)
-            • Crop Growth Recipes & Overhead Gantry Harvest Coordination
-                                  │
-                                  │ Isolated Farm Wi-Fi (192.168.42.0/24)
-                                  ▼
-             ┌─────────────────────────────────────────┐
-             │    ROOT CHAMBER MACHINE NODE (ESP32-S3) │
-             │  • OLED Display: [NODE: ROOT-01]        │
-             │  • Setup Push-Button for Mobile BLE     │
-             │  • FreeRTOS Duty Cycle & Transpiration  │
-             └────────────────────┬────────────────────┘
-                                  │
-         ┌────────────────────────┼────────────────────────┐
-         │ BLE Downlink           │ BLE Downlink           │ BLE Downlink
-         ▼                        ▼                        ▼
- ┌───────────────┐        ┌───────────────┐        ┌───────────────┐
- │ TOOL:         │        │ TOOL:         │        │ TOOL:         │
- │ DEV_PUMP_RELAY│        │ DEV_ROOT_TELE │        │ DEV_DOCK_LATCH│
- │ ESP32-C3 Micro│        │ ESP32-C3 Micro│        │ ESP32-C3 Micro│
- │ 0.42" OLED    │        │ 0.42" OLED    │        │ 0.42" OLED    │
- │ 250ms Deadman │        │ MLX90614 IR   │        │ 250ms Deadman │
- │ 120 PSI Pump  │        │ Dual Optical  │        │ Gantry Dock   │
- │ Bleed Solenoid│        │ Float Sensors │        │ Silicone Latch│
- └───────────────┘        └───────────────┘        └───────────────┘
-```
+![Step 2.1 Technical Blueprint](/open-biosphere/hardware/tps-root-chamber/assets/stage-2/step-1-root-node-assembly.svg)
 
-### Step-by-Step Sensor Commissioning & Edge AI Protocol
+1. **Alignment & Positioning:** NODE: ESP32-S3 8MB PSRAM | VALVE: 24V Fast Exhaust
+2. **Mechanical & Electrical Execution:** ESP32-S3 dual-core node controller wired to 24V fast-bleed depressurization exhaust valve.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
 
-#### Step 3.1: Root Chamber Node & Relay Assembly
-1. Mount the ESP32-S3 Node with 0.96" I2C OLED display and physical setup push-button inside the IP65 enclosure.
-2. Mount the `DEV_PUMP_RELAY` tool board (ESP32-C3) connected to optocoupled solid-state relays for pump and bleed valve control.
-3. Verify manual mechanical countdown timer remains connected in parallel for manual backup.
 
-#### Step 3.2: MLX90614 Non-Contact Infrared Root Sensor (`DEV_ROOT_TELE`)
-1. Mount the MLX90614 infrared temperature sensor in a 3D-printed light-shielded silicone grommet aiming downward at root mass.
-2. Wire sensor to `DEV_ROOT_TELE` tool (ESP32-C3) over I2C (SDA: GPIO 8, SCL: GPIO 9).
-3. Verify root temperature reads accurately on tool OLED within 18.0°C to 24.0°C.
+### Step 2.2: Melexis MLX90614 Non-Contact IR Root Sensor Rigging
 
-#### Step 3.3: 24V Fast-Bleed Depressurization Valve Installation
-1. Tee a 24V DC normally-closed high-speed solenoid valve into the nozzle manifold pressure line, routing its exhaust port back to drain.
-2. Wire solenoid to `DEV_PUMP_RELAY` tool channel 2.
-3. Program cutoff sequence: when pump turns OFF, trigger solenoid for 400 ms, dropping manifold pressure from 120 PSI to 0 PSI in 80 ms to eliminate nozzle dripping.
+![Step 2.2 Technical Blueprint](/open-biosphere/hardware/tps-root-chamber/assets/stage-2/step-2-infrared-root-temp.svg)
 
-#### Step 3.4: Dual Optical Dry-Run Float Installation
-1. Install two optical liquid level sensors in the suction line manifold: one at 1-gallon warning mark and one at critical intake port.
-2. Wire sensors directly to `DEV_ROOT_TELE` tool digital interrupt inputs.
-3. Verify cutoff safety: removing liquid triggers pump shutdown within 25 milliseconds.
+1. **Alignment & Positioning:** ACCURACY: ±0.5°C | FIELD OF VIEW: 35° Cone
+2. **Mechanical & Electrical Execution:** Medical-grade optical pyrometer aimed at bare root mass to measure transpiration stress.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
 
-#### Step 3.5: Provisioning & 250ms Watchdog Verification
-1. Power on Central Controller; verify active Cluster ID on OLED, terminal stdout, or BLE beacon (`POTFRM-4096`).
-2. Power on Root Chamber Node; display shows `[NODE UNPAIRED - PAIR VIA BLE]`.
-3. Press physical setup button on Node; connect via mobile companion app over BLE, enter `4096`.
-4. Node commits credentials to NVS, links to `POTFRM-4096`, registers at `ws://192.168.42.1:8443/register`, and updates display to `[ONLINE | LINK -> 4096]`.
-5. Verify Node auto-discovers and binds all three BLE Tools.
-6. Test fail-safe watchdog: drop BLE link to `DEV_PUMP_RELAY`; verify booster pump power cuts in $< 250$ ms.
 
-```mermaid
-stateDiagram-v2
-    [*] --> Standby_Telemetry: Power On & Sensor Check
-    Standby_Telemetry --> Transpiration_Check: 1 Hz Telemetry
-    
-    state Transpiration_Check {
-        [*] --> Read_IR_Root_Temp
-        Read_IR_Root_Temp --> Check_Interval: Temp Normal (< 22C)
-        Read_IR_Root_Temp --> Accelerated_Mist: Temp Elevated (> 22C)
-    }
+### Step 2.3: Dual Optical Infrared Liquid Level Sensor Mounting
 
-    Transpiration_Check --> Misting_Pulse: Timer = 180s (or Stress Trigger)
+![Step 2.3 Technical Blueprint](/open-biosphere/hardware/tps-root-chamber/assets/stage-2/step-3-optical-level-floats.svg)
 
-    state Misting_Pulse {
-        [*] --> Check_Liquid_Sensors
-        Check_Liquid_Sensors --> Fire_120PSI_Pump: Water Confirmed (5s Pulse)
-        Fire_120PSI_Pump --> Fast_Bleed_Solenoid: Pump Off -> 400ms Vent
-    }
+1. **Alignment & Positioning:** PROBES: 2x Optical Prism | DRY-RUN RESPONSE: < 10ms
+2. **Mechanical & Electrical Execution:** Solid-state polysulfone level probes detecting high nutrient level and pump dry-run cutoff.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
 
-    Misting_Pulse --> Standby_Telemetry: Cycle Complete
-    Standby_Telemetry --> Gantry_Harvest_Dock: Gantry Harvest Signal via Wi-Fi
-    Gantry_Harvest_Dock --> Standby_Telemetry: Mini-Tubers Harvested
-```
 
-### Step-by-Step Autonomous Multi-Agent Runbook
+### Step 2.4: Universal Solar Roof Shutter Integration (TOOL-OPT-SHUTTER-01)
 
-1. **Autonomous Boot & Sensor Health Check**: On power-up, the Root Chamber Node checks optical liquid sensors and verifies root-zone infrared temperature. It establishes Wi-Fi communication with the Central Controller.
-2. **Transpiration-Driven Adaptive Pulse Misting**: The firmware executes a default 5-second mist pulse every 180 seconds. However, if the MLX90614 infrared sensor detects root-zone temperature rising above 22.5°C, the Node dynamically shortens the mist interval to 120 seconds.
-3. **Instant Zero-Drip Pressure Venting**: Immediately after each 5-second booster pump pulse, `DEV_PUMP_RELAY` energizes the fast-bleed solenoid valve for 400 ms, collapsing line pressure instantly to prevent large droplets.
-4. **Optical Dry-Run Failsafe Interlock**: If the nutrient reservoir runs dry, the optical level sensors trigger an instantaneous hardware interrupt within 25 ms, halting the booster pump and broadcasting an alert to Central Controller.
-5. **Overhead Gantry Autonomous Harvest Coordination**: At Day 75, Central Controller dispatches the 2-Axis Overhead Gantry with its potato extraction toolhead. The gantry docks into the silicone collar, applies soft pneumatic suction to pluck mature mini-tubers, and withdraws non-destructively.
-6. **250ms Fail-Safe Watchdogs**: If BLE connection to `DEV_PUMP_RELAY` drops for $> 250$ ms, pump power cuts instantly. If Wi-Fi link to Central Controller is lost, the Node continues the default 180s mist cycle safely.
+![Step 2.4 Technical Blueprint](/open-biosphere/hardware/tps-root-chamber/assets/stage-2/step-4-canopy-light-shutter.svg)
+
+1. **Alignment & Positioning:** STANDARD: RFC-0009 | SHUTTER ACTUATION: 0° - 90°
+2. **Mechanical & Electrical Execution:** Interfacing central tower rotary helical shutter to balance canopy PAR and root zone heat.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
+
+
+### Step 2.5: 250ms Watchdog & High-Pressure Fail-Safe Verification
+
+![Step 2.5 Technical Blueprint](/open-biosphere/hardware/tps-root-chamber/assets/stage-2/step-5-watchdog-verification.svg)
+
+1. **Alignment & Positioning:** DEPRESSURIZE TIME: < 120ms | TIMEOUT: 250ms
+2. **Mechanical & Electrical Execution:** Tripping fast-exhaust valve to zero PSI within 250ms of heartbeat interruption.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
+
+
+### Step-by-Step Operating & Commissioning Runbook
+
+1. **Pre-Flight Mechanical Inspection:** Verify all fasteners are torqued finger-tight or to engineering specification; inspect structural clearances against Datum Z=0.00.
+2. **Electrical & Signal Continuity:** Check wiring harnesses for polarity alignment; ensure physical Master DC Switch is in the OFF position prior to power connection.
+3. **Two-Control Power Sequence (RFC-0005):** Switch Master DC switch to ON; observe 0.91" status OLED initialization sequence displaying firmware build and BLE advertising state.
+4. **Virtual Panel Commissioning:** Open the Open Biosphere companion app, pair via local BLE GATT, and exercise manual jog sliders through full travel envelopes.
+5. **250ms Deadman Watchdog Verification:** Confirm all actuators trip to safe de-energized states immediately upon intentional signal cutoff or emergency power disconnect.
+
 
 ---
 

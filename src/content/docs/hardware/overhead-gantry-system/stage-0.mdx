@@ -53,79 +53,52 @@ The Stage 0 baseline build of the **2-Axis Overhead Precision Gantry** is a **10
 
 ## Part 5: Step-by-Step Assembly & Operating Protocol
 
-The foundational build of the 2-Axis Precision Overhead Gantry is a **100% mechanical, zero-power Cartesian rolling bridge**. Utilizing low-friction polyoxymethylene (POM) dual V-wheels running on 2040 aluminum extrusions, it allows a grower to glide an inspection bridge effortlessly across a 20 × 10 ft canopy with $< 2$ N of manual hand effort. A magnetic kinematic dock holds interchangeable manual wands and optical lenses.
+The following 5 sequential assembly steps guide the physical fabrication, mounting, and wiring of the 2-Axis Overhead Gantry Array (0). Each procedural step is directly anchored by an isolated, reverse-deconstructed vector blueprint adhering to RFC-0010.
 
-### Mechanical Architecture & Decoupling Standard
-1. **Cartesian Rail Structure**: Two parallel longitudinal Y-rails (2040 V-slot, up to 6 m) support a transverse X-axis bridge beam (4040 V-slot, 3.1 m width) rolling on 16 heavy-duty POM V-wheels with dual 625-2RS bearings.
-2. **Kinematic 3-Point Toolhead Dock**: Three pairs of hardened stainless steel ball bearings seated against 4 mm neodymium N52 magnets provide exact kinematic repeatability ($< 0.05$ mm positional repeat).
-3. **Manual Toolhead Wand**: A lightweight carbon-fiber wand with an integrated bicycle Bowden cable transmits hand-squeeze force to actuate bypass pruners, soil probes, or seeding tubes at bed level.
-4. **Mechanical Decoupling Standard**: Quick-release cam-lever belt clamps anchor the timing belts to the carriage plates. Flipping the cam levers releases belt tension instantly, allowing the entire gantry bridge and carriage to be pushed and pulled by hand with zero motor drag.
+### Step 1.1: 2040 V-Slot Rail Cutting & Outer Frame Alignment
 
-```
-       OVERHEAD CARTESIAN GANTRY — BASE MECHANICAL ELEVATION
-  =================================================================
-       [Y-Axis Rail: 2040 V-Slot]               [Y-Axis Rail: 2040 V-Slot]
-             ||                                           ||
-       (POM V-Wheels)                               (POM V-Wheels)
-          [===O===]                                    [===O===]
-             ||                                           ||
-             +============================================+
-             |         [X-Axis Bridge Beam: 4040 V-Slot]   |
-             +============================================+
-                                   ||
-                             (POM V-Wheels)
-                                [===O===]
-                                   ||
-                       [X-Carriage Plate: 4mm Al]
-                                   ||
-                       [Kinematic Magnetic Dock]
-                                (N52)
-                                   ||
-                        [Manual Toolhead Wand]
-                                   ||
-                         [Bypass Hand Pruner]
-                                   v
-                         (Delicate Grow Bed)
-```
+![Step 1.1 Technical Blueprint](/open-biosphere/hardware/overhead-gantry-system/assets/stage-0/step-1-rail-cutting-frame.svg)
 
-### Step-by-Step Fabrication & Assembly Protocol
+1. **Alignment & Positioning:** RAIL PROFILE: 2040 V-Slot | SPAN: 3000mm x 3000mm
+2. **Mechanical & Electrical Execution:** Squaring outer perimeter 2040 V-slot aluminum rails with precision cast corner brackets.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
 
-#### Step 1.1: Rail Cutting & Frame Alignment
-1. Cut four 3,000 mm segments of 2040 V-slot black anodized aluminum extrusion for the longitudinal Y-axis tracks.
-2. Join segments end-to-end using hidden straight internal joint connectors and M5 set screws, creating two continuous 6,000 mm guide rails.
-3. Clamp and level the Y-rails atop perimeter garden posts or greenhouse walls at $Z = 1,200$ mm height. Verify parallel rail spacing across both ends (3,050 mm ± 1.0 mm).
 
-#### Step 1.2: Gantry Wheel Plates & Eccentric Spacer Tuning
-1. CNC-mill or waterjet cut four 4.0 mm 6061-T6 aluminum gantry end-plates.
-2. Press 625-2RS sealed ball bearings into eight POM dual V-wheels per side plate.
-3. Install wheels using M5 grade 10.9 button-head screws: use standard round spacers on top wheels and eccentric spacers on bottom wheels.
-4. Mount wheel plates onto the Y-rails and rotate eccentric hex spacers with a 10 mm wrench until all play is eliminated without wheel binding (wheels should be skidded only with moderate finger force).
+### Step 1.2: Gantry End Plates & Eccentric Spacer Tuning
 
-#### Step 1.3: Transverse X-Axis Bridge Assembly
-1. Span the 3,048 mm 4040 V-slot extrusion between the two Y-axis gantry end plates.
-2. Fasten using 90° heavy-duty cast aluminum corner brackets and M5 roll-in T-nuts.
-3. Square the bridge to the Y-rails using a 1-meter framing square. Diagonal variance across the bridge must measure $< 1.5$ mm over 3 meters.
+![Step 1.2 Technical Blueprint](/open-biosphere/hardware/overhead-gantry-system/assets/stage-0/step-2-wheel-plates-tuning.svg)
 
-#### Step 1.4: Kinematic Magnetic Toolhead Base Fabrication
-1. 3D-print the kinematic toolhead receiver plate in carbon-fiber reinforced PETG.
-2. Press three pairs of 6 mm hardened stainless steel ball bearings into the triangular radial V-grooves at 120° intervals.
-3. Epoxy three 15 × 5 mm N52 neodymium disc magnets into the recessed pockets.
-4. Verify kinematic seating: snapping the toolhead dock on and off 10 times must repeat physical position within $\pm 0.05$ mm measured by dial indicator.
+1. **Alignment & Positioning:** PLATE: 4mm 6061-T6 | WHEELS: Polycarbonate Solid V
+2. **Mechanical & Electrical Execution:** Laser-cut 4mm 6061 aluminum plates with dual POM V-wheels and eccentric preload spacers.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
 
-#### Step 1.5: Manual Squeeze Wand & Cable Rigging
-1. Mount a 1.2 m rigid carbon-fiber extension tube to the kinematic toolhead mating plate.
-2. Route a 1.2 mm stainless steel Bowden cable down the center of the tube.
-3. Clamp an ergonomic bicycle hand lever to the upper wand handle.
-4. Attach spring-loaded micro-bypass snip blades to the lower wand tip, verifying that a hand squeeze cleanly snips a 4 mm test stem.
 
-```mermaid
-flowchart TD
-    A[Step 1.1: Y-Rail Alignment & Leveling] --> B[Step 1.2: Gantry Wheel Plate & Eccentric Tuning]
-    B --> C[Step 1.3: Assemble Transverse X-Axis Bridge]
-    C --> D[Step 1.4: Kinematic Magnetic Dock Assembly]
-    D --> E[Step 1.5: Rig Bowden Cable Squeeze Wand]
-    E --> F[Verification: Smooth Hand Glide Across 20x10 ft Area]
-```
+### Step 1.3: 4040 V-Slot Transverse Bridge Beam Assembly
+
+![Step 1.3 Technical Blueprint](/open-biosphere/hardware/overhead-gantry-system/assets/stage-0/step-3-transverse-bridge.svg)
+
+1. **Alignment & Positioning:** BEAM: 4040 V-Slot | SAG LIMIT: < 0.2mm Across Span
+2. **Mechanical & Electrical Execution:** Rigid 4040 aluminum bridge beam spanning 3,048mm with under 0.2mm center deflection.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
+
+
+### Step 1.4: Kinematic Magnetic Toolhead Base Fabrication
+
+![Step 1.4 Technical Blueprint](/open-biosphere/hardware/overhead-gantry-system/assets/stage-0/step-4-kinematic-tool-base.svg)
+
+1. **Alignment & Positioning:** REPEATABILITY: < 10µm | RETENTION FORCE: 45 N
+2. **Mechanical & Electrical Execution:** 3-point Kelvin kinematic coupling with N52 neodymium magnets and hardened stainless spheres.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
+
+
+### Step 1.5: Manual Carbon-Fiber Squeeze Wand & Cable Rigging
+
+![Step 1.5 Technical Blueprint](/open-biosphere/hardware/overhead-gantry-system/assets/stage-0/step-5-wand-cable-rigging.svg)
+
+1. **Alignment & Positioning:** WAND LENGTH: 1500mm | MATERIAL: High-Modulus Carbon
+2. **Mechanical & Electrical Execution:** Rigid 1.5m carbon wand with Bowden cable trigger allowing zero-power human end-effector use.
+3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
+
 
 ### Step-by-Step Operating Runbook (Manual Mode)
 
@@ -136,6 +109,8 @@ flowchart TD
 5. **Executing Manual Selective Harvest**: Aim the wand tip at the target stem (e.g. ripe saffron flower or succulent purslane shoot). Squeeze the bicycle hand lever firmly to snip the pedicel cleanly.
 6. **Canopy-Wide Stepped Inspection**: Push the bridge forward in 500 mm increments, methodically inspecting each grow zone without stepping on bed soil or reaching across trellises.
 7. **End-of-Run Parking**: Push the gantry bridge to the South datum parking stop ($Y = 0$). Engage the manual thumb-screw track locks to secure the bridge against wind movement.
+
+---
 
 ---
 

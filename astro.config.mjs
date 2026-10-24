@@ -170,6 +170,7 @@ export default defineConfig({
             { label: 'RFC-0007: Multi-Stage Machine Sub-Page Architecture', slug: 'rfcs/rfc-0007-multi-stage-sub-page-architecture' },
             { label: 'RFC-0008: Global Part Registry & BOM Schema', slug: 'rfcs/rfc-0008-global-part-registry-bom-schema' },
             { label: 'RFC-0009: Helical Shutter Solar Roof', slug: 'rfcs/rfc-0009-helical-shutter-solar-roof' },
+            { label: 'RFC-0010: Stepwise Reverse-Deconstructed Blueprints', slug: 'rfcs/rfc-0010-stepwise-reverse-deconstructed-blueprints' },
           ],
         },
       ],
