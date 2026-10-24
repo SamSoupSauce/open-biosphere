@@ -37,14 +37,86 @@ export default defineConfig({
           label: 'Open-Hardware Machine Registry',
           items: [
             { label: 'Interactive Machine Catalogue', slug: 'hardware/catalog' },
-            { label: 'Fluidic Skimmer & Dewatering Separator', slug: 'hardware/fluidic-skimmer-loop' },
-            { label: 'Revolving Sprout Bioreactor Drum', slug: 'hardware/revolving-sprout-bioreactor' },
-            { label: 'Mantis Branch-Crawler Robot', slug: 'hardware/mantis-branch-crawler' },
-            { label: 'Ground Track AGV Pod Carrier', slug: 'hardware/ground-track-agv' },
-            { label: '2-Axis Overhead Gantry Array', slug: 'hardware/overhead-gantry-system' },
-            { label: 'Aerial Spotter & Pollinator Drone', slug: 'hardware/aerial-pollination-drone' },
-            { label: 'Microclimate & Automated Dosing Array', slug: 'hardware/microclimate-dosing-array' },
-            { label: 'TPS Aeroponic Root-Zone Chamber', slug: 'hardware/tps-root-chamber' },
+            {
+              label: 'Fluidic Skimmer & Dewatering Separator',
+              collapsed: true,
+              items: [
+                { label: 'Overview & Specifications', slug: 'hardware/fluidic-skimmer-loop' },
+                { label: 'Stage 0: Zero-Power Baseline', slug: 'hardware/fluidic-skimmer-loop/stage-0' },
+                { label: 'Stage 1: BLE Electromechanical', slug: 'hardware/fluidic-skimmer-loop/stage-1' },
+                { label: 'Stage 2: Agentic Autonomous AI', slug: 'hardware/fluidic-skimmer-loop/stage-2' },
+              ],
+            },
+            {
+              label: 'Revolving Sprout Bioreactor Drum',
+              collapsed: true,
+              items: [
+                { label: 'Overview & Specifications', slug: 'hardware/revolving-sprout-bioreactor' },
+                { label: 'Stage 0: Zero-Power Baseline', slug: 'hardware/revolving-sprout-bioreactor/stage-0' },
+                { label: 'Stage 1: BLE Electromechanical', slug: 'hardware/revolving-sprout-bioreactor/stage-1' },
+                { label: 'Stage 2: Agentic Autonomous AI', slug: 'hardware/revolving-sprout-bioreactor/stage-2' },
+              ],
+            },
+            {
+              label: 'Mantis Branch-Crawler Robot',
+              collapsed: true,
+              items: [
+                { label: 'Overview & Specifications', slug: 'hardware/mantis-branch-crawler' },
+                { label: 'Stage 0: Zero-Power Baseline', slug: 'hardware/mantis-branch-crawler/stage-0' },
+                { label: 'Stage 1: BLE Electromechanical', slug: 'hardware/mantis-branch-crawler/stage-1' },
+                { label: 'Stage 2: Agentic Autonomous AI', slug: 'hardware/mantis-branch-crawler/stage-2' },
+              ],
+            },
+            {
+              label: 'Ground Track AGV Pod Carrier',
+              collapsed: true,
+              items: [
+                { label: 'Overview & Specifications', slug: 'hardware/ground-track-agv' },
+                { label: 'Stage 0: Zero-Power Baseline', slug: 'hardware/ground-track-agv/stage-0' },
+                { label: 'Stage 1: BLE Electromechanical', slug: 'hardware/ground-track-agv/stage-1' },
+                { label: 'Stage 2: Agentic Autonomous AI', slug: 'hardware/ground-track-agv/stage-2' },
+              ],
+            },
+            {
+              label: '2-Axis Overhead Gantry Array',
+              collapsed: true,
+              items: [
+                { label: 'Overview & Specifications', slug: 'hardware/overhead-gantry-system' },
+                { label: 'Stage 0: Zero-Power Baseline', slug: 'hardware/overhead-gantry-system/stage-0' },
+                { label: 'Stage 1: BLE Electromechanical', slug: 'hardware/overhead-gantry-system/stage-1' },
+                { label: 'Stage 2: Agentic Autonomous AI', slug: 'hardware/overhead-gantry-system/stage-2' },
+              ],
+            },
+            {
+              label: 'Aerial Spotter & Pollinator Drone',
+              collapsed: true,
+              items: [
+                { label: 'Overview & Specifications', slug: 'hardware/aerial-pollination-drone' },
+                { label: 'Stage 0: Zero-Power Baseline', slug: 'hardware/aerial-pollination-drone/stage-0' },
+                { label: 'Stage 1: BLE Electromechanical', slug: 'hardware/aerial-pollination-drone/stage-1' },
+                { label: 'Stage 2: Agentic Autonomous AI', slug: 'hardware/aerial-pollination-drone/stage-2' },
+              ],
+            },
+            {
+              label: 'Microclimate & Automated Dosing Array',
+              collapsed: true,
+              items: [
+                { label: 'Overview & Specifications', slug: 'hardware/microclimate-dosing-array' },
+                { label: 'Stage 0: Zero-Power Baseline', slug: 'hardware/microclimate-dosing-array/stage-0' },
+                { label: 'Stage 1: BLE Electromechanical', slug: 'hardware/microclimate-dosing-array/stage-1' },
+                { label: 'Stage 2: Agentic Autonomous AI', slug: 'hardware/microclimate-dosing-array/stage-2' },
+              ],
+            },
+            {
+              label: 'TPS Aeroponic Root-Zone Chamber',
+              collapsed: true,
+              items: [
+                { label: 'Overview & Specifications', slug: 'hardware/tps-root-chamber' },
+                { label: 'Stage 0: Zero-Power Baseline', slug: 'hardware/tps-root-chamber/stage-0' },
+                { label: 'Stage 1: BLE Electromechanical', slug: 'hardware/tps-root-chamber/stage-1' },
+                { label: 'Stage 2: Agentic Autonomous AI', slug: 'hardware/tps-root-chamber/stage-2' },
+              ],
+            },
           ],
         },
         {
@@ -85,6 +157,7 @@ export default defineConfig({
             { label: 'RFC-0004: Controller-Node-Tool Architecture', slug: 'rfcs/rfc-0004-controller-node-tool' },
             { label: 'RFC-0005: Hardware Interlocks & BLE Virtual Panel', slug: 'rfcs/rfc-0005-hardware-interlocks-ble-virtual-panel' },
             { label: 'RFC-0006: Agnostic Controller Runtime', slug: 'rfcs/rfc-0006-agnostic-controller-runtime' },
+            { label: 'RFC-0007: Multi-Stage Machine Sub-Page Architecture', slug: 'rfcs/rfc-0007-multi-stage-sub-page-architecture' },
           ],
         },
       ],

@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0f1d"/>
+      <stop offset="100%" stop-color="#030712"/>
+    </linearGradient>
+    <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
+      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#1e293b" stroke-width="0.75" opacity="0.6"/>
+    </pattern>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Background & Engineering Grid -->
+  <rect width="960" height="540" fill="url(#bgGrad)"/>
+  <rect width="960" height="540" fill="url(#grid)"/>
+
+  <!-- Outer Blueprint Frame -->
+  <rect x="20" y="20" width="920" height="500" fill="none" stroke="#334155" stroke-width="1.5"/>
+  <rect x="25" y="25" width="910" height="490" fill="none" stroke="#1e293b" stroke-width="1"/>
+
+  <!-- Header Block -->
+  <path d="M 25 25 L 935 25 L 935 85 L 25 85 Z" fill="#0f172a" opacity="0.85"/>
+  <line x1="25" y1="85" x2="935" y2="85" stroke="#a855f7" stroke-width="2"/>
+  
+  <text x="45" y="55" font-family="monospace" font-size="13" font-weight="bold" fill="#a855f7" letter-spacing="2">OPEN BIOSPHERE // TECHNICAL BLUEPRINT SPECIFICATION</text>
+  <text x="45" y="75" font-family="sans-serif" font-size="16" font-weight="700" fill="#f8fafc">TPS Aeroponic Root-Zone Chamber</text>
+  
+  <rect x="710" y="42" width="205" height="28" rx="4" fill="#1e293b" stroke="#a855f7" stroke-width="1"/>
+  <text x="812" y="61" font-family="monospace" font-size="11" font-weight="bold" fill="#a855f7" text-anchor="middle">STAGE 2 // CNT AUTONOMOUS</text>
+
+  <!-- Technical Drawing Core -->
+
+  <!-- STAGE 2: AGENTIC CONTROLLER-NODE-TOOL MESH -->
+  <g transform="translate(60, 115)">
+    <!-- Central Controller -->
+    <rect x="30" y="70" width="240" height="100" rx="8" fill="#1e293b" stroke="#ec4899" stroke-width="2"/>
+    <text x="45" y="95" font-family="monospace" font-size="11" fill="#f472b6">CENTRAL CONTROLLER (RFC-0006)</text>
+    <text x="150" y="120" font-family="sans-serif" font-size="12" font-weight="bold" fill="#f8fafc" text-anchor="middle">AGNOSTIC RUNTIME HOST</text>
+    <text x="150" y="140" font-family="monospace" font-size="11" fill="#38bdf8" text-anchor="middle">SSID: POTFRM-4096 (192.168.42.1)</text>
+    <text x="150" y="158" font-family="sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">llama-cpp-python Local Vision GGUF</text>
+
+    <!-- Wi-Fi Uplink Arrow -->
+    <line x1="270" y1="120" x2="330" y2="120" stroke="#ec4899" stroke-width="2.5" stroke-dasharray="4 2"/>
+    <polygon points="330,120 322,115 322,125" fill="#ec4899"/>
+    <text x="300" y="112" font-family="monospace" font-size="9" fill="#f472b6" text-anchor="middle">WIFI</text>
+
+    <!-- Machine Node (ESP32-S3) -->
+    <rect x="330" y="70" width="240" height="100" rx="8" fill="#1e293b" stroke="#a855f7" stroke-width="2"/>
+    <text x="345" y="95" font-family="monospace" font-size="11" fill="#a855f7">MACHINE NODE (ESP32-S3)</text>
+    <text x="450" y="120" font-family="sans-serif" font-size="12" font-weight="bold" fill="#f8fafc" text-anchor="middle">SUBSYSTEM CONTROLLER</text>
+    <text x="450" y="140" font-family="monospace" font-size="11" fill="#38bdf8" text-anchor="middle">OLED: [NODE: ROOT-01 | LINK]</text>
+    <text x="450" y="158" font-family="sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">Two-Control Interlocks &amp; BLE Central</text>
+
+    <!-- Modular Edge Tools (3x) -->
+    <g transform="translate(600, 70)">
+      <rect x="0" y="0" width="240" height="220" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+      <text x="15" y="25" font-family="monospace" font-size="11" fill="#38bdf8">MODULAR EDGE TOOLS (ESP32-C3)</text>
+
+      <!-- Tool 1 -->
+      <rect x="15" y="40" width="210" height="48" rx="4" fill="#0f172a" stroke="#38bdf8" stroke-width="1"/>
+      <text x="25" y="58" font-family="sans-serif" font-size="11" font-weight="bold" fill="#f8fafc">TOOL 1: ACTUATOR / MOTOR</text>
+      <text x="25" y="75" font-family="monospace" font-size="10" fill="#ef4444">WATCHDOG: 250ms DEADMAN</text>
+
+      <!-- Tool 2 -->
+      <rect x="15" y="98" width="210" height="48" rx="4" fill="#0f172a" stroke="#38bdf8" stroke-width="1"/>
+      <text x="25" y="116" font-family="sans-serif" font-size="11" font-weight="bold" fill="#f8fafc">TOOL 2: POSITION / SENSOR</text>
+      <text x="25" y="133" font-family="monospace" font-size="10" fill="#ef4444">WATCHDOG: 250ms DEADMAN</text>
+
+      <!-- Tool 3 -->
+      <rect x="15" y="156" width="210" height="48" rx="4" fill="#0f172a" stroke="#38bdf8" stroke-width="1"/>
+      <text x="25" y="174" font-family="sans-serif" font-size="11" font-weight="bold" fill="#f8fafc">TOOL 3: SAFETY / INTERRUPT</text>
+      <text x="25" y="191" font-family="monospace" font-size="10" fill="#22c55e">FAIL-SAFE HIGH-Z HALT</text>
+    </g>
+
+    <!-- Node to Tools Downlink Arrow -->
+    <line x1="570" y1="120" x2="600" y2="120" stroke="#38bdf8" stroke-width="2.5" stroke-dasharray="3 3"/>
+    <text x="585" y="112" font-family="monospace" font-size="9" fill="#38bdf8" text-anchor="middle">BLE</text>
+
+    <!-- Bottom Telemetry Banner -->
+    <rect x="30" y="200" width="540" height="90" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1.5"/>
+    <text x="45" y="225" font-family="monospace" font-size="11" font-weight="bold" fill="#a855f7">REAL-TIME CNT TELEMETRY &amp; INTERLOCKS</text>
+    <text x="45" y="248" font-family="sans-serif" font-size="11" fill="#cbd5e1">• If Wi-Fi link drops: Node retains local loop; safe shutdown after 500ms.</text>
+    <text x="45" y="268" font-family="sans-serif" font-size="11" fill="#cbd5e1">• If Tool BLE drops &gt;250ms: Tool hardware cuts holding torque / flow immediately.</text>
+  </g>
+
+  <!-- Blueprint Title Block Footer -->
+  <path d="M 25 465 L 935 465 L 935 515 L 25 515 Z" fill="#0f172a" opacity="0.9"/>
+  <line x1="25" y1="465" x2="935" y2="465" stroke="#334155" stroke-width="1.5"/>
+
+  <text x="45" y="490" font-family="monospace" font-size="10" fill="#94a3b8">DWG NO: <tspan fill="#f8fafc" font-weight="bold">ROOT-01-S2</tspan></text>
+  <text x="45" y="505" font-family="monospace" font-size="10" fill="#94a3b8">REVISION: <tspan fill="#f8fafc">v2.4 (RFC-0007)</tspan></text>
+
+  <text x="320" y="490" font-family="monospace" font-size="10" fill="#94a3b8">ARCHITECTURE: <tspan fill="#f8fafc">Stage 2: Agentic Autonomous AI Pack (CNT Edge Mesh)</tspan></text>
+  <text x="320" y="505" font-family="sans-serif" font-size="10" fill="#cbd5e1">CNT Node Mesh (ESP32-S3), 3x BLE Tools, MLX90614 IR Sensor & Fast Bleed Valve</text>
+
+  <text x="820" y="490" font-family="monospace" font-size="10" fill="#94a3b8">SCALE: <tspan fill="#f8fafc">1:1 SCHEMATIC</tspan></text>
+  <text x="820" y="505" font-family="monospace" font-size="10" fill="#a855f7">STATUS: APPROVED</text>
+</svg>

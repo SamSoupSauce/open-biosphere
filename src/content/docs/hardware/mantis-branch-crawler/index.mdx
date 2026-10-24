@@ -1,0 +1,111 @@
+---
+title: "Mantis Branch-Crawler Robot — Subsystem Overview"
+description: "Lightweight pole-mounted and robotic crawler for trellised berry and legume harvesting."
+---
+
+import { Card, CardGrid, LinkButton } from '@astrojs/starlight/components';
+
+## 1. Standalone Homesteading & Off-Grid Utility
+
+Delicate soft fruits such as mulberries, blackberries, and goldenberries bruise easily when picked with conventional robotic grippers or shaken mechanically. The Mantis crawler solves this with **soft-silicone pinch locomotion and cushioned vacuum-assisted harvesting**:
+
+<CardGrid>
+  <Card title="Espalier & Trellis Agility" icon="anchor">
+    Traverses standard 1/8-inch orchard guide wires and woody limbs (6 mm to 22 mm diameter) without slipping, stripping bark, or crushing vascular xylem.
+  </Card>
+  <Card title="Zero-Bruise Vacuum Catch" icon="feather">
+    Pneumatic suction pulls ripe fruit into a foam-lined funnel simultaneously with pedicel micro-shearing, eliminating drop damage completely.
+  </Card>
+  <Card title="Stereo Multispectral Ripeness" icon="eye">
+    Dual RGB-NIR cameras run on-device YOLO edge segmentation, distinguishing ripe, sugar-rich berries from unripe green fruit under variable lighting.
+  </Card>
+  <Card title="Off-Grid Battery or Tethered" icon="battery">
+    Runs on standard 18V/20V tool batteries (Makita, DeWalt) for portable field use, or plugs into a 24V bus rail for continuous greenhouse operation.
+  </Card>
+</CardGrid>
+
+---
+
+---
+
+## 2. Technical Specifications
+
+| Parameter | Specification |
+| :--- | :--- |
+| **Locomotion** | Dual-opposed silicone roller pinch drive (Shore 40A durometer) |
+| **Limb Clamping Force** | Dynamic 2.0 to 8.5 N closed-loop torque control |
+| **End-Effector** | High-precision micro-rotary shear + pneumatic vacuum catch pod |
+| **Harvest Cycle Time** | 4.2 seconds per fruit |
+| **Compute Architecture** | ESP32-S3 Mantis Node + ESP32-C3 Modular Tools (Vision offloaded to Central Controller) |
+| **Vision Modality** | Dual-stereo RGB + 850nm NIR structured light illuminator |
+| **Traversable Angle** | Up to 65° incline along tensioned trellis wire or woody espalier arms |
+| **Weight** | 1.85 kg (chassis + battery + end-effector) |
+| **Power Supply** | 0W (Manual) / 18V Tool Battery (Add-On 1) / 24V Tethered Bus (Add-On 2) |
+
+---
+
+---
+
+## 6. Staged Upgrade Progression & Cost Summary
+
+### Build Tier Comparison
+
+| Build Stage | Operational Capability | Direct Stage Cost | Cumulative Investment |
+| :--- | :--- | :--- | :--- |
+| **Base: Instructions** | 100% mechanical pole-mounted pruner and squeeze clamp with gravity collection | 3.00 | **3.00** |
+| **Add-On 1: Semi-Auto** | Motorized pinch climb, vacuum fruit funnel with BLE Virtual Panel & 2 physical controls | +35.00 | **28.00** |
+| **Add-On 2: Agentic AI** | Controller-Node-Tool (CNT) automation, 8.5N grip limiting, & 250ms watchdogs | +77.00 | **05.00** |
+
+### Step-by-Step Zero-Waste Conversion Roadmap
+
+#### Path 1: Base Machine $
+ightarrow$ Add-On 1 (Electromechanical RC Upgrade)
+1. Remove the manual telescopic pole from the base clamp.
+2. Swing the aluminum motor swing-plates into position and bolt the NEMA 14 pancake steppers onto the chassis plates.
+3. Replace the manual bypass snip blade with the 12V coreless rotary micro-shear tool and 5015 vacuum blower funnel.
+4. Mount the battery shoe and Two-Control enclosure onto the spine, connect the 18V tool battery, and operate via Flutter BLE Virtual Panel. The silicone rollers and scissor frame remain 100% identical.
+
+#### Path 2: Add-On 1 $
+ightarrow$ Add-On 2 (Autonomous Edge CNT Upgrade)
+1. Transition the ESP32 carrier into the Mantis Node configuration.
+2. Mount the Mantis Node (ESP32-S3 + OLED + Button) and modular ESP32-C3 Tools on the chassis spine.
+3. Mount the lightweight dual stereo camera bar on the forward snout for video streaming to the Central Controller.
+4. Wire the HX711 load cell into the `DEV_CLAMP_ACT` tool, and connect the `DEV_SHEAR_VAC` and `DEV_ROLLER_DRV` tools.
+5. Provision the Mantis Node with the Central Controller ID via mobile app BLE, and confirm 250ms hardware watchdogs are active across all tools.
+
+---
+
+---
+
+## 7. Master Biosphere Assembly Interlock
+
+When integrated into the centralized Open Biosphere facility (~20 × 10 ft footprint):
+
+1. **Perimeter Wall Indexing**: Navigates the rigid 1/8" stainless guideframe wires running along the North-East vertical boundary wall ($Z = 760$ to $1,220$ mm), servicing espaliered bush mulberries and goldenberries.
+2. **Tethered DC Bus**: Draws continuous 24V power from an overhead slip-ring cable running along the gantry rail, eliminating battery swap downtime.
+3. **Pneumatic Transfer**: Deposits harvested berries directly into the Ground Track AGV transit bins stationed on the Perimeter Lower Tier.
+4. **Biosphere Central Telemetry**: Broadcasts real-time crop ripeness maps, yield counts, and branch stress metrics over CAN bus to the central facility dashboard.
+
+---
+
+## 8. Select Your Build Stage
+
+Explore the step-by-step fabrication, wiring, and commissioning guides for each operational tier:
+
+<CardGrid>
+  <Card title="Stage 0: Pure Mechanical Baseline" icon="hammer">
+    **100% Zero-Power Manual Operation.** Built using common hardware, manual linkages, hand cranks, and gravity flows. Zero electrical power required.
+    <br/><br/>
+    <LinkButton href="/open-biosphere/hardware/mantis-branch-crawler/stage-0/">Enter Stage 0 Assembly Guide →</LinkButton>
+  </Card>
+  <Card title="Stage 1: BLE Electromechanical Pack" icon="setting">
+    **Motorized Drive & BLE Virtual Panel.** Upgrades to continuous DC motorization with Strict Two-Control hardware interlocks and Flutter BLE touch controls.
+    <br/><br/>
+    <LinkButton href="/open-biosphere/hardware/mantis-branch-crawler/stage-1/">Enter Stage 1 Retrofit Guide →</LinkButton>
+  </Card>
+  <Card title="Stage 2: Agentic Autonomous AI Pack" icon="cpu">
+    **Controller-Node-Tool (CNT) Mesh.** Full multi-agent automation over isolated Wi-Fi AP (<code>POTFRM-4096</code>), 250ms deadman watchdogs, and local GGUF vision.
+    <br/><br/>
+    <LinkButton href="/open-biosphere/hardware/mantis-branch-crawler/stage-2/">Enter Stage 2 Autonomous Guide →</LinkButton>
+  </Card>
+</CardGrid>

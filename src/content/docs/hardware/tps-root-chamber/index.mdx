@@ -1,0 +1,110 @@
+---
+title: "TPS Aeroponic Root-Zone Chamber — Subsystem Overview"
+description: "True Potato Seed (TPS) aeroponic misting chamber with non-destructive harvesting."
+---
+
+import { Card, CardGrid, LinkButton } from '@astrojs/starlight/components';
+
+## 1. Standalone Homesteading & Off-Grid Utility
+
+Traditional seed potatoes require disease-prone clonal tubers that degrade over generations and demand large soil footprints. This machine enables homesteaders to germinate **True Potato Seed (TPS)**—tiny botanical seeds weighing 1/1000th of a tuber—and produce clean, pathogen-free mini-tubers continuously in a compact footprint:
+
+<CardGrid>
+  <Card title="Botanical Seed Propagation" icon="seed">
+    Grow clean potatoes from compact, indefinitely shelf-stable botanical seeds instead of hauling 50-pound bags of perishable seed tubers.
+  </Card>
+  <Card title="Non-Destructive Harvesting" icon="hands">
+    Selective root chamber access allows pickers to harvest walnut-sized mini-tubers one at a time while leaving the vine productive for 120+ days.
+  </Card>
+  <Card title="Zero Chlorophyll / Solanine" icon="moon">
+    Dual-labyrinth EPDM light seals keep root zones below 0.05 lux, completely preventing green solanine toxins from accumulating in growing tubers.
+  </Card>
+  <Card title="Closed Misting Conservation" icon="droplet">
+    Ultrasonic atomizers suspend nutrient mist directly on bare roots, saving 95% of water compared to traditional in-ground potato hills.
+  </Card>
+</CardGrid>
+
+---
+
+---
+
+## 2. Technical Specifications
+
+| Parameter | Specification |
+| :--- | :--- |
+| **Chassis Dimensions** | 1,200 mm (L) × 800 mm (W) × 650 mm (H) |
+| **Planting Density** | 12 to 18 TPS root collars per square meter (24 plants per chamber) |
+| **Misting Cycle** | 5 seconds pulse every 3 minutes (closed-loop timer) or manual pump |
+| **Droplet Size** | 30 to 50 µm high-pressure atomization |
+| **Operating Pressure** | 80 to 120 PSI high-pressure line or manual hand-pump garden wand |
+| **Light Ingress** | Less than 0.05 lux (tested via dual EPDM foam labyrinth seals) |
+| **Harvest Yield** | 40 to 60 mini-tubers (15–35g each) per plant over a 120-day cycle |
+| **Power Consumption** | 0W (Manual) / 45W avg (Add-On 1) / 58W peak (Add-On 2) |
+| **Controller Architecture**| Manual Hand-Pump / Spring-Wound Dial Timer / ESP32-C3 Transpiration Node |
+
+---
+
+---
+
+## 6. Staged Upgrade Progression & Cost Summary
+
+### Build Tier Comparison
+
+| Build Stage | Operational Capability | Direct Stage Cost | Cumulative Investment |
+| :--- | :--- | :--- | :--- |
+| **Base: Instructions** | 100% mechanical tote with hand-pump pressure sprayer and baffled access hatch | $105.00 | **$105.00** |
+| **Add-On 1: Semi-Auto** | High-pressure 120 PSI misting pump with Flutter BLE Virtual Panel & Two-Control Standard | +$114.00 | **$219.00** |
+| **Add-On 2: Agentic AI** | Controller-Node-Tool (CNT) automation, transpiration-driven misting, & 250ms watchdogs | +$71.00 | **$290.00** |
+
+### Step-by-Step Zero-Waste Conversion Roadmap
+
+#### Path 1: Base Machine $
+ightarrow$ Add-On 1 (Motorized Misting Chamber)
+1. Mount the 24V 120 PSI booster pump to the rear wall of the HDPE tub.
+2. Install the 1/4" nylon tubing and six brass anti-drip nozzles inside the tub at $Z = 300$ mm height.
+3. Mount the Two-Control junction box on the front rail, pair the Flutter Companion App BLE Virtual Panel, and plug in the 24V desktop power supply. The manual garden wand pass-through grommets remain permanently accessible.
+
+#### Path 2: Add-On 1 $
+ightarrow$ Add-On 2 (Autonomous Edge CNT Production Cell)
+1. Mount the Root Chamber Node (ESP32-S3 + OLED + Button) and modular ESP32-C3 Tools inside the IP65 enclosure.
+2. Connect `DEV_PUMP_RELAY` to the booster pump and 24V fast-bleed solenoid in parallel with the manual dial timer.
+3. Mount the MLX90614 infrared root sensor in the tub lid and wire to `DEV_ROOT_TELE`.
+4. Install dual optical liquid level sensors in the suction line manifold.
+5. Provision the Root Chamber Node with Central Controller ID via mobile app BLE, and verify 250ms hardware watchdog trips immediately upon signal loss.
+
+---
+
+---
+
+## 7. Master Biosphere Assembly Interlock
+
+When integrated into the centralized Open Biosphere facility (~20 × 10 ft footprint):
+
+1. **Sub-Surface Basin Suspension**: The chamber docks into the southern bay of the Central Basin, suspended over the nutrient reservoir at $Z = 0$ to $650$ mm.
+2. **Overhead Gantry Toolhead**: The 2-Axis Overhead Gantry descends through the top silicone docking collar with a soft-silicone suction toolhead, harvesting mature mini-tubers non-destructively.
+3. **Plumbing Integration**: Drains directly into the primary MBBR biofiltration sump, creating a continuous gravity return circuit with zero standing water.
+4. **Biosphere Synchronized Dosing**: Communicates via CAN bus with the Microclimate & Automated Dosing Array, automatically requesting calcium and potassium nutrient replenishments during peak tuber bulking phases.
+
+---
+
+## 8. Select Your Build Stage
+
+Explore the step-by-step fabrication, wiring, and commissioning guides for each operational tier:
+
+<CardGrid>
+  <Card title="Stage 0: Pure Mechanical Baseline" icon="hammer">
+    **100% Zero-Power Manual Operation.** Built using common hardware, manual linkages, hand cranks, and gravity flows. Zero electrical power required.
+    <br/><br/>
+    <LinkButton href="/open-biosphere/hardware/tps-root-chamber/stage-0/">Enter Stage 0 Assembly Guide →</LinkButton>
+  </Card>
+  <Card title="Stage 1: BLE Electromechanical Pack" icon="setting">
+    **Motorized Drive & BLE Virtual Panel.** Upgrades to continuous DC motorization with Strict Two-Control hardware interlocks and Flutter BLE touch controls.
+    <br/><br/>
+    <LinkButton href="/open-biosphere/hardware/tps-root-chamber/stage-1/">Enter Stage 1 Retrofit Guide →</LinkButton>
+  </Card>
+  <Card title="Stage 2: Agentic Autonomous AI Pack" icon="cpu">
+    **Controller-Node-Tool (CNT) Mesh.** Full multi-agent automation over isolated Wi-Fi AP (<code>POTFRM-4096</code>), 250ms deadman watchdogs, and local GGUF vision.
+    <br/><br/>
+    <LinkButton href="/open-biosphere/hardware/tps-root-chamber/stage-2/">Enter Stage 2 Autonomous Guide →</LinkButton>
+  </Card>
+</CardGrid>

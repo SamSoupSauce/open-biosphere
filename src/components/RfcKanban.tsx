@@ -74,6 +74,16 @@ const RFC_LIST: RFCItem[] = [
     summary: 'Hardware-agnostic portable runtime (biosphere-core) for any Linux/macOS host with POTFRM-<CLUSTER_ID> AP, 192.168.42.0/24 subnet, and local llama-cpp-python GGUF inference.',
     docSlug: '/rfcs/rfc-0006-agnostic-controller-runtime',
   },
+  {
+    id: 'RFC-0007',
+    title: 'Multi-Stage Machine Sub-Page Architecture & Assembly Template',
+    author: 'Documentation Systems Architecture Team',
+    targetType: 'Documentation',
+    status: 'Implemented',
+    date: '2026-10-24',
+    summary: 'Decomposition of monolithic machine catalog specifications into modular index and stage-0, stage-1, stage-2 sub-pages with isolated BOMs and dedicated vector SVG blueprints.',
+    docSlug: '/rfcs/rfc-0007-multi-stage-sub-page-architecture',
+  },
 ];
 
 export default function RfcKanban() {

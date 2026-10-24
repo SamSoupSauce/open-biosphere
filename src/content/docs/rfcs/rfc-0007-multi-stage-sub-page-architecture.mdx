@@ -1,0 +1,128 @@
+---
+title: "RFC-0007: Multi-Stage Machine Sub-Page Architecture & Assembly Template"
+description: "Specification for decomposing monolithic machine specifications into modular, sequential build sub-pages with isolated BOMs and dedicated SVG blueprints."
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+## Status & Metadata
+- **RFC ID:** RFC-0007 / DOCS-001
+- **Working Group:** Documentation, Tooling & Open-Hardware Working Group
+- **Author:** Documentation Systems Architecture Team
+- **Status:** Implemented
+- **Supersedes / Refines:** Decomposes monolithic hardware machine catalog docs into modular multi-stage directories
+- **Target Subsystems:** Machine Documentation, Navigation Hierarchy, Stage-Specific BOMs, Vector Blueprints
+- **Release Target:** Open Biosphere v2.0-alpha
+
+---
+
+## 1. Executive Summary & Problem Statement
+
+Previously, each open-hardware machine specification in the Open Biosphere catalog was consolidated into a single monolithic document containing all three build tiers (Stage 0: Base Zero-Power, Stage 1: Semi-Autonomous BLE Pack, and Stage 2: Agentic Autonomous AI Pack). While comprehensive, this structure created significant cognitive friction:
+1. **Cognitive Overload**: Builders assembling a simple manual machine had to scroll through advanced neural network topologies and stepper driver schematics.
+2. **BOM Ambiguity**: Cumulative and stage-specific costs were easily conflated, confusing makers about exact component dependencies for their specific tier.
+3. **Diagram Crowding**: Multi-mode schematics tried to illustrate manual linkages, 24V wiring, and BLE GATT links simultaneously.
+
+**RFC-0007** mandates that every machine catalog entry be decomposed into a dedicated parent overview page (`index.mdx`) and discrete, sequential sub-pages (`stage-0.mdx`, `stage-1.mdx`, `stage-2.mdx`) with isolated BOMs, high-contrast SVG blueprints, and linear stage-navigation footers.
+
+---
+
+## 2. Directory Hierarchy & Routing Specification
+
+Every machine under `src/content/docs/hardware/<machine-slug>/` adheres strictly to the following directory layout:
+
+```text
+src/content/docs/hardware/<machine-slug>/
+├── index.mdx       # Subsystem Overview, Target Crops, and Stage Comparison Matrix
+├── stage-0.mdx     # Base Zero-Power Machine (Pure Mechanical Baseline)
+├── stage-1.mdx     # Add-On 1: Electromechanical Pack (BLE Virtual Panel & DC Drive)
+└── stage-2.mdx     # Add-On 2: Agentic Autonomous AI Pack (Controller-Node-Tool Mesh)
+```
+
+### 2.1 Starlight Navigation Interlock
+The Starlight documentation sidebar exposes each machine as a dedicated nested group:
+```javascript
+{
+  label: 'Fluidic Skimmer & Dewatering Separator',
+  collapsed: true,
+  items: [
+    { label: 'Overview & Specifications', slug: 'hardware/fluidic-skimmer-loop' },
+    { label: 'Stage 0: Zero-Power Baseline', slug: 'hardware/fluidic-skimmer-loop/stage-0' },
+    { label: 'Stage 1: BLE Electromechanical', slug: 'hardware/fluidic-skimmer-loop/stage-1' },
+    { label: 'Stage 2: Agentic Autonomous AI', slug: 'hardware/fluidic-skimmer-loop/stage-2' },
+  ],
+}
+```
+Linear bottom pagination and interactive stage-nav pills link directly across the build journey:
+$$\text{Overview} \longleftrightarrow \text{Stage 0} \longleftrightarrow \text{Stage 1} \longleftrightarrow \text{Stage 2}$$
+
+---
+
+## 3. Standardized Sub-Page Anatomy (The 6-Part Template)
+
+Every `stage-X.mdx` document must strictly implement the following 6-part structure:
+
+### Part 1: Stage Header & Executive Summary
+- Full descriptive heading with stage badge (e.g. `# Fluidic Skimmer — Stage 0: Zero-Power Baseline`).
+- A prominent summary callout detailing operational scope, expected hourly/daily throughput, electrical power requirement (e.g. `0W (Pure Manual)` or `24V DC / 65W`), and cost ceiling.
+
+### Part 2: Capability Delta (Features Introduced)
+- Explicit list contrasting what this stage introduces over the previous stage:
+  - **Stage 0:** Fundamental mechanical leverage, gravity siphoning, zero electrical dependencies, fail-safe off-grid reliability.
+  - **Stage 1:** Electromechanical actuation, motorized continuous duty, Strict Two-Control hardware interlocks, Flutter BLE Virtual Panel interface, preserved manual overrides.
+  - **Stage 2:** Controller-Node-Tool (CNT) architecture, closed-loop telemetry, autonomous vision detection, 250ms deadman watchdogs, multi-agent coordination.
+
+### Part 3: Isolated Stage Bill of Materials (BOM)
+- Table listing **strictly the components required for this specific stage**.
+- Explicit columns: Item ID, Component Description, Sourcing / Reference, Quantity, Unit Cost, and Total Cost.
+- Standardized summary footer displaying:
+  - **Direct Stage Cost:** (e.g. `+$160.00`)
+  - **Cumulative Investment:** (e.g. `$340.00 Total`)
+
+### Part 4: Standalone Full SVG Blueprint
+- Scalable, high-contrast vector blueprint (`.svg`) illustrating the machine strictly at this stage's level of completion.
+- Vector graphics feature color-coded subsystems:
+  - Mechanical linkages & chassis (Grey / Steel)
+  - Fluidic / biological flows (Cyan / Blue / Green)
+  - Low-voltage DC electrical circuits (Amber / Orange)
+  - BLE & Wi-Fi communication overlays (Purple / Magenta)
+
+### Part 5: Step-by-Step Assembly & Operating Protocol
+- Ordered, numbered subsections:
+  - `### Step X.1`: Mechanical fabrication, 3D printing, and frame mounting.
+  - `### Step X.2`: Fluidic, powertrain, or sensor wiring connections.
+  - `### Step X.3`: Calibration runbook, leak tests, and verification checks.
+  - `### Operating Runbook`: Step-by-step instructions for operating the machine at this tier.
+
+### Part 6: Guided Stage Navigation Footer
+- Forward and backward navigation links enabling makers to step through the upgrade path sequentially without returning to the index.
+
+---
+
+## 4. Parent Overview Anatomy (`index.mdx`)
+
+The `index.mdx` document acts as the technical landing page and systems engineering summary for the machine subsystem:
+1. **Executive Summary & Functional Purpose**: Role within the closed-loop biosphere.
+2. **Target Crops & Biological Affinities**: Crop matrix detailing yield rates, biomass extraction, or pollination synergy.
+3. **Core Technical Specifications Matrix**: Dimensions, mass, throughput, materials, and operating limits.
+4. **Tri-Modal Control & Decoupling Standard**: How manual, motorized, and autonomous tiers interface cleanly without binding.
+5. **Full Multi-Stage Comparison Matrix**: Side-by-side comparison of Stage 0, Stage 1, and Stage 2 capabilities and costs.
+6. **Master Biosphere Facility Interlock**: Physical and computational interfaces with adjacent machines (AGV handoff, gantry docking, biofiltration sump).
+7. **Primary Call-to-Action**: Clear entry point directing builders into `Stage 0: Zero-Power Baseline`.
+
+---
+
+## 5. Directory Migration & Verification Matrix
+
+The migration decomposes the eight machines into 32 modular documents:
+
+| Machine Name | Parent Overview | Stage 0 (Manual) | Stage 1 (Semi-Auto) | Stage 2 (Agentic) |
+| :--- | :--- | :--- | :--- | :--- |
+| **Fluidic Skimmer** | `fluidic-skimmer-loop/index.mdx` | `.../stage-0.mdx` | `.../stage-1.mdx` | `.../stage-2.mdx` |
+| **Sprout Bioreactor** | `revolving-sprout-bioreactor/index.mdx` | `.../stage-0.mdx` | `.../stage-1.mdx` | `.../stage-2.mdx` |
+| **Mantis Crawler** | `mantis-branch-crawler/index.mdx` | `.../stage-0.mdx` | `.../stage-1.mdx` | `.../stage-2.mdx` |
+| **Ground Track AGV** | `ground-track-agv/index.mdx` | `.../stage-0.mdx` | `.../stage-1.mdx` | `.../stage-2.mdx` |
+| **Overhead Gantry** | `overhead-gantry-system/index.mdx` | `.../stage-0.mdx` | `.../stage-1.mdx` | `.../stage-2.mdx` |
+| **Pollination Drone** | `aerial-pollination-drone/index.mdx` | `.../stage-0.mdx` | `.../stage-1.mdx` | `.../stage-2.mdx` |
+| **Dosing Array** | `microclimate-dosing-array/index.mdx` | `.../stage-0.mdx` | `.../stage-1.mdx` | `.../stage-2.mdx` |
+| **TPS Root Chamber** | `tps-root-chamber/index.mdx` | `.../stage-0.mdx` | `.../stage-1.mdx` | `.../stage-2.mdx` |

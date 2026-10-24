@@ -1,0 +1,109 @@
+---
+title: "Ground Track AGV Pod Carrier — Subsystem Overview"
+description: "Low-profile autonomous guided vehicle for tote logistics, battery swapping, and bin exchange."
+---
+
+import { Card, CardGrid, LinkButton } from '@astrojs/starlight/components';
+
+## 1. Standalone Homesteading & Off-Grid Utility
+
+In greenhouses, hoop houses, and high tunnels, narrow aisles make traditional tractors and human carts cumbersome. This machine handles **heavy repetitive material shuttling, seedling tray transport, and low-canopy selective harvesting**:
+
+<CardGrid>
+  <Card title="Narrow-Aisle Rover" icon="truck">
+    Ultra-compact chassis (350 mm width) turns in place on rubber tracks, easily navigating tight greenhouse aisles and rough earthen paths.
+  </Card>
+  <Card title="25 kg Cargo Capacity" icon="box">
+    Pneumatic quick-docking latch carries seed drums, produce totes, compost tubs, or water reservoirs without manual lifting.
+  </Card>
+  <Card title="Simple Tape or LiDAR Guidance" icon="compass">
+    Follows low-cost adhesive magnetic floor tape for bulletproof reliability, or pairs with 2D LiDAR for flexible SLAM navigation.
+  </Card>
+  <Card title="Selective Robotic Harvester" icon="scissors">
+    Optional 3-axis articulated harvesting arm with soft silicone gripper and rotary shear picks low bush beans and peppers with stereo-depth precision.
+  </Card>
+</CardGrid>
+
+---
+
+---
+
+## 2. Technical Specifications
+
+| Parameter | Specification |
+| :--- | :--- |
+| **Chassis Dimensions** | 500 mm (L) × 350 mm (W) × 280 mm (H) |
+| **Locomotion** | Dual continuous rubber tracks with suspension bogies (45 mm ground clearance) |
+| **Payload Capacity** | 25 kg continuous payload on cargo bed |
+| **Max Speed** | 0.8 m/s (programmable working speed: 0.2 to 0.4 m/s) |
+| **Docking Interface** | Mechanical foot cam latch / 12V solenoid / Pneumatic quick-connect |
+| **Harvest Arm** | Optional 3-axis articulated arm with soft silicone 2-finger clamp & rotary blade |
+| **Battery System** | 24V 15Ah LiFePO4 pack (6+ hours runtime) with inductive floor charging pads |
+| **Onboard Controller**| 0W (Manual) / Dual 15A DC Driver Pendant (Add-On 1) / ESP32-S3 + ROS2 (Add-On 2) |
+
+---
+
+---
+
+## 6. Staged Upgrade Progression & Cost Summary
+
+### Build Tier Comparison
+
+| Build Stage | Operational Capability | Direct Stage Cost | Cumulative Investment |
+| :--- | :--- | :--- | :--- |
+| **Base: Instructions** | 100% mechanical manual push cart with neutral gearbox lever and foot-pedal clamp | $119.00 | **$119.00** |
+| **Add-On 1: Semi-Auto** | Motorized planetary track drive with BLE Virtual Panel & 2 physical controls | +$213.00 | **$332.00** |
+| **Add-On 2: Agentic AI** | Controller-Node-Tool (CNT) automation, 2D LiDAR, magnetic line following, & inductive charge | +$165.00 | **$497.00** |
+
+### Step-by-Step Zero-Waste Conversion Roadmap
+
+#### Path 1: Base Machine $
+ightarrow$ Add-On 1 (Motorized Tug Upgrade)
+1. Bolt the two 24V 250W gearmotor brackets inside the welded chassis.
+2. Connect the #25 drive chains to the dog clutch input hubs (the manual freewheel dog clutch levers remain fully functional).
+3. Drop the 24V LiFePO4 battery pack into the central tray, wire the motor driver, and connect Two-Control box with BLE Virtual Panel. The manual push tiller can either fold flat or be detached via its quick-release pins.
+
+#### Path 2: Add-On 1 $
+ightarrow$ Add-On 2 (Autonomous Robotics CNT Platform)
+1. Mount the AGV Node (ESP32-S3 + OLED + Button) and modular ESP32-C3 Tools in the electronics deck.
+2. Wire the `DEV_TRACK_DRV` tool to the motor drivers in parallel with the BLE Virtual Panel controller.
+3. Install the 5-channel magnetic sensor bar and 2D LiDAR scanner linked to `DEV_NAV_SNS`.
+4. Bolt the 3-axis articulated transfer arm and wire to `DEV_ARM_ACT`.
+5. Install the 120W inductive charging receiver coil on the chassis underside, provision the AGV Node with Central Controller ID via mobile app BLE, and confirm 250ms watchdogs are active.
+
+---
+
+---
+
+## 7. Master Biosphere Assembly Interlock
+
+When integrated into the centralized Open Biosphere facility (~20 × 10 ft footprint):
+
+1. **Perimeter Lane Routing**: Follows the continuous magnetic guide strip embedded along the Perimeter Lower Tier ($Z = 150$ to $365$ mm above water level).
+2. **Bioreactor Drum Exchange**: Automatically docks into the Revolving Sprout Bioreactor bays, unlatching ripe 4-day canisters and replacing them with freshly seeded drums.
+3. **Automated Recharging**: Docks into magnetic inductive floor charge plates located at the South-West datum origin $(0,0,0)$.
+4. **Fleet Coordination**: Communicates with the overhead gantry and aerial drone via CAN bus / MQTT, synchronizing produce tote handoffs without path collisions.
+
+---
+
+## 8. Select Your Build Stage
+
+Explore the step-by-step fabrication, wiring, and commissioning guides for each operational tier:
+
+<CardGrid>
+  <Card title="Stage 0: Pure Mechanical Baseline" icon="hammer">
+    **100% Zero-Power Manual Operation.** Built using common hardware, manual linkages, hand cranks, and gravity flows. Zero electrical power required.
+    <br/><br/>
+    <LinkButton href="/open-biosphere/hardware/ground-track-agv/stage-0/">Enter Stage 0 Assembly Guide →</LinkButton>
+  </Card>
+  <Card title="Stage 1: BLE Electromechanical Pack" icon="setting">
+    **Motorized Drive & BLE Virtual Panel.** Upgrades to continuous DC motorization with Strict Two-Control hardware interlocks and Flutter BLE touch controls.
+    <br/><br/>
+    <LinkButton href="/open-biosphere/hardware/ground-track-agv/stage-1/">Enter Stage 1 Retrofit Guide →</LinkButton>
+  </Card>
+  <Card title="Stage 2: Agentic Autonomous AI Pack" icon="cpu">
+    **Controller-Node-Tool (CNT) Mesh.** Full multi-agent automation over isolated Wi-Fi AP (<code>POTFRM-4096</code>), 250ms deadman watchdogs, and local GGUF vision.
+    <br/><br/>
+    <LinkButton href="/open-biosphere/hardware/ground-track-agv/stage-2/">Enter Stage 2 Autonomous Guide →</LinkButton>
+  </Card>
+</CardGrid>

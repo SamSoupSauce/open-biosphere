@@ -1,0 +1,112 @@
+---
+title: "Fluidic Skimmer & Dewatering Separator — Subsystem Overview"
+description: "Surface skimmer and continuous protein/starch dewatering press for rapid biomass harvesting."
+---
+
+import { Card, CardGrid, LinkButton } from '@astrojs/starlight/components';
+
+## 1. Standalone Homesteading & Off-Grid Utility
+
+For homesteaders managing duckweed (*Lemna minor* / *Wolffia globosa*) or operating small-scale aquaculture/aquaponics systems, harvesting surface biomass manually is backbreaking and erratic. This machine provides **continuous, autonomous surface skimming, solids separation, and water dewatering**:
+
+<CardGrid>
+  <Card title="Pond & Tank Duckweed Harvester" icon="leaf">
+    Mounts onto any farm pond edge, IBC tote, or stock tank to skim high-protein floating watermeal automatically, harvesting up to 12.5 kg of green biomass per hour.
+  </Card>
+  <Card title="Continuous Aeration & Clarification" icon="droplet">
+    Integrated Moving Bed Biofilm Reactor (MBBR) and venturi aerator maintain clear, pathogen-free water for fish or aquatic crops with zero chemical inputs.
+  </Card>
+  <Card title="Zero-Clog Wedge-Wire Screen" icon="grid">
+    V-shaped 316L stainless steel wedge wires shed microscopic fronds cleanly, eliminating the constant clogging seen in woven mesh nets.
+  </Card>
+  <Card title="12V/24V Off-Grid Solar Ready" icon="sun">
+    Powered by an efficient 24V brushless DC motor drawing just 45W to 120W, easily run directly off a small off-grid solar panel and battery bank.
+  </Card>
+</CardGrid>
+
+---
+
+---
+
+## 2. Technical Specifications
+
+| Parameter | Specification |
+| :--- | :--- |
+| **Circulation Flow Rate** | 45 to 75 Gallons per Minute (GPM) |
+| **Skimmer Weir** | Variable-buoyancy bistable overflow weir (600 mm or 1,200 mm modular width) |
+| **Dewatering Screen** | Stainless 316L wedge-wire screen (slot width: 150 µm) |
+| **Harvest Rate** | Up to 12.5 kg wet biomass per hour |
+| **Biofilter Loop** | 3-stage moving bed biofilm reactor (MBBR) with K1 media + 15W UV-C clarifier |
+| **Drive Pump** | Brushless DC variable-frequency magnetic-drive pump (240W max, 24V DC) |
+| **Separation Auger** | 3D printed PETG / stainless screw press (reduces frond moisture to ~82%) |
+| **Microcontroller** | Raspberry Pi Pico or ESP32 running FreeRTOS with optical level triggers |
+
+---
+
+---
+
+## 6. Staged Upgrade Progression & Cost Summary
+
+A builder can start with the **Base Machine ($180.00)**, run completely off-grid with manual cranks and gravity drainage, and upgrade modularly in place:
+
+| Build Tier | Operational Capability | Direct Tier Cost | Cumulative Investment |
+| :--- | :--- | :--- | :--- |
+| **Base Machine** | 100% mechanical, zero-power off-grid harvesting with hand levers & cranks | $180.00 | **$180.00** |
+| **Add-On 1** | Motorized pumping & auger pressing with BLE Virtual Panel & 2 physical controls | +$160.00 | **$340.00** |
+| **Add-On 2** | Controller-Node-Tool (CNT) architecture, automated weir, & 250ms watchdogs | +$97.00 | **$437.00** |
+
+### Step-by-Step Conversion Roadmap (Zero Waste Upgrade Path)
+
+```text
+Upgrade Path 1: Converting Base Machine to Add-On 1 (Semi-Autonomous)
+  ├── 1. Leave all Base Machine acrylic chassis, wedge wire, and auger screw completely intact.
+  ├── 2. Mount 24V brushless pump on lower flume bracket; plumb into existing 1.5" PVC bulkhead.
+  ├── 3. Bolt NEMA 23 motor bracket to auger chassis; slide spring-loaded slip-clutch over auger hex shaft.
+  ├── 4. Mount Two-Control IP67 box (Master DC Cut + SD Reset + Micro-SD) and pair Flutter BLE Virtual Panel.
+  └── Result: Full electromechanical push-button operation; manual crank remains functional via slip-clutch.
+
+Upgrade Path 2: Converting Add-On 1 to Add-On 2 (Agentic CNT)
+  ├── 1. Leave all Add-On 1 pumps, motor drives, slip-clutch, and manual override panel in place.
+  ├── 2. Unpin the manual counterweight link from the weir gate arm; bolt 12V micro linear actuator in its place.
+  ├── 3. Mount overhead 2020 camera strut at Z=1,400mm; install Sony IMX219 NIR camera module for Central Controller stream.
+  ├── 4. Install JSN-SR04T ultrasonic level sensor and optical float switch inside the sump with DEV_SUMP_LEVEL tool.
+  ├── 5. Mount Skimmer Node (ESP32-S3 + OLED + Two-Control Standard); bind modular Tools via Flutter BLE Virtual Panel.
+  ├── 6. Commission Skimmer Node with Target Controller ID via Flutter BLE Virtual Panel; bind DEV_WEIR_ACT, DEV_AUGER_STEP, DEV_PUMP_VFD, DEV_SUMP_LEVEL.
+  └── Result: Fully autonomous closed-loop CNT AI operation with 100% preserved manual & push-button fallback.
+```
+
+---
+
+---
+
+## 7. Master Biosphere Assembly Interlock
+
+In the integrated 20x10 ft Open Biosphere installation:
+
+1. **Basin Perimeter Mounting**: Clamps directly to the south coping of the pool ($X = 300$ to $2,748$ mm, $Y = 600$ mm) using standardized 4040 aluminum extrusion bracketry.
+2. **Cascading Recirculation**: Discharges clarified, nitrate-reduced effluent into the Central Basin and aeroponic manifold.
+3. **Automated Harvest Discharging**: Dewatered protein paste is deposited into Ground Track AGV carrier pods for automated transport.
+
+---
+
+## 8. Select Your Build Stage
+
+Explore the step-by-step fabrication, wiring, and commissioning guides for each operational tier:
+
+<CardGrid>
+  <Card title="Stage 0: Pure Mechanical Baseline" icon="hammer">
+    **100% Zero-Power Manual Operation.** Built using common hardware, manual linkages, hand cranks, and gravity flows. Zero electrical power required.
+    <br/><br/>
+    <LinkButton href="/open-biosphere/hardware/fluidic-skimmer-loop/stage-0/">Enter Stage 0 Assembly Guide →</LinkButton>
+  </Card>
+  <Card title="Stage 1: BLE Electromechanical Pack" icon="setting">
+    **Motorized Drive & BLE Virtual Panel.** Upgrades to continuous DC motorization with Strict Two-Control hardware interlocks and Flutter BLE touch controls.
+    <br/><br/>
+    <LinkButton href="/open-biosphere/hardware/fluidic-skimmer-loop/stage-1/">Enter Stage 1 Retrofit Guide →</LinkButton>
+  </Card>
+  <Card title="Stage 2: Agentic Autonomous AI Pack" icon="cpu">
+    **Controller-Node-Tool (CNT) Mesh.** Full multi-agent automation over isolated Wi-Fi AP (<code>POTFRM-4096</code>), 250ms deadman watchdogs, and local GGUF vision.
+    <br/><br/>
+    <LinkButton href="/open-biosphere/hardware/fluidic-skimmer-loop/stage-2/">Enter Stage 2 Autonomous Guide →</LinkButton>
+  </Card>
+</CardGrid>

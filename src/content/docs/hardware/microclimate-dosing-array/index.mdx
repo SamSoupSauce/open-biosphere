@@ -1,0 +1,108 @@
+---
+title: "Microclimate & Automated Dosing Array — Subsystem Overview"
+description: "6-channel precision peristaltic nutrient and pH dosing manifold with isolated telemetry."
+---
+
+import { Card, CardGrid, LinkButton } from '@astrojs/starlight/components';
+
+## 1. Standalone Homesteading & Off-Grid Utility
+
+Maintaining optimal pH, electrical conductivity (EC), and atmospheric conditions by hand requires daily manual testing and chemical adjusting. This machine provides **autonomous 24/7 PID feedback regulation**:
+
+<CardGrid>
+  <Card title="6-Channel Nutrient & pH Doser" icon="flask">
+    Industrial peristaltic pumps meter Nitrates, Phosphates, Potassium, Micronutrients, pH Up, and pH Down with $\pm 0.1$ mL precision.
+  </Card>
+  <Card title="Closed-Loop Atmospheric PID" icon="activity">
+    Monitors air temperature, relative humidity (RH), and $CO_2$ levels in real time, triggering ultrasonic mist, exhaust dampers, or solenoids.
+  </Card>
+  <Card title="Open Hardware (ESP32 / Pi CM4)" icon="cpu">
+    Runs open-source automation firmware (ESPHome, Mycodo, or Home Assistant) with local web dashboards and offline local datalogging.
+  </Card>
+  <Card title="Isolated Industrial Telemetry" icon="shield">
+    Galvanically isolated I2C and RS-485 Modbus circuits prevent electrical ground-loop noise from skewing sensitive pH and EC probe readings.
+  </Card>
+</CardGrid>
+
+---
+
+---
+
+## 2. Technical Specifications
+
+| Parameter | Subsystem | Operating Target & Tolerance |
+| :--- | :--- | :--- |
+| **Nutrient Dosing** | 6-channel industrial 12V peristaltic pumps or gravity burettes | Resolution: $\pm 0.1$ mL per dose |
+| **Water Chemistry** | Dual-junction lab-grade pH probe & platinum EC electrode | pH: 6.0 to 6.8 | EC: 1.2 to 2.4 mS/cm |
+| **Atmospheric $CO_2$** | High-pressure $CO_2$ regulator with electronic solenoid mass flow meter | 800 to 1,200 ppm |
+| **Relative Humidity (RH)** | Ultrasonic mist humidification + dual refrigeration dehumidifiers | 65% to 75% RH |
+| **Air Temperature** | Inverter heat pump with duct distribution manifold | 21°C to 27°C day / 16°C to 19°C night |
+| **Dynamic Spectrum LED** | 8-channel controllable LED bars (Deep Red 660nm, Far Red 730nm, Royal Blue 450nm) | 150 to 600 µmol/m²/s PAR |
+| **Power Consumption** | 0W (Manual) / 25W avg (Add-On 1) / 38W peak (Add-On 2) |
+| **Controller Architecture** | Gravity Burettes / 6-Button Potentiometer Panel / ESP32-S3 + Modbus RTU |
+
+---
+
+---
+
+## 6. Staged Upgrade Progression & Cost Summary
+
+### Build Tier Comparison
+
+| Build Stage | Operational Capability | Direct Stage Cost | Cumulative Investment |
+| :--- | :--- | :--- | :--- |
+| **Base: Instructions** | 100% mechanical gravity burettes, manual 3-way L-port valves, and colorimetric drops | $122.00 | **$122.00** |
+| **Add-On 1: Semi-Auto** | Motorized 6-channel peristaltic pumping with Flutter BLE Virtual Panel & Two-Control Standard | +$130.00 | **$252.00** |
+| **Add-On 2: Agentic AI** | Controller-Node-Tool (CNT) automation, 1 Hz closed-loop PID, NDIR $CO_2$, & 250ms watchdogs | +$184.00 | **$436.00** |
+
+### Step-by-Step Zero-Waste Conversion Roadmap
+
+#### Path 1: Base Machine $
+ightarrow$ Add-On 1 (Motorized Dosing Panel)
+1. Bolt the six 12V peristaltic pumps into the pre-drilled central holes on the acrylic backplane.
+2. Plumb the pump discharge lines into Port 3 of the 3-way L-port bypass valves (the manual burettes remain fully usable).
+3. Install the 12V MeanWell power supply, Two-Control enclosure, and link the Flutter Companion App BLE Virtual Panel.
+
+#### Path 2: Add-On 1 $
+ightarrow$ Add-On 2 (Autonomous Closed-Loop CNT Brain)
+1. Mount the Doser Node (ESP32-S3 + OLED + Button) and modular ESP32-C3 Tools inside the IP65 enclosure.
+2. Connect `DEV_WATER_SNS` to the galvanically isolated pH and EC probe BNC headers.
+3. Connect `DEV_PUMP_BANK1` and `DEV_PUMP_BANK2` to the MOSFET driver board in parallel with the manual push buttons.
+4. Mount the Sensirion SCD41 $CO_2$ sensor and wire the $CO_2$ gas solenoid to `DEV_GAS_CTL`.
+5. Provision the Doser Node with Central Controller ID via mobile app BLE, and confirm 250ms watchdogs prevent uncommanded chemical release.
+
+---
+
+---
+
+## 7. Master Biosphere Assembly Interlock
+
+When integrated into the centralized Open Biosphere facility (~20 × 10 ft footprint):
+
+1. **Perimeter Wall Mounting**: Mounts in an IP65 splash-proof enclosure directly beside the South-West datum origin $(0,0,0)$.
+2. **Manifold Injection**: Dosing lines inject concentrated stock solutions directly into the fluidic return line after the biofiltration loop, ensuring complete turbulent mixing before water re-enters the Central Basin and NFT gutters.
+3. **Master CAN / MQTT Bus**: Publishes environmental telemetry and pump actuation logs to the centralized Open Biosphere logging server, coordinating lighting spectrum adjustments with water nutrient replenishment.
+
+---
+
+## 8. Select Your Build Stage
+
+Explore the step-by-step fabrication, wiring, and commissioning guides for each operational tier:
+
+<CardGrid>
+  <Card title="Stage 0: Pure Mechanical Baseline" icon="hammer">
+    **100% Zero-Power Manual Operation.** Built using common hardware, manual linkages, hand cranks, and gravity flows. Zero electrical power required.
+    <br/><br/>
+    <LinkButton href="/open-biosphere/hardware/microclimate-dosing-array/stage-0/">Enter Stage 0 Assembly Guide →</LinkButton>
+  </Card>
+  <Card title="Stage 1: BLE Electromechanical Pack" icon="setting">
+    **Motorized Drive & BLE Virtual Panel.** Upgrades to continuous DC motorization with Strict Two-Control hardware interlocks and Flutter BLE touch controls.
+    <br/><br/>
+    <LinkButton href="/open-biosphere/hardware/microclimate-dosing-array/stage-1/">Enter Stage 1 Retrofit Guide →</LinkButton>
+  </Card>
+  <Card title="Stage 2: Agentic Autonomous AI Pack" icon="cpu">
+    **Controller-Node-Tool (CNT) Mesh.** Full multi-agent automation over isolated Wi-Fi AP (<code>POTFRM-4096</code>), 250ms deadman watchdogs, and local GGUF vision.
+    <br/><br/>
+    <LinkButton href="/open-biosphere/hardware/microclimate-dosing-array/stage-2/">Enter Stage 2 Autonomous Guide →</LinkButton>
+  </Card>
+</CardGrid>

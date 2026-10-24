@@ -1,0 +1,111 @@
+---
+title: "Revolving Sprout Bioreactor Drum — Subsystem Overview"
+description: "Sanitary rotating aerated drum for continuous 96-hour hypocotyl sprout cultivation."
+---
+
+import { Card, CardGrid, LinkButton } from '@astrojs/starlight/components';
+
+## 1. Standalone Homesteading & Off-Grid Utility
+
+In off-grid and homestead scenarios, fresh bioavailable nutrients are often seasonally constrained. This machine produces **2.5 to 4.0 kg of crisp, high-protein mung bean or legume hypocotyls every 4 days** with zero soil, zero natural sunlight, and minimal water consumption:
+
+<CardGrid>
+  <Card title="Kitchen & Cabin Appliance" icon="star">
+    Operates independently on a kitchen counter, root cellar, or pantry shelf. Requires zero electrical power in base manual configuration.
+  </Card>
+  <Card title="Closed Water Conservation" icon="droplet">
+    Recirculating ultrasonic misting and scheduled drain cycles consume under 1.5 liters of fresh water per kilogram of fresh yield.
+  </Card>
+  <Card title="Photophobic Bioreaction" icon="moon">
+    Complete light isolation eliminates bitter chlorophyll synthesis, yielding tender, sweet, restaurant-grade hypocotyls without manual rinsing.
+  </Card>
+  <Card title="Ozonated Auto-Sanitization" icon="shield">
+    Integrated inline ozone generator executes an automated 3-minute sanitation wash between cycles, preventing fungal or bacterial mold.
+  </Card>
+</CardGrid>
+
+---
+
+---
+
+## 2. Technical Specifications
+
+| Parameter | Specification |
+| :--- | :--- |
+| **Footprint Dimensions** | 450 mm (W) × 600 mm (D) × 500 mm (H) |
+| **Drum Geometry** | Cylindrical food-grade perforated drum: 300 mm diameter × 450 mm length |
+| **Batch Capacity** | 800 g dry seed (yields ~3.5 kg wet hypocotyls per 96-hour run) |
+| **Rotation Drive** | NEMA 17 planetary geared stepper motor (5.18:1 reduction) or manual crank |
+| **Rotation Speed** | 0.5 to 2.0 RPM intermittent (rotates 15 seconds every 15 minutes) |
+| **Irrigation System** | Dual high-pressure atomizing misting nozzles (50 µm droplet size) |
+| **Sanitation Subsystem** | 200 mg/h corona-discharge ozone generator with gas diffuser stone |
+| **Power Consumption** | 0W (Manual) / 18W average (Add-On 1) / 22W peak (Add-On 2) |
+| **Controller Architecture** | Standalone manual / Dual-dial analog timer / ESP32-S3 FreeRTOS CAN node |
+
+---
+
+---
+
+## 6. Staged Upgrade Progression & Cost Summary
+
+The Sprout Bioreactor is intentionally designed so that **not a single bolt or bracket is thrown away** when upgrading from the zero-power manual build all the way to the full AI autonomous cyber-physical appliance.
+
+### Build Tier Comparison
+
+| Build Stage | Operational Capability | Direct Stage Cost | Cumulative Investment |
+| :--- | :--- | :--- | :--- |
+| **Base: Instructions** | 100% mechanical zero-electricity benchtop tumbler with hand crank and ratchet | $145.00 | **$145.00** |
+| **Add-On 1: Semi-Auto** | Motorized planetary rotation, misting with BLE Virtual Panel & 2 physical controls | +$147.00 | **$292.00** |
+| **Add-On 2: Agentic AI** | Controller-Node-Tool (CNT) automation, StallGuard homing, ozone sanitizing, & AGV interlock | +$89.00 | **$381.00** |
+
+### Step-by-Step Zero-Waste Conversion Roadmap
+
+#### Path 1: Base Machine $\rightarrow$ Add-On 1 (Semi-Autonomous Retrofit)
+1. Mount the NEMA 17 motor bracket to the rear vertical extrusion using existing T-slot channels (no drilling required).
+2. Slide the 60T GT2 pulley and axial dog clutch onto the protruding 8 mm D-shaft stub between the pillow block and hand crank.
+3. Install the 24V diaphragm mist pump in the lower frame base, threading the 1/4" mist line through the pre-cast access grommets in the top hood.
+4. Mount the Two-Control IP65 enclosure (Master DC Cut + SD Reset + Micro-SD) and pair Flutter BLE Virtual Panel. The hand crank remains permanently installed for manual zero-power override.
+
+#### Path 2: Add-On 1 $\rightarrow$ Add-On 2 (Agentic Autonomous CNT Upgrade)
+1. Mount the Sprout Node (ESP32-S3 + OLED + Two-Control Standard) and modular ESP32-C3 Tools on the DIN rail.
+2. Connect the stepper motor 4-wire lead to the TMC2209 driver governed by the `DEV_DRUM_STEP` tool with StallGuard homing.
+3. Insert the SHT40 probe into the pre-molded exhaust flue socket and plug the 4-wire lead into the `DEV_CLIMATE_SNS` tool.
+4. Mount the corona ozone module and connect its aeration tube to the reservoir stone, wired to the `DEV_OZONE_GEN` tool.
+5. Bolt the magnetic alignment docking latch to the lower front rail, provision the Sprout Node with the Central Controller ID via mobile app BLE, and verify all four BLE Tools bind with active 250ms watchdogs.
+
+---
+
+---
+
+## 7. Master Biosphere Assembly Interlock
+
+When integrated into the centralized Open Biosphere facility (~20 × 10 ft footprint):
+
+1. **Mechanical Docking**: The drum chassis features a standardized 2020 V-slot bottom dovetail rail that slides and locks into the Perimeter Lower Tier mounting brackets ($Z = 150$ mm above the central basin water line).
+2. **Autonomous AGV Pod Carrier Exchange**: The Ground Track AGV uses an articulated pneumatic clamp to interface with the drum's magnetic docking latch, unlatching and shuttling spent canisters directly to the central harvest processing station.
+3. **Plumbing Quick-Connect**: Magnetic-seat, dry-break fluid disconnects tap directly into the enclosure's centralized ozonated sanitizing loop and nutrient drain manifold.
+4. **Communications Bus**: Communicates via CAN bus / ESPHome MQTT to the centralized master biosphere orchestrator, broadcasting chamber temperature, relative humidity, harvest countdown, and motor torque profiles.
+
+---
+
+## 8. Select Your Build Stage
+
+Explore the step-by-step fabrication, wiring, and commissioning guides for each operational tier:
+
+<CardGrid>
+  <Card title="Stage 0: Pure Mechanical Baseline" icon="hammer">
+    **100% Zero-Power Manual Operation.** Built using common hardware, manual linkages, hand cranks, and gravity flows. Zero electrical power required.
+    <br/><br/>
+    <LinkButton href="/open-biosphere/hardware/revolving-sprout-bioreactor/stage-0/">Enter Stage 0 Assembly Guide →</LinkButton>
+  </Card>
+  <Card title="Stage 1: BLE Electromechanical Pack" icon="setting">
+    **Motorized Drive & BLE Virtual Panel.** Upgrades to continuous DC motorization with Strict Two-Control hardware interlocks and Flutter BLE touch controls.
+    <br/><br/>
+    <LinkButton href="/open-biosphere/hardware/revolving-sprout-bioreactor/stage-1/">Enter Stage 1 Retrofit Guide →</LinkButton>
+  </Card>
+  <Card title="Stage 2: Agentic Autonomous AI Pack" icon="cpu">
+    **Controller-Node-Tool (CNT) Mesh.** Full multi-agent automation over isolated Wi-Fi AP (<code>POTFRM-4096</code>), 250ms deadman watchdogs, and local GGUF vision.
+    <br/><br/>
+    <LinkButton href="/open-biosphere/hardware/revolving-sprout-bioreactor/stage-2/">Enter Stage 2 Autonomous Guide →</LinkButton>
+  </Card>
+</CardGrid>

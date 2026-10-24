@@ -1,0 +1,112 @@
+---
+title: "2-Axis Overhead Precision Gantry — Subsystem Overview"
+description: "High-precision Cartesian gantry covering nursery beds with modular toolheads."
+---
+
+import { Card, CardGrid, LinkButton } from '@astrojs/starlight/components';
+
+## 1. Standalone Homesteading & Off-Grid Utility
+
+For homesteaders managing raised beds, hydroponic NFT channels, or microgreen trays, manual weeding, inspecting, and harvesting delicate crops takes hours every day. This machine automates **continuous optical inspection, micro-seeding, and selective micro-harvesting**:
+
+<CardGrid>
+  <Card title="Scalable Garden Automation" icon="maximize">
+    Easily scaled to any rectangular garden bed (from 4x8 ft up to 10x20 ft) using standard V-slot aluminum extrusions and GT2 timing belts.
+  </Card>
+  <Card title="Kinematic Quick-Swap Toolhead" icon="tool">
+    Magnetic tool mount allows hot-swapping between optical multi-spectral cameras, micro-tweezers (for saffron), precision seeders, and weed shears.
+  </Card>
+  <Card title="0.15 mm Sub-Millimeter Precision" icon="crosshair">
+    Closed-loop stepper motors provide high-accuracy indexing, allowing micro-tweezers to extract saffron stigmas without tearing delicate petals.
+  </Card>
+  <Card title="Open Firmware (Klipper / ESPHome)" icon="code">
+    Runs standard 3D printer firmware (Klipper on STM32 or ESPHome), configurable through familiar web interfaces with zero vendor lock-in.
+  </Card>
+</CardGrid>
+
+---
+
+---
+
+## 2. Technical Specifications
+
+| Parameter | Specification |
+| :--- | :--- |
+| **Motion Envelope** | Length: up to 6,096 mm ($Y$-Axis) | Width: up to 3,048 mm ($X$-Axis) | Elevation: 1,200 mm ($Z$) |
+| **Drive Mechanism** | GT2 9mm steel-reinforced timing belts with NEMA 23 closed-loop steppers |
+| **Linear Guide** | Dual 2040 / 4040 V-slot aluminum extrusions with polyoxymethylene (POM) wheels |
+| **Repeatability** | $\pm 0.15$ mm across the entire 20 × 10 ft envelope |
+| **Payload Rating** | Up to 8.5 kg toolhead payload |
+| **Toolhead Mount** | Magnetic kinematic 3-point ball-seat quick-swap mount with 8-pin spring pogo bus |
+| **Power Consumption**| 0W (Manual) / 85W avg (Add-On 1) / 120W peak (Add-On 2) |
+| **Controller Architecture**| Manual Freewheel / 6-Button CNC Jog Pendant / BTT Octopus Pro (Klipper CAN) |
+
+---
+
+---
+
+## 6. Staged Upgrade Progression & Cost Summary
+
+### Build Tier Comparison
+
+| Build Stage | Operational Capability | Direct Stage Cost | Cumulative Investment |
+| :--- | :--- | :--- | :--- |
+| **Base: Instructions** | 100% mechanical manual lead screw carriage with handwheels and analog dial indicator | $177.00 | **$177.00** |
+| **Add-On 1: Semi-Auto** | Motorized NEMA 23 belt drive with Flutter BLE Virtual Panel & Two-Control Standard | +$216.00 | **$393.00** |
+| **Add-On 2: Agentic AI** | Controller-Node-Tool (CNT) automation, 4K macro vision, kinematic tool change, & 250ms watchdogs | +$194.00 | **$603.40** |
+
+### Step-by-Step Zero-Waste Conversion Roadmap
+
+#### Path 1: Base Machine $
+ightarrow$ Add-On 1 (Motorized Jog Upgrade)
+1. Bolt the NEMA 23 stepper motor bracket onto the X-axis carriage plate using the pre-drilled M5 holes.
+2. Connect the 9 mm GT2 timing belt to the manual handwheel axle (the handwheels remain 100% functional for zero-power manual indexing).
+3. Mount the IP65 Two-Control enclosure to the outer gantry upright, wire the 24V PSU and TB6600 drivers, and pair the Flutter Companion App BLE Virtual Panel.
+
+#### Path 2: Add-On 1 $
+ightarrow$ Add-On 2 (Autonomous Edge CNT Robot)
+1. Mount the Gantry Node (ESP32-S3 + OLED + Button) and modular ESP32-C3 Tools (`DEV_X_AXIS`, `DEV_Y_AXIS`, `DEV_TOOL_HEAD`).
+2. Mount the 4K macro camera module on the toolhead carriage with Wi-Fi video streaming to the Central Controller.
+3. Install AS5600 magnetic rotary encoders on motor shafts for closed-loop position verification.
+4. Mount kinematic toolheads (Saffron Tweezer and Purslane Shear) into the tool rack.
+5. Provision the Gantry Node with the Central Controller ID via mobile app BLE, and verify all 250ms deadman watchdogs are active.
+
+---
+
+---
+
+## 7. Master Biosphere Assembly Interlock
+
+When integrated into the centralized Open Biosphere facility (~20 × 10 ft footprint):
+
+1. **Perimeter Extrusion Mounting**: The Y-axis gantry rails bolt directly onto the outer 4040 aluminum perimeter extrusions at elevation $Z = 1,200$ mm.
+2. **Toolhead Ecosystem**:
+   - **Optical Inspection Cartridge**: 4K RGB + 850nm NIR camera for leaf area index (LAI) and canopy stress mapping.
+   - **Saffron Micro-Tweezer**: Micro-servo actuated silicone forceps extracting *Crocus sativus* stigmas with 0.15 mm repeatability.
+   - **Purslane Lateral Shear**: Oscillating reciprocating micro-blades trimming succulent purslane greens without pulling root plugs.
+   - **TPS Potato Root Extractor**: Vacuum-assisted nozzle descending into aeroponic root chambers to pick mature mini-tubers.
+3. **Inter-Robot Handoff**: Coordinates directly with the Ground Track AGV; upon completing a harvest run, the gantry deposits harvested crop pods directly into the AGV's cargo bed.
+
+---
+
+## 8. Select Your Build Stage
+
+Explore the step-by-step fabrication, wiring, and commissioning guides for each operational tier:
+
+<CardGrid>
+  <Card title="Stage 0: Pure Mechanical Baseline" icon="hammer">
+    **100% Zero-Power Manual Operation.** Built using common hardware, manual linkages, hand cranks, and gravity flows. Zero electrical power required.
+    <br/><br/>
+    <LinkButton href="/open-biosphere/hardware/overhead-gantry-system/stage-0/">Enter Stage 0 Assembly Guide →</LinkButton>
+  </Card>
+  <Card title="Stage 1: BLE Electromechanical Pack" icon="setting">
+    **Motorized Drive & BLE Virtual Panel.** Upgrades to continuous DC motorization with Strict Two-Control hardware interlocks and Flutter BLE touch controls.
+    <br/><br/>
+    <LinkButton href="/open-biosphere/hardware/overhead-gantry-system/stage-1/">Enter Stage 1 Retrofit Guide →</LinkButton>
+  </Card>
+  <Card title="Stage 2: Agentic Autonomous AI Pack" icon="cpu">
+    **Controller-Node-Tool (CNT) Mesh.** Full multi-agent automation over isolated Wi-Fi AP (<code>POTFRM-4096</code>), 250ms deadman watchdogs, and local GGUF vision.
+    <br/><br/>
+    <LinkButton href="/open-biosphere/hardware/overhead-gantry-system/stage-2/">Enter Stage 2 Autonomous Guide →</LinkButton>
+  </Card>
+</CardGrid>
