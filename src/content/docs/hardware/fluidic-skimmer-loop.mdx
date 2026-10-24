@@ -335,10 +335,10 @@ flowchart LR
 
 ## 5. Add-On 2: Agentic Autonomous AI Pack (Edge Vision & Closed Loop)
 
-Under [RFC-0004](/rfcs/rfc-0004-controller-node-tool), Add-On 2 transforms the skimmer into a **hierarchical Controller-Node-Tool (CNT) cyber-physical harvester**. Monolithic on-machine SBCs and brittle CAN transceivers are eliminated; the machine operates as a dedicated **Machine Node** commanding modular **Edge Tools** over BLE, orchestrated by the Central Biosphere Controller over hidden WPA3 Wi-Fi.
+Under [RFC-0004](/rfcs/rfc-0004-controller-node-tool) and [RFC-0006](/rfcs/rfc-0006-agnostic-controller-runtime), Add-On 2 transforms the skimmer into a **hierarchical Controller-Node-Tool (CNT) cyber-physical harvester**. Monolithic on-machine SBCs and brittle CAN transceivers are eliminated; the machine operates as a dedicated **Machine Node** commanding modular **Edge Tools** over BLE, orchestrated by the Central Biosphere Controller over isolated farm Wi-Fi (`POTFRM-4096`).
 
 ### Autonomous Vision, Telemetry & Multi-Agent Control
-- **Decoupled Optical Frond Profiling**: The overhead Sony IMX219 NIR camera streams directly to the Central Controller (Raspberry Pi 5 + Hailo-8 M.2 HAT). The Central Controller executes morphological neural mat segmentation, determining when surface *Wolffia* thickness exceeds 8.0 mm and dispatching harvest commands to the Skimmer Node.
+- **Decoupled Optical Frond Profiling**: The overhead Sony IMX219 NIR camera streams directly to the Central Controller (Agnostic Runtime, e.g. Raspberry Pi 5 + Hailo-8 or x86 Host). The Central Controller executes morphological neural mat segmentation, determining when surface *Wolffia* thickness exceeds 8.0 mm and dispatching harvest commands to the Skimmer Node.
 - **Skimmer Subsystem Node (ESP32-S3)**: A mid-tier ESP32-S3 with PSRAM mounted in an IP67 enclosure. Features an onboard 0.96" I2C OLED display (`[NODE: SKIMMER-01 | LINK -> 4096]`) and physical setup button. It maintains a secure Wi-Fi client uplink to the Central Controller and acts as a BLE Central aggregator managing downstream local Tools.
 - **Dedicated Modular Edge Tools (ESP32-C3)**: Actuators and sensors are driven 1:1 by tiny ESP32-C3 micro-controllers equipped with 0.42" micro OLED displays and uncompromising **250ms hardware deadman watchdogs**:
   - `DEV_WEIR_ACT`: Governs the 12V micro linear actuator with analog position feedback to lower the weir lip (5–20 mm) dynamically.
@@ -372,8 +372,8 @@ Step 3.4: Skimmer Node Provisioning & BLE Tool Binding
   ├── Mount ESP32-S3 Node with 0.96" I2C OLED display and physical setup push-button inside IP67 enclosure.
   ├── Power up Skimmer Node; onboard display shows [NODE UNPAIRED - PAIR VIA BLE].
   ├── Press physical setup button; connect mobile companion app to Node over BLE.
-  ├── Enter the 4-digit Controller Pairing ID (e.g. 4096) displayed on Central Controller OLED.
-  ├── Node commits credentials to NVS, connects to hidden WPA3 Wi-Fi, and updates OLED to [ONLINE | LINK -> 4096].
+  ├── Enter the 4-digit Cluster ID (e.g. 4096) displayed on Central Controller OLED, terminal stdout, or BLE beacon.
+  ├── Node commits credentials to NVS, connects to POTFRM-4096, registers at ws://192.168.42.1:8443/register, and updates OLED to [ONLINE | LINK -> 4096].
   └── Node scans BLE advertising channels, auto-binding DEV_WEIR_ACT, DEV_AUGER_STEP, DEV_PUMP_VFD, and DEV_SUMP_LEVEL.
 
 Step 3.5: 250ms Watchdog & Fail-Safe Verification
@@ -387,7 +387,7 @@ Step 3.5: 250ms Watchdog & Fail-Safe Verification
 1. **Self-Diagnostic Boot & Handshake Sequence**: Upon boot, Skimmer Node queries all bound BLE Tools:
    - Verifies `DEV_SUMP_LEVEL` reads between 150 mm and 280 mm (normal sump depth).
    - Commands `DEV_WEIR_ACT` to cycle linear actuator to 0.0 mm (fully closed home).
-   - Pings Central Controller over hidden Wi-Fi; registers active node status and displays `[NODE: SKIMMER-01 | LINK -> 4096]`.
+   - Pings Central Controller over isolated farm Wi-Fi; registers active node status and displays `[NODE: SKIMMER-01 | LINK -> 4096]`.
 2. **Autonomous Canopy Sentry (Sentry Mode)**:
    - Pump runs at minimum maintenance speed (15% duty cycle, 12 GPM) to prevent water stagnation.
    - Central Controller Hailo-8 NPU processes canopy camera frames every 5 seconds, calculating frond coverage percentage.
@@ -416,12 +416,12 @@ ADD-ON 2 CONTROLLER-NODE-TOOL (CNT) HIERARCHICAL EDGE ARCHITECTURE BLUEPRINT
 Decoupled Neural Perception, Dual-Core Machine Node & 250ms Watchdog Edge Tools
 ========================================================================================
 
-            CENTRAL BIOSPHERE CONTROLLER (Raspberry Pi 5 + Hailo-8 M.2 HAT)
-            • Emits Hidden WPA3 Biosphere Wi-Fi Network
-            • Onboard Status OLED: [CTRL_ID: 4096]
+            CENTRAL BIOSPHERE CONTROLLER (Agnostic Runtime / POTFRM-4096)
+            • Emits Isolated Farm AP: SSID [POTFRM-4096] (192.168.42.0/24)
+            • Host Status Output: OLED / CLI / Beacon: [POTFRM-4096]
             • YOLOv8 Canopy Biomass Vision & Global Biosphere Coordination
                                        │
-                                       │ Encrypted Local Wi-Fi Uplink
+                                       │ Isolated Farm Wi-Fi (192.168.42.0/24)
                                        ▼
      ┌─────────────────────── SKIMMER NODE (ESP32-S3) ────────────────────────┐
      │  • Mini I2C OLED Status Display: [NODE: SKIMMER-01 | LINK -> 4096]       │

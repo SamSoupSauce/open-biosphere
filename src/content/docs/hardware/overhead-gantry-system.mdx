@@ -259,11 +259,11 @@ flowchart LR
 
 ## 5. Add-On 2: Agentic Autonomous AI Pack (Edge Vision & Closed Loop)
 
-Under [RFC-0004](/rfcs/rfc-0004-controller-node-tool), the **Agentic Autonomous AI Pack** transforms the gantry into a hierarchical **Controller-Node-Tool (CNT)** sub-millimeter agricultural robot. Heavy neural vision processing is offloaded to the Central Biosphere Controller over Wi-Fi, while a dedicated **Gantry Node** coordinates Cartesian motion primitives and downlinks to modular **Edge Tools** over BLE with 250ms hardware deadman watchdogs.
+Under [RFC-0004](/rfcs/rfc-0004-controller-node-tool) and [RFC-0006](/rfcs/rfc-0006-agnostic-controller-runtime), the **Agentic Autonomous AI Pack** transforms the gantry into a hierarchical **Controller-Node-Tool (CNT)** sub-millimeter agricultural robot. Heavy neural vision processing is offloaded to the Central Biosphere Controller over Wi-Fi, while a dedicated **Gantry Node** coordinates Cartesian motion primitives and downlinks to modular **Edge Tools** over BLE with 250ms hardware deadman watchdogs.
 
 ### Autonomous Vision & Telemetry Architecture
 - **Gantry Machine Node (ESP32-S3)**: Dual-Core Xtensa LX7 (240 MHz, 8 MB PSRAM) mounted inside the main electrical enclosure governed by the **Strict Two-Control Physical Standard** (Master DC Power Switch and Recessed SD Reset Button alongside 0.96" I2C OLED `[NODE: GANTRY-01 | LINK -> 4096]`). Uplinks to Central Controller via Wi-Fi; receives Cartesian path plans and coordinates downstream Tools via BLE Central.
-- **Decoupled Down-Facing Macro Vision**: Sony IMX519 16MP / 4K RGB camera paired with an 850 nm NIR ring illuminator streams high-resolution video over Wi-Fi directly to the Central Controller (Raspberry Pi 5 + Hailo-8 M.2 HAT), which executes YOLOv8 neural detection for saffron stigmas (*Crocus sativus*) and purslane trimming targets.
+- **Decoupled Down-Facing Macro Vision**: Sony IMX519 16MP / 4K RGB camera paired with an 850 nm NIR ring illuminator streams high-resolution video over Wi-Fi directly to the Central Controller (Agnostic Runtime, e.g. Raspberry Pi 5 + Hailo-8 or x86 Host), which executes YOLOv8 neural detection for saffron stigmas (*Crocus sativus*) and purslane trimming targets.
 - **Dedicated Modular Edge Tools (ESP32-C3)**: Driven 1:1 by micro ESP32-C3 controllers equipped with 0.42" micro OLED displays and **250ms hardware deadman watchdogs**:
   - `DEV_X_AXIS`: Micro ESP32-C3 with 0.42" OLED (`TOOL: X_AXIS | LINK: OK`) + 250ms watchdog driving the X-axis NEMA 23 stepper driver and AS5600 magnetic rotary encoder.
   - `DEV_Y_AXIS`: Micro ESP32-C3 with 0.42" OLED (`TOOL: Y_AXIS | LINK: OK`) + 250ms watchdog driving dual Y-axis NEMA 23 stepper drivers and AS5600 encoder.
@@ -273,11 +273,11 @@ Under [RFC-0004](/rfcs/rfc-0004-controller-node-tool), the **Agentic Autonomous 
 ```text
        CONTROLLER-NODE-TOOL (CNT) HIERARCHICAL EDGE ARCHITECTURE
   =================================================================
-            CENTRAL BIOSPHERE CONTROLLER (Pi 5 + Hailo-8 M.2 HAT)
-            • Emits Hidden WPA3 Wi-Fi Network | OLED: [CTRL_ID: 4096]
+            CENTRAL BIOSPHERE CONTROLLER (Agnostic Runtime / POTFRM-4096)
+            • Emits Isolated Farm AP: SSID [POTFRM-4096] (192.168.42.0/24)
             • YOLOv8 Macro Canopy Vision & Sub-Millimeter Targeting
                                   │
-                                  │ Encrypted Wi-Fi Uplink
+                                  │ Isolated Farm Wi-Fi (192.168.42.0/24)
                                   ▼
              ┌─────────────────────────────────────────┐
              │       GANTRY MACHINE NODE (ESP32-S3)    │
@@ -323,10 +323,10 @@ Under [RFC-0004](/rfcs/rfc-0004-controller-node-tool), the **Agentic Autonomous 
 3. Test automatic tool-docking: the gantry moves to the tool rack at $(X=0, Y=0)$, slides sideways into the slot, and uncouples the kinematic magnets cleanly.
 
 #### Step 3.5: Provisioning & 250ms Watchdog Verification
-1. Power on Central Controller; note pairing ID on its OLED (`CTRL_ID: 4096`).
+1. Power on Central Controller; verify active Cluster ID on OLED, terminal stdout, or BLE beacon (`POTFRM-4096`).
 2. Power on Gantry Node; display shows `[NODE UNPAIRED - PAIR VIA BLE]`.
 3. Press physical setup button on Node; connect via mobile companion app over BLE, enter `4096`.
-4. Node commits credentials to NVS, links to hidden Wi-Fi, and updates display to `[ONLINE | LINK -> 4096]`.
+4. Node commits credentials to NVS, links to `POTFRM-4096`, registers at `ws://192.168.42.1:8443/register`, and updates display to `[ONLINE | LINK -> 4096]`.
 5. Verify Node auto-discovers and binds all three BLE Tools.
 6. Test fail-safe watchdog: drop BLE link to `DEV_X_AXIS`; verify stepper current drops to 0.0A in $< 250$ ms.
 

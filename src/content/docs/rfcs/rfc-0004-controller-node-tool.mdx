@@ -22,20 +22,20 @@ This RFC establishes the **Controller-Node-Tool (CNT)** standard across the enti
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
 │                        CONTROLLER (CENTRAL BRAIN)                      │
-│  Raspberry Pi 5 + AI Accelerator (e.g. Hailo-8 M.2 HAT)                │
-│  • Emits hidden biosphere Wi-Fi network                                │
-│  • Onboard mini OLED status screen: displays [CONTROLLER ID: XXXX]     │
-│  • Open BLE endpoint for operator mobile companion app                 │
+│  Portable Agnostic Software Runtime (RFC-0006: Linux / macOS Host)     │
+│  • Emits isolated farm AP: SSID [POTFRM-<CLUSTER_ID>] (192.168.42.0/24)│
+│  • Local GGUF Neural Inference via llama-cpp-python (Zero Cloud Calls) │
+│  • Status display: OLED screen, CLI stdout, or BLE Discovery Beacon    │
 │  • Maintains global biosphere model, scheduling, and multi-agent loops │
 └───────────────────────────────────┬────────────────────────────────────┘
-                                    │ Encrypted Local Wi-Fi (Direct Link)
+                                    │ Encrypted Local Wi-Fi (192.168.42.0/24)
                                     ▼
 ┌────────────────────────────────────────────────────────────────────────┐
 │                        NODE (MACHINE AGGREGATOR)                       │
 │  Mid-tier ESP32 (e.g. ESP32-S3 Dual-Core)                              │
 │  • One per physical machine / subsystem frame                          │
 │  • Onboard mini OLED status screen + setup push-button                 │
-│  • Connects UP to Controller via Wi-Fi using paired Controller ID      │
+│  • Connects UP to Controller via Wi-Fi using paired Cluster ID         │
 │  • Exposes BLE service for initial phone provisioning                  │
 │  • Manages local machine logic, safety watchdog, and down-links        │
 └───────────────────────────────────┬────────────────────────────────────┘
@@ -58,14 +58,15 @@ This RFC establishes the **Controller-Node-Tool (CNT)** standard across the enti
 ## 2. Structural Layer Definitions
 
 ### Layer 1: The Controller (Biosphere Master)
-* **Hardware:** Raspberry Pi 5 (8GB) with dedicated NPU/AI HAT (e.g. Hailo-8 / Google Coral).
-* **Physical Enclosure:** Self-contained black-box enclosure requiring only master DC power.
-* **Display Interface:** Dedicated small I2C/SPI OLED display (0.96" or 1.3") showing:
-  * Controller Pairing ID (e.g. `CTRL_ID: 4096`).
+* **Compute Runtime:** Under [RFC-0006](/rfcs/rfc-0006-agnostic-controller-runtime), a hardware-agnostic portable software runtime (`biosphere-core`) running on any Linux (ARM64/x86_64) or macOS host. Dedicated SBCs (Raspberry Pi 4/5 + optional Hailo-8 NPU), repurposed corporate thin clients, used laptops, and home servers are all supported.
+* **Physical Enclosure:** Self-contained enclosure or standard desktop/laptop case requiring only master DC power.
+* **Display Interface:** Small I2C/SPI OLED display (0.96" or 1.3"), CLI terminal stdout, or BLE beacon broadcasting:
+  * Cluster ID (e.g. `POTFRM-4096`).
   * System health, connected Node count, and local Wi-Fi status.
 * **Networking & RF:**
-  * **Wi-Fi AP:** Broadcasts a hidden, high-throughput WPA3 local network for Nodes only.
-  * **Bluetooth (BLE):** Dedicated service open for operator companion app connection. Operators connect their phone to the Controller via BLE to query global biosphere health, telemetry, yield statistics, and active alerts.
+  * **Wi-Fi AP:** Broadcasts an isolated, local-only private network (`POTFRM-<CLUSTER_ID>` on `192.168.42.0/24`) for Nodes only.
+  * **Local APIs:** Secure WebSocket and HTTPS on port `8443` for Node registration (`ws://192.168.42.1:8443/register`) and Flutter companion app queries.
+  * **Local Neural Inference:** `llama-cpp-python` running quantized GGUF models locally with native hardware acceleration.
 
 ### Layer 2: The Node (Subsystem Manager)
 * **Hardware:** Mid-tier ESP32 module (ESP32-S3 with PSRAM).

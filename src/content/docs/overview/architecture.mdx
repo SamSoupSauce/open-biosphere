@@ -63,25 +63,25 @@ When assembled together, the individual machines occupy four interlocking spatia
 
 ## 3. Controller-Node-Tool (CNT) Hierarchical Edge Architecture
 
-Under [RFC-0004](/rfcs/rfc-0004-controller-node-tool), the biosphere decouples heavy neural compute from edge electro-mechanics through a 3-tier hierarchy:
+Under [RFC-0004](/rfcs/rfc-0004-controller-node-tool) and [RFC-0006](/rfcs/rfc-0006-agnostic-controller-runtime), the biosphere decouples heavy neural compute from edge electro-mechanics through a 3-tier hierarchy:
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
 │                        CONTROLLER (CENTRAL BRAIN)                      │
-│  Raspberry Pi 5 + AI Accelerator (e.g. Hailo-8 M.2 HAT)                │
-│  • Emits hidden biosphere Wi-Fi network                                │
-│  • Onboard mini OLED status screen: displays [CONTROLLER ID: XXXX]     │
-│  • Open BLE endpoint for operator mobile companion app                 │
+│  Portable Agnostic Software Runtime (RFC-0006: Linux / macOS Host)     │
+│  • Emits isolated farm AP: SSID [POTFRM-<CLUSTER_ID>] (192.168.42.0/24)│
+│  • Local GGUF Neural Inference via llama-cpp-python (Zero Cloud Calls) │
+│  • Status output: OLED screen, CLI stdout, or BLE Discovery Beacon     │
 │  • Maintains global biosphere model, scheduling, and multi-agent loops │
 └───────────────────────────────────┬────────────────────────────────────┘
-                                    │ Encrypted Local Wi-Fi (Direct Link)
+                                    │ Encrypted Local Wi-Fi (192.168.42.0/24)
                                     ▼
 ┌────────────────────────────────────────────────────────────────────────┐
 │                        NODE (MACHINE AGGREGATOR)                       │
 │  Mid-tier ESP32 (e.g. ESP32-S3 Dual-Core)                              │
 │  • One per physical machine / subsystem frame                          │
 │  • Onboard mini OLED status screen + setup push-button                 │
-│  • Connects UP to Controller via Wi-Fi using paired Controller ID      │
+│  • Connects UP to Controller via Wi-Fi using paired Cluster ID         │
 │  • Exposes BLE service for initial phone provisioning                  │
 │  • Manages local machine logic, safety watchdog, and down-links        │
 └───────────────────────────────────┬────────────────────────────────────┘
@@ -99,7 +99,7 @@ Under [RFC-0004](/rfcs/rfc-0004-controller-node-tool), the biosphere decouples h
 └───────────────────┘       └───────────────────┘       └───────────────────┘
 ```
 
-1. **The Controller (Central Brain)**: A single black-box appliance (Raspberry Pi 5 + Hailo-8 M.2 HAT) running neural perception, spatial mapping, and multi-agent coordination. Emits a hidden WPA3 Wi-Fi network and displays `[CTRL_ID: XXXX]` on its OLED screen for mobile app pairing.
+1. **The Controller (Central Brain)**: Under [RFC-0006](/rfcs/rfc-0006-agnostic-controller-runtime), the Controller is defined strictly as a portable, hardware-agnostic software runtime (`biosphere-core`) running on any Linux (ARM64/x86_64) or macOS host (e.g. Raspberry Pi 4/5, repurposed x86 mini-PCs, thin clients, or laptops). It hosts an isolated Wi-Fi AP (`POTFRM-<CLUSTER_ID>` on `192.168.42.0/24`), executes local neural reasoning via `llama-cpp-python` with native hardware acceleration, and coordinates multi-agent schedules over secure WebSocket (`ws://192.168.42.1:8443/register`).
 2. **The Node (Machine Subsystem)**: Exactly one per physical machine frame (ESP32-S3 with PSRAM). Hosts an OLED status display (`[NODE: <NAME> | LINK -> CTRL_ID]`). Under [RFC-0005](/rfcs/rfc-0005-hardware-interlocks-ble-virtual-panel), physical control panels are banned: the enclosure carries strictly an inline DC power switch and a recessed SD recovery button. The operator provisions the Node and performs manual jogging via the Flutter companion app over local BLE.
 3. **The Tools (Actuators & Sensors)**: Minimalist micro-controllers (ESP32-C3 / Xiao) dedicated 1:1 to single motors, drivers, or sensor clusters. Each Tool features a micro OLED status display and a **250ms hardware deadman watchdog** that cuts power or snaps valves closed if communication to its Node is lost.
 

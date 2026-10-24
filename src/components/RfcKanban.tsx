@@ -66,12 +66,13 @@ const RFC_LIST: RFCItem[] = [
   },
   {
     id: 'RFC-0006',
-    title: 'Wasabi Chiller Fluidic Loop PID Autotuning',
-    author: 'Microclimate Group',
-    targetType: 'Zone',
-    status: 'Draft',
-    date: '2026-10-23',
-    summary: 'Reinforcement learning PID controller to maintain strict 10-13C water temperature and DO > 8.0 mg/L in sawa gravel troughs.',
+    title: 'Agnostic Controller Runtime & Host Specification',
+    author: 'Controller Systems Architecture Team',
+    targetType: 'Software',
+    status: 'Implemented',
+    date: '2026-10-24',
+    summary: 'Hardware-agnostic portable runtime (biosphere-core) for any Linux/macOS host with POTFRM-<CLUSTER_ID> AP, 192.168.42.0/24 subnet, and local llama-cpp-python GGUF inference.',
+    docSlug: '/rfcs/rfc-0006-agnostic-controller-runtime',
   },
 ];
 

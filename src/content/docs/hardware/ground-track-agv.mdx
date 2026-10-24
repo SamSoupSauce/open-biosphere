@@ -289,7 +289,7 @@ flowchart LR
 
 ## 5. Add-On 2: Agentic Autonomous AI Pack (Edge Vision & Closed Loop)
 
-Under [RFC-0004](/rfcs/rfc-0004-controller-node-tool), the **Agentic Autonomous AI Pack** transforms the AGV into a hierarchical **Controller-Node-Tool (CNT)** autonomous logistics carrier. Operating as a dedicated **AGV Node** commanding modular **Edge Tools** over BLE, it receives route schedules from the Central Biosphere Controller over Wi-Fi, tracks magnetic floor tape, scans for obstacles via 2D LiDAR, and transfers harvest totes with 250ms watchdog safety.
+Under [RFC-0004](/rfcs/rfc-0004-controller-node-tool) and [RFC-0006](/rfcs/rfc-0006-agnostic-controller-runtime), the **Agentic Autonomous AI Pack** transforms the AGV into a hierarchical **Controller-Node-Tool (CNT)** autonomous logistics carrier. Operating as a dedicated **AGV Node** commanding modular **Edge Tools** over BLE, it receives route schedules from the Central Biosphere Controller over Wi-Fi, tracks magnetic floor tape, scans for obstacles via 2D LiDAR, and transfers harvest totes with 250ms watchdog safety.
 
 ### Autonomous Vision & Telemetry Architecture
 - **AGV Machine Node (ESP32-S3)**: Dual-Core Xtensa LX7 (240 MHz, 8 MB PSRAM) mounted in a protected central tray. Features an onboard 0.96" I2C OLED display (`[NODE: AGV-01 | LINK -> 4096]`) and setup push-button for mobile BLE provisioning. Uplinks to Central Controller via Wi-Fi; coordinates local kinematics and downlinks to Tools via BLE Central.
@@ -303,11 +303,11 @@ Under [RFC-0004](/rfcs/rfc-0004-controller-node-tool), the **Agentic Autonomous 
 ```text
        CONTROLLER-NODE-TOOL (CNT) HIERARCHICAL EDGE ARCHITECTURE
   =================================================================
-            CENTRAL BIOSPHERE CONTROLLER (Pi 5 + Hailo-8 M.2 HAT)
-            • Emits Hidden WPA3 Wi-Fi Network | OLED: [CTRL_ID: 4096]
+            CENTRAL BIOSPHERE CONTROLLER (Agnostic Runtime / POTFRM-4096)
+            • Emits Isolated Farm AP: SSID [POTFRM-4096] (192.168.42.0/24)
             • Global Logistics Routing, Zone Scheduling & Multi-Agent Dispatch
                                   │
-                                  │ Encrypted Wi-Fi Uplink
+                                  │ Isolated Farm Wi-Fi (192.168.42.0/24)
                                   ▼
              ┌─────────────────────────────────────────┐
              │         AGV MACHINE NODE (ESP32-S3)     │
@@ -363,10 +363,10 @@ Under [RFC-0004](/rfcs/rfc-0004-controller-node-tool), the **Agentic Autonomous 
 3. Test dock alignment: navigating onto the transmitter plate initiates 24V 4.5A charging within 1.5 seconds.
 
 #### Step 3.5: Provisioning & 250ms Watchdog Verification
-1. Power on Central Controller; note pairing ID on its OLED (`CTRL_ID: 4096`).
+1. Power on Central Controller; verify active Cluster ID on OLED, terminal stdout, or BLE beacon (`POTFRM-4096`).
 2. Power on AGV Node; display shows `[NODE UNPAIRED - PAIR VIA BLE]`.
 3. Press physical setup button on Node; connect via mobile companion app over BLE, enter `4096`.
-4. Node commits credentials to NVS, links to hidden Wi-Fi, and updates display to `[ONLINE | LINK -> 4096]`.
+4. Node commits credentials to NVS, links to `POTFRM-4096`, registers at `ws://192.168.42.1:8443/register`, and updates display to `[ONLINE | LINK -> 4096]`.
 5. Verify Node auto-discovers and binds all four BLE Tools.
 6. Test fail-safe watchdog: drop BLE link to `DEV_TRACK_DRV`; verify track motors cut to 0.0A in $< 250$ ms.
 

@@ -262,11 +262,11 @@ flowchart LR
 
 ## 5. Add-On 2: Agentic Autonomous AI Pack (Edge Vision & Closed Loop)
 
-Under [RFC-0004](/rfcs/rfc-0004-controller-node-tool), the **Agentic Autonomous AI Pack** enables fully autonomous indoor pollination without human pilots or GPS under the **Controller-Node-Tool (CNT)** standard. The drone operates as a flying **Drone Node** commanding modular **Edge Tools** over BLE, receiving global flight sortie schedules and bloom coordinates from the Central Biosphere Controller over Wi-Fi.
+Under [RFC-0004](/rfcs/rfc-0004-controller-node-tool) and [RFC-0006](/rfcs/rfc-0006-agnostic-controller-runtime), the **Agentic Autonomous AI Pack** enables fully autonomous indoor pollination without human pilots or GPS under the **Controller-Node-Tool (CNT)** standard. The drone operates as a flying **Drone Node** commanding modular **Edge Tools** over BLE, receiving global flight sortie schedules and bloom coordinates from the Central Biosphere Controller over Wi-Fi.
 
 ### Autonomous Vision & Telemetry Architecture
 - **Drone Flight Node (ESP32-S3)**: Dual-Core Xtensa LX7 (240 MHz, 8 MB PSRAM) flight companion computer governed by the **Strict Two-Control Physical Standard** (Master DC Power Switch and Recessed SD Reset Button alongside 0.96" I2C OLED `[NODE: DRONE-01 | LINK -> 4096]`). Uplinks to Central Controller via Wi-Fi; receives flight plans, coordinates local pose estimation, and downlinks to Tools via BLE Central.
-- **Decoupled Optical AprilTag Tracking**: Down-facing micro-camera streams video directly over Wi-Fi to the Central Controller (Raspberry Pi 5 + Hailo-8 M.2 HAT), which processes AprilTags spaced along greenhouse ceiling extrusions at 30 FPS, returning millimeter 6-DoF global pose vectors $(X, Y, Z)$ to the drone.
+- **Decoupled Optical AprilTag Tracking**: Down-facing micro-camera streams video directly over Wi-Fi to the Central Controller (Agnostic Runtime, e.g. Raspberry Pi 5 + Hailo-8 or x86 Host), which processes AprilTags spaced along greenhouse ceiling extrusions at 30 FPS, returning millimeter 6-DoF global pose vectors $(X, Y, Z)$ to the drone.
 - **Dedicated Modular Edge Tools (ESP32-C3)**: Driven 1:1 by micro ESP32-C3 controllers equipped with 0.42" micro OLED displays and **250ms hardware deadman watchdogs**:
   - `DEV_FLIGHT_CTL`: Micro ESP32-C3 / STM32 bridge with 0.42" OLED (`TOOL: FLIGHT_CTL | LINK: OK`) + 250ms watchdog driving 4x brushless ESCs with auto-land descent failsafe.
   - `DEV_OPTICAL_FLOW`: Micro ESP32-C3 with 0.42" OLED (`TOOL: OPTICAL_FLOW | LINK: OK`) managing PMW3901 optical flow (42 FPS) and VL53L1X laser time-of-flight sensor for sub-millimeter altitude hold.
@@ -276,11 +276,11 @@ Under [RFC-0004](/rfcs/rfc-0004-controller-node-tool), the **Agentic Autonomous 
 ```text
        CONTROLLER-NODE-TOOL (CNT) HIERARCHICAL EDGE ARCHITECTURE
   =================================================================
-            CENTRAL BIOSPHERE CONTROLLER (Pi 5 + Hailo-8 M.2 HAT)
-            • Emits Hidden WPA3 Wi-Fi Network | OLED: [CTRL_ID: 4096]
+            CENTRAL BIOSPHERE CONTROLLER (Agnostic Runtime / POTFRM-4096)
+            • Emits Isolated Farm AP: SSID [POTFRM-4096] (192.168.42.0/24)
             • AprilTag Global SLAM & Canopy Bloom Waypoint Schedules
                                   │
-                                  │ Encrypted Wi-Fi Uplink
+                                  │ Isolated Farm Wi-Fi (192.168.42.0/24)
                                   ▼
              ┌─────────────────────────────────────────┐
              │       DRONE FLIGHT NODE (ESP32-S3)      │
@@ -326,9 +326,9 @@ Under [RFC-0004](/rfcs/rfc-0004-controller-node-tool), the **Agentic Autonomous 
 3. Attach spring-loaded copper landing skids to the drone airframe base.
 
 #### Step 3.5: Provisioning & 250ms Watchdog Verification
-1. Power on Central Controller; note pairing ID on its OLED (`CTRL_ID: 4096`).
+1. Power on Central Controller; verify active Cluster ID on OLED, terminal stdout, or BLE beacon (`POTFRM-4096`).
 2. Power on Drone Node; press physical setup button; pair via mobile companion app over BLE, enter `4096`.
-3. Node commits credentials to NVS, links to hidden Wi-Fi, and updates display to `[ONLINE | LINK -> 4096]`.
+3. Node commits credentials to NVS, links to `POTFRM-4096`, registers at `ws://192.168.42.1:8443/register`, and updates display to `[ONLINE | LINK -> 4096]`.
 4. Verify Node auto-discovers and binds all three BLE Tools.
 5. Test fail-safe watchdog: drop BLE link to `DEV_FLIGHT_CTL`; verify auto-land descent triggers within $< 250$ ms.
 

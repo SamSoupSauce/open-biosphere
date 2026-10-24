@@ -1,0 +1,243 @@
+---
+title: "RFC-0006: Agnostic Controller Runtime & Host Specification"
+description: "Hardware-agnostic software runtime, network envelope, and local inference specification for the Central Biosphere Controller."
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+## Status & Metadata
+- **RFC ID:** RFC-0006 / SOFT-001
+- **Working Group:** Architecture & Software Systems Core
+- **Author:** Controller Systems Architecture Team
+- **Status:** Implemented
+- **Supersedes / Refines:** Refines the Controller tier of [RFC-0004](/rfcs/rfc-0004-controller-node-tool)
+- **Target Subsystems:** Controller Runtime, Wireless AP Gateway, Local Edge AI Inference, Node Registration Protocol
+- **Release Target:** Open Biosphere v2.0-alpha
+
+---
+
+## 1. Executive Summary & Hardware Agnosticism
+
+The Central Biosphere Controller is defined strictly as a **portable, hardware-agnostic software runtime (`biosphere-core`)**, not a proprietary physical appliance or single-vendor embedded board. Any compute host capable of hosting an isolated Wi-Fi Access Point and running Python with `llama-cpp-python` qualifies as a fully conformant Biosphere Controller.
+
+Previous design drafts referenced a dedicated Raspberry Pi 5 paired with a Hailo-8 M.2 HAT as a monolithic hardware requirement. Under **RFC-0006**, that combination is recategorized as merely one of many supported **Reference Hardware Profiles**. Open Biosphere installations must be deployable on off-lease corporate desktop workstations, ruggedized industrial mini-PCs, used laptops, or existing home servers, ensuring resilience against single-board computer supply shortages and minimizing capital expenditures.
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                   SUPPORTED CONTROLLER COMPUTE TARGETS                      │
+├───────────────────┬───────────────────┬───────────────────┬─────────────────┤
+│ Single-Board Comps│ Repurposed x86    │ Laptops / Tablets │ Workstations &  │
+│ (SBCs)            │ Thin Clients      │ (Field / Mobile)  │ Home Servers    │
+│ • Raspberry Pi 4/5│ • HP EliteDesk    │ • Lenovo ThinkPad │ • Proxmox / KVM │
+│ • Orange Pi 5     │ • Dell OptiPlex   │ • Apple Silicon   │ • Tower Servers │
+│ • Rockchip RK3588 │ • Intel NUC / Mini│   MacBook (M1-M4) │ • Custom Rig    │
+└───────────────────┴───────────────────┴───────────────────┴─────────────────┘
+```
+
+---
+
+## 2. Minimum Host System Requirements
+
+A compute host must satisfy the following hardware and software capabilities to host the `biosphere-core` runtime:
+
+| System Parameter | Minimum Specification | Recommended Production Target |
+| :--- | :--- | :--- |
+| **Operating System** | Linux (Debian 12+, Ubuntu 22.04+, Alpine, Arch) or macOS 12.0+ | Debian 12 (Bookworm) or Ubuntu Server 24.04 LTS |
+| **Compute Architecture** | 64-bit multi-core CPU (ARM64 or x86_64) | 4+ physical cores @ 2.0 GHz or higher |
+| **System Memory (RAM)**| 4 GB unified or system RAM | 8 GB to 16 GB RAM |
+| **Storage Capacity** | 16 GB NVMe / SSD / eMMC / high-end Class 10 SD | 64 GB NVMe SSD (for telemetry databases and GGUFs) |
+| **Wireless NIC** | 802.11 b/g/n/ac adapter with AP (Master) mode support | Dual-band (2.4 GHz / 5 GHz) AP-capable wireless chipset |
+| **Python Runtime** | Python $\ge 3.10$ | Python 3.11 or 3.12 |
+| **Inference Backend** | `llama-cpp-python` compiled with native acceleration | Metal (macOS), CUDA (Nvidia), OpenCL/ROCm, or AVX2 (CPU) |
+
+> [!NOTE]
+> Dedicated hardware AI accelerators (such as Hailo-8, Google Coral, or Nvidia Jetson TensorRT) are supported as optional acceleration plugins. However, baseline reasoning, anomaly detection, and vision tasks must run cleanly on native CPU threads using quantized 1B–4B parameter models via `llama-cpp-python`.
+
+---
+
+## 3. Network Architecture & SSID Discovery Pattern
+
+The Biosphere Controller hosts an **isolated, local-only private wireless network** dedicated strictly to machine Nodes, Edge Tools, and the operator's Flutter companion app. It functions independently of external internet uplinks, cellular gateways, or home Wi-Fi routers.
+
+### 3.1 AP Naming & Addressing Spec
+
+- **SSID Convention:** `POTFRM-<CLUSTER_ID>`
+  - `<CLUSTER_ID>`: A 4-digit numeric string (e.g., `POTFRM-4096`, `POTFRM-1024`).
+- **Wireless Security:** WPA2-PSK or WPA3-SAE with a locally generated or deterministic farm passphrase.
+- **Network Envelope:**
+  - **Subnet:** `192.168.42.0/24`
+  - **Controller Static IP:** `192.168.42.1`
+  - **Subnet Mask:** `255.255.255.0`
+  - **Dynamic Node DHCP Lease Range:** `192.168.42.10` to `192.168.42.250`
+- **mDNS Service Advertisement:** The daemon advertises its presence locally over multicast DNS:
+  ```text
+  _biosphere-controller._tcp.local. -> 192.168.42.1:8443
+  TXT: cluster_id=4096, version=2.0.0, runtime=biosphere-core
+  ```
+
+```text
+========================================================================================
+ISOLATED LOCAL NETWORK ENVELOPE (192.168.42.0/24)
+========================================================================================
+
+                 ┌────────────────────────────────────────────────────────┐
+                 │          CENTRAL CONTROLLER COMPUTING HOST             │
+                 │          Static IP: 192.168.42.1 | Port: 8443          │
+                 │          SSID: POTFRM-4096 (Hidden or Broadcast)       │
+                 └───────────────────────────┬────────────────────────────┘
+                                             │
+             ┌───────────────────────────────┼───────────────────────────────┐
+             │ DHCP: 192.168.42.10           │ DHCP: 192.168.42.25           │ DHCP: 192.168.42.50
+             ▼                               ▼                               ▼
+    ┌─────────────────┐             ┌─────────────────┐             ┌─────────────────┐
+    │  SKIMMER NODE   │             │   GANTRY NODE   │             │   DOSER NODE    │
+    │  ESP32-S3       │             │   ESP32-S3      │             │   ESP32-S3      │
+    └────────┬────────┘             └────────┬────────┘             └────────┬────────┘
+             │ BLE Tools                     │ BLE Tools                     │ BLE Tools
+             ▼                               ▼                               ▼
+      [Auger / Pump]                  [X / Y / Head]                  [Pumps / Gas]
+```
+
+---
+
+## 4. Software Stack & Core Daemons
+
+The Controller runtime is composed of three lightweight, decoupled daemon layers executed under asynchronous event orchestration:
+
+```
+┌────────────────────────────────────────────────────────────────────────┐
+│                        FLUTTER COMPANION APP                           │
+│          (Connects via Direct BLE or Local Wi-Fi 192.168.42.1)         │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │ WebSocket / REST API (:8443)
+                                    ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│                   CONTROLLER ORCHESTRATION DAEMON                      │
+│                        (Python 3.10+ AsyncIO)                          │
+│  • Node registry & state tree: /nodes/{node_id}/tools                  │
+│  • 250ms periodic heartbeat dispatcher                                 │
+│  • Autonomous harvest & replenishment event scheduler                  │
+│  • Local SQLite / TimescaleDB telemetry datalogging                    │
+└───────────────────┬────────────────────────────────┬───────────────────┘
+                    │ Local Loopback API             │ In-Memory IPC
+                    ▼                                ▼
+┌──────────────────────────────────────┐  ┌──────────────────────────────┐
+│       llama-cpp-python ENGINE        │  │    WIRELESS MESH GATEWAY     │
+│   (Quantized Local GGUF Models)      │  │    (hostapd / dnsmasq)       │
+│  • Vision-Language Multimodal Eval   │  │  • SSID: POTFRM-<CLUSTER_ID> │
+│  • Non-linear closed-loop decisions  │  │  • Static IP: 192.168.42.1   │
+│  • Zero-cloud privacy and offline    │  │  • DHCP lease table for Nodes│
+└──────────────────────────────────────┘  └──────────────────────────────┘
+```
+
+### 4.1 Wireless Mesh Gateway (`hostapd` / `dnsmasq` or NetworkManager)
+- Automatically establishes the `POTFRM-<CLUSTER_ID>` Wi-Fi access point upon host boot.
+- Runs an embedded DHCP/DNS service allocating static leases keyed to Node MAC addresses, ensuring every physical machine retains its assigned IP address across power interruptions.
+
+### 4.2 Controller Orchestration Daemon (`biosphere-core`)
+- High-performance asynchronous Python daemon listening on secure WebSocket and HTTPS port `8443`.
+- Maintains the in-memory global state tree of all paired Nodes (`/nodes/{node_id}/tools`).
+- **250ms Heartbeat Dispatcher**: Transmits periodic heartbeat packets over WebSocket to every connected Node. If a Node fails to respond within 500 ms, it is flagged as disconnected, triggering local Tool fail-safes.
+- Provides a stateless REST / JSON-RPC status API consumed by the Flutter companion app.
+
+### 4.3 Local Inference Engine (`llama-cpp-python`)
+- Executes quantized GGUF neural models (e.g. `SmolVLM-2B`, `Moondream2`, `Qwen2.5-3B-Instruct`, or `Mistral-7B-Instruct-v0.3-Q4_K_M`) directly on host hardware.
+- Hardware-accelerated execution pipelines:
+  - **macOS / Apple Silicon:** Metal Shading Language (`LLAMA_METAL=on`).
+  - **Linux with Nvidia GPU:** CUDA runtime (`LLAMA_CUDA=on`).
+  - **Linux with AMD / Intel GPU:** OpenCL / ROCm backend.
+  - **x86_64 & ARM64 CPUs:** AVX2, FMA, NEON vectorization extensions with multi-threading.
+- Evaluates canopy camera frames streamed over RTSP, performing crop maturity classification and anomaly detection with zero internet dependencies.
+
+---
+
+## 5. Provisioning & Headless Execution Flow
+
+The runtime is designed for zero-friction deployment on both headless appliances and interactive developer workstations.
+
+### 5.1 Service Launch
+
+<Tabs>
+  <TabItem label="Interactive CLI (Workstations & Laptops)">
+```bash
+# Launch controller daemon interactively
+biosphere-controller start \
+  --id 4096 \
+  --interface wlan0 \
+  --model models/smolvlm-2b-q4_k_m.gguf \
+  --port 8443
+```
+  </TabItem>
+  <TabItem label="systemd Service (Headless Appliances & SBCs)">
+```ini
+# /etc/systemd/system/biosphere-controller.service
+[Unit]
+Description=Open Biosphere Central Orchestration Daemon
+After=network.target hostapd.service
+Wants=hostapd.service
+
+[Service]
+Type=simple
+User=biosphere
+Group=biosphere
+WorkingDirectory=/opt/open-biosphere
+ExecStart=/opt/open-biosphere/venv/bin/biosphere-controller start --id 4096 --model /opt/open-biosphere/models/smolvlm-2b-q4_k_m.gguf
+Restart=always
+RestartSec=3s
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target
+```
+  </TabItem>
+</Tabs>
+
+### 5.2 Identification & Pairing Output
+1. **With Attached I2C/SPI OLED Screen**: The host outputs `POTFRM-4096` alongside real-time CPU load and connected Node count on the screen.
+2. **Headless Without Screen**: The host outputs `POTFRM-4096` to terminal `stdout` and broadcasts a short-range BLE discovery beacon:
+   ```text
+   BLE Advertisement: [Name: "CTRL-4096", ServiceUUID: "0x181A", Data: "192.168.42.1:8443"]
+   ```
+   The operator's Flutter mobile app scans the beacon and displays the Cluster ID automatically.
+
+### 5.3 Machine Node Registration Handshake
+When an ESP32-S3 Machine Node boots:
+1. It reads its provisioned cluster ID (`4096`) from non-volatile storage (NVS).
+2. It scans for Wi-Fi SSID `POTFRM-4096` and authenticates using WPA2/WPA3.
+3. Upon receiving an IP lease (e.g. `192.168.42.15`), the Node opens a secure WebSocket connection to `ws://192.168.42.1:8443/register`.
+4. The Node transmits its hardware manifest:
+   ```json
+   {
+     "node_id": "GANTRY-01",
+     "mac": "24:6F:28:AB:CD:EF",
+     "cluster_id": 4096,
+     "firmware_version": "2.4.1",
+     "tools": [
+       {"id": "DEV_X_AXIS", "type": "stepper", "deadman_ms": 250},
+       {"id": "DEV_Y_AXIS", "type": "stepper", "deadman_ms": 250},
+       {"id": "DEV_TOOL_HEAD", "type": "kinematic_z", "deadman_ms": 250}
+     ]
+   }
+   ```
+5. The Controller acknowledges registration and begins transmitting 250ms heartbeat packets.
+
+---
+
+## 6. Migration & Backward Compatibility Guide
+
+Existing documentation referencing "Raspberry Pi 5 + Hailo-8 M.2 HAT" remains valid as **Reference Profile A (Single-Board Computer)**. However, all hardware catalog pages, architecture diagrams, and networking specifications must reflect the following universal terminology:
+
+| Legacy Term | RFC-0006 Standard Term | Technical Scope |
+| :--- | :--- | :--- |
+| *Raspberry Pi 5 Brain* | **Central Biosphere Controller** | Any host satisfying Section 2 requirements running `biosphere-core` |
+| *Hidden Wi-Fi Network* | **Isolated Farm AP (`POTFRM-<ID>`)** | Dedicated `192.168.42.0/24` subnet managed by host |
+| *Hailo-8 Neural Co-Processor* | **Local GGUF Inference Engine** | `llama-cpp-python` with native hardware acceleration |
+| *Pairing Screen Code `4096`* | **Cluster ID (`<CLUSTER_ID>`)** | 4-digit numeric cluster namespace identifier |
+
+---
+
+## 7. Security, Resilience & Air-Gap Compliance
+
+- **Zero Cloud Dependence**: The Controller runtime operates 100% offline. It makes zero outbound DNS queries, telemetry uploads, or licensing pings.
+- **Strict Isolated Boundary**: No bridging between the `POTFRM-<CLUSTER_ID>` subnet (`192.168.42.0/24`) and any external WAN interface occurs by default. Machine Nodes cannot be port-scanned or accessed from the external internet.
+- **Fail-Safe Disconnects**: If the Controller host halts or crashes, all subordinate Nodes detect heartbeat timeout within 500 ms and instruct their BLE Edge Tools to transition to zero-torque, zero-flow high-Z safe state.
