@@ -1,0 +1,119 @@
+---
+id: "part-custom-part-elec-two-ctrl-pack"
+title: "Strict Two-Control Physical Interlock & SD Recovery Pack"
+classification: "custom-fabricated"
+fabrication_method: "3d-printed"
+material: "aluminum"
+model_file: "./model.3ds"
+estimated_cost: 22.00
+dimensions:
+  x_mm: 115.0
+  y_mm: 65.0
+  z_mm: 40.0
+sidebar:
+  badge:
+    text: "CUSTOM-FAB"
+    variant: "note"
+---
+
+import ModelViewer from '../../../../components/ModelViewer';
+
+# Strict Two-Control Physical Interlock & SD Recovery Pack
+
+**Canonical Part ID:** `PART-ELEC-TWO-CTRL-PACK`  
+**Classification:** `custom-fabricated`  
+**Fabrication Method:** `3d-printed`  
+**Primary Material:** `aluminum`  
+**Estimated Unit Cost:** `\$22.00 USD`
+
+---
+
+## 1. Component Overview & Architectural Role
+
+Standardized physical control enclosure interface containing a single high-visibility Master DC Power Switch, a recessed SD Reset button, Micro-SD carrier, and 0.91-inch status OLED.
+
+---
+
+## 2. Interactive 3D Model Inspection
+
+<ModelViewer
+  client:load
+  partId="PART-ELEC-TWO-CTRL-PACK"
+  partName="Strict Two-Control Physical Interlock & SD Recovery Pack"
+  material="aluminum"
+  fabricationMethod="3d-printed"
+  dimensions={{ x_mm: 115.0, y_mm: 65.0, z_mm: 40.0 }}
+  estimatedCost={22.00}
+  modelUrl="/open-biosphere/assets/parts/PART-ELEC-TWO-CTRL-PACK/model.3ds"
+/>
+
+* **Direct Canonical Download:** [Download model.3ds (Autodesk 3DS Binary)](/open-biosphere/assets/parts/PART-ELEC-TWO-CTRL-PACK/model.3ds)
+* **Local Workspace Asset:** `./model.3ds`
+
+---
+
+## 3. Technical Summary & Engineering Contracts
+
+### 3.1 Purpose & Functional Role
+Custom fabricated component engineered specifically for the Open Biosphere autonomous duckweed cultivation and robotics infrastructure. Off-the-shelf commercial alternatives fail to meet the strict zero-plastic food-safe requirements, spatial envelope datum constraints, and continuous high-humidity (>85% RH) environmental resistance.
+
+### 3.2 Mating Interfaces & Tolerances
+Mates directly with standard 2020 T-slot aluminum extrusions via M4/M5 stainless fasteners and precision dowel pins (tolerance ±0.1mm). Interfaces with Stage 1 manual override linkages and Stage 2 autonomous actuator housings.
+
+### 3.3 Fabrication & Post-Processing Instructions
+Fabricate via 3D Print / Assembly in aluminum. Deburr all edges with a 0.5mm chamfer. Perform ultrasonic cleaning in deionized water. Apply food-grade surface passivation or sealing prior to deployment in crop contact loops.
+
+---
+
+## 4. Engineering Dimensions & Physical Metrics
+
+| Dimension Parameter | Value |
+| :--- | :--- |
+| **Length (X-Axis)** | `115.0 mm` |
+| **Width / Diameter (Y-Axis)** | `65.0 mm` |
+| **Thickness / Height (Z-Axis)** | `40.0 mm` |
+| **Manufacturing Tolerance** | `±0.1 mm (ISO 2768-m)` |
+| **Unit Weight** | `135.0 g` |
+
+---
+
+## 5. Engineering Blueprint & Isometric Drawings
+
+### Dimensional Drawing
+![Dimensional Drawing](/open-biosphere/assets/parts/PART-ELEC-TWO-CTRL-PACK/dimensional-drawing.svg)
+
+### Isometric Render View
+![Isometric Render](/open-biosphere/assets/parts/PART-ELEC-TWO-CTRL-PACK/isometric-render.svg)
+
+---
+
+## 6. Sourcing & Procurement Specification
+
+| Parameter | Specification Detail |
+| :--- | :--- |
+| **Primary Supplier / Fabrication Route** | [In-House Open-Biosphere Fab](https://open-biosphere.org/parts/PART-ELEC-TWO-CTRL-PACK) |
+| **SKU / Fabrication Code** | `OB-PACK-TWOCTRL-V1` |
+| **Direct Sourcing Link** | [https://open-biosphere.org/parts/PART-ELEC-TWO-CTRL-PACK](https://open-biosphere.org/parts/PART-ELEC-TWO-CTRL-PACK) |
+| **Estimated Unit Cost** | `\$22.00 USD` |
+| **Minimum Order Quantity (MOQ)** | `1` |
+| **Lead Time** | `1 business days` |
+
+---
+
+## 7. Machine Cross-Reference & Reverse BOM Lookup
+
+The following automated biosphere sub-systems declare this custom part within their official build bill of materials:
+
+| Machine Assembly | Stage Level | Quantity Required |
+| :--- | :--- | :--- |
+| [`aerial-pollination-drone`](/open-biosphere/hardware/aerial-pollination-drone/stage-1/) | `Stage 1` | `1` |
+| [`ground-track-agv`](/open-biosphere/hardware/ground-track-agv/stage-1/) | `Stage 1` | `1` |
+| [`mantis-branch-crawler`](/open-biosphere/hardware/mantis-branch-crawler/stage-1/) | `Stage 1` | `1` |
+| [`microclimate-dosing-array`](/open-biosphere/hardware/microclimate-dosing-array/stage-1/) | `Stage 1` | `1` |
+| [`overhead-gantry-system`](/open-biosphere/hardware/overhead-gantry-system/stage-1/) | `Stage 1` | `1` |
+| [`revolving-sprout-bioreactor`](/open-biosphere/hardware/revolving-sprout-bioreactor/stage-1/) | `Stage 1` | `1` |
+| [`tps-root-chamber`](/open-biosphere/hardware/tps-root-chamber/stage-1/) | `Stage 1` | `1` |
+
+---
+
+[Back to Global Part Registry Catalog](/open-biosphere/parts/catalog/) • [Custom Fabricated Index](/open-biosphere/parts/custom-fab/)

@@ -1,0 +1,113 @@
+---
+id: "part-custom-part-mech-clamp-foot-cam"
+title: "Mechanical Foot-Pedal Spring Cam Clamp Assembly"
+classification: "custom-fabricated"
+fabrication_method: "laser-cut"
+material: "aluminum"
+model_file: "./model.3ds"
+estimated_cost: 18.00
+dimensions:
+  x_mm: 140.0
+  y_mm: 65.0
+  z_mm: 55.0
+sidebar:
+  badge:
+    text: "CUSTOM-FAB"
+    variant: "note"
+---
+
+import ModelViewer from '../../../../components/ModelViewer';
+
+# Mechanical Foot-Pedal Spring Cam Clamp Assembly
+
+**Canonical Part ID:** `PART-MECH-CLAMP-FOOT-CAM`  
+**Classification:** `custom-fabricated`  
+**Fabrication Method:** `laser-cut`  
+**Primary Material:** `aluminum`  
+**Estimated Unit Cost:** `\$18.00 USD`
+
+---
+
+## 1. Component Overview & Architectural Role
+
+Over-center foot-operated mechanical toggle latch providing 400 N clamping force onto pod carrier transport rails.
+
+---
+
+## 2. Interactive 3D Model Inspection
+
+<ModelViewer
+  client:load
+  partId="PART-MECH-CLAMP-FOOT-CAM"
+  partName="Mechanical Foot-Pedal Spring Cam Clamp Assembly"
+  material="aluminum"
+  fabricationMethod="laser-cut"
+  dimensions={{ x_mm: 140.0, y_mm: 65.0, z_mm: 55.0 }}
+  estimatedCost={18.00}
+  modelUrl="/open-biosphere/assets/parts/PART-MECH-CLAMP-FOOT-CAM/model.3ds"
+/>
+
+* **Direct Canonical Download:** [Download model.3ds (Autodesk 3DS Binary)](/open-biosphere/assets/parts/PART-MECH-CLAMP-FOOT-CAM/model.3ds)
+* **Local Workspace Asset:** `./model.3ds`
+
+---
+
+## 3. Technical Summary & Engineering Contracts
+
+### 3.1 Purpose & Functional Role
+Custom fabricated component engineered specifically for the Open Biosphere autonomous duckweed cultivation and robotics infrastructure. Off-the-shelf commercial alternatives fail to meet the strict zero-plastic food-safe requirements, spatial envelope datum constraints, and continuous high-humidity (>85% RH) environmental resistance.
+
+### 3.2 Mating Interfaces & Tolerances
+Mates directly with standard 2020 T-slot aluminum extrusions via M4/M5 stainless fasteners and precision dowel pins (tolerance ±0.1mm). Interfaces with Stage 1 manual override linkages and Stage 2 autonomous actuator housings.
+
+### 3.3 Fabrication & Post-Processing Instructions
+Fabricate via Laser Steel / Spring Clamp in aluminum. Deburr all edges with a 0.5mm chamfer. Perform ultrasonic cleaning in deionized water. Apply food-grade surface passivation or sealing prior to deployment in crop contact loops.
+
+---
+
+## 4. Engineering Dimensions & Physical Metrics
+
+| Dimension Parameter | Value |
+| :--- | :--- |
+| **Length (X-Axis)** | `140.0 mm` |
+| **Width / Diameter (Y-Axis)** | `65.0 mm` |
+| **Thickness / Height (Z-Axis)** | `55.0 mm` |
+| **Manufacturing Tolerance** | `±0.1 mm (ISO 2768-m)` |
+| **Unit Weight** | `380.0 g` |
+
+---
+
+## 5. Engineering Blueprint & Isometric Drawings
+
+### Dimensional Drawing
+![Dimensional Drawing](/open-biosphere/assets/parts/PART-MECH-CLAMP-FOOT-CAM/dimensional-drawing.svg)
+
+### Isometric Render View
+![Isometric Render](/open-biosphere/assets/parts/PART-MECH-CLAMP-FOOT-CAM/isometric-render.svg)
+
+---
+
+## 6. Sourcing & Procurement Specification
+
+| Parameter | Specification Detail |
+| :--- | :--- |
+| **Primary Supplier / Fabrication Route** | [Carr Lane / McMaster](https://mcmaster.com) |
+| **SKU / Fabrication Code** | `CL-FOOT-CLAMP-01` |
+| **Direct Sourcing Link** | [https://mcmaster.com](https://mcmaster.com) |
+| **Estimated Unit Cost** | `\$18.00 USD` |
+| **Minimum Order Quantity (MOQ)** | `1` |
+| **Lead Time** | `2 business days` |
+
+---
+
+## 7. Machine Cross-Reference & Reverse BOM Lookup
+
+The following automated biosphere sub-systems declare this custom part within their official build bill of materials:
+
+| Machine Assembly | Stage Level | Quantity Required |
+| :--- | :--- | :--- |
+| [`ground-track-agv`](/open-biosphere/hardware/ground-track-agv/stage-0/) | `Stage 0` | `1` |
+
+---
+
+[Back to Global Part Registry Catalog](/open-biosphere/parts/catalog/) • [Custom Fabricated Index](/open-biosphere/parts/custom-fab/)

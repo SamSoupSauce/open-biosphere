@@ -1,0 +1,114 @@
+---
+id: "part-custom-spoke-keyed-alum16"
+title: "Keyed Stamped 5052 Aluminum Spoke Bracket Set (16x Radial Rim)"
+classification: "custom-fabricated"
+fabrication_method: "laser-cut"
+material: "aluminum"
+model_file: "./model.3ds"
+estimated_cost: 48.00
+dimensions:
+  x_mm: 380.0
+  y_mm: 45.0
+  z_mm: 3.0
+sidebar:
+  badge:
+    text: "CUSTOM-FAB"
+    variant: "note"
+---
+
+import ModelViewer from '../../../../components/ModelViewer';
+
+# Keyed Stamped 5052 Aluminum Spoke Bracket Set (16x Radial Rim)
+
+**Canonical Part ID:** `PART-MECH-SPOKE-KEYED-ALUM16`  
+**Classification:** `custom-fabricated`  
+**Fabrication Method:** `laser-cut`  
+**Primary Material:** `aluminum`  
+**Estimated Unit Cost:** `\$48.00 USD`
+
+---
+
+## 1. Component Overview & Architectural Role
+
+Set of 16 indexed laser-cut and stamped aluminum spoke brackets with factory-bent detents for zero-alignment exterior mirror mounting.
+
+---
+
+## 2. Interactive 3D Model Inspection
+
+<ModelViewer
+  client:load
+  partId="PART-MECH-SPOKE-KEYED-ALUM16"
+  partName="Keyed Stamped 5052 Aluminum Spoke Bracket Set (16x Radial Rim)"
+  material="aluminum"
+  fabricationMethod="laser-cut"
+  dimensions={{ x_mm: 380.0, y_mm: 45.0, z_mm: 3.0 }}
+  estimatedCost={48.00}
+  modelUrl="/open-biosphere/assets/parts/PART-MECH-SPOKE-KEYED-ALUM16/model.3ds"
+/>
+
+* **Direct Canonical Download:** [Download model.3ds (Autodesk 3DS Binary)](/open-biosphere/assets/parts/PART-MECH-SPOKE-KEYED-ALUM16/model.3ds)
+* **Local Workspace Asset:** `./model.3ds`
+
+---
+
+## 3. Technical Summary & Engineering Contracts
+
+### 3.1 Purpose & Functional Role
+Custom fabricated component engineered specifically for the Open Biosphere autonomous duckweed cultivation and robotics infrastructure. Off-the-shelf commercial alternatives fail to meet the strict zero-plastic food-safe requirements, spatial envelope datum constraints, and continuous high-humidity (>85% RH) environmental resistance.
+
+### 3.2 Mating Interfaces & Tolerances
+Mates directly with standard 2020 T-slot aluminum extrusions via M4/M5 stainless fasteners and precision dowel pins (tolerance ±0.1mm). Interfaces with Stage 1 manual override linkages and Stage 2 autonomous actuator housings.
+
+### 3.3 Fabrication & Post-Processing Instructions
+Fabricate via CNC Laser Cut / Stamped 5052-H32 Aluminum in aluminum. Deburr all edges with a 0.5mm chamfer. Perform ultrasonic cleaning in deionized water. Apply food-grade surface passivation or sealing prior to deployment in crop contact loops.
+
+---
+
+## 4. Engineering Dimensions & Physical Metrics
+
+| Dimension Parameter | Value |
+| :--- | :--- |
+| **Length (X-Axis)** | `380.0 mm` |
+| **Width / Diameter (Y-Axis)** | `45.0 mm` |
+| **Thickness / Height (Z-Axis)** | `3.0 mm` |
+| **Manufacturing Tolerance** | `±0.1 mm (ISO 2768-m)` |
+| **Unit Weight** | `1650.0 g` |
+
+---
+
+## 5. Engineering Blueprint & Isometric Drawings
+
+### Dimensional Drawing
+![Dimensional Drawing](/open-biosphere/assets/parts/PART-MECH-SPOKE-KEYED-ALUM16/dimensional-drawing.svg)
+
+### Isometric Render View
+![Isometric Render](/open-biosphere/assets/parts/PART-MECH-SPOKE-KEYED-ALUM16/isometric-render.svg)
+
+---
+
+## 6. Sourcing & Procurement Specification
+
+| Parameter | Specification Detail |
+| :--- | :--- |
+| **Primary Supplier / Fabrication Route** | [SendCutSend / In-House Metal Fab](https://sendcutsend.com) |
+| **SKU / Fabrication Code** | `SCS-SPOKE-ALUM-16SET` |
+| **Direct Sourcing Link** | [https://sendcutsend.com](https://sendcutsend.com) |
+| **Estimated Unit Cost** | `\$48.00 USD` |
+| **Minimum Order Quantity (MOQ)** | `1` |
+| **Lead Time** | `4 business days` |
+
+---
+
+## 7. Machine Cross-Reference & Reverse BOM Lookup
+
+The following automated biosphere sub-systems declare this custom part within their official build bill of materials:
+
+| Machine Assembly | Stage Level | Quantity Required |
+| :--- | :--- | :--- |
+| [`fluidic-skimmer-loop`](/open-biosphere/hardware/fluidic-skimmer-loop/stage-1/) | `Stage 1` | `1` |
+| [`tps-root-chamber`](/open-biosphere/hardware/tps-root-chamber/stage-1/) | `Stage 1` | `1` |
+
+---
+
+[Back to Global Part Registry Catalog](/open-biosphere/parts/catalog/) • [Custom Fabricated Index](/open-biosphere/parts/custom-fab/)

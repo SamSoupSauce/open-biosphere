@@ -1,0 +1,115 @@
+---
+id: "part-custom-manifold-junction"
+title: "4-Way Dial-A-Dose Fluidic Manifold Junction Block"
+classification: "custom-fabricated"
+fabrication_method: "machined"
+material: "aluminum"
+model_file: "./model.3ds"
+estimated_cost: 22.00
+dimensions:
+  x_mm: 110.0
+  y_mm: 48.0
+  z_mm: 36.0
+sidebar:
+  badge:
+    text: "CUSTOM-FAB"
+    variant: "note"
+---
+
+import ModelViewer from '../../../../components/ModelViewer';
+
+# 4-Way Dial-A-Dose Fluidic Manifold Junction Block
+
+**Canonical Part ID:** `PART-FAB-JUNCTION-MANIFOLD-4WAY`  
+**Classification:** `custom-fabricated`  
+**Fabrication Method:** `machined`  
+**Primary Material:** `aluminum`  
+**Estimated Unit Cost:** `\$22.00 USD`
+
+---
+
+## 1. Component Overview & Architectural Role
+
+Multi-channel fluidic mixing junction block for simultaneous metering of Macro-N, Micro-K, Iron Chelate, and pH balance solutions into recirculating irrigation streams.
+
+---
+
+## 2. Interactive 3D Model Inspection
+
+<ModelViewer
+  client:load
+  partId="PART-FAB-JUNCTION-MANIFOLD-4WAY"
+  partName="4-Way Dial-A-Dose Fluidic Manifold Junction Block"
+  material="aluminum"
+  fabricationMethod="machined"
+  dimensions={{ x_mm: 110.0, y_mm: 48.0, z_mm: 36.0 }}
+  estimatedCost={22.00}
+  modelUrl="/open-biosphere/assets/parts/PART-FAB-JUNCTION-MANIFOLD-4WAY/model.3ds"
+/>
+
+* **Direct Canonical Download:** [Download model.3ds (Autodesk 3DS Binary)](/open-biosphere/assets/parts/PART-FAB-JUNCTION-MANIFOLD-4WAY/model.3ds)
+* **Local Workspace Asset:** `./model.3ds`
+
+---
+
+## 3. Technical Summary & Engineering Contracts
+
+### 3.1 Purpose & Functional Role
+Consolidates four distinct chemical dosing channels into a single turbulent mixing vortex prior to injection into the main duckweed and aeroponic supply loops. Off-the-shelf industrial manifolds cause channel cross-siphonage during non-actuated cycles and lack the non-metallic or food-passivated surfaces necessary to prevent nutrient oxidation.
+
+### 3.2 Mating Interfaces & Tolerances
+Four independent 1/4"-18 NPT female inlet ports spaced at 22.0 mm intervals, counter-drilled for 1/4" compression tube fittings. Single coaxial 1/2"-14 NPT central delivery discharge port. Two M4 counterbored through-holes on 80.0 mm centers for rigid mounting to 2020 frame struts.
+
+### 3.3 Fabrication & Post-Processing Instructions
+Machined from solid 6061-T6 aluminum block or virgin POM Delrin. Cross-drilled port passages reamed to 6.35 mm diameter with micro-peck cycle to ensure burr-free fluid passages. Precision tap all NPT threads with taper reamer prep. Passivate aluminum blocks with food-safe electroless nickel plating (ENP 25 μm).
+
+---
+
+## 4. Engineering Dimensions & Physical Metrics
+
+| Dimension Parameter | Value |
+| :--- | :--- |
+| **Length (X-Axis)** | `110.0 mm` |
+| **Width / Diameter (Y-Axis)** | `48.0 mm` |
+| **Thickness / Height (Z-Axis)** | `36.0 mm` |
+| **Manufacturing Tolerance** | `±0.1 mm (ISO 2768-m)` |
+| **Unit Weight** | `240.0 g` |
+
+---
+
+## 5. Engineering Blueprint & Isometric Drawings
+
+### Dimensional Drawing
+![Dimensional Drawing](/open-biosphere/assets/parts/PART-FAB-JUNCTION-MANIFOLD-4WAY/dimensional-drawing.svg)
+
+### Isometric Render View
+![Isometric Render](/open-biosphere/assets/parts/PART-FAB-JUNCTION-MANIFOLD-4WAY/isometric-render.svg)
+
+---
+
+## 6. Sourcing & Procurement Specification
+
+| Parameter | Specification Detail |
+| :--- | :--- |
+| **Primary Supplier / Fabrication Route** | [In-House Machine Shop / Local CNC](https://mcmaster.com) |
+| **SKU / Fabrication Code** | `FAB-MANIFOLD-4WAY-6061` |
+| **Direct Sourcing Link** | [https://mcmaster.com](https://mcmaster.com) |
+| **Estimated Unit Cost** | `\$22.00 USD` |
+| **Minimum Order Quantity (MOQ)** | `1` |
+| **Lead Time** | `3 business days` |
+
+---
+
+## 7. Machine Cross-Reference & Reverse BOM Lookup
+
+The following automated biosphere sub-systems declare this custom part within their official build bill of materials:
+
+| Machine Assembly | Stage Level | Quantity Required |
+| :--- | :--- | :--- |
+| [`microclimate-dosing-array`](/open-biosphere/hardware/microclimate-dosing-array/stage-0/) | `Stage 0` | `1` |
+| [`microclimate-dosing-array`](/open-biosphere/hardware/microclimate-dosing-array/stage-1/) | `Stage 1` | `1` |
+| [`microclimate-dosing-array`](/open-biosphere/hardware/microclimate-dosing-array/stage-2/) | `Stage 2` | `1` |
+
+---
+
+[Back to Global Part Registry Catalog](/open-biosphere/parts/catalog/) • [Custom Fabricated Index](/open-biosphere/parts/custom-fab/)

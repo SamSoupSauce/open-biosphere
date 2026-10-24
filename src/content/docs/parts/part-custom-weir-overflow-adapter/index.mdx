@@ -1,0 +1,115 @@
+---
+id: "part-custom-weir-overflow-adapter"
+title: "Duckweed Biomass Skimming Weir Flume Flange Adapter"
+classification: "custom-fabricated"
+fabrication_method: "3d-printed"
+material: "petg"
+model_file: "./model.3ds"
+estimated_cost: 14.00
+dimensions:
+  x_mm: 160.0
+  y_mm: 90.0
+  z_mm: 75.0
+sidebar:
+  badge:
+    text: "CUSTOM-FAB"
+    variant: "note"
+---
+
+import ModelViewer from '../../../../components/ModelViewer';
+
+# Duckweed Biomass Skimming Weir Flume Flange Adapter
+
+**Canonical Part ID:** `PART-FAB-ADAPTER-WEIR-OVERFLOW`  
+**Classification:** `custom-fabricated`  
+**Fabrication Method:** `3d-printed`  
+**Primary Material:** `petg`  
+**Estimated Unit Cost:** `\$14.00 USD`
+
+---
+
+## 1. Component Overview & Architectural Role
+
+Hydrodynamic 15° convergent transition adapter connecting rectangular flume sump bodies to cylindrical wedge-wire dewatering auger press intakes.
+
+---
+
+## 2. Interactive 3D Model Inspection
+
+<ModelViewer
+  client:load
+  partId="PART-FAB-ADAPTER-WEIR-OVERFLOW"
+  partName="Duckweed Biomass Skimming Weir Flume Flange Adapter"
+  material="petg"
+  fabricationMethod="3d-printed"
+  dimensions={{ x_mm: 160.0, y_mm: 90.0, z_mm: 75.0 }}
+  estimatedCost={14.00}
+  modelUrl="/open-biosphere/assets/parts/PART-FAB-ADAPTER-WEIR-OVERFLOW/model.3ds"
+/>
+
+* **Direct Canonical Download:** [Download model.3ds (Autodesk 3DS Binary)](/open-biosphere/assets/parts/PART-FAB-ADAPTER-WEIR-OVERFLOW/model.3ds)
+* **Local Workspace Asset:** `./model.3ds`
+
+---
+
+## 3. Technical Summary & Engineering Contracts
+
+### 3.1 Purpose & Functional Role
+Transitions circulating surface duckweed slurries from the rectangular 140 mm × 60 mm weir throat into the 85 mm cylindrical intake of the dewatering press. Commercial PVC pipe reducers introduce blunt 90° stagnation eddies that trigger biomass clogging, biofouling, and cavitation at the auger inlet; this custom geometry provides an optimized 15° laminar velocity ramp.
+
+### 3.2 Mating Interfaces & Tolerances
+Inlet face features a 140 mm × 60 mm rectangular perimeter flange with 6x M4 stainless through-holes (hole pitch 45 mm horizontal, 50 mm vertical) sealing against a 2 mm food-grade silicone flat gasket. Outlet transitions to an 85 mm inner-diameter slip collar with an internal 3 mm EPDM O-ring groove for clamping to the dewatering cylinder.
+
+### 3.3 Fabrication & Post-Processing Instructions
+FDM 3D-printed using certified food-contact compliant PETG. Print settings: 0.6 mm hardened steel nozzle, 0.20 mm layer height, 6 solid wall perimeters, 50% gyroid infill. Post-process with solvent wipe or food-grade polyurethane sealant on all interior wet surfaces to eliminate micro-cavity bacterial entrapment.
+
+---
+
+## 4. Engineering Dimensions & Physical Metrics
+
+| Dimension Parameter | Value |
+| :--- | :--- |
+| **Length (X-Axis)** | `160.0 mm` |
+| **Width / Diameter (Y-Axis)** | `90.0 mm` |
+| **Thickness / Height (Z-Axis)** | `75.0 mm` |
+| **Manufacturing Tolerance** | `±0.1 mm (ISO 2768-m)` |
+| **Unit Weight** | `210.0 g` |
+
+---
+
+## 5. Engineering Blueprint & Isometric Drawings
+
+### Dimensional Drawing
+![Dimensional Drawing](/open-biosphere/assets/parts/PART-FAB-ADAPTER-WEIR-OVERFLOW/dimensional-drawing.svg)
+
+### Isometric Render View
+![Isometric Render](/open-biosphere/assets/parts/PART-FAB-ADAPTER-WEIR-OVERFLOW/isometric-render.svg)
+
+---
+
+## 6. Sourcing & Procurement Specification
+
+| Parameter | Specification Detail |
+| :--- | :--- |
+| **Primary Supplier / Fabrication Route** | [In-House FDM Print](https://matterhackers.com) |
+| **SKU / Fabrication Code** | `FAB-PETG-ADAPTER-WEIR` |
+| **Direct Sourcing Link** | [https://matterhackers.com](https://matterhackers.com) |
+| **Estimated Unit Cost** | `\$14.00 USD` |
+| **Minimum Order Quantity (MOQ)** | `1` |
+| **Lead Time** | `0 business days` |
+
+---
+
+## 7. Machine Cross-Reference & Reverse BOM Lookup
+
+The following automated biosphere sub-systems declare this custom part within their official build bill of materials:
+
+| Machine Assembly | Stage Level | Quantity Required |
+| :--- | :--- | :--- |
+| [`fluidic-skimmer-loop`](/open-biosphere/hardware/fluidic-skimmer-loop/stage-0/) | `Stage 0` | `1` |
+| [`fluidic-skimmer-loop`](/open-biosphere/hardware/fluidic-skimmer-loop/stage-1/) | `Stage 1` | `1` |
+| [`fluidic-skimmer-loop`](/open-biosphere/hardware/fluidic-skimmer-loop/stage-2/) | `Stage 2` | `1` |
+
+---
+
+[Back to Global Part Registry Catalog](/open-biosphere/parts/catalog/) • [Custom Fabricated Index](/open-biosphere/parts/custom-fab/)

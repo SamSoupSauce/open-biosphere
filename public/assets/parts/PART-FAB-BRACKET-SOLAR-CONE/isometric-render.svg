@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="100%" height="100%">
+  <defs>
+    <linearGradient id="iso-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#070c18" />
+      <stop offset="100%" stop-color="#02040a" />
+    </linearGradient>
+    <pattern id="iso-grid" width="30" height="30" patternUnits="userSpaceOnUse">
+      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#131e32" stroke-width="0.75" />
+    </pattern>
+    <linearGradient id="face-top" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+    <linearGradient id="face-left" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#020617" />
+    </linearGradient>
+    <linearGradient id="face-right" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1e3a5f" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+  </defs>
+
+  <rect width="100%" height="100%" fill="url(#iso-bg)" />
+  <rect width="100%" height="100%" fill="url(#iso-grid)" />
+
+  <!-- Header -->
+  <rect x="25" y="25" width="750" height="45" fill="#0f172a" stroke="#1e293b" stroke-width="1.5" />
+  <text x="45" y="53" font-family="monospace" font-size="14" font-weight="bold" fill="#38bdf8">PART-FAB-BRACKET-SOLAR-CONE</text>
+  <text x="300" y="53" font-family="sans-serif" font-size="13" fill="#94a3b8">ISOMETRIC 3D CAD PERSPECTIVE</text>
+  <text x="680" y="53" font-family="monospace" font-size="12" fill="#10b981">ALUMINUM</text>
+
+  <!-- 3D Isometric Shaded Solid -->
+  <g transform="translate(400, 310)">
+    <!-- Coordinate Triad Axis -->
+    <line x1="0" y1="0" x2="-90" y2="52" stroke="#ef4444" stroke-width="2" />
+    <text x="-105" y="60" font-family="monospace" font-size="12" font-weight="bold" fill="#ef4444">X</text>
+
+    <line x1="0" y1="0" x2="90" y2="52" stroke="#10b981" stroke-width="2" />
+    <text x="100" y="60" font-family="monospace" font-size="12" font-weight="bold" fill="#10b981">Y</text>
+
+    <line x1="0" y1="0" x2="0" y2="-100" stroke="#3b82f6" stroke-width="2" />
+    <text x="-5" y="-110" font-family="monospace" font-size="12" font-weight="bold" fill="#3b82f6">Z</text>
+
+    <!-- Isometric Box Faces -->
+    <!-- Top Face -->
+    <polygon points="0,-90 140,-10 0,70 -140,-10" fill="url(#face-top)" stroke="#38bdf8" stroke-width="1.75" />
+    <!-- Left Face -->
+    <polygon points="-140,-10 0,70 0,170 -140,90" fill="url(#face-left)" stroke="#38bdf8" stroke-width="1.75" />
+    <!-- Right Face -->
+    <polygon points="0,70 140,-10 140,90 0,170" fill="url(#face-right)" stroke="#38bdf8" stroke-width="1.75" />
+
+    <!-- Recessed Bore Details / Kinematic Alignment -->
+    <ellipse cx="0" cy="-10" rx="45" ry="25" fill="#020617" stroke="#38bdf8" stroke-width="1.5" />
+    <ellipse cx="0" cy="15" rx="30" ry="16" fill="#0a0f1d" stroke="#f59e0b" stroke-width="1.2" stroke-dasharray="3,3" />
+
+    <!-- Mounting Lugs -->
+    <polygon points="-160,-20 -140,-30 -140,10 -160,20" fill="#0f172a" stroke="#38bdf8" stroke-width="1.5" />
+    <circle cx="-150" cy="0" r="5" fill="#020617" stroke="#38bdf8" stroke-width="1" />
+
+    <polygon points="140,-30 160,-20 160,20 140,10" fill="#1e293b" stroke="#38bdf8" stroke-width="1.5" />
+    <circle cx="150" cy="0" r="5" fill="#020617" stroke="#38bdf8" stroke-width="1" />
+
+    <!-- Datum Node Pins -->
+    <circle cx="0" cy="70" r="3.5" fill="#f59e0b" />
+    <circle cx="-140" cy="-10" r="3.5" fill="#f59e0b" />
+    <circle cx="140" cy="-10" r="3.5" fill="#f59e0b" />
+    <circle cx="0" cy="-90" r="3.5" fill="#f59e0b" />
+    <circle cx="0" cy="170" r="3.5" fill="#f59e0b" />
+    <circle cx="-140" cy="90" r="3.5" fill="#f59e0b" />
+    <circle cx="140" cy="90" r="3.5" fill="#f59e0b" />
+  </g>
+
+  <!-- Status / Orbit Badge -->
+  <rect x="40" y="525" width="280" height="36" rx="6" fill="#0f172a" stroke="#1e293b" stroke-width="1" />
+  <circle cx="58" cy="543" r="6" fill="#10b981" />
+  <text x="75" y="547" font-family="monospace" font-size="11" fill="#94a3b8">SOLID GEOMETRY VERIFIED [3DS]</text>
+</svg>

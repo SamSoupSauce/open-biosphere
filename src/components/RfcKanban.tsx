@@ -124,6 +124,16 @@ const RFC_LIST: RFCItem[] = [
     summary: 'Eliminates all raw ASCII blueprint diagrams from markdown code blocks in favor of high-contrast, scalable, responsive vector SVG schematics and elevations.',
     docSlug: '/rfcs/rfc-0011-vector-blueprint-standard',
   },
+  {
+    id: 'RFC-0012',
+    title: 'Concrete Custom-Fabricated Part Contracts & Subpage Architecture',
+    author: 'Autonomous Hardware Systems & CAD Engineering Team',
+    targetType: 'Hardware',
+    status: 'Implemented',
+    date: '2026-10-24',
+    summary: 'Establishes strict requirements eliminating ambiguous part placeholders and defines dedicated subpages under parts/<slug>/ with canonical 3D assets, technical summaries, and interactive WebGL viewers.',
+    docSlug: '/rfcs/rfc-0012-custom-fabricated-part-contracts',
+  },
 ];
 
 export default function RfcKanban() {

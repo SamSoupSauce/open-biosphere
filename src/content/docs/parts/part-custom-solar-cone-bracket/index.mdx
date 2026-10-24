@@ -1,0 +1,115 @@
+---
+id: "part-custom-solar-cone-bracket"
+title: "Adjustable Solar Cone Collector Mounting Bracket (6061-T6)"
+classification: "custom-fabricated"
+fabrication_method: "machined"
+material: "aluminum"
+model_file: "./model.3ds"
+estimated_cost: 16.50
+dimensions:
+  x_mm: 120.0
+  y_mm: 65.0
+  z_mm: 45.0
+sidebar:
+  badge:
+    text: "CUSTOM-FAB"
+    variant: "note"
+---
+
+import ModelViewer from '../../../../components/ModelViewer';
+
+# Adjustable Solar Cone Collector Mounting Bracket (6061-T6)
+
+**Canonical Part ID:** `PART-FAB-BRACKET-SOLAR-CONE`  
+**Classification:** `custom-fabricated`  
+**Fabrication Method:** `machined`  
+**Primary Material:** `aluminum`  
+**Estimated Unit Cost:** `\$16.50 USD`
+
+---
+
+## 1. Component Overview & Architectural Role
+
+Dual-axis adjustable 6061-T6 aluminum mounting bracket for inverted pyramid and conical solar collectors with vibration-damped rail anchors.
+
+---
+
+## 2. Interactive 3D Model Inspection
+
+<ModelViewer
+  client:load
+  partId="PART-FAB-BRACKET-SOLAR-CONE"
+  partName="Adjustable Solar Cone Collector Mounting Bracket (6061-T6)"
+  material="aluminum"
+  fabricationMethod="machined"
+  dimensions={{ x_mm: 120.0, y_mm: 65.0, z_mm: 45.0 }}
+  estimatedCost={16.50}
+  modelUrl="/open-biosphere/assets/parts/PART-FAB-BRACKET-SOLAR-CONE/model.3ds"
+/>
+
+* **Direct Canonical Download:** [Download model.3ds (Autodesk 3DS Binary)](/open-biosphere/assets/parts/PART-FAB-BRACKET-SOLAR-CONE/model.3ds)
+* **Local Workspace Asset:** `./model.3ds`
+
+---
+
+## 3. Technical Summary & Engineering Contracts
+
+### 3.1 Purpose & Functional Role
+Rigidly anchors the overhead inverted solar cone collector and specular pyramid deflector array to the 2020 structural extrusion frame. Off-the-shelf L-brackets cannot withstand localized thermal expansion under concentrated 1,200 W/m² photon flux without warping, and lack integrated ±15° elevation micro-adjustment slots necessary for precision optical calibration.
+
+### 3.2 Mating Interfaces & Tolerances
+Mates with standard 2020 T-slot aluminum extrusions via dual drop-in M5 steel T-nuts (20.0 mm pitch center-to-center, tolerance ±0.08 mm). The upper flange features a 3/8"-16 UNC continuous steel core anchor stud clamp for primary suspension, and four M4 counterbored clearance holes on a 50.0 mm bolt circle for collector cone coupling.
+
+### 3.3 Fabrication & Post-Processing Instructions
+CNC milled from 6061-T6 billet or 5 mm laser-cut plate with precision 90° air-brake bending. Tap all M5 and M4 mounting holes to ISO metric standards (6H thread tolerance). Deburr all edges with a 0.5 mm 45° chamfer. Apply Mil-A-8625 Type II clear anodizing for corrosion and humidity resistance in continuous 85% RH biosphere environments.
+
+---
+
+## 4. Engineering Dimensions & Physical Metrics
+
+| Dimension Parameter | Value |
+| :--- | :--- |
+| **Length (X-Axis)** | `120.0 mm` |
+| **Width / Diameter (Y-Axis)** | `65.0 mm` |
+| **Thickness / Height (Z-Axis)** | `45.0 mm` |
+| **Manufacturing Tolerance** | `±0.1 mm (ISO 2768-m)` |
+| **Unit Weight** | `185.0 g` |
+
+---
+
+## 5. Engineering Blueprint & Isometric Drawings
+
+### Dimensional Drawing
+![Dimensional Drawing](/open-biosphere/assets/parts/PART-FAB-BRACKET-SOLAR-CONE/dimensional-drawing.svg)
+
+### Isometric Render View
+![Isometric Render](/open-biosphere/assets/parts/PART-FAB-BRACKET-SOLAR-CONE/isometric-render.svg)
+
+---
+
+## 6. Sourcing & Procurement Specification
+
+| Parameter | Specification Detail |
+| :--- | :--- |
+| **Primary Supplier / Fabrication Route** | [In-House Machine Shop / SendCutSend](https://sendcutsend.com) |
+| **SKU / Fabrication Code** | `FAB-BRACKET-SOLAR-CONE-6061` |
+| **Direct Sourcing Link** | [https://sendcutsend.com](https://sendcutsend.com) |
+| **Estimated Unit Cost** | `\$16.50 USD` |
+| **Minimum Order Quantity (MOQ)** | `1` |
+| **Lead Time** | `4 business days` |
+
+---
+
+## 7. Machine Cross-Reference & Reverse BOM Lookup
+
+The following automated biosphere sub-systems declare this custom part within their official build bill of materials:
+
+| Machine Assembly | Stage Level | Quantity Required |
+| :--- | :--- | :--- |
+| [`overhead-gantry-system`](/open-biosphere/hardware/overhead-gantry-system/stage-0/) | `Stage 0` | `2` |
+| [`overhead-gantry-system`](/open-biosphere/hardware/overhead-gantry-system/stage-1/) | `Stage 1` | `2` |
+| [`overhead-gantry-system`](/open-biosphere/hardware/overhead-gantry-system/stage-2/) | `Stage 2` | `2` |
+
+---
+
+[Back to Global Part Registry Catalog](/open-biosphere/parts/catalog/) • [Custom Fabricated Index](/open-biosphere/parts/custom-fab/)

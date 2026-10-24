@@ -4952,5 +4952,237 @@
         "quantity_required": 1
       }
     ]
+  },
+  {
+    "name": "Adjustable Solar Cone Collector Mounting Bracket (6061-T6)",
+    "category": "custom-fab",
+    "summary": "Dual-axis adjustable 6061-T6 aluminum mounting bracket for inverted pyramid and conical solar collectors with vibration-damped rail anchors.",
+    "dimensions": {
+      "length_mm": 120.0,
+      "width_mm": 65.0,
+      "thickness_mm": 45.0,
+      "tolerance_mm": "\u00b10.1",
+      "weight_grams": 185.0
+    },
+    "fabrication": {
+      "is_custom_fab": true,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "CNC Milled Aluminum",
+      "slug": "part-custom-solar-cone-bracket",
+      "material": "aluminum",
+      "fabrication_method": "machined",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-BRACKET-SOLAR-CONE/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-FAB-BRACKET-SOLAR-CONE/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-FAB-BRACKET-SOLAR-CONE/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "In-House Machine Shop / SendCutSend",
+        "sku": "FAB-BRACKET-SOLAR-CONE-6061",
+        "direct_url": "https://sendcutsend.com",
+        "unit_price_usd": 16.5,
+        "moq": 1,
+        "lead_time_days": 4
+      }
+    ],
+    "part_id": "PART-FAB-BRACKET-SOLAR-CONE",
+    "used_by": [
+      {
+        "machine_slug": "overhead-gantry-system",
+        "stage": 0,
+        "quantity_required": 2
+      },
+      {
+        "machine_slug": "overhead-gantry-system",
+        "stage": 1,
+        "quantity_required": 2
+      },
+      {
+        "machine_slug": "overhead-gantry-system",
+        "stage": 2,
+        "quantity_required": 2
+      }
+    ],
+    "technical_summary": {
+      "purpose": "Rigidly anchors the overhead inverted solar cone collector and specular pyramid deflector array to the 2020 structural extrusion frame. Off-the-shelf L-brackets cannot withstand localized thermal expansion under concentrated 1,200 W/m\u00b2 photon flux without warping, and lack integrated \u00b115\u00b0 elevation micro-adjustment slots necessary for precision optical calibration.",
+      "mating": "Mates with standard 2020 T-slot aluminum extrusions via dual drop-in M5 steel T-nuts (20.0 mm pitch center-to-center, tolerance \u00b10.08 mm). The upper flange features a 3/8\"-16 UNC continuous steel core anchor stud clamp for primary suspension, and four M4 counterbored clearance holes on a 50.0 mm bolt circle for collector cone coupling.",
+      "instructions": "CNC milled from 6061-T6 billet or 5 mm laser-cut plate with precision 90\u00b0 air-brake bending. Tap all M5 and M4 mounting holes to ISO metric standards (6H thread tolerance). Deburr all edges with a 0.5 mm 45\u00b0 chamfer. Apply Mil-A-8625 Type II clear anodizing for corrosion and humidity resistance in continuous 85% RH biosphere environments."
+    }
+  },
+  {
+    "name": "Duckweed Biomass Skimming Weir Flume Flange Adapter",
+    "category": "custom-fab",
+    "summary": "Hydrodynamic 15\u00b0 convergent transition adapter connecting rectangular flume sump bodies to cylindrical wedge-wire dewatering auger press intakes.",
+    "dimensions": {
+      "length_mm": 160.0,
+      "width_mm": 90.0,
+      "thickness_mm": 75.0,
+      "tolerance_mm": "\u00b10.2",
+      "weight_grams": 210.0
+    },
+    "fabrication": {
+      "is_custom_fab": true,
+      "is_3d_printed": true,
+      "print_spec": {
+        "material": "PETG (Food-Grade)",
+        "nozzle_diameter_mm": 0.6,
+        "layer_height_mm": 0.2,
+        "perimeters": 6,
+        "infill_percentage": 50,
+        "infill_pattern": "gyroid",
+        "print_time_hours": 6.2,
+        "filament_weight_grams": 220.0
+      },
+      "fab_type": "3D Print FDM",
+      "slug": "part-custom-weir-overflow-adapter",
+      "material": "petg",
+      "fabrication_method": "3d-printed",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-ADAPTER-WEIR-OVERFLOW/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-FAB-ADAPTER-WEIR-OVERFLOW/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-FAB-ADAPTER-WEIR-OVERFLOW/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "In-House FDM Print",
+        "sku": "FAB-PETG-ADAPTER-WEIR",
+        "direct_url": "https://matterhackers.com",
+        "unit_price_usd": 14.0,
+        "moq": 1,
+        "lead_time_days": 0
+      }
+    ],
+    "part_id": "PART-FAB-ADAPTER-WEIR-OVERFLOW",
+    "used_by": [
+      {
+        "machine_slug": "fluidic-skimmer-loop",
+        "stage": 0,
+        "quantity_required": 1
+      },
+      {
+        "machine_slug": "fluidic-skimmer-loop",
+        "stage": 1,
+        "quantity_required": 1
+      },
+      {
+        "machine_slug": "fluidic-skimmer-loop",
+        "stage": 2,
+        "quantity_required": 1
+      }
+    ],
+    "technical_summary": {
+      "purpose": "Transitions circulating surface duckweed slurries from the rectangular 140 mm \u00d7 60 mm weir throat into the 85 mm cylindrical intake of the dewatering press. Commercial PVC pipe reducers introduce blunt 90\u00b0 stagnation eddies that trigger biomass clogging, biofouling, and cavitation at the auger inlet; this custom geometry provides an optimized 15\u00b0 laminar velocity ramp.",
+      "mating": "Inlet face features a 140 mm \u00d7 60 mm rectangular perimeter flange with 6x M4 stainless through-holes (hole pitch 45 mm horizontal, 50 mm vertical) sealing against a 2 mm food-grade silicone flat gasket. Outlet transitions to an 85 mm inner-diameter slip collar with an internal 3 mm EPDM O-ring groove for clamping to the dewatering cylinder.",
+      "instructions": "FDM 3D-printed using certified food-contact compliant PETG. Print settings: 0.6 mm hardened steel nozzle, 0.20 mm layer height, 6 solid wall perimeters, 50% gyroid infill. Post-process with solvent wipe or food-grade polyurethane sealant on all interior wet surfaces to eliminate micro-cavity bacterial entrapment."
+    }
+  },
+  {
+    "name": "4-Way Dial-A-Dose Fluidic Manifold Junction Block",
+    "category": "custom-fab",
+    "summary": "Multi-channel fluidic mixing junction block for simultaneous metering of Macro-N, Micro-K, Iron Chelate, and pH balance solutions into recirculating irrigation streams.",
+    "dimensions": {
+      "length_mm": 110.0,
+      "width_mm": 48.0,
+      "thickness_mm": 36.0,
+      "tolerance_mm": "\u00b10.05",
+      "weight_grams": 240.0
+    },
+    "fabrication": {
+      "is_custom_fab": true,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "CNC Machined Aluminum / Delrin",
+      "slug": "part-custom-manifold-junction",
+      "material": "aluminum",
+      "fabrication_method": "machined",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-JUNCTION-MANIFOLD-4WAY/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-FAB-JUNCTION-MANIFOLD-4WAY/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-FAB-JUNCTION-MANIFOLD-4WAY/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "In-House Machine Shop / Local CNC",
+        "sku": "FAB-MANIFOLD-4WAY-6061",
+        "direct_url": "https://mcmaster.com",
+        "unit_price_usd": 22.0,
+        "moq": 1,
+        "lead_time_days": 3
+      }
+    ],
+    "part_id": "PART-FAB-JUNCTION-MANIFOLD-4WAY",
+    "used_by": [
+      {
+        "machine_slug": "microclimate-dosing-array",
+        "stage": 0,
+        "quantity_required": 1
+      },
+      {
+        "machine_slug": "microclimate-dosing-array",
+        "stage": 1,
+        "quantity_required": 1
+      },
+      {
+        "machine_slug": "microclimate-dosing-array",
+        "stage": 2,
+        "quantity_required": 1
+      }
+    ],
+    "technical_summary": {
+      "purpose": "Consolidates four distinct chemical dosing channels into a single turbulent mixing vortex prior to injection into the main duckweed and aeroponic supply loops. Off-the-shelf industrial manifolds cause channel cross-siphonage during non-actuated cycles and lack the non-metallic or food-passivated surfaces necessary to prevent nutrient oxidation.",
+      "mating": "Four independent 1/4\"-18 NPT female inlet ports spaced at 22.0 mm intervals, counter-drilled for 1/4\" compression tube fittings. Single coaxial 1/2\"-14 NPT central delivery discharge port. Two M4 counterbored through-holes on 80.0 mm centers for rigid mounting to 2020 frame struts.",
+      "instructions": "Machined from solid 6061-T6 aluminum block or virgin POM Delrin. Cross-drilled port passages reamed to 6.35 mm diameter with micro-peck cycle to ensure burr-free fluid passages. Precision tap all NPT threads with taper reamer prep. Passivate aluminum blocks with food-safe electroless nickel plating (ENP 25 \u03bcm)."
+    }
+  },
+  {
+    "name": "Dual-Yoke Articulated Servo Bellcrank Linkage (Zero-Backlash)",
+    "category": "custom-fab",
+    "summary": "Dual-clevis zero-backlash bellcrank linkage translating 25T servo rotation into linear gate displacement for weir skimming and flume redirection.",
+    "dimensions": {
+      "length_mm": 85.0,
+      "width_mm": 24.0,
+      "thickness_mm": 16.0,
+      "tolerance_mm": "\u00b10.05",
+      "weight_grams": 38.0
+    },
+    "fabrication": {
+      "is_custom_fab": true,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "CNC Machined Aluminum / CF-PETG",
+      "slug": "part-custom-servo-linkage",
+      "material": "aluminum",
+      "fabrication_method": "machined",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-LINKAGE-SERVO-DUAL-YOKE/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-FAB-LINKAGE-SERVO-DUAL-YOKE/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-FAB-LINKAGE-SERVO-DUAL-YOKE/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "In-House Machine Shop / 3D Print",
+        "sku": "FAB-LINKAGE-SERVO-DUAL-YOKE",
+        "direct_url": "https://sendcutsend.com",
+        "unit_price_usd": 9.5,
+        "moq": 1,
+        "lead_time_days": 2
+      }
+    ],
+    "part_id": "PART-FAB-LINKAGE-SERVO-DUAL-YOKE",
+    "used_by": [
+      {
+        "machine_slug": "fluidic-skimmer-loop",
+        "stage": 1,
+        "quantity_required": 1
+      },
+      {
+        "machine_slug": "fluidic-skimmer-loop",
+        "stage": 2,
+        "quantity_required": 1
+      }
+    ],
+    "technical_summary": {
+      "purpose": "Couples the 25T spline output of the 25kg-cm steering servo directly to the overflow weir gate pivot arm. Commercial RC plastic horns flex under hydrodynamic surge pressure and suffer from deadband hysteresis (+/-2.5 degrees), which corrupts the precise weir crest elevation needed for 1.5 mm thin-film duckweed skimming.",
+      "mating": "Features a broached 25T standard servo spline hub with an integrated M2.5 grade 12.9 pinch clamp screw for zero backlash. Opposing bellcrank yoke features dual 3.0 mm H7 reamed clevis pin bores equipped with flanged oilite bronze bushings and stainless steel retaining E-clips.",
+      "instructions": "CNC milled from 6061-T6 aluminum or precision 3D-printed in Continuous Carbon-Fiber PETG (100% infill). Spline hub reamed and broached with 25T involute cutter; clevis ears drilled undersize and line-reamed to 3.00 mm (+0.01/-0.00 mm). Deburr all slot edges and hard-coat anodize (black, Mil-A-8625 Type III)."
+    }
   }
 ]
