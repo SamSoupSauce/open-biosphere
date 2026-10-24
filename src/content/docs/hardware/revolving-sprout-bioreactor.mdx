@@ -15,7 +15,7 @@ In off-grid and homestead scenarios, fresh bioavailable nutrients are often seas
 
 <CardGrid>
   <Card title="Kitchen & Cabin Appliance" icon="star">
-    Operates independently on a kitchen counter, root cellar, or pantry shelf. Requires only 24V DC power and intermittent water supply.
+    Operates independently on a kitchen counter, root cellar, or pantry shelf. Requires zero electrical power in base manual configuration.
   </Card>
   <Card title="Closed Water Conservation" icon="droplet">
     Recirculating ultrasonic misting and scheduled drain cycles consume under 1.5 liters of fresh water per kilogram of fresh yield.
@@ -37,85 +37,366 @@ In off-grid and homestead scenarios, fresh bioavailable nutrients are often seas
 | **Footprint Dimensions** | 450 mm (W) × 600 mm (D) × 500 mm (H) |
 | **Drum Geometry** | Cylindrical food-grade perforated drum: 300 mm diameter × 450 mm length |
 | **Batch Capacity** | 800 g dry seed (yields ~3.5 kg wet hypocotyls per 96-hour run) |
-| **Rotation Drive** | NEMA 17 planetary geared stepper motor (5.18:1 reduction) |
+| **Rotation Drive** | NEMA 17 planetary geared stepper motor (5.18:1 reduction) or manual crank |
 | **Rotation Speed** | 0.5 to 2.0 RPM intermittent (rotates 15 seconds every 15 minutes) |
 | **Irrigation System** | Dual high-pressure atomizing misting nozzles (50 µm droplet size) |
 | **Sanitation Subsystem** | 200 mg/h corona-discharge ozone generator with gas diffuser stone |
-| **Power Consumption** | Average 18W continuous (12V/24V DC dual rail, peak 45W during misting) |
-| **Controller Architecture** | ESP32-S3 microcontroller with WiFi/BLE telemetry & local web UI |
+| **Power Consumption** | 0W (Manual) / 18W average (Add-On 1) / 22W peak (Add-On 2) |
+| **Controller Architecture** | Standalone manual / Dual-dial analog timer / ESP32-S3 FreeRTOS CAN node |
 
 ---
 
-## 3. Tri-Modal Control Architecture
+## 3. Instructions (Base Zero-Power Machine)
 
-The sprout bioreactor can be operated completely off-grid by hand, controlled with simple push-buttons, or driven autonomously by AI orchestration:
+The foundational build of the Revolving Sprout Bioreactor requires **zero electricity, zero microcontrollers, and zero firmware**. It relies strictly on mechanical leverage, sealed ball bearings, a spring-loaded ratchet pawl, and manual gravity drainage. Anyone with basic hand tools can construct, operate, and harvest fresh protein off-grid.
 
-| Control Mode | Actuation Mechanism | Operator / System Experience |
-| :--- | :--- | :--- |
-| **Tier 1: Manual (Zero Power)** | Hand crank + mechanical ratchet pawl + gravity drain valve | Rotate the drum manually 5 turns twice a day using the external hand crank; open the brass ball valve by hand to drain rinse water without any electrical connection. |
-| **Tier 2: Buttons & Dials** | Tactile push-button + analog dial timer | Press the green panel button to jog the drum to any position; turn the physical rotary timer dial to set misting frequency; flip a toggle switch to run an ozonated wash cycle. |
-| **Tier 3: Autonomous AI** | Edge microcontroller schedule + AGV telemetry | ESP32-S3 executes precise 96-hour growth program, dynamically modulating rotation and misting based on ambient humidity; signals Ground Track AGV when harvest is ready. |
+### Mechanical Architecture & Decoupling Standard
+1. **Perforated Cylinder & Flanges**: A 300 mm diameter by 450 mm long food-grade 304 stainless steel mesh cylinder (1.5 mm perforations) rotates inside an open 2020 T-slot aluminum frame.
+2. **Bearing Support**: Both ends of the drum rest on grease-packed 608-2RS skate bearings housed in rigid pillow blocks, allowing effortless hand spinning even with a 4.0 kg saturated seed load.
+3. **Ratchet Pawl Mechanism**: A 12-tooth mechanical ratchet wheel and spring-loaded Delrin pawl lock the drum against counter-rotation and hold it steadily at 45° tilt angles for optimal gravity drainage.
+4. **Mechanical Decoupling**: The 8 mm precision ground D-shaft features an integrated ball-detent dog clutch. When motor add-ons are installed later, pulling the clutch pin completely disconnects the motor gearbox, allowing instant zero-drag hand cranking.
+
+```
+       REVOLVING SPROUT BIOREACTOR — BASE MECHANICAL ELEVATION
+  =================================================================
+                    Top Removable Lightproof Hood
+         +---------------------------------------------------+
+         |                                                   |
+         |         [Perforated 304 SS Mesh Drum]             |
+         |               (300 mm OD x 450 mm L)              |
+         |        .---------------------------------.        |
+         |       /                                   \       |
+  [Hand] |======|    *   *   *   *   *   *   *   *    |======| [608-2RS]
+  Crank  |  ||  |  *   *   (Seed Mass)   *   *   *   |  ||  | Bearing
+  Pawl   |--++-- \                                   / --++--| Pillow
+  Lock   |        '---------------------------------'        | Block
+         |                         |                         |
+         |                         v Droplets                |
+         |           \---------------------------/           |
+         |             \   Silicone Sump Basin /             |
+         |               \                   /               |
+         |                 +-------+-------+                 |
+         |                         |                         |
+         |                   [3/4" Brass]                    |
+         |                    Ball Valve                     |
+         |                         |                         |
+         +-------------------------+-------------------------+
+                              Gravity Drain
+```
+
+### Step-by-Step Fabrication & Assembly Protocol
+
+#### Step 1.1: Chassis Cutting & Extrusion Assembly
+1. Cut eight segments of 2020 black-anodized aluminum extrusion: four longitudinal rails at 500 mm and four upright stanchions at 400 mm.
+2. Deburr all cut ends and tap center holes to M5 thread depth 15 mm.
+3. Assemble the rectangular box chassis using 90° cast aluminum corner brackets and M5 button-head cap screws with roll-in T-nuts. Torque to 4.2 N·m.
+4. Verify rectangular squareness using a machinist square across all internal corners ($< 0.5$ mm diagonal variance).
+
+#### Step 1.2: Perforated Mesh Cylinder & Flange Assembly
+1. Roll a 304 stainless steel 1.5 mm perforated mesh sheet into a 300 mm outer diameter cylinder (length 450 mm).
+2. Lap the seam by 12 mm and secure with 316 stainless steel blind pop rivets spaced every 30 mm.
+3. 3D-print or CNC-rout two 300 mm circular end flanges in PETG or food-grade HDPE with a 15 mm perimeter groove.
+4. Seat the mesh cylinder into the endcap perimeter grooves using food-grade silicone RTV gasket sealant. Clamp longitudinally with four M4 threaded stainless tie-rods until cured (24 hours).
+5. Cut a 150 mm × 100 mm access hatch in the mesh cylinder wall, installing two stainless steel miniature draw latches and a flexible silicone sealing gasket.
+
+#### Step 1.3: Axle Spindle & 608-2RS Bearing Installation
+1. Press-fit dual 608-2RS sealed ball bearings into machined aluminum pillow blocks mounted atop the 400 mm upright frame rails.
+2. Slide an 8 mm precision-ground stainless steel D-profile shaft through the center flanged hubs of both drum endcaps.
+3. Lock the shaft to the drum flanges using M4 stainless grub screws biting directly into the D-flat.
+4. Slide shaft ends into the pillow-block bearings and clamp with 8 mm shaft collars, ensuring zero axial play while maintaining effortless rotational spin ($< 0.05$ N·m break-away torque).
+
+#### Step 1.4: Hand Crank & Ratchet Pawl Alignment
+1. Mount the 12-tooth Delrin ratchet wheel onto the drive-side D-shaft stub protruding 40 mm past the pillow block.
+2. Pivot-mount the spring-loaded Delrin pawl onto the upper aluminum frame rail using an M5 shoulder bolt and torsion spring.
+3. Attach the ergonomic detachable hand crank with internal ball-detent collar onto the 8 mm shaft stub.
+4. Test crank rotation: clockwise motion must rotate smoothly with audible ratchet clicks; counter-clockwise rotation must lock solidly within 30° of travel.
+
+#### Step 1.5: Sump Funnel & Gravity Drain Installation
+1. Form a food-grade silicone or heat-molded PETG catch pan beneath the drum, angled at a 15° slope toward a central sump.
+2. Drill a 26 mm hole at the lowest point and install a 3/4" bulkhead fitting with EPDM washers.
+3. Thread a 3/4" manual brass full-port ball valve onto the bulkhead fitting.
+4. Plumb a short length of food-grade 3/4" braided silicone tubing from the valve outlet to gravity-discharge into a wastewater bucket or garden bed.
+
+```mermaid
+flowchart TD
+    A[Step 1.1: Frame Assembly] --> B[Step 1.2: SS Mesh Drum Fabrication]
+    B --> C[Step 1.3: 608-2RS Bearings & Axle Mounting]
+    C --> D[Step 1.4: Ratchet Pawl & Hand Crank Setup]
+    D --> E[Step 1.5: Sump Basin & Brass Drain Valve]
+    E --> F[Verification: Manual Spin & Gravity Drain Check]
+```
+
+### Step-by-Step Operating Runbook (Manual Mode)
+
+1. **Pre-Soak & Seed Loading**: Weigh 800 g of dry, high-germination mung bean seeds. Rinse thoroughly in fresh water, then soak in a clean bowl for 6 to 8 hours. Open the drum's 150 mm access hatch, pour in the swollen seeds, close the hatch, and secure both draw latches.
+2. **Morning Tumbling Cycle**: Rotate the hand crank clockwise 5 full revolutions at ~1 RPM. This gently tumbles the seed bed, uncurls tangles, and aerates the root zone without damaging tender hypocotyls. The ratchet pawl prevents the drum from rolling back.
+3. **Manual Rinse Application**: Pour 2.0 liters of clean, dechlorinated water through the top lightproof access port directly onto the rotating drum. Crank 2 additional revolutions while pouring to ensure uniform wetting across all seeds.
+4. **Gravity Drainage Discharge**: Open the 3/4" brass ball valve beneath the sump basin. Allow all excess rinse water to drain completely for 3 minutes. *Crucial: Never allow seeds to sit submerged in standing water, which induces anaerobic rot and fungal contamination.* Close the ball valve.
+5. **Midday Inspection & Aeration**: Rotate the drum 3 revolutions at noon. The mechanical ratchet allows locking the drum at a 45° offset angle, promoting residual gravity drainage away from newly emerged shoots.
+6. **Evening Tumbling & Rinse**: Repeat Step 2 and Step 3 at 18:00 (5 revolutions + 2.0 L rinse + full gravity drain).
+7. **96-Hour Harvest Protocol**: On day 4, open the access hatch, position a clean food tote beneath the drum, rotate the drum 180° downward, and tap the mesh to release ~3.5 kg of crisp, sweet hypocotyls. Spray the empty drum with boiling water or 3% food-grade hydrogen peroxide before reloading.
+
+### Base Machine Bill of Materials (BOM)
+
+| Item | Component Description | Sourcing / Part Reference | Qty | Unit Cost | Total Cost |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **B-01** | 2020 T-Slot Black Anodized Extrusion (500mm & 400mm) | Standard structural aluminum | 8 | $3.50 | $28.00 |
+| **B-02** | 304 Stainless Steel Perforated Sheet (1.5mm holes, 300x450mm) | McMaster / local sheet supplier | 1 | $42.00 | $42.00 |
+| **B-03** | Food-Grade PETG Drum End Flanges & Axle Hubs | 3D printed / local fab | 2 | $6.00 | $12.00 |
+| **B-04** | 608-2RS Deep-Groove Sealed Skate Bearings | Precision skate hardware | 4 | $1.50 | $6.00 |
+| **B-05** | 8 mm Precision Ground D-Profile Stainless Axle Shaft (550mm) | Motion hardware supplier | 1 | $14.00 | $14.00 |
+| **B-06** | Detachable Hand Crank + Ratchet Wheel & Delrin Pawl | 3D printed + torsion spring | 1 | $11.00 | $11.00 |
+| **B-07** | Food-Grade Silicone Sump Tray + 3/4" Bulkhead Fitting | Silicone pan + brass fitting | 1 | $12.00 | $12.00 |
+| **B-08** | 3/4" Brass Full-Port Manual Ball Valve | Hardware / plumbing supply | 1 | $8.00 | $8.00 |
+| **B-09** | Fasteners (M5 T-nuts, M5 corner brackets, M4 tie rods) | Standard stainless hardware pack | 1 | $12.00 | $12.00 |
+| **Total** | **Base Zero-Power Machine Build** | **Complete off-grid appliance** | | | **$145.00** |
 
 ---
 
-## 4. Staged Bill of Materials (BOM) — Manual, Semi-Auto, Agentic
+## 4. Add-On 1: Semi-Autonomous Electromechanical Pack (Buttons & Dials)
 
-The Sprout Bioreactor can be built as a **zero-electricity cabin tumbler**, upgraded with **push-button rotation and dial misting**, and expanded into a **fully automated 96-hour AI bioreactor with AGV docking**:
+The **Semi-Autonomous Pack** retrofits onto the Base Machine in under 60 minutes. It automates repetitive tumbling and misting using robust electro-mechanical switchgear: an industrial planetary stepper motor, a 100 PSI diaphragm pump with brass atomizing nozzles, an analog countdown dial timer, and momentary jog push-buttons.
 
-### Stage 1: Manual BOM (Off-Grid Mechanical Tumbler)
-*Rigid aluminum extrusion chassis, perforated stainless drum, detachable hand crank, ratchet pawl, and manual gravity drainage.*
+### Electromechanical Actuation Architecture & Decoupling
+- **Drive Motor**: NEMA 17 planetary geared stepper motor (5.18:1 ratio, 1.8 N·m output torque) driving a GT2 6 mm timing belt (60T drum pulley, 20T motor pulley).
+- **Mechanical Decoupling**: A spring-loaded dog clutch slides axially on the 8 mm D-shaft. Pulling the knurled collar disengages the motor drive dogs, allowing instant hand-crank manual operation without fighting motor cogging or back-powering drivers.
+- **Pressurized Misting**: A 24V DC diaphragm pump pressurizes an inline manifold to 100 PSI, delivering a 50 µm atomized fog through two 0.3 mm brass orifice nozzles directly into the drum core.
+- **Operator Interface**: Dual panel-mounted spring-wound countdown dial timers control mist interval (0–60 min) and mist duration (0–60 sec). A momentary green button provides instant manual jog rotation.
 
-| Item Category | Component Name & Description | Sourcing / Standard Part | Est. Cost (USD) |
-| :--- | :--- | :--- | :--- |
-| **Frame** | 2020 T-Slot Black Anodized Aluminum Extrusion (400mm & 500mm lengths) | Standard extrusion supplier | $28.00 |
-| **Drum Core** | Food-Grade 304 Stainless Steel Perforated Mesh Cylinder (300mm dia) | Metal mesh fabricator / eBay | $42.00 |
-| **Drum Flanges** | 3D Printed PETG / Polycarbonate Endcaps & Axle Spindles | FDM 3D printed (0.28mm layer height) | $12.00 |
-| **Bearings** | 608-2RS Sealed Deep Groove Ball Bearings (4x) | Standard skate bearings | $6.00 |
-| **Hand Drive** | Detachable Ergonomic Hand Crank with Spring-Loaded Ratchet Pawl | 3D printed + steel pivot pin | $14.00 |
-| **Gravity Drainage** | 3/4-inch Manual Brass Drain Ball Valve + Silicone Collection Funnel | Standard plumbing supply | $11.00 |
-| **Stage 1 Total** | **Zero-Electricity Mechanical Tumbler** | **Off-grid baseline appliance** | **$113.00** |
+```
+       ELECTROMECHANICAL WIRING & CONTROL PANEL SCHEMATIC
+  =================================================================
+  [24V DC 60W PSU]
+        |
+        +----[Main Toggle SW]----(Power LED Red)
+        |
+        +----[Jog Button NO]----+-----> [TMC Driver STEP/DIR Engine]
+        |                       |                 |
+        +----[Dial Timer 1]-----+                 v
+        |    (Tumble Interval)            [NEMA 17 Geared Stepper]
+        |                                         |
+        |                                 (Dog Slip Clutch)
+        |                                         |
+        |                                         v
+        |                                 [Perforated Drum]
+        |
+        +----[Dial Timer 2]-----------> [24V Diaphragm Mist Pump]
+             (Mist Duration)                      |
+                                                  v
+                                      [Dual 0.3mm Brass Nozzles]
+```
 
-### Stage 2: Semi-Autonomous Add-On (Push-Button Jog & Dial Mist)
-*Adds planetary stepper rotation, 100 PSI misting pump, rotary countdown timer, and panel jog push-buttons.*
+### Step-by-Step Retrofit Protocol
 
-| Item Category | Component Name & Description | Sourcing / Standard Part | Est. Cost (USD) |
-| :--- | :--- | :--- | :--- |
-| **Drive Motor** | NEMA 17 Geared Planetary Stepper (5.18:1) + GT2 6mm Belt & Pulleys | 3D printer aftermarket part | $24.00 |
-| **Misting System** | 24V Diaphragm Mist Pump (100 PSI) + Brass 0.3mm Atomizing Nozzles (2x) | Hydroponics mist supplier | $34.00 |
-| **Hardware Timer** | Spring-Wound Mechanical Countdown Dial Timer (0–60 min mist interval) | Appliance component store | $15.00 |
-| **Panel Controls** | Green Momentary Jog Push-Button + Heavy-Duty Power Toggle Switch | Industrial electrical supply | $10.00 |
-| **Power Supply** | 24V 60W DC Desktop Power Supply with 2.1mm Barrel Jack | Standard electronics supply | $16.00 |
-| **Stage 2 Add-On** | **Electromechanical Power Upgrade** | **Adds to Stage 1 base** | **+$99.00** |
-| **Stage 2 Cumulative** | **Operational Semi-Autonomous Bioreactor** | **Stage 1 + Stage 2** | **$212.00** |
+#### Step 2.1: Stepper Motor & Belt Drive Bracket Mounting
+1. Bolt a slotted NEMA 17 motor bracket to the rear vertical 2020 extrusion using M5 drop-in T-nuts.
+2. Mount the NEMA 17 planetary geared motor with its 20T GT2 aluminum pulley facing inward.
+3. Slide the 60T GT2 drum pulley onto the 8 mm D-shaft between the pillow block and the drum endcap.
+4. Route a 6 mm closed-loop GT2 neoprene timing belt between pulleys. Tension motor bracket until 5 mm belt deflection occurs at 2 N finger pressure.
 
-### Stage 3: Agentic Add-On (Closed-Loop 96h Bioreactor with AGV Handshake)
-*Adds ESP32-S3 FreeRTOS automation, chamber humidity telemetry, corona ozone sanitization, and autonomous AGV docking.*
+#### Step 2.2: Dog Clutch Retrofit on Main D-Shaft
+1. Install the sliding dog clutch sleeve between the 60T pulley hub and the axle shaft collar.
+2. Verify axial sliding action: when engaged, the dog teeth lock the pulley to the shaft; when pulled outward, the shaft spins completely freely.
+3. Retain the manual hand crank on the outer shaft stub for instant mechanical fallback.
 
-| Item Category | Component Name & Description | Sourcing / Standard Part | Est. Cost (USD) |
-| :--- | :--- | :--- | :--- |
-| **Controller Node** | ESP32-S3 NodeMCU Mainboard with BLE/WiFi & FreeRTOS Schedule Engine | Open-source maker supplier | $14.00 |
-| **Silent Driver** | TMC2209 Ultra-Silent Stepper Driver with Sensorless Homing Support | 3D printer mainboard parts | $8.00 |
-| **Chamber Sensor** | Sensirion SHT40 High-Precision Temperature & Relative Humidity Probe | Precision sensor supplier | $12.00 |
-| **Auto-Sanitizer** | 12V 200mg/h Corona-Discharge Ozone Module + Gas Diffuser Stone | Compact aquarium ozone unit | $19.00 |
-| **AGV Interlock** | Magnetic Alignment Docking Latch + Optical Target + CAN Transceiver | Robotics maker hardware | $16.00 |
-| **Stage 3 Add-On** | **Autonomous Edge AI & Biosphere Interlock** | **Adds to Stage 1 + 2** | **+$69.00** |
-| **Full Build Total** | **Complete Autonomous Biosphere Bioreactor** | **Stage 1 + Stage 2 + Stage 3** | **$281.00** |
+#### Step 2.3: Diaphragm Misting Pump & Atomizing Manifold
+1. Mount the 24V DC diaphragm mist pump (100 PSI, 1.2 L/min) to the lower chassis rail using vibration-dampening rubber grommets.
+2. Plumb a 1/4" food-grade polyurethane pressure line from the pump outlet to a brass tee fitting mounted inside the top hood.
+3. Install two 0.3 mm anti-drip brass atomizing misting nozzles angled at 45° across the seed bed.
+4. Plumb the pump inlet to an external 5-gallon food-grade water reservoir with an inline 80-mesh stainless suction filter.
 
-### Cost & Upgrade Progression Summary
+#### Step 2.4: IP65 Electrical Control Enclosure Installation
+1. Mount an IP65 polycarbonate electrical junction box (160 × 160 × 90 mm) to the side frame rail.
+2. Drill panel cutouts for:
+   - One 22 mm red illuminated latching power rocker switch.
+   - One 22 mm green momentary tactile jog push-button.
+   - Two 48 mm panel-mount mechanical spring-wound countdown timers.
+3. Snap a 24V-to-12V DC-DC buck converter and a standalone pulse-generator module onto internal DIN rail.
+
+#### Step 2.5: Point-to-Point Wiring & Grounding Verification
+1. Wire 24V DC positive through the main rocker switch to the pulse generator, timers, and pump relay.
+2. Connect the green jog button directly across the manual pulse-trigger terminal on the stepper driver board.
+3. Wire the chassis aluminum frame to earth ground through a 3-pin fused IEC power inlet.
+4. Verify isolation: resistance between 24V DC negative and the aluminum frame must measure $> 10\text{ M}\Omega$.
+
+```mermaid
+flowchart LR
+    A[Main Power Switch] --> B{Timer or Jog?}
+    B -->|Jog Button Pressed| C[Immediate Stepper Rotation]
+    B -->|Dial Timer Trigger| D[Pulse Generator: 15s Rotation]
+    B -->|Mist Interval Timer| E[24V Pump: 30s Atomized Spray]
+    C & D --> F[Drum Tumbling Action]
+    E --> G[Hydration & Cooling]
+    F & G --> H[Tender Hypocotyl Growth]
+```
+
+### Step-by-Step Push-Button Operating Runbook
+
+1. **System Power-Up & Dial Calibration**: Flip the red master toggle switch to ON. Set Dial Timer 1 (Tumble Interval) to 15 minutes. Set Dial Timer 2 (Mist Duration) to 30 seconds.
+2. **Drum Loading via Green Jog Button**: Open the drum access hatch. Press and hold the green momentary jog button to rotate the drum until the hatch opening faces vertically upward. Release button (drum stops instantly). Load 800 g soaked seeds and latch hatch.
+3. **Automated Continuous Cycling**: Leave the machine in automated dial mode. Every 15 minutes, the pulse generator triggers a 15-second rotation at 1.0 RPM. Simultaneously, the diaphragm pump pressurizes the misting nozzles for 30 seconds, maintaining 95% relative humidity inside the dark chamber.
+4. **Mid-Cycle Observation & Manual Jog**: To inspect sprout progress without disrupting the schedule, press the green jog button to rotate the inspection port into view.
+5. **Drain Flush Maintenance**: Open the lower brass ball valve twice daily for 2 minutes to discharge accumulated mist runoff from the sump.
+6. **Zero-Power Fallback Override**: If off-grid power is lost, pull the dog clutch ring outward and slide the hand crank onto the shaft. Resume the 7-step manual runbook without dismounting the motor or belt.
+
+### Add-On 1 Bill of Materials (BOM)
+
+| Item | Component Description | Sourcing / Part Reference | Qty | Unit Cost | Total Cost |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **A1-01** | NEMA 17 Planetary Geared Stepper (5.18:1, 1.8 N·m) | Standard motion supplier | 1 | $24.00 | $24.00 |
+| **A1-02** | GT2 60T/20T Aluminum Pulley Set + 6mm Neoprene Belt | 3D printer drive hardware | 1 | $9.00 | $9.00 |
+| **A1-03** | Axial Spring-Loaded Dog Clutch Sliding Mechanism | Machined aluminum / 3D PETG | 1 | $14.00 | $14.00 |
+| **A1-04** | 24V DC 100 PSI Diaphragm Mist Pump (1.2 L/min) | Hydroponics mist supplier | 1 | $32.00 | $32.00 |
+| **A1-05** | Brass 0.3mm Atomizing Misting Nozzles + 1/4" Fittings | High-pressure fogging kit | 2 | $5.00 | $10.00 |
+| **A1-06** | Spring-Wound Mechanical Countdown Dial Timers | Industrial appliance controls | 2 | $12.00 | $24.00 |
+| **A1-07** | IP65 Control Enclosure + Green Jog Button + Rocker Switch | Electrical enclosure kit | 1 | $16.00 | $16.00 |
+| **A1-08** | 24V 2.5A (60W) Desktop Industrial Power Supply | Mean Well or equivalent | 1 | $18.00 | $18.00 |
+| **Total** | **Add-On 1 Electromechanical Pack** | **Retrofits directly to Base** | | | **+$147.00** |
+| **Cumul.** | **Operational Semi-Autonomous Bioreactor** | **Base ($145) + Add-On 1 ($147)** | | | **$292.00** |
+
+---
+
+## 5. Add-On 2: Agentic Autonomous AI Pack (Edge Vision & Closed Loop)
+
+The **Agentic Autonomous AI Pack** transforms the bioreactor into a self-monitoring, precision cyber-physical node capable of independent closed-loop environmental control, automated ozonated sanitization, and robotic tote exchange with the Ground Track AGV.
+
+### Autonomous Vision & Telemetry Architecture
+- **Compute Core**: ESP32-S3 Dual-Core Xtensa LX7 (240 MHz, 8 MB PSRAM) running FreeRTOS with CAN bus transceiver (SN65HVD230) and local MQTT/ESPHome telemetry.
+- **Silent Stepper Control**: Trinamic TMC2209 driver running in UART mode, enabling Sensorless StallGuard homing to locate the drum access hatch without mechanical limit switches.
+- **Microclimate Telemetry**: Sensirion SHT40 high-precision relative humidity ($\pm 1.5\%$) and temperature ($\pm 0.1^\circ\text{C}$) digital probe mounted directly in the drum exhaust stream.
+- **Sanitation Subsystem**: 12V 200 mg/h corona-discharge ozone generator paired with a miniature air pump and diffuser stone inside the misting fluid reservoir for zero-chemical sterilization.
+- **Robotic Biosphere Interlock**: Magnetic alignment latch and retroreflective optical fiducial marker for automated docking with the Ground Track AGV pod carrier.
+
+```
+       CYBER-PHYSICAL EDGE AI ARCHITECTURE & CAN TELEMETRY
+  =================================================================
+             +-----------------------------------------+
+             |       ESP32-S3 Edge Controller Node      |
+             |  (FreeRTOS Multitasking + Neural Net)   |
+             +----+--------------------+----------+----+
+                  |                    |          |
+         +--------+--+                 |          +-------+----+
+         |   UART    |                 | I2C              | GPIO
+         v           v                 v                  v
+    [TMC2209 Driver] [CAN Bus]    [SHT40 Temp/RH]   [Relay Board]
+         |           | (To Master   (Exhaust Flue)   |      |
+         v           |  Biosphere)                   v      v
+   [NEMA 17 Stepper] v                         [Ozone] [Solenoid]
+   (Sensorless Homing)                     (Generator)  (Drain)
+```
+
+### Step-by-Step Sensor Commissioning & Edge AI Protocol
+
+#### Step 3.1: ESP32-S3 & TMC2209 Carrier Board Assembly
+1. Mount the ESP32-S3 development board and TMC2209 driver module onto the DIN rail carrier base inside the control enclosure.
+2. Jumper the TMC2209 DIAG pin to ESP32 GPIO 4 for sensorless stall detection homing.
+3. Configure TMC2209 motor current to 850 mA RMS via UART software register commands.
+
+#### Step 3.2: SHT40 Environmental Probe Integration
+1. Mount the Sensirion SHT40 probe inside an aspirated, lightproof flue adapter on the drum's exhaust vent.
+2. Connect SHT40 via shielded 4-wire cable to I2C bus (SDA: GPIO 21, SCL: GPIO 22). Pull up lines with $4.7\text{ k}\Omega$ resistors.
+3. Verify telemetry readings over serial terminal: ambient RH must report within 30–95% at 0.1°C temperature resolution.
+
+#### Step 3.3: Corona Ozone Generator & Diffusion Loop
+1. Mount the 12V 200 mg/h corona-discharge ozone generator module in an isolated compartment of the enclosure.
+2. Route silicone ozone-rated tubing from the ozone discharge port through a check valve into the mist water reservoir's ceramic diffuser stone.
+3. Wire the ozone module and internal aeration pump to Relay Channel 1 (GPIO 18).
+
+#### Step 3.4: Magnetic AGV Docking Latch & Optical Target
+1. Bolt a neodymium magnetic alignment latch (150 N holding force) to the chassis front lower rail ($Z = 120$ mm datum).
+2. Install a high-contrast AprilTag 36h11 fiducial marker directly above the access hatch for AGV machine vision recognition.
+3. Wire the magnetic latch release solenoid to Relay Channel 2 (GPIO 19).
+
+#### Step 3.5: Firmware Flashing & CAN Bus Calibration
+1. Flash the ESP32-S3 with the Open Biosphere FreeRTOS agentic firmware via USB-C.
+2. Configure CAN bus bit rate to 500 kbps (TX: GPIO 5, RX: GPIO 6) linked to the master biosphere backbone.
+3. Test StallGuard homing: drum rotates slowly until the access hatch mechanical stop registers a current spike, zeroing the rotational datum accurately to $\pm 1.2^\circ$.
+
+```mermaid
+stateDiagram-v2
+    [*] --> Standby_Homed: Power On & StallGuard Homing
+    Standby_Homed --> Germination_Phase: Seed Load Acknowledged (Hour 0)
+    
+    state Germination_Phase {
+        [*] --> High_Humidity_Mist
+        High_Humidity_Mist --> Low_RPM_Tumble: Every 20 min
+        Low_RPM_Tumble --> High_Humidity_Mist: RH > 95%
+    }
+
+    Germination_Phase --> Active_Elongation: Hour 24 (Radicle Emergence)
+
+    state Active_Elongation {
+        [*] --> Environmental_Sentry
+        Environmental_Sentry --> Pulse_Mist: RH < 90%
+        Environmental_Sentry --> Gas_Exchange_Tumble: CO2 > 2500 ppm
+    }
+
+    Active_Elongation --> Harvest_Ready: Hour 96 (Biomass Complete)
+    Harvest_Ready --> AGV_Tote_Exchange: CAN Handshake Signal
+    AGV_Tote_Exchange --> Ozonated_Sanitize: Drum Empty Confirmed
+    Ozonated_Sanitize --> Standby_Homed: 3-min Wash Done
+```
+
+### Step-by-Step Autonomous Multi-Agent Runbook
+
+1. **Pre-Flight Self-Test & StallGuard Homing**: On boot, the ESP32-S3 executes a memory and sensor bus check. It drives the stepper in reverse at 0.5 RPM until Trinamic StallGuard detects the mechanical travel limit, indexing the 150 mm hatch position precisely at $0.0^\circ$.
+2. **Day 1 Adaptive Germination**: For the first 24 hours, the agent maintains an unbroken dark photophobic cycle. It pulses misting for 12 seconds every 18 minutes, tumbling 1 revolution to coat seeds uniformly in an ultra-fine water film without mechanical agitation.
+3. **Day 2–3 Closed-Loop Elongation Control**: The SHT40 probe continuously reads chamber humidity and transpiration rate. If relative humidity drops below 92%, the agent triggers immediate misting. If transpiration heat causes chamber temperature to rise $> 24.5^\circ\text{C}$, the agent commands a 3-revolution tumble and opens the motorized exhaust damper for evaporative cooling.
+4. **Automated AGV Handshake & Harvest**: At Hour 96, the agent flags `STATE_HARVEST_READY` across the CAN bus. When the Ground Track AGV pod carrier docks and signals readiness, the bioreactor rotates the hatch to $180^\circ$ (downward) and actuates the latch release solenoid, dumping ~3.5 kg of prime hypocotyls directly into the AGV transport tote.
+5. **Post-Harvest Ozonated Sanitation Wash**: Immediately following harvest confirmation, the agent actuates Relay 1, running the corona ozone generator and mist pump for 3 minutes. Ozonated water (0.4 ppm dissolved $O_3$) blankets every mesh pore, destroying fungal spores and bacteria with zero chemical residue.
+6. **Fail-Safe Watchdog Protocol**: If CAN bus communication is lost or SHT40 telemetry fails, the firmware immediately drops into autonomous fail-safe mode: executing a hardcoded 15-minute tumble and 30-second mist schedule while sounding an audible piezo alarm.
+
+### Add-On 2 Bill of Materials (BOM)
+
+| Item | Component Description | Sourcing / Part Reference | Qty | Unit Cost | Total Cost |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **A2-01** | ESP32-S3 DevKitC-1 N8R8 (8MB PSRAM, USB-C) | Espressif distributor | 1 | $12.00 | $12.00 |
+| **A2-02** | Trinamic TMC2209 Silent Stepper Driver (UART/StallGuard) | 3D printer electronics supplier | 1 | $8.00 | $8.00 |
+| **A2-03** | Sensirion SHT40 Digital Temp/RH Probe + Flue Mount | Precision sensor distributor | 1 | $14.00 | $14.00 |
+| **A2-04** | 12V 200mg/h Corona Ozone Generator + Diffuser Stone | Compact ozone module supplier | 1 | $19.00 | $19.00 |
+| **A2-05** | Dual SPDT Optocoupled 10A Relay Module (Ozone & Solenoid) | Robotics electronics supplier | 1 | $6.00 | $6.00 |
+| **A2-06** | CAN Bus Transceiver Module (SN65HVD230 3.3V) | Waveshare / industrial CAN | 1 | $5.00 | $5.00 |
+| **A2-07** | Neodymium Magnetic Alignment Docking Latch + Solenoid | Robotics latch supplier | 1 | $16.00 | $16.00 |
+| **A2-08** | Custom Shielded Wire Harness & AprilTag Optical Plate | 22 AWG silicone + laser target | 1 | $9.00 | $9.00 |
+| **Total** | **Add-On 2 Agentic Autonomous Pack** | **Expands Base + Add-On 1** | | | **+$89.00** |
+| **Full Build** | **Complete Autonomous Biosphere Bioreactor** | **Base + Add-On 1 + Add-On 2** | | | **$381.00** |
+
+---
+
+## 6. Staged Upgrade Progression & Cost Summary
+
+The Sprout Bioreactor is intentionally designed so that **not a single bolt or bracket is thrown away** when upgrading from the zero-power manual build all the way to the full AI autonomous cyber-physical appliance.
+
+### Build Tier Comparison
 
 | Build Stage | Operational Capability | Direct Stage Cost | Cumulative Investment |
 | :--- | :--- | :--- | :--- |
-| **Stage 1: Manual** | 100% mechanical zero-electricity benchtop tumbler with hand crank and ratchet | $113.00 | **$113.00** |
-| **Stage 2: Semi-Auto** | Motorized planetary rotation, pressurized misting, and analog dial countdown timer | +$99.00 | **$212.00** |
-| **Stage 3: Agentic** | Automated 96-hour growth schedule, ozone sanitizing wash, and AGV docking handshake | +$69.00 | **$281.00** |
+| **Base: Instructions** | 100% mechanical zero-electricity benchtop tumbler with hand crank and ratchet | $145.00 | **$145.00** |
+| **Add-On 1: Semi-Auto** | Motorized planetary rotation, pressurized misting, and analog dial countdown timer | +$147.00 | **$292.00** |
+| **Add-On 2: Agentic AI** | Automated 96-hour growth schedule, ozone sanitizing wash, and AGV docking handshake | +$89.00 | **$381.00** |
+
+### Step-by-Step Zero-Waste Conversion Roadmap
+
+#### Path 1: Base Machine $\rightarrow$ Add-On 1 (Semi-Autonomous Retrofit)
+1. Mount the NEMA 17 motor bracket to the rear vertical extrusion using existing T-slot channels (no drilling required).
+2. Slide the 60T GT2 pulley and axial dog clutch onto the protruding 8 mm D-shaft stub between the pillow block and hand crank.
+3. Install the 24V diaphragm mist pump in the lower frame base, threading the 1/4" mist line through the pre-cast access grommets in the top hood.
+4. Fasten the IP65 control box to the front rail with two M5 T-nuts, plug in the 24V desktop power supply, and enjoy automated timed tumbling and misting. The hand crank remains permanently installed for manual zero-power override.
+
+#### Path 2: Add-On 1 $\rightarrow$ Add-On 2 (Agentic Autonomous Upgrade)
+1. Open the IP65 control enclosure. Unclip the mechanical spring-wound countdown timers and clip the ESP32-S3 and TMC2209 carrier board onto the internal DIN rail.
+2. Connect the stepper motor 4-wire lead to the TMC2209 output header and route the DIAG stall wire to GPIO 4.
+3. Insert the SHT40 probe into the pre-molded exhaust flue socket and plug the 4-wire JST connector into the I2C port.
+4. Mount the corona ozone module and connect its aeration tube to the reservoir stone.
+5. Bolt the magnetic alignment docking latch to the lower front rail, connect the CAN bus pair to the master biosphere backbone, and boot the autonomous FreeRTOS scheduler.
 
 ---
 
-## 5. Master Biosphere Assembly Interlock
+## 7. Master Biosphere Assembly Interlock
 
-When deployed within the full Open Biosphere enclosure (~20x10 ft footprint):
+When integrated into the centralized Open Biosphere facility (~20 × 10 ft footprint):
 
-1. **Mechanical Docking**: The drum chassis features a standardized V-slot bottom dovetail rail that locks into the Perimeter Lower Tier mounting brackets ($Z = 150$ mm above water line).
-2. **Autonomous AGV Exchange**: The Ground Track AGV pod carrier uses an articulated pneumatic clamp to grip the drum's central hub, unlatching and shuttling spent canisters to the harvest station.
-3. **Plumbing Quick-Connect**: Magnetic-seat fluid disconnects tap directly into the enclosure's ozone sanitizing loop and nutrient drain manifold.
-4. **Communications Bus**: Communicates via CAN bus / ESPHome MQTT to the centralized master biosphere orchestrator.
+1. **Mechanical Docking**: The drum chassis features a standardized 2020 V-slot bottom dovetail rail that slides and locks into the Perimeter Lower Tier mounting brackets ($Z = 150$ mm above the central basin water line).
+2. **Autonomous AGV Pod Carrier Exchange**: The Ground Track AGV uses an articulated pneumatic clamp to interface with the drum's magnetic docking latch, unlatching and shuttling spent canisters directly to the central harvest processing station.
+3. **Plumbing Quick-Connect**: Magnetic-seat, dry-break fluid disconnects tap directly into the enclosure's centralized ozonated sanitizing loop and nutrient drain manifold.
+4. **Communications Bus**: Communicates via CAN bus / ESPHome MQTT to the centralized master biosphere orchestrator, broadcasting chamber temperature, relative humidity, harvest countdown, and motor torque profiles.
