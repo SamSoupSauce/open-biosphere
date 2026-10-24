@@ -246,62 +246,91 @@ flowchart LR
 
 ## 5. Add-On 2: Agentic Autonomous AI Pack (Edge Vision & Closed Loop)
 
-The **Agentic Autonomous AI Pack** transforms the AGV into an intelligent, driverless robotic logistics platform. Operating under ROS2 / Micro-XRCE-DDS on an ESP32-S3 brain, it tracks magnetic floor tape, scans for obstacles via 360° 2D LiDAR, exchanges sprout drums automatically using a 3-axis articulated transfer arm, and charges itself wirelessly over inductive floor pads.
+Under [RFC-0004](/rfcs/rfc-0004-controller-node-tool), the **Agentic Autonomous AI Pack** transforms the AGV into a hierarchical **Controller-Node-Tool (CNT)** autonomous logistics carrier. Operating as a dedicated **AGV Node** commanding modular **Edge Tools** over BLE, it receives route schedules from the Central Biosphere Controller over Wi-Fi, tracks magnetic floor tape, scans for obstacles via 2D LiDAR, and transfers harvest totes with 250ms watchdog safety.
 
 ### Autonomous Vision & Telemetry Architecture
-- **Robotics Compute Core**: ESP32-S3 Dual-Core Xtensa LX7 (240 MHz) with CAN bus transceiver and ROS2 Micro-XRCE-DDS agent communication.
-- **Guidance & Navigation**: 5-channel magnetic track induction guide sensor array detecting adhesive floor magnetic tape, combined with a 360° 2D LiDAR scanner (RPLiDAR C1 / LD06, 12 m range, 10 Hz scan rate) for obstacle avoidance and SLAM mapping.
-- **3-Axis Material Transfer Arm**: Articulated mini transfer arm actuated by metal-gear high-torque digital servos, capable of gripping drum handles and transferring 4.0 kg hypocotyl canisters.
-- **Inductive Wireless Charging**: Floor-mounted magnetic resonance receiver pad (24V 5A, 120W) mating automatically with the datum origin charging pad.
+- **AGV Machine Node (ESP32-S3)**: Dual-Core Xtensa LX7 (240 MHz, 8 MB PSRAM) mounted in a protected central tray. Features an onboard 0.96" I2C OLED display (`[NODE: AGV-01 | LINK -> 4096]`) and setup push-button for mobile BLE provisioning. Uplinks to Central Controller via Wi-Fi; coordinates local kinematics and downlinks to Tools via BLE Central.
+- **Dedicated Modular Edge Tools (ESP32-C3)**: Driven 1:1 by micro ESP32-C3 controllers equipped with 0.42" micro OLED displays and **250ms hardware deadman watchdogs**:
+  - `DEV_TRACK_DRV`: Micro ESP32-C3 with 0.42" OLED (`TOOL: TRACK_DRV | LINK: OK`) + 250ms watchdog driving dual 24V track motor drivers (PWM/DIR) with current sensing.
+  - `DEV_NAV_SNS`: Micro ESP32-C3 with 0.42" OLED (`TOOL: NAV_SNS | LINK: OK`) reading the 5-channel magnetic induction guide sensor and 360° 2D LiDAR scanner.
+  - `DEV_ARM_ACT`: Micro ESP32-C3 with 0.42" OLED (`TOOL: ARM_ACT | LINK: OK`) + 250ms watchdog driving 3-axis articulated canister transfer arm servos.
+  - `DEV_CHARGE_CTL`: Micro ESP32-C3 with 0.42" OLED (`TOOL: CHARGE_CTL | LINK: OK`) regulating the 120W wireless inductive floor charging receiver.
+- **250ms Deadman Watchdog Fail-Safe**: If any Tool loses BLE connection to the AGV Node for $> 250$ ms, it drops immediately into high-Z safe state: track motors stop instantly and drop holding torque to zero, and the transfer arm freezes in place.
 
-```
-       CYBER-PHYSICAL EDGE AI ARCHITECTURE & SLAM TELEMETRY
+```text
+       CONTROLLER-NODE-TOOL (CNT) HIERARCHICAL EDGE ARCHITECTURE
   =================================================================
-               +--------------------------------------+
-               |    ESP32-S3 ROS2 Micro-XRCE Brain    |
-               |  (Dual-Core 240 MHz + RTOS Nav-Loop) |
-               +---+--------------------+---------+---+
-                   |                    |         |
-         +---------+----+               | UART    | SPI / I2C
-         | PWM / CAN    |               v         v
-         v              v        [2D LiDAR Scanner] [5-Ch Magnetic]
-  [Dual 15A Driver] [CAN Bus]    (360 deg Obstacle) (Tape Induction)
-         |          (Master             |                 |
-         v           Biosphere)         v                 v
-   [Dual Tracks]                 [SLAM Map Vector]  [Track Following]
+            CENTRAL BIOSPHERE CONTROLLER (Pi 5 + Hailo-8 M.2 HAT)
+            • Emits Hidden WPA3 Wi-Fi Network | OLED: [CTRL_ID: 4096]
+            • Global Logistics Routing, Zone Scheduling & Multi-Agent Dispatch
+                                  │
+                                  │ Encrypted Wi-Fi Uplink
+                                  ▼
+             ┌─────────────────────────────────────────┐
+             │         AGV MACHINE NODE (ESP32-S3)     │
+             │  • OLED Display: [NODE: AGV-01]         │
+             │  • Setup Push-Button for Mobile BLE     │
+             │  • Kinematics, PD Line Tracking & RTOS  │
+             └────────────────────┬────────────────────┘
+                                  │
+         ┌────────────────────────┼────────────────────────┐
+         │ BLE Downlink           │ BLE Downlink           │ BLE Downlink
+         ▼                        ▼                        ▼
+ ┌───────────────┐        ┌───────────────┐        ┌───────────────┐
+ │ TOOL:         │        │ TOOL:         │        │ TOOL:         │
+ │ DEV_TRACK_DRV │        │ DEV_NAV_SNS   │        │ DEV_ARM_ACT   │
+ │ ESP32-C3 Micro│        │ ESP32-C3 Micro│        │ ESP32-C3 Micro│
+ │ 0.42" OLED    │        │ 0.42" OLED    │        │ 0.42" OLED    │
+ │ 250ms Deadman │        │ 250ms Deadman │        │ 250ms Deadman │
+ │ Dual 24V PWM  │        │ 5-Ch Magnetic │        │ 3-Axis Servos │
+ │ Track Drive   │        │ 2D LiDAR Scnr │        │ Canister Arm  │
+ └───────────────┘        └───────────────┘        └───────────────┘
+                                  │
+                                  ▼ (BLE Downlink)
+                          ┌───────────────┐
+                          │ TOOL:         │
+                          │ DEV_CHARGE_CTL│
+                          │ ESP32-C3 Micro│
+                          │ 0.42" OLED    │
+                          │ 120W Inductive│
+                          │ Battery BMS   │
+                          └───────────────┘
 ```
 
 ### Step-by-Step Sensor Commissioning & Edge AI Protocol
 
-#### Step 3.1: ESP32-S3 & CAN Bus Controller Installation
-1. Mount the ESP32-S3 robotics carrier board in a protected electronics tray above the battery deck.
-2. Connect PWM and DIR lines from ESP32 GPIO pins directly to the motor driver inputs.
-3. Wire the SN65HVD230 CAN bus transceiver to GPIO 4 (TX) and GPIO 5 (RX).
+#### Step 3.1: AGV Node & Driver Assembly
+1. Mount the ESP32-S3 Node with 0.96" I2C OLED display and physical setup push-button in the electronics tray above the battery deck.
+2. Mount the `DEV_TRACK_DRV` tool board (ESP32-C3) and connect its PWM and DIR lines directly to the dual 15A motor driver inputs.
+3. Verify driver current sensing and stall detection under track load.
 
-#### Step 3.2: 5-Channel Magnetic Induction Sensor Installation
+#### Step 3.2: 5-Channel Magnetic Induction & LiDAR Integration
 1. Mount the 5-channel magnetic sensor bar beneath the front chassis bumper ($20$ mm road clearance).
-2. Wire the 5 digital sensor outputs to ESP32 GPIOs 11–15 with $10\text{ k}\Omega$ pull-up resistors.
-3. Verify calibration: rolling over 25 mm magnetic floor tape triggers cleanly across adjacent sensors with zero false positives.
+2. Mount the RPLiDAR C1 scanner on the elevated 150 mm center mast above the cargo bed.
+3. Wire both sensors to the `DEV_NAV_SNS` tool board (ESP32-C3); verify magnetic line tracking and obstacle point cloud over tool OLED.
 
-#### Step 3.3: 360-Degree 2D LiDAR Scanner Integration
-1. Mount the RPLiDAR scanner on a 150 mm elevated center mast above the cargo bed for an unobstructed 360° field of view.
-2. Connect LiDAR UART lines to ESP32 hardware serial port 1 (115,200 baud).
-3. Verify laser point cloud: obstacles at 1.5 m distance register with $< 20$ mm distance variance.
-
-#### Step 3.4: 3-Axis Articulated Transfer Arm Mounting
+#### Step 3.3: 3-Axis Articulated Transfer Arm Mounting
 1. Bolt the 3-axis mini transfer arm base to the front-right chassis corner.
-2. Connect the three metal-gear servos (base pan, shoulder pitch, gripper clamp) to a dedicated 6V 5A BEC regulator.
+2. Connect the three metal-gear servos (base pan, shoulder pitch, gripper clamp) to `DEV_ARM_ACT` tool board (ESP32-C3).
 3. Program calibration positions: Stowed, Reaching, Gripping, and Lifted.
 
-#### Step 3.5: Inductive Floor Charging Coil Installation
+#### Step 3.4: Inductive Floor Charging Coil Installation
 1. Mount the 120W wireless power receiver coil under the rear chassis plate ($15$ mm air gap clearance).
-2. Wire the coil output through a synchronous rectifier and CC/CV charge controller directly into the LiFePO4 battery terminals.
+2. Wire the coil output through a synchronous rectifier and CC/CV charge controller directly into the LiFePO4 battery terminals via `DEV_CHARGE_CTL` tool.
 3. Test dock alignment: navigating onto the transmitter plate initiates 24V 4.5A charging within 1.5 seconds.
+
+#### Step 3.5: Provisioning & 250ms Watchdog Verification
+1. Power on Central Controller; note pairing ID on its OLED (`CTRL_ID: 4096`).
+2. Power on AGV Node; display shows `[NODE UNPAIRED - PAIR VIA BLE]`.
+3. Press physical setup button on Node; connect via mobile companion app over BLE, enter `4096`.
+4. Node commits credentials to NVS, links to hidden Wi-Fi, and updates display to `[ONLINE | LINK -> 4096]`.
+5. Verify Node auto-discovers and binds all four BLE Tools.
+6. Test fail-safe watchdog: drop BLE link to `DEV_TRACK_DRV`; verify track motors cut to 0.0A in $< 250$ ms.
 
 ```mermaid
 stateDiagram-v2
-    [*] --> Magnetic_Patrol: Route Command Received
-    Magnetic_Patrol --> Obstacle_Hold: LiDAR Detects Object (< 0.8m)
+    [*] --> Magnetic_Patrol: Route Command Received via Wi-Fi
+    Magnetic_Patrol --> Obstacle_Hold: DEV_NAV_SNS LiDAR Detects Object (< 0.8m)
     Obstacle_Hold --> Magnetic_Patrol: Path Cleared
     
     Magnetic_Patrol --> Bay_Docking: Station RFID Marker Detected
@@ -309,7 +338,7 @@ stateDiagram-v2
     state Bay_Docking {
         [*] --> Creep_Align
         Creep_Align --> Solenoid_Unlatch: In Position (< 5mm)
-        Solenoid_Unlatch --> Arm_Exchange: Swap Ripe/Fresh Drum
+        Solenoid_Unlatch --> Arm_Exchange: DEV_ARM_ACT Swaps Drum
     }
 
     Bay_Docking --> Magnetic_Patrol: Exchange Complete
@@ -319,23 +348,23 @@ stateDiagram-v2
 
 ### Step-by-Step Autonomous Multi-Agent Runbook
 
-1. **Autonomous Route Initiation**: On receiving a harvest dispatch over CAN bus, the AGV unlatches from the inductive charging dock, powers its sensor array, and accelerates to 0.4 m/s.
-2. **Magnetic Line-Tracking Loop**: The 5-channel sensor runs a closed-loop PD steering algorithm at 100 Hz, centering the AGV over the magnetic floor tape with $< 4$ mm lateral drift.
-3. **LiDAR Sentry & Obstacle Avoidance**: The 2D LiDAR continuously scans at 10 Hz. If a human, hanging vine, or tool enters within 0.8 m of the track, the robot decelerates smoothly to a complete stop, sounding an intermittent alert tone until the path clears.
-4. **Bioreactor Bay Precision Docking**: Upon sensing the magnetic RFID bay marker at the Revolving Sprout Bioreactor, the AGV drops speed to 0.05 m/s, using reflective optical alignment to dock into the chassis bay with $\pm 3$ mm precision.
-5. **Autonomous Canister Transfer**: The 3-axis arm extends, clamps the spent sprout drum handle, and pulls it onto the cargo bed. The 12V solenoid engages the retention wedge. The AGV shuttles the ripe drum directly to the wash station.
-6. **Automatic Wireless Recharging**: When mission queues are empty or battery drops below 25%, the AGV navigates to the $(0,0,0)$ datum charge pad. The inductive coil auto-engages, replenishing the battery at 120W with zero mechanical plug contacts.
+1. **Autonomous Route Initiation**: On receiving a harvest dispatch from the Central Controller over Wi-Fi, the AGV unlatches from the inductive charging dock, powers its sensor array, and accelerates to 0.4 m/s.
+2. **Magnetic Line-Tracking Loop**: The `DEV_NAV_SNS` tool runs a closed-loop PD steering algorithm at 100 Hz, centering the AGV over the magnetic floor tape with $< 4$ mm lateral drift.
+3. **LiDAR Sentry & Obstacle Avoidance**: The 2D LiDAR continuously scans at 10 Hz. If an obstacle enters within 0.8 m of the track, the robot decelerates smoothly to a complete stop, sounding an alert tone until the path clears.
+4. **Bioreactor Bay Precision Docking**: Upon sensing the magnetic RFID bay marker at the Revolving Sprout Bioreactor or Skimmer chute, the AGV drops speed to 0.05 m/s, using optical alignment to dock with $\pm 3$ mm precision.
+5. **Autonomous Canister Transfer**: The `DEV_ARM_ACT` tool extends the 3-axis arm, clamps the spent drum handle, and pulls it onto the cargo bed. The AGV shuttles the ripe drum directly to the wash station.
+6. **250ms Fail-Safe Watchdogs**: If BLE connection between Node and any Tool drops for $> 250$ ms, track motors halt and holding torque cuts to 0. If Wi-Fi link to Central Controller is lost, the AGV finishes its immediate local dock waypoint and halts in a safe siding.
 
 ### Add-On 2 Bill of Materials (BOM)
 
 | Item | Component Description | Sourcing / Part Reference | Qty | Unit Cost | Total Cost |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **A2-01** | ESP32-S3 Microcontroller Carrier + CAN Transceiver | Robotics maker supplier | 1 | $18.00 | $18.00 |
-| **A2-02** | 5-Channel Magnetic Track Induction Guide Sensor Array | Autonomous robotics store | 1 | $16.00 | $16.00 |
+| **A2-01** | AGV Machine Node: ESP32-S3 (8MB PSRAM) + 0.96" OLED + Setup Button | Espressif distributor | 1 | $16.00 | $16.00 |
+| **A2-02** | 5-Channel Magnetic Track Induction Sensor + 1x ESP32-C3 Nav Tool | Robotics sensor store | 1 | $20.00 | $20.00 |
 | **A2-03** | 360-Degree 2D LiDAR Scanner (RPLiDAR C1 / LD06) | Maker LiDAR distributor | 1 | $68.00 | $68.00 |
-| **A2-04** | 3-Axis Mini Articulated Arm Kit + Metal Gear Servos | 3D printed + MG996R servos | 1 | $38.00 | $38.00 |
+| **A2-04** | 3-Axis Mini Articulated Arm Kit + Servos + 1x ESP32-C3 Arm Tool | 3D printed + metal servos | 1 | $36.00 | $36.00 |
 | **A2-05** | 120W Magnetic Inductive Wireless Charging Receiver Module | Wireless power supplier | 1 | $25.00 | $25.00 |
-| **Total** | **Add-On 2 Agentic Autonomous Pack** | **Expands Base + Add-On 1** | | | **+$165.00** |
+| **Total** | **Add-On 2 Agentic Autonomous Pack (CNT Standard)** | **Expands Base + Add-On 1** | | | **+$165.00** |
 | **Full Build** | **Complete Autonomous Biosphere AGV Carrier** | **Base + Add-On 1 + Add-On 2** | | | **$497.00** |
 
 ---
@@ -348,19 +377,21 @@ stateDiagram-v2
 | :--- | :--- | :--- | :--- |
 | **Base: Instructions** | 100% mechanical manual push cart with neutral gearbox lever and foot-pedal clamp | $119.00 | **$119.00** |
 | **Add-On 1: Semi-Auto** | Motorized planetary track drive with wired industrial jog pendant and LiFePO4 pack | +$213.00 | **$332.00** |
-| **Add-On 2: Agentic AI** | Autonomous ROS2 SLAM, 2D LiDAR, magnetic line following, and inductive auto-charging | +$165.00 | **$497.00** |
+| **Add-On 2: Agentic AI** | Controller-Node-Tool (CNT) automation, 2D LiDAR, magnetic line following, & inductive charge | +$165.00 | **$497.00** |
 
 ### Step-by-Step Zero-Waste Conversion Roadmap
 
-#### Path 1: Base Machine $\rightarrow$ Add-On 1 (Motorized Tug Upgrade)
+#### Path 1: Base Machine $ightarrow$ Add-On 1 (Motorized Tug Upgrade)
 1. Bolt the two 24V 250W gearmotor brackets inside the welded chassis.
 2. Connect the #25 drive chains to the dog clutch input hubs (the manual freewheel dog clutch levers remain fully functional).
 3. Drop the 24V LiFePO4 battery pack into the pre-drilled central tray, wire the motor driver, and plug in the yellow industrial pendant. The manual push tiller can either fold flat or be detached via its quick-release pins.
 
-#### Path 2: Add-On 1 $\rightarrow$ Add-On 2 (Autonomous Robotics Platform)
-1. Mount the ESP32-S3 robotics carrier board in the electronics tray and connect PWM control lines to the motor driver.
-2. Fasten the 5-channel magnetic line sensor beneath the front bumper and erect the center LiDAR mast.
-3. Install the 3-axis mini transfer arm and inductive floor charge coil, connect to the CAN bus backbone, and flash the autonomous ROS2 micro-agent firmware.
+#### Path 2: Add-On 1 $ightarrow$ Add-On 2 (Autonomous Robotics CNT Platform)
+1. Mount the AGV Node (ESP32-S3 + OLED + Button) and modular ESP32-C3 Tools in the electronics deck.
+2. Wire the `DEV_TRACK_DRV` tool to the motor drivers in parallel with the manual jog pendant.
+3. Install the 5-channel magnetic sensor bar and 2D LiDAR scanner linked to `DEV_NAV_SNS`.
+4. Bolt the 3-axis articulated transfer arm and wire to `DEV_ARM_ACT`.
+5. Install the 120W inductive charging receiver coil on the chassis underside, provision the AGV Node with Central Controller ID via mobile app BLE, and confirm 250ms watchdogs are active.
 
 ---
 

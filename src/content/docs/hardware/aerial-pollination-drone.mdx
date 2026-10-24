@@ -244,67 +244,86 @@ flowchart LR
 
 ## 5. Add-On 2: Agentic Autonomous AI Pack (Edge Vision & Closed Loop)
 
-The **Agentic Autonomous AI Pack** enables fully autonomous indoor pollination without human pilots or GPS. Equipped with a down-facing PMW3901 optical flow sensor, a VL53L1X time-of-flight laser altimeter, a RunCam Split HD camera with AprilTag fiducial tracking, and a self-aligning conical charging perch, the drone takes off on automated schedules, buzz-pollinates blossoms, streams multispectral canopy NDVI maps, and auto-perches to recharge.
+Under [RFC-0004](/rfcs/rfc-0004-controller-node-tool), the **Agentic Autonomous AI Pack** enables fully autonomous indoor pollination without human pilots or GPS under the **Controller-Node-Tool (CNT)** standard. The drone operates as a flying **Drone Node** commanding modular **Edge Tools** over BLE, receiving global flight sortie schedules and bloom coordinates from the Central Biosphere Controller over Wi-Fi.
 
 ### Autonomous Vision & Telemetry Architecture
-- **Autonomous Navigation Stack**: ESP32-S3 / Raspberry Pi Zero 2W running optical flow visual odometry linked to ArduPilot / Crazyflie autonomous flight firmwares over MAVLink.
-- **GPS-Denied Optical Flow**: PMW3901 optical flow sensor (42 FPS tracking at down to 10 lux) paired with a VL53L1X laser time-of-flight sensor ($< 2$ mm altitude accuracy up to 4.0 m).
-- **AprilTag Global Localization**: Down-facing micro-camera tracks 36h11 family AprilTags spaced at 1,000 mm intervals along the upper greenhouse aluminum extrusions, eliminating drift over long indoor flights.
-- **Automated Conical Charging Perch**: Inverted cone landing pad with concentric brass wiper contacts that seat against the drone's spring-loaded copper landing legs, providing automated 2S 2A balance charging without human plugs.
+- **Drone Flight Node (ESP32-S3)**: Dual-Core Xtensa LX7 (240 MHz, 8 MB PSRAM) flight companion computer with an onboard 0.96" I2C OLED display (`[NODE: DRONE-01 | LINK -> 4096]`) and physical setup button for mobile BLE provisioning. Uplinks to Central Controller via Wi-Fi; receives flight plans, coordinates local pose estimation, and downlinks to Tools via BLE Central.
+- **Decoupled Optical AprilTag Tracking**: Down-facing micro-camera streams video directly over Wi-Fi to the Central Controller (Raspberry Pi 5 + Hailo-8 M.2 HAT), which processes AprilTags spaced along greenhouse ceiling extrusions at 30 FPS, returning millimeter 6-DoF global pose vectors $(X, Y, Z)$ to the drone.
+- **Dedicated Modular Edge Tools (ESP32-C3)**: Driven 1:1 by micro ESP32-C3 controllers equipped with 0.42" micro OLED displays and **250ms hardware deadman watchdogs**:
+  - `DEV_FLIGHT_CTL`: Micro ESP32-C3 / STM32 bridge with 0.42" OLED (`TOOL: FLIGHT_CTL | LINK: OK`) + 250ms watchdog driving 4x brushless ESCs with auto-land descent failsafe.
+  - `DEV_OPTICAL_FLOW`: Micro ESP32-C3 with 0.42" OLED (`TOOL: OPTICAL_FLOW | LINK: OK`) managing PMW3901 optical flow (42 FPS) and VL53L1X laser time-of-flight sensor for sub-millimeter altitude hold.
+  - `DEV_BUZZ_ACT`: Micro ESP32-C3 with 0.42" OLED (`TOOL: BUZZ_ACT | LINK: OK`) + 250ms watchdog pulsing the acoustic piezo flower buzz transducer (180–220 Hz).
+- **250ms Deadman Watchdog Fail-Safe**: If the `DEV_FLIGHT_CTL` tool loses BLE connection to the Drone Node for $> 250$ ms, it immediately disengages autonomous cruise, drops into controlled low-speed descent, and cuts motor throttle smoothly upon ground contact.
 
-```
-       CYBER-PHYSICAL EDGE AI ARCHITECTURE & OPTICAL SLAM
+```text
+       CONTROLLER-NODE-TOOL (CNT) HIERARCHICAL EDGE ARCHITECTURE
   =================================================================
-               +--------------------------------------+
-               |  ESP32-S3 / Pi Zero 2W SLAM Engine   |
-               | (AprilTag Fiducial + Optical Flow)   |
-               +---+--------------------+---------+---+
-                   |                    |         |
-         +---------+----+               | SPI     | I2C
-         | MAVLink UART |               v         v
-         v              v       [PMW3901 Flow]    [VL53L1X ToF Lidar]
-  [STM32F4 Flight Ctrl] [Master (Ground Texture)  (Laser Altitude Hold)
-         |             Biosphere]       |                 |
-         v                              v                 v
-   [4x Motors]                  [Centimeter Hover] [Sub-Millimeter Z]
+            CENTRAL BIOSPHERE CONTROLLER (Pi 5 + Hailo-8 M.2 HAT)
+            • Emits Hidden WPA3 Wi-Fi Network | OLED: [CTRL_ID: 4096]
+            • AprilTag Global SLAM & Canopy Bloom Waypoint Schedules
+                                  │
+                                  │ Encrypted Wi-Fi Uplink
+                                  ▼
+             ┌─────────────────────────────────────────┐
+             │       DRONE FLIGHT NODE (ESP32-S3)      │
+             │  • OLED Display: [NODE: DRONE-01]       │
+             │  • Setup Push-Button for Mobile BLE     │
+             │  • Waypoint Navigation & MAVLink Bridge │
+             └────────────────────┬────────────────────┘
+                                  │
+         ┌────────────────────────┼────────────────────────┐
+         │ BLE Downlink           │ BLE Downlink           │ BLE Downlink
+         ▼                        ▼                        ▼
+ ┌───────────────┐        ┌───────────────┐        ┌───────────────┐
+ │ TOOL:         │        │ TOOL:         │        │ TOOL:         │
+ │ DEV_FLIGHT_CTL│        │ DEV_OPT_FLOW  │        │ DEV_BUZZ_ACT  │
+ │ ESP32-C3 Micro│        │ ESP32-C3 Micro│        │ ESP32-C3 Micro│
+ │ 0.42" OLED    │        │ 0.42" OLED    │        │ 0.42" OLED    │
+ │ 250ms Deadman │        │ PMW3901 Flow  │        │ 250ms Deadman │
+ │ 4x Brushless  │        │ VL53L1X Laser │        │ Piezo 200 Hz  │
+ │ ESC Auto-Land │        │ Sub-mm Alt    │        │ Buzz Pollinate│
+ └───────────────┘        └───────────────┘        └───────────────┘
 ```
 
 ### Step-by-Step Sensor Commissioning & Edge AI Protocol
 
-#### Step 3.1: Optical Flow & Laser ToF Board Assembly
-1. Mount the PMW3901 optical flow breakout and VL53L1X ToF sensor on a carbon bottom plate ($Z = 0$ ground plane).
-2. Wire optical flow over SPI (MOSI, MISO, SCK, CS) and laser ToF over I2C (SDA, SCL) to the companion compute board.
-3. Test optical tracking over rough greenhouse soil and concrete pathways: drift must measure $< 15$ mm per minute of static hover.
+#### Step 3.1: Drone Node & Power Harness Setup
+1. Mount the ESP32-S3 Node with 0.96" I2C OLED display and physical setup push-button on the top carbon plate.
+2. Wire power via a miniature high-efficiency 5V 2A buck regulator tapped from the 2S LiPo battery.
+3. Verify telemetry link: onboard OLED reads `[NODE UNPAIRED - PAIR VIA BLE]`.
 
-#### Step 3.2: AprilTag Visual Fiducial Camera Setup
-1. Mount the down-facing RunCam Split micro-camera with its lens angled 15° forward of nadir.
-2. Affix 100 × 100 mm AprilTag markers (family 36h11, IDs 0–15) along the upper greenhouse 2040 extrusions.
-3. Calibrate tag recognition pipeline: the companion board must detect and calculate 6-DoF pose relative to tags at 30 FPS.
+#### Step 3.2: Optical Flow & Laser ToF Integration (`DEV_OPT_FLOW`)
+1. Mount PMW3901 optical flow and VL53L1X laser ToF on the bottom carbon plate ($Z=0$ ground plane).
+2. Wire sensors to `DEV_OPT_FLOW` tool board (ESP32-C3) over SPI and I2C.
+3. Test static hover tracking: drift must measure $< 15$ mm per minute over greenhouse soil.
 
-#### Step 3.3: Automated Conical Charging Perch Fabrication
+#### Step 3.3: AprilTag Visual Camera & Wi-Fi Link
+1. Mount the down-facing micro-camera angled 15° forward of nadir.
+2. Affix 100 × 100 mm AprilTag markers (family 36h11) along upper greenhouse ceiling extrusions.
+3. Configure camera stream to Central Controller; verify 6-DoF global pose calculations at 30 FPS.
+
+#### Step 3.4: Automated Conical Charging Perch Fabrication
 1. 3D-print a 150 mm diameter conical landing funnel with a 35° incline.
 2. Inlay dual concentric brass wiper rings connected to a 2S LiPo CC/CV smart balance charging circuit.
-3. Attach spring-loaded copper landing skids to the drone's airframe base.
+3. Attach spring-loaded copper landing skids to the drone airframe base.
 
-#### Step 3.4: Firmware Flashing & Autonomous Mission Tuning
-1. Flash the flight controller with autonomous ArduPilot / Crazyflie firmware with optical flow navigation enabled.
-2. Configure waypoint mission: Takeoff to 1,200 mm $\rightarrow$ Traverse Row 1 at 0.3 m/s $\rightarrow$ Hover 3 sec over tag-registered blooms $\rightarrow$ Return to Conical Perch.
-3. Tune PID gains: stabilize position error to $\pm 25$ mm under turbulent greenhouse fan airflow.
-
-#### Step 3.5: Master Biosphere CAN/WiFi Telemetry Link
-1. Connect companion board to greenhouse local WiFi / ESPHome mesh network.
-2. Stream live canopy health tiles, flower bloom heatmaps, and battery telemetry to the central biosphere dashboard.
+#### Step 3.5: Provisioning & 250ms Watchdog Verification
+1. Power on Central Controller; note pairing ID on its OLED (`CTRL_ID: 4096`).
+2. Power on Drone Node; press physical setup button; pair via mobile companion app over BLE, enter `4096`.
+3. Node commits credentials to NVS, links to hidden Wi-Fi, and updates display to `[ONLINE | LINK -> 4096]`.
+4. Verify Node auto-discovers and binds all three BLE Tools.
+5. Test fail-safe watchdog: drop BLE link to `DEV_FLIGHT_CTL`; verify auto-land descent triggers within $< 250$ ms.
 
 ```mermaid
 stateDiagram-v2
     [*] --> Perched_Charging: Battery Full (8.4V)
-    Perched_Charging --> Autonomous_Sortie: Scheduled Flight Trigger (09:00)
+    Perched_Charging --> Autonomous_Sortie: Scheduled Flight Trigger via Wi-Fi (09:00)
     
     state Autonomous_Sortie {
         [*] --> Vertical_Takeoff: Climb to Z = 1.2m
-        Vertical_Takeoff --> AprilTag_Patrol: Align with Extrusion Grid
+        Vertical_Takeoff --> AprilTag_Patrol: Align with Extrusion Grid via Controller
         AprilTag_Patrol --> Blossom_Buzz: Hover Over Blossom Coordinate
-        Blossom_Buzz --> AprilTag_Patrol: 3s Buzz Complete
+        Blossom_Buzz --> AprilTag_Patrol: DEV_BUZZ_ACT 3s Buzz Complete
     }
 
     Autonomous_Sortie --> Return_To_Perch: Mission Done or Battery < 7.2V
@@ -320,23 +339,23 @@ stateDiagram-v2
 
 ### Step-by-Step Autonomous Multi-Agent Runbook
 
-1. **Scheduled Morning Wakeup**: At 09:00 AM, the central biosphere orchestrator broadcasts an autonomous pollination dispatch. The drone confirms battery voltage $\ge 8.35\text{ V}$ and spins up motors.
-2. **Centimeter-Accurate Optical Takeoff**: The drone lifts vertically out of the conical perch to $Z = 1,200$ mm. PMW3901 optical flow locks position over the ground texture with zero horizontal drift.
-3. **AprilTag Waypoint Navigation**: The drone flies along the upper perimeter extrusion rail, reading ceiling AprilTags to update its global position vector $(X, Y, Z)$ at 30 Hz.
-4. **Autonomous Buzz Pollination Sortie**: Upon reaching pre-mapped flower coordinates (provided by the 2-Axis Gantry survey), the drone drops to $Z = 600$ mm (150 mm above flowers), pulses downwash at 2.4 m/s, and fires its piezo transducer for 3.0 seconds, releasing pollen across the blossom cluster.
-5. **Multispectral Canopy Health Logging**: While traversing between flower targets, the camera logs high-resolution canopy frames, extracting vegetative NDVI health indices and detecting early mite webs.
-6. **Self-Aligning Conical Perch Docking**: When the 8.5-minute sortie concludes, the drone navigates to the conical perch, positions directly over the funnel center via laser ToF, and cuts throttle. The angled cone guides the copper landing skids into concentric brass wipers, initiating a 14-minute 2A fast charge.
+1. **Scheduled Morning Wakeup**: At 09:00 AM, the Central Controller broadcasts an autonomous pollination sortie over Wi-Fi. The drone confirms battery $\ge 8.35	ext{ V}$ and signals `DEV_FLIGHT_CTL` to spin up motors.
+2. **Centimeter-Accurate Optical Takeoff**: The drone lifts vertically out of the conical perch to $Z = 1,200$ mm. The `DEV_OPT_FLOW` tool locks position over ground texture with zero horizontal drift.
+3. **AprilTag Waypoint Navigation**: The drone traverses the perimeter rail; the Central Controller reads ceiling tags from the camera feed and streams real-time pose corrections to the Drone Node.
+4. **Autonomous Buzz Pollination Sortie**: Upon reaching pre-mapped flower targets, the drone drops to $Z = 600$ mm (150 mm above flowers), pulses downwash at 2.4 m/s, and signals `DEV_BUZZ_ACT` to fire its piezo transducer for 3.0 seconds, buzz-pollinating blossoms.
+5. **Self-Aligning Conical Perch Docking**: When the 8.5-minute sortie concludes, the drone navigates to the conical perch, positions directly over the funnel center via laser ToF, and cuts throttle smoothly into the brass wiper contacts to recharge at 2A.
+6. **250ms Fail-Safe Watchdogs**: If BLE connection between Node and `DEV_FLIGHT_CTL` drops for $> 250$ ms, auto-land is engaged immediately. If Wi-Fi link to Central Controller is lost, the drone initiates an immediate return-to-perch abort.
 
 ### Add-On 2 Bill of Materials (BOM)
 
 | Item | Component Description | Sourcing / Part Reference | Qty | Unit Cost | Total Cost |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **A2-01** | PMW3901 Optical Flow Breakout + VL53L1X Laser ToF Sensor | Maker robotics sensor store | 1 | $19.00 | $19.00 |
-| **A2-02** | RunCam Split HD / Micro RGB-NIR Camera Module | Micro FPV camera maker | 1 | $32.00 | $32.00 |
-| **A2-03** | Raspberry Pi Zero 2W / ESP32-S3 Visual Tracker Board | Maker single board store | 1 | $22.00 | $22.00 |
+| **A2-01** | Drone Flight Node: ESP32-S3 (8MB PSRAM) + 0.96" OLED + Setup Button | Espressif distributor | 1 | $16.00 | $16.00 |
+| **A2-02** | PMW3901 Optical Flow Breakout + VL53L1X Laser ToF + 1x ESP32-C3 Tool | Maker robotics sensor store | 1 | $21.00 | $21.00 |
+| **A2-03** | RunCam Split HD / Micro RGB-NIR Camera Module with Wi-Fi Link | Micro FPV camera maker | 1 | $32.00 | $32.00 |
 | **A2-04** | 3D-Printed Conical Perch + Concentric Brass Contacts | DIY 3D print + brass wire | 1 | $16.00 | $16.00 |
-| **A2-05** | Automated 2S LiPo 2A Smart CC/CV Balance Charger Board | Maker charger electronics | 1 | $10.00 | $10.00 |
-| **Total** | **Add-On 2 Agentic Autonomous Pack** | **Expands Base + Add-On 1** | | | **+$99.00** |
+| **A2-05** | 2x ESP32-C3 Modular Tools with 0.42" OLED & 250ms Watchdog (Flight & Buzz) | Microcontroller supplier | 2 | $7.00 | $14.00 |
+| **Total** | **Add-On 2 Agentic Autonomous Pack (CNT Standard)** | **Expands Base + Add-On 1** | | | **+$99.00** |
 | **Full Build** | **Complete Autonomous Biosphere Pollination Drone** | **Base + Add-On 1 + Add-On 2** | | | **$324.00** |
 
 ---
@@ -349,19 +368,20 @@ stateDiagram-v2
 | :--- | :--- | :--- | :--- |
 | **Base: Instructions** | 100% mechanical manual wand with acoustic resonant flower vibrator & mirror | $52.00 | **$52.00** |
 | **Add-On 1: Semi-Auto** | Handheld RC radio-piloted ducted whoop flight with push-button buzz pollination | +$173.00 | **$225.00** |
-| **Add-On 2: Agentic AI** | Autonomous indoor AprilTag navigation, optical flow hover, and contact auto-recharge | +$99.00 | **$324.00** |
+| **Add-On 2: Agentic AI** | Controller-Node-Tool (CNT) automation, indoor AprilTag SLAM, optical flow hover, & auto-perch | +$99.00 | **$324.00** |
 
 ### Step-by-Step Zero-Waste Conversion Roadmap
 
-#### Path 1: Base Machine $\rightarrow$ Add-On 1 (Piloted Micro-Whoop Drone)
+#### Path 1: Base Machine $ightarrow$ Add-On 1 (Piloted Micro-Whoop Drone)
 1. Assemble the 85 mm ducted whoop airframe, brushless motors, and STM32F4 flight controller.
 2. Solder the ExpressLRS receiver and piezo acoustic transducer.
 3. The Base carbon wand and 1/4"-20 cradle remain fully functional as a handheld backup mount if flying indoors is restricted by temporary netting.
 
-#### Path 2: Add-On 1 $\rightarrow$ Add-On 2 (Autonomous Optical SLAM Platform)
-1. Mount the PMW3901 optical flow and laser ToF sensor board beneath the airframe.
-2. Install the companion compute board and down-facing AprilTag camera.
-3. Assemble the conical landing perch with brass contacts on the greenhouse coping deck and flash ArduPilot autonomous navigation firmware.
+#### Path 2: Add-On 1 $ightarrow$ Add-On 2 (Autonomous Edge CNT Drone)
+1. Mount the Drone Flight Node (ESP32-S3 + OLED + Button) and modular ESP32-C3 Tools on the carbon airframe.
+2. Connect `DEV_OPT_FLOW` tool to the bottom optical flow and laser ToF sensors.
+3. Wire the RunCam micro-camera with Wi-Fi video streaming to the Central Controller.
+4. Mount the conical landing perch with charging contacts, provision the Drone Node with Central Controller ID via mobile app BLE, and verify 250ms auto-land watchdog.
 
 ---
 

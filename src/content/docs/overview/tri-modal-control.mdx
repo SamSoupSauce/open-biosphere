@@ -36,7 +36,7 @@ The **Open Biosphere Tri-Modal Control Standard** mandates that every machine in
     **No software, network, or firmware required.** Machine operators can jog motors, prime pumps, open valves, and execute harvest cycles directly from physical panel buttons, rotary dials, and toggle switches wired to simple relays and motor drivers.
   </Card>
   <Card title="Tier 3: Autonomous AI & Agent Orchestration" icon="cpu">
-    **Fully autonomous closed-loop intelligence.** When powered and networked, edge AI models (computer vision on Jetson/Hailo, sensor telemetry over CAN bus, automated PID algorithms) actuate the exact same servos, valves, and stepper motors automatically.
+    **Fully autonomous closed-loop intelligence.** Under [RFC-0004](/rfcs/rfc-0004-controller-node-tool), the system operates on a Controller-Node-Tool (CNT) model: a Central Controller (Raspberry Pi 5 + Hailo-8 NPU) orchestrates machine Nodes (ESP32-S3) over hidden WPA3 Wi-Fi, while Nodes coordinate dedicated edge Tools (ESP32-C3) over BLE with 250ms hardware deadman watchdogs.
   </Card>
   <Card title="Universal Mechanical Decoupling" icon="lock">
     Manual controls never fight electronic actuators. Hand levers utilize override clutches, dual-yoke linkages, or parallel bypass plumbing, allowing seamless transition between manual and automated modes.
@@ -70,15 +70,15 @@ To ensure manual inputs and motorized servos operate without stripping gears or 
 
 ## 3. Subsystem Implementation Matrix
 
-| Subsystem Machine | Tier 1: Manual Control | Tier 2: Button / Dial Control | Tier 3: Autonomous AI Control |
+| Subsystem Machine | Tier 1: Manual Control | Tier 2: Button / Dial Control | Tier 3: Autonomous AI Control (CNT Architecture) |
 | :--- | :--- | :--- | :--- |
-| **Fluidic Skimmer** | Counterweight hand lever on weir gate; manual crank on dewatering auger press. | Waterproof toggle switches for pump speed; push-button auger reverse jog. | Optical line-scanner triggers variable weir; AI modulates pump based on surface biomass density. |
-| **Sprout Bioreactor** | Hand-crank handle on drum axle with ratchet pawl; manual gravity flush valve. | Momentary drum rotation jog button; rotary dial interval timer (0–60 min). | ESP32-S3 scheduled 4-day lighting/misting cycle with automated ozone sanitation flush. |
-| **Mantis Crawler** | Squeeze-lever cable actuator for silicone clamp; manual shears on pole mount. | Wired thumbstick joystick for forward/reverse roll; trigger button for shear. | Dual-stereo RGB-NIR edge AI segmentation (YOLO) identifies ripe fruit and auto-shears pedicel. |
-| **Ground Track AGV** | Fold-out rear push bar with mechanical drum release foot pedal. | Tethered 3-button pendant (Forward, Reverse, Stop); rotary speed potentiometer. | LiDAR SLAM + magnetic line tracking routes autonomously to docking bays on 4-day cycle. |
-| **Overhead Gantry** | Handwheels on X/Y belt drives; manual squeeze-lever cable on toolhead shears. | 4-way D-pad directional jog buttons + fast/slow toggle switch on gantry frame. | Klipper CAN bus coordinates pathing; macro vision identifies saffron flowers or weed targets. |
-| **Microclimate Doser**| Graduated gravity burettes with manual 3-way L-port ball valves for chemical stock. | Momentary push buttons for priming each pump; manual potentiometer for flow rate. | Closed-loop 1 Hz PID algorithm adjusts pH/EC/CO2 based on isolated electrode telemetry. |
-| **TPS Root Chamber** | Manual hand-pump pressure spray tank; sliding inspection door with light-baffles. | Rocker switch for continuous mist; mechanical dial countdown timer. | Ultrasonic piezoelectric misting controlled by humidity transducers and level sensors. |
+| **Fluidic Skimmer** | Counterweight hand lever on weir gate; manual crank on dewatering auger press. | Waterproof toggle switches for pump speed; push-button auger reverse jog. | Central Controller vision modulates Skimmer Node via Wi-Fi; Tool ESP32 modulates pump & weir with 250ms watchdog. |
+| **Sprout Bioreactor** | Hand-crank handle on drum axle with ratchet pawl; manual gravity flush valve. | Momentary drum rotation jog button; rotary dial interval timer (0–60 min). | Sprout Node executes scheduled rotation/flush from Controller; downlinks via BLE to drum stepper Tool and solenoid Tool. |
+| **Mantis Crawler** | Squeeze-lever cable actuator for silicone clamp; manual shears on pole mount. | Wired thumbstick joystick for forward/reverse roll; trigger button for shear. | Central Controller offloads stereo pedicel detection; Mantis Node commands dual roller & shear Tools over BLE with 250ms watchdog. |
+| **Ground Track AGV** | Fold-out rear push bar with mechanical drum release foot pedal. | Tethered 3-button pendant (Forward, Reverse, Stop); rotary speed potentiometer. | Central Controller plans global pathing; AGV Node guides steer/drive Tools over BLE with magnetic/inductive feedback. |
+| **Overhead Gantry** | Handwheels on X/Y belt drives; manual squeeze-lever cable on toolhead shears. | 4-way D-pad directional jog buttons + fast/slow toggle switch on gantry frame. | Central Controller coordinates Cartesian pathing; Gantry Node coordinates X/Y stepper Tools & end-effector Tool over BLE. |
+| **Microclimate Doser**| Graduated gravity burettes with manual 3-way L-port ball valves for chemical stock. | Momentary push buttons for priming each pump; manual potentiometer for flow rate. | Doser Node aggregates sensor telemetry; Central Controller runs 1 Hz PID loop; Node pulses peristaltic pump Tools over BLE. |
+| **TPS Root Chamber** | Manual hand-pump pressure spray tank; sliding inspection door with light-baffles. | Rocker switch for continuous mist; mechanical dial countdown timer. | Root Chamber Node drives ultrasonic transducer Tool and pressure pump Tool via BLE; 250ms watchdog prevents dry-running. |
 
 ---
 

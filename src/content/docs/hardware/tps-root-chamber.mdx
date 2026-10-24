@@ -242,63 +242,82 @@ flowchart LR
 
 ## 5. Add-On 2: Agentic Autonomous AI Pack (Edge Vision & Closed Loop)
 
-The **Agentic Autonomous AI Pack** transforms the chamber into an automated aeroponic production cell. Featuring an ESP32-C3 relay controller, dual optical dry-run liquid float sensors, an MLX90614 non-contact infrared root transpiration thermometer, a 24V fast-bleed depressurization solenoid, and a soft-silicone gantry harvest suction dock, it regulates root hydration dynamically and coordinates autonomous robotic mini-tuber extraction.
+Under [RFC-0004](/rfcs/rfc-0004-controller-node-tool), the **Agentic Autonomous AI Pack** transforms the chamber into an automated **Controller-Node-Tool (CNT)** aeroponic production cell. Operating as a dedicated **Root Chamber Node** commanding modular **Edge Tools** over BLE, it dynamically regulates root hydration based on infrared transpiration telemetry and coordinates robotic mini-tuber extraction with the 2-Axis Overhead Gantry with 250ms watchdog protection.
 
 ### Autonomous Vision & Telemetry Architecture
-- **Root Zone Compute Core**: ESP32-C3 RISC-V microcontroller (160 MHz) running FreeRTOS with CAN bus transceiver and local MQTT logging.
-- **Infrared Root Transpiration Sensing**: Melexis MLX90614 non-contact infrared pyrometer sensor mounted in the tub lid, measuring root-zone surface temperature to $\pm 0.2^\circ\text{C}$ to detect early plant transpiration stress.
-- **Zero-Drip Depressurization Solenoid**: 24V electronic solenoid valve installed on the nozzle manifold line. When the pump stops, the solenoid opens for 0.5 seconds, instantly bleeding line pressure to 0 PSI to eliminate nozzle dripping.
-- **Dual Optical Liquid Level Sensors**: Infrared optical prism sensors mounted at the pump intake line, immediately halting the booster pump if the nutrient supply runs dry.
+- **Root Chamber Node (ESP32-S3)**: Dual-Core Xtensa LX7 (240 MHz, 8 MB PSRAM) mounted inside an IP65 enclosure on the tub exterior. Hosts an onboard 0.96" I2C OLED display (`[NODE: ROOT-01 | LINK -> 4096]`) and physical setup button for mobile BLE provisioning. Uplinks to Central Controller via Wi-Fi; downlinks to Tools via BLE Central.
+- **Infrared Root Transpiration Sensing**: Melexis MLX90614 non-contact infrared pyrometer sensor mounted in the tub lid, measuring root-zone surface temperature to $\pm 0.2^\circ	ext{C}$ to detect crop transpiration stress in real time.
+- **Dedicated Modular Edge Tools (ESP32-C3)**: Driven 1:1 by micro ESP32-C3 controllers equipped with 0.42" micro OLED displays and **250ms hardware deadman watchdogs**:
+  - `DEV_PUMP_RELAY`: Micro ESP32-C3 with 0.42" OLED (`TOOL: PUMP_RELAY | LINK: OK`) + 250ms watchdog driving 24V 120 PSI booster pump and 24V fast-bleed depressurization solenoid with dry-run float interrupt.
+  - `DEV_ROOT_TELE`: Micro ESP32-C3 with 0.42" OLED (`TOOL: ROOT_TELE | LINK: OK`) reading the MLX90614 infrared root surface thermometer and dual optical liquid level sensors.
+  - `DEV_DOCK_LATCH`: Micro ESP32-C3 with 0.42" OLED (`TOOL: DOCK_LATCH | LINK: OK`) + 250ms watchdog governing the gantry harvest docking collar latch.
+- **250ms Deadman Watchdog Fail-Safe**: If `DEV_PUMP_RELAY` loses BLE connection to the Root Chamber Node for $> 250$ ms, it cuts pump power immediately and opens the bleed valve, preventing root saturation or pump burnout.
 - **Autonomous Gantry Docking Collar**: Molded silicone suction port on the tub lid, allowing the 2-Axis Overhead Gantry's tuber extraction toolhead to dock and pull mature mini-tubers non-destructively.
 
-```
-       CYBER-PHYSICAL EDGE AI ARCHITECTURE & ROOT TELEMETRY
+```text
+       CONTROLLER-NODE-TOOL (CNT) HIERARCHICAL EDGE ARCHITECTURE
   =================================================================
-               +--------------------------------------+
-               |    ESP32-C3 Root Zone Controller     |
-               |  (FreeRTOS Duty Cycle + CAN Mesh)    |
-               +---+--------------------+---------+---+
-                   |                    |         |
-         +---------+----+               | I2C     | GPIO
-         v              v               v         v
-   [CAN Bus Node] [Solid-State Relays] [MLX90614] [Dual Optical Floats]
-   (To Master     |        |           (IR Root   (Dry-Run Safety Cut)
-    Biosphere)    v        v            Temp)
-           [120 PSI Pump] [Dump Valve]
-           (5s Pulse)     (Anti-Drip)
+            CENTRAL BIOSPHERE CONTROLLER (Pi 5 + Hailo-8 M.2 HAT)
+            • Emits Hidden WPA3 Wi-Fi Network | OLED: [CTRL_ID: 4096]
+            • Crop Growth Recipes & Overhead Gantry Harvest Coordination
+                                  │
+                                  │ Encrypted Wi-Fi Uplink
+                                  ▼
+             ┌─────────────────────────────────────────┐
+             │    ROOT CHAMBER MACHINE NODE (ESP32-S3) │
+             │  • OLED Display: [NODE: ROOT-01]        │
+             │  • Setup Push-Button for Mobile BLE     │
+             │  • FreeRTOS Duty Cycle & Transpiration  │
+             └────────────────────┬────────────────────┘
+                                  │
+         ┌────────────────────────┼────────────────────────┐
+         │ BLE Downlink           │ BLE Downlink           │ BLE Downlink
+         ▼                        ▼                        ▼
+ ┌───────────────┐        ┌───────────────┐        ┌───────────────┐
+ │ TOOL:         │        │ TOOL:         │        │ TOOL:         │
+ │ DEV_PUMP_RELAY│        │ DEV_ROOT_TELE │        │ DEV_DOCK_LATCH│
+ │ ESP32-C3 Micro│        │ ESP32-C3 Micro│        │ ESP32-C3 Micro│
+ │ 0.42" OLED    │        │ 0.42" OLED    │        │ 0.42" OLED    │
+ │ 250ms Deadman │        │ MLX90614 IR   │        │ 250ms Deadman │
+ │ 120 PSI Pump  │        │ Dual Optical  │        │ Gantry Dock   │
+ │ Bleed Solenoid│        │ Float Sensors │        │ Silicone Latch│
+ └───────────────┘        └───────────────┘        └───────────────┘
 ```
 
 ### Step-by-Step Sensor Commissioning & Edge AI Protocol
 
-#### Step 3.1: ESP32-C3 Carrier Board Installation
-1. Mount the ESP32-C3 microcontroller and optocoupled solid-state relay module inside an IP65 enclosure on the tub exterior.
-2. Connect pump and dump-valve 24V power lines through the solid-state relays.
-3. Wire the CAN bus transceiver to ESP32 GPIO 4 (TX) and GPIO 5 (RX).
+#### Step 3.1: Root Chamber Node & Relay Assembly
+1. Mount the ESP32-S3 Node with 0.96" I2C OLED display and physical setup push-button inside the IP65 enclosure.
+2. Mount the `DEV_PUMP_RELAY` tool board (ESP32-C3) connected to optocoupled solid-state relays for pump and bleed valve control.
+3. Verify manual mechanical countdown timer remains connected in parallel for manual backup.
 
-#### Step 3.2: MLX90614 Non-Contact Infrared Root Sensor
-1. Drill an 18 mm hole in the center of the lid between the plant collars.
-2. Mount the Melexis MLX90614 infrared temperature sensor in a 3D-printed light-shielded silicone grommet aiming downward at the root mass.
-3. Wire sensor to ESP32 I2C bus (SDA: GPIO 8, SCL: GPIO 9). Verify root temperature reads accurately within 18.0°C to 24.0°C.
+#### Step 3.2: MLX90614 Non-Contact Infrared Root Sensor (`DEV_ROOT_TELE`)
+1. Mount the MLX90614 infrared temperature sensor in a 3D-printed light-shielded silicone grommet aiming downward at root mass.
+2. Wire sensor to `DEV_ROOT_TELE` tool (ESP32-C3) over I2C (SDA: GPIO 8, SCL: GPIO 9).
+3. Verify root temperature reads accurately on tool OLED within 18.0°C to 24.0°C.
 
 #### Step 3.3: 24V Fast-Bleed Depressurization Valve Installation
-1. Tee a 24V DC normally-closed high-speed solenoid valve into the nozzle manifold pressure line, routing its exhaust port back into the drain.
-2. Wire solenoid to Relay Channel 2.
-3. Program cutoff sequence: when pump turns OFF, trigger solenoid for 400 ms. Manifold pressure drops from 120 PSI to 0 PSI in 80 ms, completely eliminating nozzle drip.
+1. Tee a 24V DC normally-closed high-speed solenoid valve into the nozzle manifold pressure line, routing its exhaust port back to drain.
+2. Wire solenoid to `DEV_PUMP_RELAY` tool channel 2.
+3. Program cutoff sequence: when pump turns OFF, trigger solenoid for 400 ms, dropping manifold pressure from 120 PSI to 0 PSI in 80 ms to eliminate nozzle dripping.
 
 #### Step 3.4: Dual Optical Dry-Run Float Installation
-1. Install two optical liquid level sensors in the suction line manifold: one at the 1-gallon warning mark and one at the critical intake port.
-2. Wire sensor digital outputs to ESP32 GPIO 2 and GPIO 3.
+1. Install two optical liquid level sensors in the suction line manifold: one at 1-gallon warning mark and one at critical intake port.
+2. Wire sensors directly to `DEV_ROOT_TELE` tool digital interrupt inputs.
 3. Verify cutoff safety: removing liquid triggers pump shutdown within 25 milliseconds.
 
-#### Step 3.5: Gantry Harvest Docking Collar Installation
-1. Cut a 100 mm circular port in the lid center and mount a flexible silicone bellow seal.
-2. Install a CAN bus trigger socket and magnetic docking latch that mates with the 2-Axis Overhead Gantry tuber toolhead.
-3. Flash the autonomous firmware and calibrate closed-loop mist duty cycling.
+#### Step 3.5: Provisioning & 250ms Watchdog Verification
+1. Power on Central Controller; note pairing ID on its OLED (`CTRL_ID: 4096`).
+2. Power on Root Chamber Node; display shows `[NODE UNPAIRED - PAIR VIA BLE]`.
+3. Press physical setup button on Node; connect via mobile companion app over BLE, enter `4096`.
+4. Node commits credentials to NVS, links to hidden Wi-Fi, and updates display to `[ONLINE | LINK -> 4096]`.
+5. Verify Node auto-discovers and binds all three BLE Tools.
+6. Test fail-safe watchdog: drop BLE link to `DEV_PUMP_RELAY`; verify booster pump power cuts in $< 250$ ms.
 
 ```mermaid
 stateDiagram-v2
     [*] --> Standby_Telemetry: Power On & Sensor Check
-    Standby_Telemetry --> Transpiration_Check: 1 Hz Loop
+    Standby_Telemetry --> Transpiration_Check: 1 Hz Telemetry
     
     state Transpiration_Check {
         [*] --> Read_IR_Root_Temp
@@ -315,29 +334,29 @@ stateDiagram-v2
     }
 
     Misting_Pulse --> Standby_Telemetry: Cycle Complete
-    Standby_Telemetry --> Gantry_Harvest_Dock: Gantry Harvest Signal
+    Standby_Telemetry --> Gantry_Harvest_Dock: Gantry Harvest Signal via Wi-Fi
     Gantry_Harvest_Dock --> Standby_Telemetry: Mini-Tubers Harvested
 ```
 
 ### Step-by-Step Autonomous Multi-Agent Runbook
 
-1. **Autonomous Boot & Sensor Health Check**: On power-up, the ESP32-C3 checks optical liquid sensors and verifies root-zone infrared temperature. It establishes CAN communication with the master biosphere controller.
-2. **Transpiration-Driven Adaptive Pulse Misting**: The firmware executes a default 5-second mist pulse every 180 seconds. However, if the MLX90614 infrared sensor detects root-zone surface temperature rising above 22.5°C (indicating high crop transpiration demand under intense lighting), the agent dynamically shortens the mist interval to 120 seconds.
-3. **Instant Zero-Drip Pressure Venting**: Immediately after each 5-second booster pump pulse, the controller energizes the fast-bleed solenoid valve for 400 ms. Line pressure collapses instantly, preventing the formation of large droplets that could waterlog roots.
-4. **Optical Dry-Run Failsafe Interlock**: If the nutrient reservoir runs dry, the optical level sensors trigger an instantaneous hardware interrupt within 25 ms, halting the booster pump and broadcasting an emergency refill alert over CAN bus to prevent pump head burnout.
-5. **Overhead Gantry Autonomous Harvest Coordination**: At Day 75, the biosphere master dispatches the 2-Axis Overhead Gantry with its potato extraction toolhead. The gantry descends into the silicone docking collar, applies soft pneumatic suction to pluck mature mini-tubers, and withdraws without disturbing the dark-sealed environment.
-6. **Biofilter Gravity Return Cycling**: All drainage runoff drains continuously through the bottom 1-inch PVC bulkhead directly into the central biofiltration basin, creating a zero-waste, 100% closed-loop nutrient circuit.
+1. **Autonomous Boot & Sensor Health Check**: On power-up, the Root Chamber Node checks optical liquid sensors and verifies root-zone infrared temperature. It establishes Wi-Fi communication with the Central Controller.
+2. **Transpiration-Driven Adaptive Pulse Misting**: The firmware executes a default 5-second mist pulse every 180 seconds. However, if the MLX90614 infrared sensor detects root-zone temperature rising above 22.5°C, the Node dynamically shortens the mist interval to 120 seconds.
+3. **Instant Zero-Drip Pressure Venting**: Immediately after each 5-second booster pump pulse, `DEV_PUMP_RELAY` energizes the fast-bleed solenoid valve for 400 ms, collapsing line pressure instantly to prevent large droplets.
+4. **Optical Dry-Run Failsafe Interlock**: If the nutrient reservoir runs dry, the optical level sensors trigger an instantaneous hardware interrupt within 25 ms, halting the booster pump and broadcasting an alert to Central Controller.
+5. **Overhead Gantry Autonomous Harvest Coordination**: At Day 75, Central Controller dispatches the 2-Axis Overhead Gantry with its potato extraction toolhead. The gantry docks into the silicone collar, applies soft pneumatic suction to pluck mature mini-tubers, and withdraws non-destructively.
+6. **250ms Fail-Safe Watchdogs**: If BLE connection to `DEV_PUMP_RELAY` drops for $> 250$ ms, pump power cuts instantly. If Wi-Fi link to Central Controller is lost, the Node continues the default 180s mist cycle safely.
 
 ### Add-On 2 Bill of Materials (BOM)
 
 | Item | Component Description | Sourcing / Part Reference | Qty | Unit Cost | Total Cost |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **A2-01** | ESP32-C3 RISC-V Relay Controller Module + CAN Transceiver | Maker electronics supplier | 1 | $14.00 | $14.00 |
+| **A2-01** | Root Chamber Node: ESP32-S3 (8MB PSRAM) + 0.96" OLED + Setup Button | Espressif distributor | 1 | $16.00 | $16.00 |
 | **A2-02** | Dual Optical Liquid Level Sensors (Infrared Prism) | Aquarium / maker level sensor | 2 | $6.00 | $12.00 |
 | **A2-03** | MLX90614 Non-Contact Infrared Root Temperature Sensor | Precision sensor store | 1 | $16.00 | $16.00 |
-| **A2-04** | 24V DC Fast-Bleed Solenoid Depressurization Valve | Pneumatics / solenoid supplier | 1 | $15.00 | $15.00 |
-| **A2-05** | Molded Silicone Gantry Harvest Docking Collar + Latch | 3D printed + silicone mold | 1 | $14.00 | $14.00 |
-| **Total** | **Add-On 2 Agentic Autonomous Pack** | **Expands Base + Add-On 1** | | | **+$71.00** |
+| **A2-04** | 24V DC Fast-Bleed Solenoid Depressurization Valve | Pneumatics / solenoid supplier | 1 | $13.00 | $13.00 |
+| **A2-05** | 2x ESP32-C3 Modular Tools with 0.42" OLED & 250ms Watchdog (Pump & Dock) | Microcontroller supplier | 2 | $7.00 | $14.00 |
+| **Total** | **Add-On 2 Agentic Autonomous Pack (CNT Standard)** | **Expands Base + Add-On 1** | | | **+$71.00** |
 | **Full Build** | **Complete Autonomous Biosphere TPS Root Chamber** | **Base + Add-On 1 + Add-On 2** | | | **$290.00** |
 
 ---
@@ -350,19 +369,21 @@ stateDiagram-v2
 | :--- | :--- | :--- | :--- |
 | **Base: Instructions** | 100% mechanical tote with hand-pump pressure sprayer and baffled access hatch | $105.00 | **$105.00** |
 | **Add-On 1: Semi-Auto** | High-pressure 120 PSI misting pump with mechanical countdown dial timer | +$114.00 | **$219.00** |
-| **Add-On 2: Agentic AI** | Transpiration-driven ultrasonic misting, IR root telemetry, and gantry harvest interlock | +$71.00 | **$290.00** |
+| **Add-On 2: Agentic AI** | Controller-Node-Tool (CNT) automation, transpiration-driven misting, & 250ms watchdogs | +$71.00 | **$290.00** |
 
 ### Step-by-Step Zero-Waste Conversion Roadmap
 
-#### Path 1: Base Machine $\rightarrow$ Add-On 1 (Motorized Misting Chamber)
+#### Path 1: Base Machine $ightarrow$ Add-On 1 (Motorized Misting Chamber)
 1. Mount the 24V 120 PSI booster pump to the rear wall of the HDPE tub.
 2. Install the 1/4" nylon tubing and six brass anti-drip nozzles inside the tub at $Z = 300$ mm height.
 3. Mount the mechanical dial timer junction box on the front rail and plug in the 24V desktop power supply. The manual garden wand pass-through grommets remain permanently accessible.
 
-#### Path 2: Add-On 1 $\rightarrow$ Add-On 2 (Autonomous Transpiration Platform)
-1. Mount the IP65 enclosure with the ESP32-C3 relay controller beside the pump.
-2. Install the MLX90614 non-contact infrared sensor in the lid grommet and optical level sensors in the suction line.
-3. Install the 24V fast-bleed depressurization valve, connect the CAN bus pair, and flash the autonomous transpiration duty-cycling firmware.
+#### Path 2: Add-On 1 $ightarrow$ Add-On 2 (Autonomous Edge CNT Production Cell)
+1. Mount the Root Chamber Node (ESP32-S3 + OLED + Button) and modular ESP32-C3 Tools inside the IP65 enclosure.
+2. Connect `DEV_PUMP_RELAY` to the booster pump and 24V fast-bleed solenoid in parallel with the manual dial timer.
+3. Mount the MLX90614 infrared root sensor in the tub lid and wire to `DEV_ROOT_TELE`.
+4. Install dual optical liquid level sensors in the suction line manifold.
+5. Provision the Root Chamber Node with Central Controller ID via mobile app BLE, and verify 250ms hardware watchdog trips immediately upon signal loss.
 
 ---
 

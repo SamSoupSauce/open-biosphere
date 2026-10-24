@@ -237,75 +237,103 @@ flowchart LR
 
 ## 5. Add-On 2: Agentic Autonomous AI Pack (Edge Vision & Closed Loop)
 
-The **Agentic Autonomous AI Pack** converts the panel into a 24/7 self-regulating cyber-physical biosphere orchestrator. Powered by an ESP32-S3 / Raspberry Pi CM4 controller, galvanically isolated lab-grade pH and platinum EC sensors, a Sensirion SCD41 photoacoustic NDIR $CO_2$ sensor, and CAN bus integration, it continuously executes a 1 Hz closed-loop PID algorithm, micro-dosing concentrated nutrients and injecting carbon dioxide without human intervention.
+Under [RFC-0004](/rfcs/rfc-0004-controller-node-tool), the **Agentic Autonomous AI Pack** transforms the dosing panel into a 24/7 self-regulating **Controller-Node-Tool (CNT)** water chemistry orchestrator. It operates as a dedicated **Doser Node** commanding modular **Edge Tools** over BLE, receiving nutrient recipe ratios and 1 Hz closed-loop PID setpoints from the Central Biosphere Controller over Wi-Fi.
 
 ### Autonomous Vision & Telemetry Architecture
-- **Microclimate Compute Core**: ESP32-S3 Dual-Core Xtensa LX7 (240 MHz) running FreeRTOS with isolated RS-485 Modbus RTU and CAN bus transceivers.
-- **Galvanically Isolated Chemistry Probes**: Dual-junction sealed lab-grade pH probe and platinum dual-pin EC electrode connected via Atlas Scientific EZO or DFRobot galvanic isolation circuits, eliminating ground-loop noise from submersible pumps.
-- **Photoacoustic Ambient Gas Sensor**: Sensirion SCD41 photoacoustic NDIR sensor measuring atmospheric $CO_2$ (400 to 5,000 ppm $\pm 40$ ppm), air temperature ($\pm 0.8^\circ\text{C}$), and relative humidity ($\pm 2\%$).
-- **Predictive PID Loop**: 1 Hz telemetry engine calculating moving-average chemical depletion rates and dosing micro-pulses ($\pm 0.1$ mL) to prevent water chemistry oscillations.
+- **Doser Machine Node (ESP32-S3)**: Dual-Core Xtensa LX7 (240 MHz, 8 MB PSRAM) mounted inside an IP65 enclosure. Hosts an onboard 0.96" I2C OLED display (`[NODE: DOSER-01 | LINK -> 4096]`) and physical setup button for mobile BLE provisioning. Uplinks to Central Controller via Wi-Fi; collects telemetry and downlinks to Tools via BLE Central.
+- **Galvanically Isolated Chemistry Probes**: Dual-junction sealed lab-grade pH probe and platinum dual-pin EC electrode connected via Atlas Scientific galvanic isolation circuits, eliminating ground-loop electrical noise from submersible pumps.
+- **Photoacoustic Ambient Gas Sensor**: Sensirion SCD41 photoacoustic NDIR sensor measuring atmospheric $CO_2$ (400 to 5,000 ppm $\pm 40$ ppm), air temperature ($\pm 0.8^\circ	ext{C}$), and relative humidity ($\pm 2\%$).
+- **Dedicated Modular Edge Tools (ESP32-C3)**: Driven 1:1 by micro ESP32-C3 controllers equipped with 0.42" micro OLED displays and **250ms hardware deadman watchdogs**:
+  - `DEV_PUMP_BANK1`: Micro ESP32-C3 with 0.42" OLED (`TOOL: PUMP_BANK1 | LINK: OK`) + 250ms watchdog driving peristaltic pumps 1–3 (N, P, K).
+  - `DEV_PUMP_BANK2`: Micro ESP32-C3 with 0.42" OLED (`TOOL: PUMP_BANK2 | LINK: OK`) + 250ms watchdog driving peristaltic pumps 4–6 (Micro, pH Down, pH Up).
+  - `DEV_WATER_SNS`: Micro ESP32-C3 with 0.42" OLED (`TOOL: WATER_SNS | LINK: OK`) reading isolated pH and EC telemetry.
+  - `DEV_GAS_CTL`: Micro ESP32-C3 with 0.42" OLED (`TOOL: GAS_CTL | LINK: OK`) + 250ms watchdog reading Sensirion SCD41 $CO_2$ and pulsing the 12V $CO_2$ solenoid valve.
+- **250ms Deadman Watchdog Fail-Safe**: If any Tool loses BLE connection to the Doser Node for $> 250$ ms, it drops immediately into high-Z safe state: all peristaltic pumps halt immediately and the $CO_2$ solenoid snaps closed, preventing catastrophic chemical dumping.
 
-```
-       CYBER-PHYSICAL EDGE AI ARCHITECTURE & MODBUS TELEMETRY
+```text
+       CONTROLLER-NODE-TOOL (CNT) HIERARCHICAL EDGE ARCHITECTURE
   =================================================================
-               +--------------------------------------+
-               |    ESP32-S3 Microclimate Brain       |
-               |  (1 Hz PID Control + Telemetry Mesh) |
-               +---+--------------------+---------+---+
-                   |                    |         |
-         +---------+----+               | I2C     | Isolated I2C
-         | CAN / RS-485 |               v         v
-         v              v       [SCD41 NDIR CO2]  [Galvanic Isolator]
-  [Master Biosphere] [Modbus]   (Photoacoustic)   (Ground Noise Filter)
-         |                      (400 - 5000 ppm)          |
-         v                                                v
-   [Cloud Datalog]                                [pH & EC EZO Probes]
-         |                                        (Dual-Junction Lab)
-         v
-   [6x Peristaltic Relays] + [CO2 Gas Solenoid]
+            CENTRAL BIOSPHERE CONTROLLER (Pi 5 + Hailo-8 M.2 HAT)
+            • Emits Hidden WPA3 Wi-Fi Network | OLED: [CTRL_ID: 4096]
+            • Global 1 Hz PID Water Chemistry & Recipe Optimization
+                                  │
+                                  │ Encrypted Wi-Fi Uplink
+                                  ▼
+             ┌─────────────────────────────────────────┐
+             │       DOSER MACHINE NODE (ESP32-S3)     │
+             │  • OLED Display: [NODE: DOSER-01]       │
+             │  • Setup Push-Button for Mobile BLE     │
+             │  • 1 Hz Telemetry & Chemical Sequencing │
+             └────────────────────┬────────────────────┘
+                                  │
+         ┌────────────────────────┼────────────────────────┐
+         │ BLE Downlink           │ BLE Downlink           │ BLE Downlink
+         ▼                        ▼                        ▼
+ ┌───────────────┐        ┌───────────────┐        ┌───────────────┐
+ │ TOOL:         │        │ TOOL:         │        │ TOOL:         │
+ │ DEV_PUMP_BANK1│        │ DEV_PUMP_BANK2│        │ DEV_GAS_CTL   │
+ │ ESP32-C3 Micro│        │ ESP32-C3 Micro│        │ ESP32-C3 Micro│
+ │ 0.42" OLED    │        │ 0.42" OLED    │        │ 0.42" OLED    │
+ │ 250ms Deadman │        │ 250ms Deadman │        │ 250ms Deadman │
+ │ Pumps 1-3 NPK │        │ Pumps 4-6 pH  │        │ SCD41 NDIR CO2│
+ │ Micro-Dosing  │        │ Micro-Dosing  │        │ Solenoid Valve│
+ └───────────────┘        └───────────────┘        └───────────────┘
+                                  │
+                                  ▼ (BLE Downlink)
+                          ┌───────────────┐
+                          │ TOOL:         │
+                          │ DEV_WATER_SNS │
+                          │ ESP32-C3 Micro│
+                          │ 0.42" OLED    │
+                          │ Isolated pH/EC│
+                          │ Dual-Junction │
+                          └───────────────┘
 ```
 
 ### Step-by-Step Sensor Commissioning & Edge AI Protocol
 
-#### Step 3.1: Galvanically Isolated Sensor Carrier Assembly
-1. Mount the Atlas Scientific / Gravity galvanic isolation carrier board inside the lower section of the enclosure.
-2. Connect the lab-grade pH probe (BNC connector) and platinum EC probe (BNC connector).
-3. Calibrate probes using standard laboratory reference buffer solutions (pH 4.00, pH 7.00, EC 1,413 µS/cm). Save calibration offsets to non-volatile EEPROM.
+#### Step 3.1: Galvanically Isolated Sensor Assembly (`DEV_WATER_SNS`)
+1. Mount the galvanic isolation carrier board inside the lower section of the enclosure.
+2. Connect the lab-grade pH probe (BNC connector) and platinum EC probe (BNC connector) to `DEV_WATER_SNS` tool (ESP32-C3).
+3. Calibrate probes using standard laboratory reference buffer solutions (pH 4.00, pH 7.00, EC 1,413 µS/cm). Save offsets to non-volatile EEPROM.
 
-#### Step 3.2: Sensirion SCD41 NDIR $CO_2$ Sensor Integration
+#### Step 3.2: Sensirion SCD41 NDIR $CO_2$ & Gas Tool (`DEV_GAS_CTL`)
 1. Mount the Sensirion SCD41 sensor inside an aspirated, light-shielded duct adapter positioned at canopy level ($Z = 900$ mm).
-2. Wire via shielded 4-core cable to ESP32 I2C bus (SDA: GPIO 21, SCL: GPIO 22).
-3. Verify baseline reading in outdoor ambient air (must read $415\text{ ppm} \pm 25\text{ ppm}$).
+2. Wire sensor and 12V $CO_2$ solenoid to `DEV_GAS_CTL` tool board (ESP32-C3).
+3. Verify baseline reading in outdoor ambient air (must read $415	ext{ ppm} \pm 25	ext{ ppm}$).
 
-#### Step 3.3: ESP32-S3 Compute & Relay Interface Wiring
-1. Mount the ESP32-S3 carrier board on internal DIN rail inside an IP65 weatherproof enclosure.
-2. Connect GPIO outputs 13–18 through optocoupled MOSFET drivers to trigger the six peristaltic pumps.
-3. Wire GPIO 19 to an optocoupled solid-state relay controlling the 12V $CO_2$ gas solenoid.
+#### Step 3.3: Doser Node & Pump Bank Wiring
+1. Mount the ESP32-S3 Node with 0.96" I2C OLED display and physical setup push-button inside the IP65 enclosure.
+2. Mount `DEV_PUMP_BANK1` and `DEV_PUMP_BANK2` tool boards connected through optocoupled MOSFET drivers to trigger the six peristaltic pumps.
+3. Verify manual push-button priming remains fully functional in parallel with the MOSFET outputs.
 
-#### Step 3.4: CAN Bus & RS-485 Modbus Interface
-1. Wire the SN65HVD230 CAN transceiver to ESP32 GPIO 4 (TX) and GPIO 5 (RX).
-2. Terminate the CAN bus line with a $120\Omega$ end-of-line resistor.
-3. Connect the differential CAN pair to the master Open Biosphere data backbone.
+#### Step 3.4: Closed-Loop Telemetry Tuning
+1. Configure Central Controller PID setpoints: pH target = 6.4 (Deadband $\pm 0.15$), EC target = 1.8 mS/cm (Deadband $\pm 0.1$), $CO_2$ target = 1,000 ppm (Deadband $\pm 50$ ppm).
+2. Tune proportional gain ($K_p = 0.45$) and integral time ($T_i = 180	ext{ s}$) to prevent chemical overshooting in the recirculating reservoir.
 
-#### Step 3.5: Closed-Loop PID Tuning
-1. Set PID target setpoints: pH target = 6.4 (Deadband $\pm 0.15$), EC target = 1.8 mS/cm (Deadband $\pm 0.1$), $CO_2$ target = 1,000 ppm (Deadband $\pm 50$ ppm).
-2. Tune proportional gain ($K_p = 0.45$) and integral time ($T_i = 180\text{ s}$) to prevent chemical overshooting in a 50-gallon recirculating reservoir.
+#### Step 3.5: Provisioning & 250ms Watchdog Verification
+1. Power on Central Controller; note pairing ID on its OLED (`CTRL_ID: 4096`).
+2. Power on Doser Node; display shows `[NODE UNPAIRED - PAIR VIA BLE]`.
+3. Press physical setup button on Node; connect via mobile companion app over BLE, enter `4096`.
+4. Node commits credentials to NVS, links to hidden Wi-Fi, and updates display to `[ONLINE | LINK -> 4096]`.
+5. Verify Node auto-discovers and binds all four BLE Tools.
+6. Test fail-safe watchdog: drop BLE link to `DEV_PUMP_BANK2`; verify acid pump stops immediately in $< 250$ ms.
 
 ```mermaid
 stateDiagram-v2
     [*] --> Continuous_Sensing: Power On & Sensor Poll
     
     state Continuous_Sensing {
-        [*] --> Read_pH_EC: 1 Hz Galvanic Sample
-        Read_pH_EC --> Read_CO2_NDIR: SCD41 Photoacoustic
-        Read_CO2_NDIR --> Evaluate_Deadbands: Compare to Target
+        [*] --> Read_pH_EC: 1 Hz Galvanic Sample (DEV_WATER_SNS)
+        Read_pH_EC --> Read_CO2_NDIR: SCD41 Photoacoustic (DEV_GAS_CTL)
+        Read_CO2_NDIR --> Stream_Controller: Wi-Fi Telemetry to Central Brain
     }
 
-    Continuous_Sensing --> Chemical_Microdose: pH > 6.55 or EC < 1.70
+    Continuous_Sensing --> Chemical_Microdose: Central Controller Triggers Dosing
     
     state Chemical_Microdose {
         [*] --> Calculate_Pulse: Vol = Kp * Error (0.1ml to 5ml)
-        Calculate_Pulse --> Fire_Peristaltic: Pulse Pump (e.g. pH Down)
+        Calculate_Pulse --> Fire_Peristaltic: Node Commands DEV_PUMP_BANK
         Fire_Peristaltic --> Mixing_Delay: Wait 180s for Mixing
     }
 
@@ -317,12 +345,12 @@ stateDiagram-v2
 
 ### Step-by-Step Autonomous Multi-Agent Runbook
 
-1. **Continuous 1 Hz Telemetry Polling**: Every second, the ESP32-S3 polls the galvanically isolated pH and EC probes and the SCD41 $CO_2$ sensor. Data is passed into a 60-sample sliding average filter to eliminate pump electrical spikes.
-2. **Autonomous Closed-Loop pH Dosing**: If pH drifts above 6.55, the controller calculates the required acid volume based on reservoir volume. It pulses Peristaltic Pump 5 (pH Down) for a micro-dose of 0.8 mL, then holds a 180-second mixing delay before evaluating further dosing.
-3. **Automated EC Nutrient Metering**: If EC falls below 1.70 mS/cm due to crop uptake, the controller pulses Pumps 1, 2, 3, and 4 in calibrated ratios (3:1:2:1 for N:P:K:Micro) to restore target electrical conductivity without manual fertilizer mixing.
-4. **Daytime $CO_2$ Atmospheric Enrichment**: The agent checks PAR sensor readings from the overhead lighting bars. When lights are active ($\text{PAR} \ge 200\text{ }\mu\text{mol/m}^2/\text{s}$), the agent pulses the 12V $CO_2$ solenoid to maintain atmospheric carbon dioxide between 950 and 1,050 ppm. At night, $CO_2$ injection halts automatically.
-5. **Dynamic Fault Protection & Safety Cutoff**: If pH readings drop below 5.2 or jump above 8.0, the firmware engages an emergency lockout: halting all chemical pumps, opening the bypass manifold, and sounding an audible alarm.
-6. **Biosphere Telemetry Broadcast**: The controller broadcasts water temperature, pH, EC, and $CO_2$ logs over CAN bus to the central database, logging chemical usage down to 0.1 mL precision.
+1. **Continuous 1 Hz Telemetry Polling**: Every second, the Doser Node polls `DEV_WATER_SNS` and `DEV_GAS_CTL`. Data is streamed over Wi-Fi to the Central Controller sliding average filter to eliminate pump electrical noise.
+2. **Autonomous Closed-Loop pH Dosing**: If pH drifts above 6.55, the Central Controller calculates required acid volume. It dispatches a micro-pulse command to the Doser Node, which signals `DEV_PUMP_BANK2` (Pump 5: pH Down) for 0.8 mL, followed by a 180-second mixing delay.
+3. **Automated EC Nutrient Metering**: If EC falls below 1.70 mS/cm, the Central Controller signals `DEV_PUMP_BANK1` to pulse Pumps 1, 2, and 3 in calibrated ratios (3:1:2 for N:P:K) to restore electrical conductivity automatically.
+4. **Daytime $CO_2$ Atmospheric Enrichment**: When lighting is active, the Central Controller signals `DEV_GAS_CTL` to pulse the 12V $CO_2$ solenoid to maintain atmospheric carbon dioxide between 950 and 1,050 ppm.
+5. **Dynamic Fault Protection & 250ms Watchdogs**: If pH readings drop below 5.2 or jump above 8.0, the firmware engages an emergency lockout. If BLE communication between Node and any pump tool drops for $> 250$ ms, pumps halt instantly.
+6. **Central Biosphere Datalogging**: The Node streams water temperature, pH, EC, and chemical usage logs over Wi-Fi to the central database down to 0.1 mL precision.
 
 ### Add-On 2 Bill of Materials (BOM)
 
@@ -330,12 +358,11 @@ stateDiagram-v2
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | **A2-01** | Galvanically Isolated Industrial pH & EC Sensor Probes + EZO | Precision water sensor maker | 1 | $85.00 | $85.00 |
 | **A2-02** | Sensirion SCD41 Photoacoustic NDIR $CO_2$, Temp & RH Sensor | Environmental sensor store | 1 | $28.00 | $28.00 |
-| **A2-03** | ESP32-S3 DevKitC-1 N8R8 Microcontroller Board | Espressif distributor | 1 | $14.00 | $14.00 |
-| **A2-04** | Optocoupled 8-Channel High-Side MOSFET Driver Board | Industrial interface maker | 1 | $14.00 | $14.00 |
-| **A2-05** | Isolated RS-485 Modbus / CAN Bus Transceiver Module | Waveshare / industrial CAN | 1 | $7.00 | $7.00 |
-| **A2-06** | IP65 ABS Weatherproof Wall-Mount Enclosure with Glands | Electrical enclosure store | 1 | $22.00 | $22.00 |
-| **A2-07** | Shielded Twisted-Pair Sensor Cable Harness (10m) | Alpha Wire or equivalent | 1 | $14.00 | $14.00 |
-| **Total** | **Add-On 2 Agentic Autonomous Pack** | **Expands Base + Add-On 1** | | | **+$184.00** |
+| **A2-03** | Doser Machine Node: ESP32-S3 (8MB PSRAM) + 0.96" OLED + Setup Button | Espressif distributor | 1 | $16.00 | $16.00 |
+| **A2-04** | 3x ESP32-C3 Modular Tools with 0.42" OLED & 250ms Watchdog (Pumps & Gas) | Microcontroller supplier | 3 | $7.00 | $21.00 |
+| **A2-05** | Optocoupled 8-Channel High-Side MOSFET Driver Board | Industrial interface maker | 1 | $14.00 | $14.00 |
+| **A2-06** | IP65 ABS Weatherproof Wall-Mount Enclosure with Glands | Electrical enclosure store | 1 | $20.00 | $20.00 |
+| **Total** | **Add-On 2 Agentic Autonomous Pack (CNT Standard)** | **Expands Base + Add-On 1** | | | **+$184.00** |
 | **Full Build** | **Complete Autonomous Biosphere Water & Climate Brain** | **Base + Add-On 1 + Add-On 2** | | | **$436.00** |
 
 ---
@@ -348,19 +375,21 @@ stateDiagram-v2
 | :--- | :--- | :--- | :--- |
 | **Base: Instructions** | 100% mechanical gravity burettes, manual 3-way L-port valves, and colorimetric drops | $122.00 | **$122.00** |
 | **Add-On 1: Semi-Auto** | Motorized 6-channel peristaltic pumping, push-button priming, and potentiometer dials | +$130.00 | **$252.00** |
-| **Add-On 2: Agentic AI** | 1 Hz closed-loop PID water chemistry, NDIR $CO_2$ injection, and CAN bus integration | +$184.00 | **$436.00** |
+| **Add-On 2: Agentic AI** | Controller-Node-Tool (CNT) automation, 1 Hz closed-loop PID, NDIR $CO_2$, & 250ms watchdogs | +$184.00 | **$436.00** |
 
 ### Step-by-Step Zero-Waste Conversion Roadmap
 
-#### Path 1: Base Machine $\rightarrow$ Add-On 1 (Motorized Dosing Panel)
+#### Path 1: Base Machine $ightarrow$ Add-On 1 (Motorized Dosing Panel)
 1. Bolt the six 12V peristaltic pumps into the pre-drilled central holes on the acrylic backplane.
 2. Plumb the pump discharge lines into Port 3 of the 3-way L-port bypass valves (the manual burettes remain fully usable).
 3. Install the 12V MeanWell power supply, priming push-buttons, and calibration potentiometers on the lower rail.
 
-#### Path 2: Add-On 1 $\rightarrow$ Add-On 2 (Autonomous Closed-Loop Brain)
-1. Mount the IP65 enclosure containing the ESP32-S3 and isolated sensor board onto the side wall.
-2. Submerge the lab-grade pH and platinum EC probes in the biofilter return line.
-3. Install the SCD41 $CO_2$ sensor at canopy level, connect the CAN bus pair, and flash the autonomous 1 Hz PID regulation firmware.
+#### Path 2: Add-On 1 $ightarrow$ Add-On 2 (Autonomous Closed-Loop CNT Brain)
+1. Mount the Doser Node (ESP32-S3 + OLED + Button) and modular ESP32-C3 Tools inside the IP65 enclosure.
+2. Connect `DEV_WATER_SNS` to the galvanically isolated pH and EC probe BNC headers.
+3. Connect `DEV_PUMP_BANK1` and `DEV_PUMP_BANK2` to the MOSFET driver board in parallel with the manual push buttons.
+4. Mount the Sensirion SCD41 $CO_2$ sensor and wire the $CO_2$ gas solenoid to `DEV_GAS_CTL`.
+5. Provision the Doser Node with Central Controller ID via mobile app BLE, and confirm 250ms watchdogs prevent uncommanded chemical release.
 
 ---
 

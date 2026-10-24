@@ -253,74 +253,93 @@ flowchart LR
 
 ## 5. Add-On 2: Agentic Autonomous AI Pack (Edge Vision & Closed Loop)
 
-The **Agentic Autonomous AI Pack** elevates the Mantis Crawler into an unsupervised autonomous harvesting robot. Driven by an onboard neural accelerator, stereo RGB-NIR cameras, and micro-load cell clamping feedback, the robot patrols espaliers, calculates 3D pedicel cutting vectors, regulates limb grip force to 8.5 N max, and auto-harvests without human intervention.
+Under [RFC-0004](/rfcs/rfc-0004-controller-node-tool), the **Agentic Autonomous AI Pack** transforms the Mantis Crawler into a lightweight, hierarchical **Controller-Node-Tool (CNT)** harvesting robot. The crawler operates as a dedicated **Mantis Node** commanding modular **Edge Tools** over BLE, while heavy neural vision processing is offloaded to the Central Biosphere Controller over Wi-Fi.
 
 ### Autonomous Vision & Telemetry Architecture
-- **Edge AI Compute Core**: Raspberry Pi 5 (4GB) paired with a Hailo-8L M.2 AI Acceleration HAT delivering 13 TOPS of neural inference at $< 5$W power consumption.
-- **Multispectral Stereo Vision**: Dual Sony IMX219 camera modules (baseline 60 mm) with 850 nm optical bandpass filters and synchronized infrared pulse LEDs for invariant day/night ripeness segmentation.
-- **Closed-Loop Clamping Feedback**: Integrated micro-load cell on the scissor hinge amplified by an HX711 24-bit ADC, dynamically governing limb clamping force between 2.0 N (traverse) and 8.5 N (stationary shear stability).
-- **Robotic Docking Interlock**: Overhead gantry slip-ring auto-dock latch and gravity produce drop chute for automated payload transfer to the Ground Track AGV.
+- **Mantis Machine Node (ESP32-S3)**: Dual-Core Xtensa LX7 (240 MHz, 8 MB PSRAM) mounted on the spine in an ultra-light enclosure. Hosts an onboard 0.96" I2C OLED display (`[NODE: MANTIS-01 | LINK -> 4096]`) and setup push-button for mobile BLE provisioning. Uplinks to Central Controller via Wi-Fi; coordinates local motion and downlinks to Tools via BLE Central.
+- **Decoupled Stereo Vision & Neural Targeting**: Dual lightweight micro RGB-NIR camera modules (baseline 60 mm) stream video directly to the Central Controller (Raspberry Pi 5 + Hailo-8 M.2 HAT) over Wi-Fi. The Central Controller runs YOLOv8 ripeness segmentation and stereo triangulation, returning 3D pedicel targeting vectors (, Y, Z$) to the Mantis Node.
+- **Dedicated Modular Edge Tools (ESP32-C3)**: Driven 1:1 by micro ESP32-C3 controllers equipped with 0.42" micro OLED displays and **250ms hardware deadman watchdogs**:
+  - `DEV_ROLLER_DRV`: Micro ESP32-C3 with 0.42" OLED (`TOOL: ROLLER_DRV | LINK: OK`) + 250ms watchdog driving NEMA 14 pinch rollers and traverse motors.
+  - `DEV_CLAMP_ACT`: Micro ESP32-C3 with 0.42" OLED (`TOOL: CLAMP_ACT | LINK: OK`) + 250ms watchdog reading the HX711 24-bit ADC micro-load cell, regulating limb clamp force between 2.0 N (traverse) and 8.5 N max (shear stability).
+  - `DEV_SHEAR_VAC`: Micro ESP32-C3 with 0.42" OLED (`TOOL: SHEAR_VAC | LINK: OK`) + 250ms watchdog pulsing the rotary saw blade and vacuum suction blower.
+- **250ms Deadman Watchdog Fail-Safe**: If any Tool loses BLE connection to the Mantis Node for $> 250$ ms, it drops immediately into high-Z safe state: roller steppers cut holding torque to zero, the clamp returns to safe passive spring position, and the saw blade and vacuum shut down within $< 250$ ms.
 
-```
-       CYBER-PHYSICAL EDGE AI ARCHITECTURE & STEREO TELEMETRY
+```text
+       CONTROLLER-NODE-TOOL (CNT) HIERARCHICAL EDGE ARCHITECTURE
   =================================================================
-               +--------------------------------------+
-               |    Raspberry Pi 5 + Hailo-8L HAT     |
-               | (YOLOv8 Edge Segmentation @ 45 FPS)  |
-               +---+--------------------+---------+---+
-                   |                    |         |
-         +---------+----+               | CSI     | I2C / SPI
-         | UART / CAN   |               v         v
-         v              v       [Dual Sony IMX219] [HX711 Load Cell]
-   [TMC2209 Drivers] [Master    (Stereo RGB-NIR)   (8.5N Clamp Max)
-         |            Biosphere]        |                 |
-         v                              v                 v
-   [NEMA 14 Pinch]              [3D Pedicel Vector] [Limb Protection]
+            CENTRAL BIOSPHERE CONTROLLER (Pi 5 + Hailo-8 M.2 HAT)
+            • Emits Hidden WPA3 Wi-Fi Network | OLED: [CTRL_ID: 4096]
+            • YOLOv8 Stereo Ripeness Detection & 3D Pedicel Triangulation
+                                  │
+                                  │ Encrypted Wi-Fi Uplink
+                                  ▼
+             ┌─────────────────────────────────────────┐
+             │       MANTIS MACHINE NODE (ESP32-S3)    │
+             │  • OLED Display: [NODE: MANTIS-01]      │
+             │  • Setup Push-Button for Mobile BLE     │
+             │  • Subsystem Navigation & Motion Bridge │
+             └────────────────────┬────────────────────┘
+                                  │
+         ┌────────────────────────┼────────────────────────┐
+         │ BLE Downlink           │ BLE Downlink           │ BLE Downlink
+         ▼                        ▼                        ▼
+ ┌───────────────┐        ┌───────────────┐        ┌───────────────┐
+ │ TOOL:         │        │ TOOL:         │        │ TOOL:         │
+ │ DEV_ROLLER_DRV│        │ DEV_CLAMP_ACT │        │ DEV_SHEAR_VAC │
+ │ ESP32-C3 Micro│        │ ESP32-C3 Micro│        │ ESP32-C3 Micro│
+ │ 0.42" OLED    │        │ 0.42" OLED    │        │ 0.42" OLED    │
+ │ 250ms Deadman │        │ 250ms Deadman │        │ 250ms Deadman │
+ │ Dual NEMA 14  │        │ HX711 LoadCell│        │ Rotary Shear  │
+ │ Pinch Rollers │        │ 8.5N Grip Max │        │ Vacuum Blower │
+ └───────────────┘        └───────────────┘        └───────────────┘
 ```
 
 ### Step-by-Step Sensor Commissioning & Edge AI Protocol
 
-#### Step 3.1: Raspberry Pi 5 & Hailo-8L HAT Installation
-1. Seat the Hailo-8L M.2 AI module into the PCIe M.2 HAT and bolt atop the Raspberry Pi 5 with brass standoffs.
-2. Mount the compute stack inside an IP54 vented enclosure on the rear spine of the crawler.
-3. Connect power via an onboard 5V 5A synchronous step-down DC-DC converter tapped from the 24V bus rail.
+#### Step 3.1: Mantis Node & Power Board Rigging
+1. Mount the ESP32-S3 Node with 0.96" I2C OLED display and physical setup push-button inside the spine enclosure.
+2. Connect power via an onboard 5V 5A synchronous step-down DC-DC converter tapped from the 24V bus rail.
+3. Verify power rail stability under full stepper load ($< 45	ext{ mV}$ ripple).
 
-#### Step 3.2: Stereo RGB-NIR Camera Rigging & Calibration
-1. Mount dual Sony IMX219 camera sensors in a rigid 3D-printed PETG crossbar with exactly 60 mm optical separation.
+#### Step 3.2: Stereo RGB-NIR Camera Rigging & RTSP Link
+1. Mount dual micro camera sensors in a rigid 3D-printed PETG crossbar with exactly 60 mm optical separation.
 2. Install 850 nm optical bandpass filters over both lenses to isolate chlorophyll reflection shifts.
-3. Run OpenCV stereo camera calibration using a 9×6 chessboard target ($< 0.18$ px reprojection error).
+3. Configure camera transmitter to stream stereo frames over local Wi-Fi to the Central Controller.
 
-#### Step 3.3: Micro-Load Cell Clamping Sensor Integration
+#### Step 3.3: Micro-Load Cell Clamping Tool (`DEV_CLAMP_ACT`)
 1. Mount a 20 N miniature bending beam load cell between the scissor clamping arm and the tensioning actuator.
-2. Connect load cell leads to an HX711 24-bit ADC module wired to Raspberry Pi GPIO (Clock: GPIO 23, Data: GPIO 24).
-3. Calibrate load cell reading against a precision 500 g calibration weight ($0.05$ N resolution).
+2. Connect load cell leads to HX711 24-bit ADC module wired to `DEV_CLAMP_ACT` tool controller (ESP32-C3).
+3. Calibrate load cell reading; ensure tool firmware hard-clamps grip force at 8.5 N maximum to protect plant cambium.
 
 #### Step 3.4: Overhead Gantry Slip-Ring Auto-Dock Latch
 1. Install an overhead spring-loaded pogo-pin power shoe on top of the chassis.
 2. Align the pogo-pin shoe with the overhead gantry 24V DC bus line.
 3. Install an optical fiducial marker on the docking shoe for gantry camera alignment.
 
-#### Step 3.5: Neural Network Deployment & Closed-Loop Tuning
-1. Compile the custom YOLOv8-Harvest model using the Hailo Dataflow Compiler into an optimized `.hef` neural binary.
-2. Verify inference speed on Raspberry Pi 5: dual-camera ripeness detection and 3D pedicel bounding boxes execute at 45 FPS.
-3. Test closed-loop clamping script: ensure motor torque instantly backs off if load cell reading exceeds 8.5 N.
+#### Step 3.5: Provisioning & 250ms Watchdog Verification
+1. Power on Central Controller; note pairing integer on its OLED (`CTRL_ID: 4096`).
+2. Power on Mantis Node; display shows `[NODE UNPAIRED - PAIR VIA BLE]`.
+3. Press physical setup button on Node; connect via mobile companion app over BLE, enter `4096`.
+4. Node commits credentials to NVS, links to hidden Wi-Fi, and updates display to `[ONLINE | LINK -> 4096]`.
+5. Verify Node auto-discovers and binds all three BLE Tools.
+6. Test fail-safe watchdog: drop BLE link to `DEV_ROLLER_DRV`; verify roller steppers drop holding torque to zero in $< 250$ ms.
 
 ```mermaid
 stateDiagram-v2
     [*] --> Wire_Patrol: Boot & Home
-    Wire_Patrol --> Cluster_Detected: YOLO Detects Ripe Fruit (Conf > 0.85)
+    Wire_Patrol --> Cluster_Detected: Central Controller YOLO Detects Ripe Fruit
     
     state Cluster_Detected {
         [*] --> Stereo_Triangulation
-        Stereo_Triangulation --> Clamp_Limb: Target Pedicel [X,Y,Z]
-        Clamp_Limb --> Torque_Hold: Load Cell = 6.0 N (Max 8.5 N)
+        Stereo_Triangulation --> Clamp_Limb: Target Pedicel [X,Y,Z] via Wi-Fi
+        Clamp_Limb --> Torque_Hold: DEV_CLAMP_ACT Holds 6.0 N (Max 8.5 N)
     }
 
     Cluster_Detected --> Harvest_Execution: Aligned (< 2mm error)
 
     state Harvest_Execution {
         [*] --> Vacuum_Engage
-        Vacuum_Engage --> Blade_Spin: Berry Seated
+        Vacuum_Engage --> Blade_Spin: DEV_SHEAR_VAC Spins Blade
         Blade_Spin --> Blade_Pulse: Cut 0.3s
         Blade_Pulse --> Vacuum_Hold: Berry in Chute
     }
@@ -332,25 +351,27 @@ stateDiagram-v2
 
 ### Step-by-Step Autonomous Multi-Agent Runbook
 
-1. **Autonomous Wakeup & Rail Scan**: On receiving a scheduled patrol command from the biosphere master over CAN bus, the Mantis crawler unlatches from its gantry docking shoe, clamps to the trellis wire at 4.0 N, and traverses at 60 mm/s.
-2. **On-Device Multispectral Detection**: The Hailo-8L neural core continuously analyzes 60 FPS video feeds. It identifies fruit clusters, classifies ripeness using NIR spectral absorption ratios (distinguishing deep purple ripe mulberries from red/green unripened fruit), and flags candidate targets.
-3. **3D Stereo Pedicel Triangulation**: The stereo camera calculates Euclidean pedicel coordinates relative to the rotary saw blade datum to $\pm 1.5$ mm accuracy.
-4. **Adaptive 8.5 N Branch Clamping**: The scissor servo clamps the branch. The HX711 load cell monitors contact force at 80 Hz; if force reaches 8.5 N, clamp motion halts instantly, securing the cutter rigidly without crushing plant cambium tissue.
-5. **Vacuum Shear Execution**: The 24V blower spins up; vacuum pulls the fruit into the TPU funnel; the rotary saw blade pulses for 300 ms, severing the pedicel cleanly. The fruit glides into the internal payload hopper.
-6. **AGV Produce Handoff**: When the internal hopper load cell reads 1.5 kg, the crawler travels to the nearest vertical drop flume, signaling the Ground Track AGV pod carrier below. It actuates its bottom trapdoor, dropping berries into the AGV's soft tote before resuming patrol.
+1. **Autonomous Wakeup & Rail Scan**: On receiving a scheduled patrol command from the Central Controller over Wi-Fi, the Mantis crawler unlatches from its gantry docking shoe, signals `DEV_CLAMP_ACT` to clamp the trellis wire at 4.0 N, and traverses at 60 mm/s via `DEV_ROLLER_DRV`.
+2. **Central Controller Neural Detection**: The Central Controller Hailo-8 NPU continuously analyzes the stereo video feed. It identifies fruit clusters, classifies ripeness using NIR spectral absorption ratios, and calculates 3D pedicel targeting vectors.
+3. **Target Navigation**: The Mantis Node converts the pedicel coordinates into motor step counts, inching the chassis until the cutter head aligns with the fruit pedicel to $\pm 1.5$ mm accuracy.
+4. **Adaptive 8.5 N Branch Clamping**: `DEV_CLAMP_ACT` drives the clamp servo. The onboard HX711 load cell monitors contact force at 80 Hz; if force reaches 8.5 N, clamping halts instantly, securing the cutter rigidly without crushing plant tissue.
+5. **Vacuum Shear Execution**: The Mantis Node signals `DEV_SHEAR_VAC` over BLE; the 24V blower spins up; vacuum pulls the fruit into the TPU funnel; the rotary saw blade pulses for 300 ms, severing the pedicel cleanly into the internal hopper.
+6. **250ms Fail-Safe Watchdogs**: If BLE connection to `DEV_ROLLER_DRV`, `DEV_CLAMP_ACT`, or `DEV_SHEAR_VAC` drops for $> 250$ ms, each tool immediately trips into safe state. If Wi-Fi link to Central Controller is lost, the crawler clamps safely in place at 4.0 N and halts.
 
 ### Add-On 2 Bill of Materials (BOM)
 
 | Item | Component Description | Sourcing / Part Reference | Qty | Unit Cost | Total Cost |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **A2-01** | Raspberry Pi 5 (4GB RAM) Single Board Computer | Official Pi distributor | 1 | $60.00 | $60.00 |
-| **A2-02** | Hailo-8L M.2 AI Acceleration Module (13 TOPS) + PCIe HAT | AI hardware distributor | 1 | $35.00 | $35.00 |
-| **A2-03** | Dual Sony IMX219 Stereo RGB-NIR Camera Modules + Lens | Camera sensor supplier | 2 | $18.00 | $36.00 |
-| **A2-04** | 20 N Miniature Bending Beam Load Cell + HX711 24-bit ADC | Precision scale sensor shop | 1 | $14.00 | $14.00 |
-| **A2-05** | 5V 5A High-Efficiency Step-Down DC-DC Power Module | Power electronics supplier | 1 | $14.00 | $14.00 |
-| **A2-06** | Overhead Gantry Spring-Loaded Pogo-Pin Docking Shoe | Custom 3D + spring pins | 1 | $18.00 | $18.00 |
-| **Total** | **Add-On 2 Agentic Autonomous Pack** | **Expands Base + Add-On 1** | | | **+$177.00** |
-| **Full Build** | **Complete Autonomous Trellis Harvester Robot** | **Base + Add-On 1 + Add-On 2** | | | **$405.00** |
+| **A2-01** | Mantis Machine Node: ESP32-S3 (8MB PSRAM) + 0.96" OLED + Setup Button | Espressif distributor | 1 | 6.00 | 6.00 |
+| **A2-02** | Dual Micro RGB-NIR Stereo Cameras with Wi-Fi RTSP Transmitter | Camera sensor supplier | 1 | 2.00 | 2.00 |
+| **A2-03** | 3x ESP32-C3 Modular Tools with 0.42" OLEDs & 250ms Watchdogs (Rollers, Clamp, Shears) | Microcontroller supplier | 3 | .00 | 1.00 |
+| **A2-04** | 20 N Miniature Bending Beam Load Cell + HX711 24-bit ADC | Precision scale sensor shop | 1 | 4.00 | 4.00 |
+| **A2-05** | 5V 5A High-Efficiency Step-Down DC-DC Power Module + Power Tap | Power electronics supplier | 1 | 4.00 | 4.00 |
+| **A2-06** | Overhead Gantry Spring-Loaded Pogo-Pin Docking Shoe & Latch | Custom 3D + spring pins | 1 | 8.00 | 8.00 |
+| **A2-07** | Dual TMC2209 Drivers & Actuator Interface Pack | 3D printer electronics supplier | 1 | 6.00 | 6.00 |
+| **A2-08** | Custom Lightweight Carbon Chassis Harness & Enclosure | Robotics carbon hardware | 1 | 6.00 | 6.00 |
+| **Total** | **Add-On 2 Agentic Autonomous Pack (CNT Standard)** | **Expands Base + Add-On 1** | | | **+77.00** |
+| **Full Build** | **Complete Autonomous Trellis Harvester Robot** | **Base + Add-On 1 + Add-On 2** | | | **05.00** |
 
 ---
 
@@ -360,23 +381,24 @@ stateDiagram-v2
 
 | Build Stage | Operational Capability | Direct Stage Cost | Cumulative Investment |
 | :--- | :--- | :--- | :--- |
-| **Base: Instructions** | 100% mechanical pole-mounted pruner and squeeze clamp with gravity collection | $93.00 | **$93.00** |
-| **Add-On 1: Semi-Auto** | Motorized pinch climb, vacuum fruit funnel, and handheld RC radio joystick steering | +$135.00 | **$228.00** |
-| **Add-On 2: Agentic AI** | On-device YOLOv8 neural pedicel detection, 8.5N grip limiting, and auto-harvesting | +$177.00 | **$405.00** |
+| **Base: Instructions** | 100% mechanical pole-mounted pruner and squeeze clamp with gravity collection | 3.00 | **3.00** |
+| **Add-On 1: Semi-Auto** | Motorized pinch climb, vacuum fruit funnel, and handheld RC radio joystick steering | +35.00 | **28.00** |
+| **Add-On 2: Agentic AI** | Controller-Node-Tool (CNT) automation, 8.5N grip limiting, & 250ms watchdogs | +77.00 | **05.00** |
 
 ### Step-by-Step Zero-Waste Conversion Roadmap
 
-#### Path 1: Base Machine $\rightarrow$ Add-On 1 (Electromechanical RC Upgrade)
+#### Path 1: Base Machine $ightarrow$ Add-On 1 (Electromechanical RC Upgrade)
 1. Remove the manual telescopic pole from the base clamp.
 2. Swing the aluminum motor swing-plates into position and bolt the NEMA 14 pancake steppers onto the chassis plates.
 3. Replace the manual bypass snip blade with the 12V coreless rotary micro-shear tool and 5015 vacuum blower funnel.
 4. Mount the battery shoe and RC receiver enclosure onto the spine, connect the 18V tool battery, and operate via the handheld RC transmitter. The silicone rollers and scissor frame remain 100% identical.
 
-#### Path 2: Add-On 1 $\rightarrow$ Add-On 2 (Autonomous Edge AI Upgrade)
+#### Path 2: Add-On 1 $ightarrow$ Add-On 2 (Autonomous Edge CNT Upgrade)
 1. Disconnect the 2.4 GHz RC receiver from the motor carrier board.
-2. Bolt the Raspberry Pi 5 + Hailo-8L compute stack onto the rear chassis deck.
-3. Mount the dual Sony IMX219 stereo camera bar on the forward chassis snout.
-4. Wire the HX711 load cell into the scissor hinge, connect the 24V overhead gantry slip-ring shoe, and boot the autonomous ROS2 harvesting daemon.
+2. Mount the Mantis Node (ESP32-S3 + OLED + Button) and modular ESP32-C3 Tools on the chassis spine.
+3. Mount the lightweight dual stereo camera bar on the forward snout for video streaming to the Central Controller.
+4. Wire the HX711 load cell into the `DEV_CLAMP_ACT` tool, and connect the `DEV_SHEAR_VAC` and `DEV_ROLLER_DRV` tools.
+5. Provision the Mantis Node with the Central Controller ID via mobile app BLE, and confirm 250ms hardware watchdogs are active across all tools.
 
 ---
 

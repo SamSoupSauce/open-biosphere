@@ -39,7 +39,7 @@ Each machine fulfills an autonomous homesteading, farming, or off-grid function 
     Makers and homesteaders can build a single appliance (e.g. the Revolving Sprout Drum or the Fluidic Skimmer) for under $200-$300 without needing to build the entire 6,000-gallon biosphere.
   </Card>
   <Card title="Plug-and-Play Assembly" icon="plug">
-    Standardized 24V DC power rails, quick-disconnect fluid manifolds, and CAN bus / Modbus protocols allow each standalone machine to dock into the master pool frame as needs grow.
+    Standardized 24V DC power rails, quick-disconnect fluid manifolds, and the 3-tier Controller-Node-Tool (CNT) Wi-Fi/BLE network stack allow each standalone machine to dock into the master pool frame as needs grow.
   </Card>
   <Card title="Decoupled Crop Data Contracts" icon="document">
     All crop species biological requirements, nutritional values, and robotics kinematics are stored in machine-readable JSON schemas, enabling automated software orchestration across all machines.
@@ -61,15 +61,59 @@ When assembled together, the individual machines occupy four interlocking spatia
 
 ---
 
-## 3. Autonomous Multi-Machine Ecosystem
+## 3. Controller-Node-Tool (CNT) Hierarchical Edge Architecture
 
-The machines cooperate along a shared Cartesian spatial datum and communication bus:
+Under [RFC-0004](/rfcs/rfc-0004-controller-node-tool), the biosphere decouples heavy neural compute from edge electro-mechanics through a 3-tier hierarchy:
+
+```
+┌────────────────────────────────────────────────────────────────────────┐
+│                        CONTROLLER (CENTRAL BRAIN)                      │
+│  Raspberry Pi 5 + AI Accelerator (e.g. Hailo-8 M.2 HAT)                │
+│  • Emits hidden biosphere Wi-Fi network                                │
+│  • Onboard mini OLED status screen: displays [CONTROLLER ID: XXXX]     │
+│  • Open BLE endpoint for operator mobile companion app                 │
+│  • Maintains global biosphere model, scheduling, and multi-agent loops │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │ Encrypted Local Wi-Fi (Direct Link)
+                                    ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│                        NODE (MACHINE AGGREGATOR)                       │
+│  Mid-tier ESP32 (e.g. ESP32-S3 Dual-Core)                              │
+│  • One per physical machine / subsystem frame                          │
+│  • Onboard mini OLED status screen + setup push-button                 │
+│  • Connects UP to Controller via Wi-Fi using paired Controller ID      │
+│  • Exposes BLE service for initial phone provisioning                  │
+│  • Manages local machine logic, safety watchdog, and down-links        │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │ Low-Power BLE / Point-to-Point Bus
+        ┌───────────────────────────┼───────────────────────────┐
+        ▼                           ▼                           ▼
+┌───────────────────┐       ┌───────────────────┐       ┌───────────────────┐
+│       TOOL        │       │       TOOL        │       │       TOOL        │
+│ Dedicated Tiny    │       │ Dedicated Tiny    │       │ Dedicated Tiny    │
+│ ESP32 Edge Device │       │ ESP32 Edge Device │       │ ESP32 Edge Device │
+│ (e.g. ESP32-C3)   │       │ (e.g. ESP32-C3)   │       │ (e.g. ESP32-C3)   │
+│ Mini OLED Screen  │       │ Mini OLED Screen  │       │ Mini OLED Screen  │
+│ 250ms Deadman     │       │ 250ms Deadman     │       │ 250ms Deadman     │
+│ [Weir Actuator]   │       │ [Auger Stepper]   │       │ [Sump Ultrasonic] │
+└───────────────────┘       └───────────────────┘       └───────────────────┘
+```
+
+1. **The Controller (Central Brain)**: A single black-box appliance (Raspberry Pi 5 + Hailo-8 M.2 HAT) running neural perception, spatial mapping, and multi-agent coordination. Emits a hidden WPA3 Wi-Fi network and displays `[CTRL_ID: XXXX]` on its OLED screen for mobile app pairing.
+2. **The Node (Machine Subsystem)**: Exactly one per physical machine frame (ESP32-S3 with PSRAM). Hosts an OLED status display (`[NODE: <NAME> | LINK -> CTRL_ID]`) and a setup button. The operator provisions the Node via mobile BLE with the Controller ID, connecting the Node to the hidden Wi-Fi.
+3. **The Tools (Actuators & Sensors)**: Minimalist micro-controllers (ESP32-C3 / Xiao) dedicated 1:1 to single motors, drivers, or sensor clusters. Each Tool features a micro OLED status display and a **250ms hardware deadman watchdog** that cuts power or snaps valves closed if communication to its Node is lost.
+
+---
+
+## 4. Multi-Machine Material & Data Flow
+
+The machines cooperate along a shared Cartesian spatial datum and the CNT network:
 
 ```
 [Fluidic Skimmer] ──(Dewatered Biomass)──► [Ground Track AGV] ◄──(Canister Exchange)──► [Sprout Bioreactor]
         │                                         ▲
         ▼                                         │
-[Nutrient Manifold] ◄──(Stock Dosing)── [Microclimate Doser] ──(Telemetry)──► [Master Orchestrator]
+[Nutrient Manifold] ◄──(Stock Dosing)── [Microclimate Doser] ──(Telemetry)──► [Central Controller]
         │                                                                             ▲
         ▼                                                                             │
 [Central Basin & NFT] ◄──(Pollination / Mapping)── [Aerial Spotter Drone] ────────────┤
@@ -79,7 +123,7 @@ The machines cooperate along a shared Cartesian spatial datum and communication 
 
 ---
 
-## 4. Closed-Loop Nutrient Recycling Kinetics
+## 5. Closed-Loop Nutrient Recycling Kinetics
 
 The fluidic loop is designed around nitrogen cascading between machines:
 1. **Bio-Digestion**: Organic waste and spent root matter are digested into bioavailable ammonium and nitrate ions.

@@ -244,60 +244,76 @@ flowchart LR
 
 ## 5. Add-On 2: Agentic Autonomous AI Pack (Edge Vision & Closed Loop)
 
-The **Agentic Autonomous AI Pack** transforms the gantry into a sub-millimeter agricultural robot. Running Klipper firmware on an STM32 32-bit controller over CAN bus, it carries a down-facing 4K RGB/NIR macro camera and optical rotary encoders, automatically executing sub-0.05 mm trajectory micro-harvesting of saffron stigmas and selective trimming of purslane.
+Under [RFC-0004](/rfcs/rfc-0004-controller-node-tool), the **Agentic Autonomous AI Pack** transforms the gantry into a hierarchical **Controller-Node-Tool (CNT)** sub-millimeter agricultural robot. Heavy neural vision processing is offloaded to the Central Biosphere Controller over Wi-Fi, while a dedicated **Gantry Node** coordinates Cartesian motion primitives and downlinks to modular **Edge Tools** over BLE with 250ms hardware deadman watchdogs.
 
 ### Autonomous Vision & Telemetry Architecture
-- **Motion Control Core**: BigTreeTech Octopus Pro (STM32F429 168 MHz) running Klipper firmware with CAN bus toolhead bridge (EBB42 CAN) over a single flexible 4-wire umbilical.
-- **Down-Facing Macro Vision**: Sony IMX519 16MP / 4K RGB camera paired with an 850 nm NIR ring illuminator, delivering 40 px/mm optical resolution across the plant canopy.
-- **Closed-Loop Encoders**: Magnetic rotary encoders (AS5600 12-bit) on motor shafts verifying sub-0.05 mm positional accuracy and detecting mechanical stalls.
-- **Autonomous Toolhead Ecosystem**:
-  - **Saffron Micro-Tweezer**: Micro-servo actuated silicone forceps extracting *Crocus sativus* stigmas with 0.15 mm repeatability.
-  - **Purslane Reciprocating Shear**: Dual oscillating micro-blades trimming succulent stems without dislodging root plugs.
+- **Gantry Machine Node (ESP32-S3)**: Dual-Core Xtensa LX7 (240 MHz, 8 MB PSRAM) mounted inside the main electrical enclosure. Hosts an onboard 0.96" I2C OLED display (`[NODE: GANTRY-01 | LINK -> 4096]`) and physical setup button for mobile BLE provisioning. Uplinks to Central Controller via Wi-Fi; receives Cartesian path plans and coordinates downstream Tools via BLE Central.
+- **Decoupled Down-Facing Macro Vision**: Sony IMX519 16MP / 4K RGB camera paired with an 850 nm NIR ring illuminator streams high-resolution video over Wi-Fi directly to the Central Controller (Raspberry Pi 5 + Hailo-8 M.2 HAT), which executes YOLOv8 neural detection for saffron stigmas (*Crocus sativus*) and purslane trimming targets.
+- **Dedicated Modular Edge Tools (ESP32-C3)**: Driven 1:1 by micro ESP32-C3 controllers equipped with 0.42" micro OLED displays and **250ms hardware deadman watchdogs**:
+  - `DEV_X_AXIS`: Micro ESP32-C3 with 0.42" OLED (`TOOL: X_AXIS | LINK: OK`) + 250ms watchdog driving the X-axis NEMA 23 stepper driver and AS5600 magnetic rotary encoder.
+  - `DEV_Y_AXIS`: Micro ESP32-C3 with 0.42" OLED (`TOOL: Y_AXIS | LINK: OK`) + 250ms watchdog driving dual Y-axis NEMA 23 stepper drivers and AS5600 encoder.
+  - `DEV_TOOL_HEAD`: Micro ESP32-C3 with 0.42" OLED (`TOOL: TOOL_HEAD | LINK: OK`) + 250ms watchdog on the kinematic carriage, managing Z-axis stepper and end-effector actuators (saffron micro-tweezer / purslane reciprocating shear).
+- **250ms Deadman Watchdog Fail-Safe**: If any Tool loses BLE connection to the Gantry Node for $> 250$ ms, it drops immediately into high-Z safe state: all stepper drivers cut holding torque to zero, and the toolhead freezes in safe stationary position.
 
-```
-       CYBER-PHYSICAL EDGE AI ARCHITECTURE & CAN BUS BRIDGE
+```text
+       CONTROLLER-NODE-TOOL (CNT) HIERARCHICAL EDGE ARCHITECTURE
   =================================================================
-             +-----------------------------------------+
-             |    BTT Octopus Pro Mainboard (Klipper)  |
-             |   (STM32F429 168 MHz + High-Current FET) |
-             +----+--------------------+----------+----+
-                  |                    |          |
-         +--------+--+                 |          +-------+----+
-         |   STEP/DIR|                 | USB / CAN        | SPI
-         v           v                 v                  v
-    [TMC2209 Silent] [EBB42 CAN Tool]  [Host Compute SBC] [AS5600 Encoders]
-         |           | (Tool Umbilical) (Raspberry Pi 5)  (Closed-Loop)
-         v           v                 |
-   [NEMA 23 Motors] [Kinematic Tool]   v
-   (Sensorless Home) [IMX519 4K Cam]  [Computer Vision AI]
+            CENTRAL BIOSPHERE CONTROLLER (Pi 5 + Hailo-8 M.2 HAT)
+            • Emits Hidden WPA3 Wi-Fi Network | OLED: [CTRL_ID: 4096]
+            • YOLOv8 Macro Canopy Vision & Sub-Millimeter Targeting
+                                  │
+                                  │ Encrypted Wi-Fi Uplink
+                                  ▼
+             ┌─────────────────────────────────────────┐
+             │       GANTRY MACHINE NODE (ESP32-S3)    │
+             │  • OLED Display: [NODE: GANTRY-01]      │
+             │  • Setup Push-Button for Mobile BLE     │
+             │  • Cartesian Trajectory & Kinematics    │
+             └────────────────────┬────────────────────┘
+                                  │
+         ┌────────────────────────┼────────────────────────┐
+         │ BLE Downlink           │ BLE Downlink           │ BLE Downlink
+         ▼                        ▼                        ▼
+ ┌───────────────┐        ┌───────────────┐        ┌───────────────┐
+ │ TOOL:         │        │ TOOL:         │        │ TOOL:         │
+ │ DEV_X_AXIS    │        │ DEV_Y_AXIS    │        │ DEV_TOOL_HEAD │
+ │ ESP32-C3 Micro│        │ ESP32-C3 Micro│        │ ESP32-C3 Micro│
+ │ 0.42" OLED    │        │ 0.42" OLED    │        │ 0.42" OLED    │
+ │ 250ms Deadman │        │ 250ms Deadman │        │ 250ms Deadman │
+ │ NEMA 23 Drive │        │ Dual NEMA 23  │        │ Z-Axis Servo  │
+ │ AS5600 Encoder│        │ AS5600 Encoder│        │ Tweezer/Shear │
+ └───────────────┘        └───────────────┘        └───────────────┘
 ```
 
 ### Step-by-Step Sensor Commissioning & Edge AI Protocol
 
-#### Step 3.1: BTT Octopus Pro & Klipper Installation
-1. Mount the BTT Octopus Pro mainboard inside the main electrical enclosure.
-2. Wire TMC2209 silent stepper drivers in UART mode for silent, resonance-free gantry motion.
-3. Flash Klipper firmware onto the Octopus Pro via SD card; configure CAN bus bit rate to 1,000,000 bps.
+#### Step 3.1: Gantry Node & Driver Carrier Assembly
+1. Mount the ESP32-S3 Node with 0.96" I2C OLED display and physical setup push-button inside the main electrical enclosure.
+2. Mount the TMC2209 silent stepper driver boards wired to `DEV_X_AXIS` and `DEV_Y_AXIS` tools for resonance-free motion.
+3. Verify AS5600 magnetic rotary encoders on motor shafts report sub-0.05 mm positional feedback to the tool controllers.
 
-#### Step 3.2: EBB42 CAN Bus Toolhead Board Assembly
-1. Mount the compact BigTreeTech EBB42 CAN board directly onto the kinematic toolhead carriage plate.
-2. Connect the 4-wire umbilical (24V Power +, Ground, CAN-H, CAN-L) through the drag chains to the Octopus mainboard.
-3. Wire toolhead servos, macro camera trigger, and LED ring illuminator directly to the EBB42 headers.
+#### Step 3.2: Kinematic Toolhead Board Assembly (`DEV_TOOL_HEAD`)
+1. Mount the compact `DEV_TOOL_HEAD` board (ESP32-C3) directly onto the kinematic toolhead carriage plate with its 0.42" OLED.
+2. Connect Z-axis coreless servo, micro-tweezer gripper, and reciprocating shear motor headers to tool outputs.
+3. Wire toolhead status display: verify screen reports `[TOOL: TOOL_HEAD | LINK: OK]`.
 
-#### Step 3.3: Down-Facing Sony IMX519 4K Macro Camera
+#### Step 3.3: Down-Facing 4K Macro Camera Integration
 1. Mount the Sony IMX519 camera on a 3-point leveling bracket alongside the kinematic toolhead dock.
 2. Install the 850 nm infrared ring illuminator surrounding the lens.
-3. Calibrate camera-to-nozzle offset: run an automated optical fiducial touch-off script ($< 0.08$ mm offset error).
+3. Connect camera to Wi-Fi video streamer; calibrate pixel-to-Cartesian millimeter transform matrix ($0.024	ext{ mm/pixel}$ at 200 mm working distance).
 
 #### Step 3.4: Saffron & Purslane Specialized Toolheads
-1. Assemble the Saffron Micro-Tweezer toolhead: a coreless digital micro-servo driving soft-silicone coated forceps tips.
-2. Assemble the Purslane Reciprocating Shear toolhead: a miniature 12V 100 Hz oscillating cutter.
+1. Assemble the Saffron Micro-Tweezer toolhead: coreless digital micro-servo driving soft-silicone coated forceps tips.
+2. Assemble the Purslane Reciprocating Shear toolhead: miniature 12V oscillating cutter.
 3. Test automatic tool-docking: the gantry moves to the tool rack at $(X=0, Y=0)$, slides sideways into the slot, and uncouples the kinematic magnets cleanly.
 
-#### Step 3.5: Vision Pipeline Tuning & Coordinate Mapping
-1. Connect the Raspberry Pi 5 host SBC to the Octopus Pro over high-speed serial.
-2. Launch the OpenCV / YOLOv8 canopy segmentation daemon.
-3. Calibrate pixel-to-Cartesian millimeter transform matrix ($0.024\text{ mm/pixel}$ at 200 mm working distance).
+#### Step 3.5: Provisioning & 250ms Watchdog Verification
+1. Power on Central Controller; note pairing ID on its OLED (`CTRL_ID: 4096`).
+2. Power on Gantry Node; display shows `[NODE UNPAIRED - PAIR VIA BLE]`.
+3. Press physical setup button on Node; connect via mobile companion app over BLE, enter `4096`.
+4. Node commits credentials to NVS, links to hidden Wi-Fi, and updates display to `[ONLINE | LINK -> 4096]`.
+5. Verify Node auto-discovers and binds all three BLE Tools.
+6. Test fail-safe watchdog: drop BLE link to `DEV_X_AXIS`; verify stepper current drops to 0.0A in $< 250$ ms.
 
 ```mermaid
 stateDiagram-v2
@@ -306,17 +322,17 @@ stateDiagram-v2
     
     state Canopy_Scan {
         [*] --> High_Speed_Tile_Scan
-        High_Speed_Tile_Scan --> Bloom_Detected: YOLO Detects Saffron Flower
+        High_Speed_Tile_Scan --> Bloom_Detected: Central Controller YOLO Detects Saffron Flower
     }
 
     Canopy_Scan --> Tool_Swap: Saffron Stigmas Identified
-
+    
     state Tool_Swap {
         [*] --> Dock_Current_Tool
         Dock_Current_Tool --> Grab_Saffron_Tweezer: Kinematic Magnetic Seat
     }
 
-    Tool_Swap --> Stigma_Extraction: Sub-Millimeter Targeting
+    Tool_Swap --> Stigma_Extraction: Sub-Millimeter Targeting via Wi-Fi
 
     state Stigma_Extraction {
         [*] --> Descend_Z_Axis: Z = 45mm Above Bloom
@@ -330,24 +346,25 @@ stateDiagram-v2
 
 ### Step-by-Step Autonomous Multi-Agent Runbook
 
-1. **Pre-Flight Sensorless Homing**: At 06:00 daily, Klipper wakes the gantry. TMC2209 StallGuard detects hard physical stops at $(0,0,0)$, establishing a sub-0.1 mm coordinate datum.
-2. **High-Speed Canopy Tile Survey**: The gantry sweeps the bed in a serpentine raster at 150 mm/s. The 4K IMX519 camera captures overlapping tiles, streaming imagery to the YOLO neural model.
-3. **Saffron Stigma Detection & Triangulation**: When a blooming *Crocus sativus* flower is classified, the gantry halts. The camera zooms in with macro NIR lighting, isolating the 3 scarlet stigmas from purple petals and calculating 3D extraction coordinates ($X, Y, Z$) to $\pm 0.15$ mm precision.
+1. **Pre-Flight Sensorless Homing**: At 06:00 daily, the Gantry Node wakes upon schedule from the Central Controller. Motor StallGuard detects hard physical stops at $(0,0,0)$, zeroing the coordinate datum.
+2. **High-Speed Canopy Tile Survey**: The gantry sweeps the bed in a serpentine raster at 150 mm/s. The 4K camera captures overlapping tiles, streaming video to the Central Controller Hailo-8 NPU.
+3. **Saffron Stigma Detection & Triangulation**: When a blooming *Crocus sativus* flower is classified, the Central Controller transmits target 3D coordinates ($X, Y, Z$) to the Gantry Node with $\pm 0.15$ mm precision.
 4. **Autonomous Kinematic Tool Change**: If another tool is mounted, the gantry travels to the tool rack, docks the current tool, and magnetically couples the Saffron Micro-Tweezer.
-5. **Precision Stigma Extraction**: The tweezer descends along the Z-axis, inserts between petals without tearing, squeezes at 1.2 N force, and lifts vertically, cleanly harvesting the high-value stigmas without manual labor.
-6. **Produce Deposit & Self-Clean**: The gantry moves to the harvest chute, deposits the stigmas into a sealed desiccated collection vial, blows compressed air over the tweezers, and continues canopy surveillance.
+5. **Precision Stigma Extraction**: The `DEV_TOOL_HEAD` tool descends along the Z-axis, inserts forceps between petals without tearing, squeezes at 1.2 N force, and lifts vertically, cleanly harvesting stigmas without damaging the flower.
+6. **250ms Fail-Safe Watchdogs**: If BLE connection to `DEV_X_AXIS`, `DEV_Y_AXIS`, or `DEV_TOOL_HEAD` drops for $> 250$ ms, each tool cuts stepper current to zero. If Wi-Fi link to Central Controller is lost, the gantry halts motion safely in place.
 
 ### Add-On 2 Bill of Materials (BOM)
 
 | Item | Component Description | Sourcing / Part Reference | Qty | Unit Cost | Total Cost |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **A2-01** | BigTreeTech Octopus Pro V1.1 (STM32F429) + TMC2209s | 3D printer mainboard store | 1 | $55.00 | $55.00 |
-| **A2-02** | BTT EBB42 CAN Bus Toolhead Board + Umbilical Cable | CAN toolhead supplier | 1 | $22.00 | $22.00 |
-| **A2-03** | Sony IMX519 16MP Autofocus 4K Camera + 850nm NIR Ring | Precision camera supplier | 1 | $42.00 | $42.00 |
-| **A2-04** | AS5600 12-bit High-Resolution Magnetic Encoders (3x) | Optical/magnetic sensor shop | 3 | $7.00 | $21.00 |
+| **A2-01** | Gantry Machine Node: ESP32-S3 (8MB PSRAM) + 0.96" OLED + Setup Button | Espressif distributor | 1 | $16.00 | $16.00 |
+| **A2-02** | 3x ESP32-C3 Modular Tools with 0.42" OLED & 250ms Watchdog (X, Y, Toolhead) | Microcontroller supplier | 3 | $7.00 | $21.00 |
+| **A2-03** | Macro 4K RGB Camera Module + 850nm NIR Ring + Wi-Fi RTSP Transmitter | Precision camera supplier | 1 | $42.00 | $42.00 |
+| **A2-04** | AS5600 12-bit High-Resolution Magnetic Encoders (3x) | Magnetic sensor shop | 3 | $7.00 | $21.00 |
 | **A2-05** | Saffron Micro-Tweezer Kinematic Toolhead (Coreless Servo) | Custom micro-assembly kit | 1 | $26.00 | $26.00 |
 | **A2-06** | Purslane Reciprocating Lateral Shear Toolhead (12V Motor) | Custom micro-trimmer kit | 1 | $28.00 | $28.00 |
-| **Total** | **Add-On 2 Agentic Autonomous Pack** | **Expands Base + Add-On 1** | | | **+$194.00** |
+| **A2-07** | TMC2209 Silent Stepper Driver Interface Pack (4x) | 3D printer electronics supplier | 1 | $40.00 | $40.00 |
+| **Total** | **Add-On 2 Agentic Autonomous Pack (CNT Standard)** | **Expands Base + Add-On 1** | | | **+$194.00** |
 | **Full Build** | **Complete Autonomous Precision Cartesian Gantry** | **Base + Add-On 1 + Add-On 2** | | | **$603.40** |
 
 ---
@@ -358,21 +375,23 @@ stateDiagram-v2
 
 | Build Stage | Operational Capability | Direct Stage Cost | Cumulative Investment |
 | :--- | :--- | :--- | :--- |
-| **Base: Instructions** | 100% mechanical free-sliding carriage with manual squeeze wand & magnetic dock | $193.40 | **$193.40** |
-| **Add-On 1: Semi-Auto** | Motorized Cartesian positioning via industrial 6-button CNC jog pendant & drag chains | +$216.00 | **$409.40** |
-| **Add-On 2: Agentic AI** | Sub-millimeter Klipper CAN bus autonomy, 4K camera vision, and quick-swap toolheads | +$194.00 | **$603.40** |
+| **Base: Instructions** | 100% mechanical manual lead screw carriage with handwheels and analog dial indicator | $177.00 | **$177.00** |
+| **Add-On 1: Semi-Auto** | Motorized NEMA 23 belt drive with 4-way tactile D-pad directional jog buttons | +$216.00 | **$393.00** |
+| **Add-On 2: Agentic AI** | Controller-Node-Tool (CNT) automation, 4K macro vision, kinematic tool change, & 250ms watchdogs | +$194.00 | **$603.40** |
 
 ### Step-by-Step Zero-Waste Conversion Roadmap
 
-#### Path 1: Base Machine $\rightarrow$ Add-On 1 (Motorized CNC Gantry)
-1. Bolt the three NEMA 23 motor brackets onto the existing aluminum gantry end-plates using pre-drilled holes.
-2. Lay the GT2 9 mm steel-core belts in the V-slot channels, securing ends in the tensioner clamps.
-3. Install the nylon drag chains along the rails, wire the TB6600 driver enclosure, and plug in the 6-button CNC jog pendant. The kinematic magnetic dock and POM wheels remain 100% untouched.
+#### Path 1: Base Machine $ightarrow$ Add-On 1 (Motorized Jog Upgrade)
+1. Bolt the NEMA 23 stepper motor bracket onto the X-axis carriage plate using the pre-drilled M5 holes.
+2. Connect the 9 mm GT2 timing belt to the manual handwheel axle (the handwheels remain 100% functional for zero-power manual indexing).
+3. Mount the IP65 control box to the outer gantry upright, wire the 24V PSU and TB6600 drivers, and plug in the 4-way tactile jog D-pad.
 
-#### Path 2: Add-On 1 $\rightarrow$ Add-On 2 (Autonomous Sub-Millimeter AI)
-1. Replace the TB6600 driver box with the BTT Octopus Pro Klipper mainboard.
-2. Mount the EBB42 CAN bus board on the carriage and run the 4-wire umbilical through the existing drag chains.
-3. Install the Sony IMX519 4K camera, calibrate the OpenCV vision pipeline, and stock the tool rack with Saffron Tweezers and Purslane Shears.
+#### Path 2: Add-On 1 $ightarrow$ Add-On 2 (Autonomous Edge CNT Robot)
+1. Mount the Gantry Node (ESP32-S3 + OLED + Button) and modular ESP32-C3 Tools (`DEV_X_AXIS`, `DEV_Y_AXIS`, `DEV_TOOL_HEAD`).
+2. Mount the 4K macro camera module on the toolhead carriage with Wi-Fi video streaming to the Central Controller.
+3. Install AS5600 magnetic rotary encoders on motor shafts for closed-loop position verification.
+4. Mount kinematic toolheads (Saffron Tweezer and Purslane Shear) into the tool rack.
+5. Provision the Gantry Node with the Central Controller ID via mobile app BLE, and verify all 250ms deadman watchdogs are active.
 
 ---
 

@@ -258,59 +258,85 @@ flowchart LR
 
 ## 5. Add-On 2: Agentic Autonomous AI Pack (Edge Vision & Closed Loop)
 
-The **Agentic Autonomous AI Pack** transforms the bioreactor into a self-monitoring, precision cyber-physical node capable of independent closed-loop environmental control, automated ozonated sanitization, and robotic tote exchange with the Ground Track AGV.
+Under [RFC-0004](/rfcs/rfc-0004-controller-node-tool), the **Agentic Autonomous AI Pack** transforms the bioreactor into a hierarchical **Controller-Node-Tool (CNT)** production cell. The bioreactor operates as a dedicated **Sprout Node** commanding modular **Edge Tools** over BLE, receiving automated 96-hour growth recipes and sanitization cycles from the Central Biosphere Controller over encrypted Wi-Fi.
 
 ### Autonomous Vision & Telemetry Architecture
-- **Compute Core**: ESP32-S3 Dual-Core Xtensa LX7 (240 MHz, 8 MB PSRAM) running FreeRTOS with CAN bus transceiver (SN65HVD230) and local MQTT/ESPHome telemetry.
-- **Silent Stepper Control**: Trinamic TMC2209 driver running in UART mode, enabling Sensorless StallGuard homing to locate the drum access hatch without mechanical limit switches.
-- **Microclimate Telemetry**: Sensirion SHT40 high-precision relative humidity ($\pm 1.5\%$) and temperature ($\pm 0.1^\circ\text{C}$) digital probe mounted directly in the drum exhaust stream.
-- **Sanitation Subsystem**: 12V 200 mg/h corona-discharge ozone generator paired with a miniature air pump and diffuser stone inside the misting fluid reservoir for zero-chemical sterilization.
-- **Robotic Biosphere Interlock**: Magnetic alignment latch and retroreflective optical fiducial marker for automated docking with the Ground Track AGV pod carrier.
+- **Sprout Machine Node (ESP32-S3)**: Dual-Core Xtensa LX7 (240 MHz, 8 MB PSRAM) with an onboard 0.96" I2C OLED screen (`[NODE: SPROUT-01 | LINK -> 4096]`) and physical setup button. It maintains a secure Wi-Fi client uplink to the Central Controller and acts as a local BLE Central manager.
+- **Dedicated Modular Edge Tools (ESP32-C3)**: Actuators and sensors are driven 1:1 by tiny ESP32-C3 micro-controllers equipped with 0.42" micro OLED displays and **250ms hardware deadman watchdogs**:
+  - `DEV_DRUM_STEP`: Micro ESP32-C3 with 0.42" OLED (`TOOL: DRUM_STEP | LINK: OK`) + 250ms watchdog driving a Trinamic TMC2209 silent driver in UART mode with Sensorless StallGuard homing.
+  - `DEV_MIST_SOL`: Micro ESP32-C3 with 0.42" OLED (`TOOL: MIST_SOL | LINK: OK`) + 250ms watchdog governing misting pump and gravity drain solenoids.
+  - `DEV_OZONE_GEN`: Micro ESP32-C3 with 0.42" OLED (`TOOL: OZONE_GEN | LINK: OK`) + 250ms watchdog driving the 12V 200 mg/h corona-discharge ozone generator.
+  - `DEV_CLIMATE_SNS`: Micro ESP32-C3 with 0.42" OLED (`TOOL: CLIMATE_SNS | LINK: OK`) reading the Sensirion SHT40 relative humidity ($\pm 1.5\%$) and temperature ($\pm 0.1^\circ\text{C}$) exhaust probe.
+- **250ms Deadman Watchdog Fail-Safe**: If any Tool loses BLE connection to the Sprout Node for $> 250$ ms, it drops immediately into high-Z safe state: stepper current cuts to zero holding torque, solenoids snap closed, and the ozone generator shuts off immediately.
+- **Robotic Biosphere Interlock**: Magnetic alignment latch and retroreflective optical AprilTag fiducial marker for automated docking with the Ground Track AGV pod carrier.
 
-```
-       CYBER-PHYSICAL EDGE AI ARCHITECTURE & CAN TELEMETRY
+```text
+       CONTROLLER-NODE-TOOL (CNT) HIERARCHICAL EDGE ARCHITECTURE
   =================================================================
-             +-----------------------------------------+
-             |       ESP32-S3 Edge Controller Node      |
-             |  (FreeRTOS Multitasking + Neural Net)   |
-             +----+--------------------+----------+----+
-                  |                    |          |
-         +--------+--+                 |          +-------+----+
-         |   UART    |                 | I2C              | GPIO
-         v           v                 v                  v
-    [TMC2209 Driver] [CAN Bus]    [SHT40 Temp/RH]   [Relay Board]
-         |           | (To Master   (Exhaust Flue)   |      |
-         v           |  Biosphere)                   v      v
-   [NEMA 17 Stepper] v                         [Ozone] [Solenoid]
-   (Sensorless Homing)                     (Generator)  (Drain)
+            CENTRAL BIOSPHERE CONTROLLER (Pi 5 + Hailo-8 M.2 HAT)
+            • Emits Hidden WPA3 Wi-Fi Network | OLED: [CTRL_ID: 4096]
+            • Global Growth Schedules & Multi-Agent AGV Logistics
+                                  │
+                                  │ Encrypted Wi-Fi Uplink
+                                  ▼
+             ┌─────────────────────────────────────────┐
+             │       SPROUT MACHINE NODE (ESP32-S3)    │
+             │  • OLED Display: [NODE: SPROUT-01]     │
+             │  • Setup Push-Button for Mobile BLE     │
+             │  • FreeRTOS Subsystem Orchestrator      │
+             └────────────────────┬────────────────────┘
+                                  │
+         ┌────────────────────────┼────────────────────────┐
+         │ BLE Downlink           │ BLE Downlink           │ BLE Downlink
+         ▼                        ▼                        ▼
+ ┌───────────────┐        ┌───────────────┐        ┌───────────────┐
+ │ TOOL:         │        │ TOOL:         │        │ TOOL:         │
+ │ DEV_DRUM_STEP │        │ DEV_MIST_SOL  │        │ DEV_OZONE_GEN │
+ │ ESP32-C3 Micro│        │ ESP32-C3 Micro│        │ ESP32-C3 Micro│
+ │ 0.42" OLED    │        │ 0.42" OLED    │        │ 0.42" OLED    │
+ │ 250ms Deadman │        │ 250ms Deadman │        │ 250ms Deadman │
+ │ TMC2209 Silent│        │ Mist Solenoid │        │ Corona Ozone  │
+ └───────────────┘        └───────────────┘        └───────────────┘
+                                  │
+                                  ▼ (BLE Downlink)
+                          ┌───────────────┐
+                          │ TOOL:         │
+                          │ DEV_CLIMATE   │
+                          │ ESP32-C3 Micro│
+                          │ 0.42" OLED    │
+                          │ SHT40 Temp/RH │
+                          └───────────────┘
 ```
 
 ### Step-by-Step Sensor Commissioning & Edge AI Protocol
 
-#### Step 3.1: ESP32-S3 & TMC2209 Carrier Board Assembly
-1. Mount the ESP32-S3 development board and TMC2209 driver module onto the DIN rail carrier base inside the control enclosure.
-2. Jumper the TMC2209 DIAG pin to ESP32 GPIO 4 for sensorless stall detection homing.
-3. Configure TMC2209 motor current to 850 mA RMS via UART software register commands.
+#### Step 3.1: Sprout Node & Tool Carrier Board Assembly
+1. Mount the ESP32-S3 Node with 0.96" I2C OLED and physical setup button onto the DIN rail carrier base inside the control enclosure.
+2. Mount the modular ESP32-C3 Edge Tool boards (`DEV_DRUM_STEP`, `DEV_MIST_SOL`, `DEV_OZONE_GEN`, `DEV_CLIMATE`) with 0.42" micro OLED screens on the lower rail.
+3. Wire the TMC2209 silent stepper driver to `DEV_DRUM_STEP` via UART (DIAG pin jumpered for sensorless StallGuard homing).
 
 #### Step 3.2: SHT40 Environmental Probe Integration
 1. Mount the Sensirion SHT40 probe inside an aspirated, lightproof flue adapter on the drum's exhaust vent.
-2. Connect SHT40 via shielded 4-wire cable to I2C bus (SDA: GPIO 21, SCL: GPIO 22). Pull up lines with $4.7\text{ k}\Omega$ resistors.
-3. Verify telemetry readings over serial terminal: ambient RH must report within 30–95% at 0.1°C temperature resolution.
+2. Wire SHT40 via shielded 4-wire cable to `DEV_CLIMATE_SNS` tool I2C bus with $4.7\text{ k}\Omega$ pull-up resistors.
+3. Verify telemetry readings on tool OLED screen: ambient RH and temperature report accurately.
 
 #### Step 3.3: Corona Ozone Generator & Diffusion Loop
 1. Mount the 12V 200 mg/h corona-discharge ozone generator module in an isolated compartment of the enclosure.
 2. Route silicone ozone-rated tubing from the ozone discharge port through a check valve into the mist water reservoir's ceramic diffuser stone.
-3. Wire the ozone module and internal aeration pump to Relay Channel 1 (GPIO 18).
+3. Wire the ozone module and internal aeration pump to `DEV_OZONE_GEN` tool output relay.
 
 #### Step 3.4: Magnetic AGV Docking Latch & Optical Target
 1. Bolt a neodymium magnetic alignment latch (150 N holding force) to the chassis front lower rail ($Z = 120$ mm datum).
 2. Install a high-contrast AprilTag 36h11 fiducial marker directly above the access hatch for AGV machine vision recognition.
-3. Wire the magnetic latch release solenoid to Relay Channel 2 (GPIO 19).
+3. Wire the magnetic latch release solenoid to `DEV_MIST_SOL` tool secondary channel.
 
-#### Step 3.5: Firmware Flashing & CAN Bus Calibration
-1. Flash the ESP32-S3 with the Open Biosphere FreeRTOS agentic firmware via USB-C.
-2. Configure CAN bus bit rate to 500 kbps (TX: GPIO 5, RX: GPIO 6) linked to the master biosphere backbone.
-3. Test StallGuard homing: drum rotates slowly until the access hatch mechanical stop registers a current spike, zeroing the rotational datum accurately to $\pm 1.2^\circ$.
+#### Step 3.5: Provisioning & 250ms Watchdog Verification
+1. Power on Central Controller; note pairing ID on its OLED (`CTRL_ID: 4096`).
+2. Power on Sprout Node; display shows `[NODE UNPAIRED - PAIR VIA BLE]`.
+3. Press physical setup button on Node; connect via mobile companion app over BLE, enter `4096`.
+4. Node commits credentials to NVS, links to hidden Wi-Fi, and updates display to `[ONLINE | LINK -> 4096]`.
+5. Verify Node auto-discovers and binds all four BLE Tools.
+6. Test fail-safe watchdog: drop BLE link to `DEV_DRUM_STEP`; verify stepper current immediately cuts to 0.0A in $< 250$ ms.
 
 ```mermaid
 stateDiagram-v2
@@ -332,33 +358,32 @@ stateDiagram-v2
     }
 
     Active_Elongation --> Harvest_Ready: Hour 96 (Biomass Complete)
-    Harvest_Ready --> AGV_Tote_Exchange: CAN Handshake Signal
+    Harvest_Ready --> AGV_Tote_Exchange: Wi-Fi Handshake to Controller
     AGV_Tote_Exchange --> Ozonated_Sanitize: Drum Empty Confirmed
     Ozonated_Sanitize --> Standby_Homed: 3-min Wash Done
 ```
 
 ### Step-by-Step Autonomous Multi-Agent Runbook
 
-1. **Pre-Flight Self-Test & StallGuard Homing**: On boot, the ESP32-S3 executes a memory and sensor bus check. It drives the stepper in reverse at 0.5 RPM until Trinamic StallGuard detects the mechanical travel limit, indexing the 150 mm hatch position precisely at $0.0^\circ$.
-2. **Day 1 Adaptive Germination**: For the first 24 hours, the agent maintains an unbroken dark photophobic cycle. It pulses misting for 12 seconds every 18 minutes, tumbling 1 revolution to coat seeds uniformly in an ultra-fine water film without mechanical agitation.
-3. **Day 2–3 Closed-Loop Elongation Control**: The SHT40 probe continuously reads chamber humidity and transpiration rate. If relative humidity drops below 92%, the agent triggers immediate misting. If transpiration heat causes chamber temperature to rise $> 24.5^\circ\text{C}$, the agent commands a 3-revolution tumble and opens the motorized exhaust damper for evaporative cooling.
-4. **Automated AGV Handshake & Harvest**: At Hour 96, the agent flags `STATE_HARVEST_READY` across the CAN bus. When the Ground Track AGV pod carrier docks and signals readiness, the bioreactor rotates the hatch to $180^\circ$ (downward) and actuates the latch release solenoid, dumping ~3.5 kg of prime hypocotyls directly into the AGV transport tote.
-5. **Post-Harvest Ozonated Sanitation Wash**: Immediately following harvest confirmation, the agent actuates Relay 1, running the corona ozone generator and mist pump for 3 minutes. Ozonated water (0.4 ppm dissolved $O_3$) blankets every mesh pore, destroying fungal spores and bacteria with zero chemical residue.
-6. **Fail-Safe Watchdog Protocol**: If CAN bus communication is lost or SHT40 telemetry fails, the firmware immediately drops into autonomous fail-safe mode: executing a hardcoded 15-minute tumble and 30-second mist schedule while sounding an audible piezo alarm.
+1. **Pre-Flight Self-Test & StallGuard Homing**: On boot, the Sprout Node queries its bound BLE Tools. It commands `DEV_DRUM_STEP` to rotate the drum at 0.5 RPM until Trinamic StallGuard detects the mechanical stop, indexing the 150 mm hatch position precisely at $0.0^\circ$.
+2. **Day 1 Adaptive Germination**: For the first 24 hours, the Node executes the dark photophobic recipe from the Central Controller. It signals `DEV_MIST_SOL` to pulse misting for 12 seconds every 18 minutes, and commands `DEV_DRUM_STEP` to tumble 1 revolution to coat seeds uniformly in an ultra-fine water film.
+3. **Day 2–3 Closed-Loop Elongation Control**: `DEV_CLIMATE_SNS` continuously relays chamber humidity and transpiration rate. If relative humidity drops below 92%, the Node triggers immediate misting. If transpiration heat causes chamber temperature to rise $> 24.5^\circ\text{C}$, the Node commands a 3-revolution tumble and opens the exhaust damper for evaporative cooling.
+4. **Automated AGV Handshake & Harvest**: At Hour 96, the Node flags harvest readiness to the Central Controller over Wi-Fi. The Central Controller dispatches the Ground Track AGV. When the AGV docks, the bioreactor rotates the hatch to $180^\circ$ (downward) and actuates the latch release solenoid, dumping ~3.5 kg of prime hypocotyls directly into the AGV transport tote.
+5. **Post-Harvest Ozonated Sanitation Wash**: Immediately following harvest confirmation, the Node signals `DEV_OZONE_GEN`, running the corona ozone generator and mist pump for 3 minutes. Ozonated water (0.4 ppm dissolved $O_3$) blankets every mesh pore, destroying fungal spores and bacteria with zero chemical residue.
+6. **250ms Fail-Safe Watchdog Protocol**: If BLE communication between Node and any Tool drops for $> 250$ ms, that Tool trips into high-Z safe state. If Wi-Fi link to Central Controller is lost, the Node continues the current 96-hour stage timer autonomously.
 
 ### Add-On 2 Bill of Materials (BOM)
 
 | Item | Component Description | Sourcing / Part Reference | Qty | Unit Cost | Total Cost |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **A2-01** | ESP32-S3 DevKitC-1 N8R8 (8MB PSRAM, USB-C) | Espressif distributor | 1 | $12.00 | $12.00 |
+| **A2-01** | Sprout Machine Node: ESP32-S3 (8MB PSRAM) + 0.96" OLED + Setup Button | Espressif distributor | 1 | $14.00 | $14.00 |
 | **A2-02** | Trinamic TMC2209 Silent Stepper Driver (UART/StallGuard) | 3D printer electronics supplier | 1 | $8.00 | $8.00 |
-| **A2-03** | Sensirion SHT40 Digital Temp/RH Probe + Flue Mount | Precision sensor distributor | 1 | $14.00 | $14.00 |
+| **A2-03** | Sensirion SHT40 Temp/RH Probe + 1x ESP32-C3 Climate Tool | Precision sensor distributor | 1 | $15.00 | $15.00 |
 | **A2-04** | 12V 200mg/h Corona Ozone Generator + Diffuser Stone | Compact ozone module supplier | 1 | $19.00 | $19.00 |
-| **A2-05** | Dual SPDT Optocoupled 10A Relay Module (Ozone & Solenoid) | Robotics electronics supplier | 1 | $6.00 | $6.00 |
-| **A2-06** | CAN Bus Transceiver Module (SN65HVD230 3.3V) | Waveshare / industrial CAN | 1 | $5.00 | $5.00 |
-| **A2-07** | Neodymium Magnetic Alignment Docking Latch + Solenoid | Robotics latch supplier | 1 | $16.00 | $16.00 |
-| **A2-08** | Custom Shielded Wire Harness & AprilTag Optical Plate | 22 AWG silicone + laser target | 1 | $9.00 | $9.00 |
-| **Total** | **Add-On 2 Agentic Autonomous Pack** | **Expands Base + Add-On 1** | | | **+$89.00** |
+| **A2-05** | 2x ESP32-C3 Modular Tools with 0.42" OLED & 250ms Watchdog (Drum & Mist) | Microcontroller supplier | 2 | $7.00 | $14.00 |
+| **A2-06** | Neodymium Magnetic Alignment Docking Latch + Solenoid | Robotics latch supplier | 1 | $14.00 | $14.00 |
+| **A2-07** | Custom Wire Harness & AprilTag Optical Alignment Plate | 22 AWG silicone + laser target | 1 | $5.00 | $5.00 |
+| **Total** | **Add-On 2 Agentic Autonomous Pack (CNT Standard)** | **Expands Base + Add-On 1** | | | **+$89.00** |
 | **Full Build** | **Complete Autonomous Biosphere Bioreactor** | **Base + Add-On 1 + Add-On 2** | | | **$381.00** |
 
 ---
@@ -373,7 +398,7 @@ The Sprout Bioreactor is intentionally designed so that **not a single bolt or b
 | :--- | :--- | :--- | :--- |
 | **Base: Instructions** | 100% mechanical zero-electricity benchtop tumbler with hand crank and ratchet | $145.00 | **$145.00** |
 | **Add-On 1: Semi-Auto** | Motorized planetary rotation, pressurized misting, and analog dial countdown timer | +$147.00 | **$292.00** |
-| **Add-On 2: Agentic AI** | Automated 96-hour growth schedule, ozone sanitizing wash, and AGV docking handshake | +$89.00 | **$381.00** |
+| **Add-On 2: Agentic AI** | Controller-Node-Tool (CNT) automation, StallGuard homing, ozone sanitizing, & AGV interlock | +$89.00 | **$381.00** |
 
 ### Step-by-Step Zero-Waste Conversion Roadmap
 
@@ -383,12 +408,12 @@ The Sprout Bioreactor is intentionally designed so that **not a single bolt or b
 3. Install the 24V diaphragm mist pump in the lower frame base, threading the 1/4" mist line through the pre-cast access grommets in the top hood.
 4. Fasten the IP65 control box to the front rail with two M5 T-nuts, plug in the 24V desktop power supply, and enjoy automated timed tumbling and misting. The hand crank remains permanently installed for manual zero-power override.
 
-#### Path 2: Add-On 1 $\rightarrow$ Add-On 2 (Agentic Autonomous Upgrade)
-1. Open the IP65 control enclosure. Unclip the mechanical spring-wound countdown timers and clip the ESP32-S3 and TMC2209 carrier board onto the internal DIN rail.
-2. Connect the stepper motor 4-wire lead to the TMC2209 output header and route the DIAG stall wire to GPIO 4.
-3. Insert the SHT40 probe into the pre-molded exhaust flue socket and plug the 4-wire JST connector into the I2C port.
-4. Mount the corona ozone module and connect its aeration tube to the reservoir stone.
-5. Bolt the magnetic alignment docking latch to the lower front rail, connect the CAN bus pair to the master biosphere backbone, and boot the autonomous FreeRTOS scheduler.
+#### Path 2: Add-On 1 $\rightarrow$ Add-On 2 (Agentic Autonomous CNT Upgrade)
+1. Open the IP65 control enclosure. Unclip the mechanical spring-wound countdown timers and mount the Sprout Node (ESP32-S3 + OLED + Button) and modular ESP32-C3 Tools on the DIN rail.
+2. Connect the stepper motor 4-wire lead to the TMC2209 driver governed by the `DEV_DRUM_STEP` tool with StallGuard homing.
+3. Insert the SHT40 probe into the pre-molded exhaust flue socket and plug the 4-wire lead into the `DEV_CLIMATE_SNS` tool.
+4. Mount the corona ozone module and connect its aeration tube to the reservoir stone, wired to the `DEV_OZONE_GEN` tool.
+5. Bolt the magnetic alignment docking latch to the lower front rail, provision the Sprout Node with the Central Controller ID via mobile app BLE, and verify all four BLE Tools bind with active 250ms watchdogs.
 
 ---
 

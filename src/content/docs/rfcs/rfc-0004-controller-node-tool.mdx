@@ -1,0 +1,121 @@
+---
+title: "RFC-0004: Controller-Node-Tool (CNT) Hierarchical Edge Architecture"
+description: Architectural standard establishing the 3-tier Controller-Node-Tool compute topology, Wi-Fi/BLE provisioning, and 250ms deadman watchdogs
+---
+
+- **Status**: Implemented
+- **Author**: Architecture Working Group
+- **Created**: 2026-10-24
+- **Target Subsystem**: Hardware & Edge Architecture (ARCH-001)
+
+---
+
+## 1. Executive Summary & Philosophy
+
+The previous machine specifications assumed each appliance hosted an isolated, monolithic high-tier compute node running standalone vision/planning and arbitrary CAN transceivers. This introduced unnecessary unit cost, brittle point-to-point network wiring, and catastrophic single-point failures.
+
+This RFC establishes the **Controller-Node-Tool (CNT)** standard across the entire Open Biosphere system:
+* **The Controller (Central Brain):** Exactly one physical black-box appliance orchestrating the entire biosphere enclosure.
+* **The Node (Machine Subsystem / Aggregator):** Exactly one per physical machine frame (e.g. Fluidic Skimmer, Sprout Bioreactor), orchestrating that machine's immediate sub-environment.
+* **The Tools (Actuators & Sensors):** Minimalist edge micro-controllers dedicated 1:1 to a single operational device (stepper, valve, float sensor, camera).
+
+```
+┌────────────────────────────────────────────────────────────────────────┐
+│                        CONTROLLER (CENTRAL BRAIN)                      │
+│  Raspberry Pi 5 + AI Accelerator (e.g. Hailo-8 M.2 HAT)                │
+│  • Emits hidden biosphere Wi-Fi network                                │
+│  • Onboard mini OLED status screen: displays [CONTROLLER ID: XXXX]     │
+│  • Open BLE endpoint for operator mobile companion app                 │
+│  • Maintains global biosphere model, scheduling, and multi-agent loops │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │ Encrypted Local Wi-Fi (Direct Link)
+                                    ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│                        NODE (MACHINE AGGREGATOR)                       │
+│  Mid-tier ESP32 (e.g. ESP32-S3 Dual-Core)                              │
+│  • One per physical machine / subsystem frame                          │
+│  • Onboard mini OLED status screen + setup push-button                 │
+│  • Connects UP to Controller via Wi-Fi using paired Controller ID      │
+│  • Exposes BLE service for initial phone provisioning                  │
+│  • Manages local machine logic, safety watchdog, and down-links        │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │ Low-Power BLE / Point-to-Point Bus
+        ┌───────────────────────────┼───────────────────────────┐
+        ▼                           ▼                           ▼
+┌───────────────────┐       ┌───────────────────┐       ┌───────────────────┐
+│       TOOL        │       │       TOOL        │       │       TOOL        │
+│ Dedicated Tiny    │       │ Dedicated Tiny    │       │ Dedicated Tiny    │
+│ ESP32 Edge Device │       │ ESP32 Edge Device │       │ ESP32 Edge Device │
+│ (e.g. ESP32-C3)   │       │ (e.g. ESP32-C3)   │       │ (e.g. ESP32-C3)   │
+│ Mini OLED Screen  │       │ Mini OLED Screen  │       │ Mini OLED Screen  │
+│ 250ms Deadman     │       │ 250ms Deadman     │       │ 250ms Deadman     │
+│ [Weir Actuator]   │       │ [Auger Stepper]   │       │ [Sump Ultrasonic] │
+└───────────────────┘       └───────────────────┘       └───────────────────┘
+```
+
+---
+
+## 2. Structural Layer Definitions
+
+### Layer 1: The Controller (Biosphere Master)
+* **Hardware:** Raspberry Pi 5 (8GB) with dedicated NPU/AI HAT (e.g. Hailo-8 / Google Coral).
+* **Physical Enclosure:** Self-contained black-box enclosure requiring only master DC power.
+* **Display Interface:** Dedicated small I2C/SPI OLED display (0.96" or 1.3") showing:
+  * Controller Pairing ID (e.g. `CTRL_ID: 4096`).
+  * System health, connected Node count, and local Wi-Fi status.
+* **Networking & RF:**
+  * **Wi-Fi AP:** Broadcasts a hidden, high-throughput WPA3 local network for Nodes only.
+  * **Bluetooth (BLE):** Dedicated service open for operator companion app connection. Operators connect their phone to the Controller via BLE to query global biosphere health, telemetry, yield statistics, and active alerts.
+
+### Layer 2: The Node (Subsystem Manager)
+* **Hardware:** Mid-tier ESP32 module (ESP32-S3 with PSRAM).
+* **Topology Role:** Bridges high-level Controller commands with low-level physical Tool execution.
+* **Display Interface:** Dedicated mini OLED screen (0.91" or 0.96") showing:
+  * Node Name (e.g. `NODE: SKIMMER-01`).
+  * Assigned Controller Pairing ID.
+  * Active downstream Tool count and link state.
+* **Networking & Provisioning:**
+  * **Uplink:** Local Wi-Fi client connecting to Controller's hidden AP.
+  * **Downlink:** Local BLE Central managing Tool peripheral connections.
+  * **Provisioning Flow:**
+    1. Builder presses the physical setup button on the Node.
+    2. Builder connects mobile companion app to the Node over BLE.
+    3. App prompts: *"Enter Target Controller ID"*.
+    4. Builder inputs the ID displayed on the Controller's physical screen (`4096`).
+    5. Node commits the ID to NVS (non-volatile storage), associates with the hidden Controller Wi-Fi network, and executes the registration handshake.
+
+### Layer 3: The Tool (Dedicated Hardware Edge Worker)
+* **Hardware:** Minimalist micro ESP32 (e.g. ESP32-C3 / Seeed Xiao ESP32).
+* **Scope:** Dedicated strictly 1:1 with an individual actuator, motor driver, or discrete sensor cluster. Tools never run heavy vision or cross-machine coordination.
+* **Display Interface:** Micro OLED screen (0.42" or 0.91") indicating Tool Type, Tool ID, and Link Status (e.g. `TOOL: AUGER_DRV | LINK: OK`).
+* **Fail-Safe & Watchdog:**
+  * Implements an uncompromising **250ms hardware watchdog**.
+  * If the Tool loses its BLE connection to its Node for $> 250$ ms, it drops immediately into high-Z safe state: stepper outputs cut to zero holding torque, linear actuators stop in place, solenoid valves snap closed.
+
+---
+
+## 3. Provisioning & Operational Runbook
+
+### Phase A: Controller Initialization
+1. Connect master 12V/24V power to the Central Controller Black Box.
+2. Pi 5 boots, initializes AI runtime, brings up the hidden Wi-Fi network, and displays the pairing integer on its OLED: `CTRL_ID: 4096`.
+3. Open companion mobile app, pair with Controller via BLE, and verify an empty node tree.
+
+### Phase B: Node Commissioning
+1. Power up target machine Node (e.g. Skimmer Node).
+2. Mini screen displays `NODE UNPAIRED - PAIR VIA BLE`.
+3. Press physical setup button on Node; select Node in mobile app via BLE; enter `4096`.
+4. Node pairs with hidden Wi-Fi, handshakes with Controller, and switches OLED to `ONLINE | LINK -> 4096`.
+
+### Phase C: Tool Binding
+1. Power up dedicated Tool controller.
+2. Tool auto-advertises peripheral BLE service with its fixed Tool Descriptor (`DEV_PUMP_VFD`, `DEV_AUGER_STEP`, `DEV_SUMP_LEVEL`).
+3. Machine Node automatically captures and binds its local Tools, routing command primitives from the Controller directly to the appropriate Tool edge.
+
+---
+
+## 4. Architectural Rules for Machine Documents
+
+1. **Strip Monolithic CAN & Onboard Pi Modules:** Individual machines are strictly **Nodes** hosting modular **Tools**. Heavy AI accelerators and Raspberry Pi compute stacks belong exclusively to the Central Controller.
+2. **Update Add-On 2 Specs:** Replace the legacy CAN-bus-only architecture in Add-On 2 across all 8 machines with the **Node (ESP32-S3) + Modular Tools (ESP32-C3) BLE/Wi-Fi stack**, mini I2C OLED status screens, and Controller handshake protocol.
+3. **Preserve Mechanical & Push-Button Foundations:** Base Machine (manual levers/cranks) and Add-On 1 (raw relays/buttons/slip-clutches) remain completely intact and functional at all times.
