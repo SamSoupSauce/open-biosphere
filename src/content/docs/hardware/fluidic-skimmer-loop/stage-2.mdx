@@ -155,7 +155,7 @@ Step 3.5: 250ms Watchdog & Fail-Safe Verification
    - Pump runs at minimum maintenance speed (15% duty cycle, 12 GPM) to prevent water stagnation.
    - Central Controller Hailo-8 NPU processes canopy camera frames every 5 seconds, calculating frond coverage percentage.
 3. **Automated Skimming Sequence Activation**:
-   - When frond mat thickness reaches $\ge 8.0$ mm, Central Controller dispatches `CMD_START_HARVEST` to Skimmer Node.
+   - When frond mat thickness reaches ≥ 8.0 mm, Central Controller dispatches `CMD_START_HARVEST` to Skimmer Node.
    - Skimmer Node signals `DEV_WEIR_ACT` over BLE to extend 14 mm, submerging the weir lip into the dense vegetative layer.
    - Skimmer Node signals `DEV_PUMP_VFD` over BLE to ramp pump speed to 65 GPM, drawing surface biomass across the wedge wire.
 4. **Closed-Loop Dewatering Press Modulation**:

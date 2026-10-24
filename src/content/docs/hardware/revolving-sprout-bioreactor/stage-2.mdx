@@ -65,7 +65,7 @@ Under [RFC-0004](/rfcs/rfc-0004-controller-node-tool) and [RFC-0006](/rfcs/rfc-0
   - `DEV_DRUM_STEP`: Micro ESP32-C3 with 0.42" OLED (`TOOL: DRUM_STEP | LINK: OK`) + 250ms watchdog driving a Trinamic TMC2209 silent driver in UART mode with Sensorless StallGuard homing.
   - `DEV_MIST_SOL`: Micro ESP32-C3 with 0.42" OLED (`TOOL: MIST_SOL | LINK: OK`) + 250ms watchdog governing misting pump and gravity drain solenoids.
   - `DEV_OZONE_GEN`: Micro ESP32-C3 with 0.42" OLED (`TOOL: OZONE_GEN | LINK: OK`) + 250ms watchdog driving the 12V 200 mg/h corona-discharge ozone generator.
-  - `DEV_CLIMATE_SNS`: Micro ESP32-C3 with 0.42" OLED (`TOOL: CLIMATE_SNS | LINK: OK`) reading the Sensirion SHT40 relative humidity ($\pm 1.5\%$) and temperature ($\pm 0.1^\circ\text{C}$) exhaust probe.
+  - `DEV_CLIMATE_SNS`: Micro ESP32-C3 with 0.42" OLED (`TOOL: CLIMATE_SNS | LINK: OK`) reading the Sensirion SHT40 relative humidity ($\pm 1.5\%$) and temperature (± 0.1°C) exhaust probe.
 - **250ms Deadman Watchdog Fail-Safe**: If any Tool loses BLE connection to the Sprout Node for $> 250$ ms, it drops immediately into high-Z safe state: stepper current cuts to zero holding torque, solenoids snap closed, and the ozone generator shuts off immediately.
 - **Robotic Biosphere Interlock**: Magnetic alignment latch and retroreflective optical AprilTag fiducial marker for automated docking with the Ground Track AGV pod carrier.
 
@@ -116,7 +116,7 @@ Under [RFC-0004](/rfcs/rfc-0004-controller-node-tool) and [RFC-0006](/rfcs/rfc-0
 
 #### Step 3.2: SHT40 Environmental Probe Integration
 1. Mount the Sensirion SHT40 probe inside an aspirated, lightproof flue adapter on the drum's exhaust vent.
-2. Wire SHT40 via shielded 4-wire cable to `DEV_CLIMATE_SNS` tool I2C bus with $4.7\text{ k}\Omega$ pull-up resistors.
+2. Wire SHT40 via shielded 4-wire cable to `DEV_CLIMATE_SNS` tool I2C bus with 4.7 kΩ pull-up resistors.
 3. Verify telemetry readings on tool OLED screen: ambient RH and temperature report accurately.
 
 #### Step 3.3: Corona Ozone Generator & Diffusion Loop
@@ -166,7 +166,7 @@ stateDiagram-v2
 
 1. **Pre-Flight Self-Test & StallGuard Homing**: On boot, the Sprout Node queries its bound BLE Tools. It commands `DEV_DRUM_STEP` to rotate the drum at 0.5 RPM until Trinamic StallGuard detects the mechanical stop, indexing the 150 mm hatch position precisely at $0.0^\circ$.
 2. **Day 1 Adaptive Germination**: For the first 24 hours, the Node executes the dark photophobic recipe from the Central Controller. It signals `DEV_MIST_SOL` to pulse misting for 12 seconds every 18 minutes, and commands `DEV_DRUM_STEP` to tumble 1 revolution to coat seeds uniformly in an ultra-fine water film.
-3. **Day 2–3 Closed-Loop Elongation Control**: `DEV_CLIMATE_SNS` continuously relays chamber humidity and transpiration rate. If relative humidity drops below 92%, the Node triggers immediate misting. If transpiration heat causes chamber temperature to rise $> 24.5^\circ\text{C}$, the Node commands a 3-revolution tumble and opens the exhaust damper for evaporative cooling.
+3. **Day 2–3 Closed-Loop Elongation Control**: `DEV_CLIMATE_SNS` continuously relays chamber humidity and transpiration rate. If relative humidity drops below 92%, the Node triggers immediate misting. If transpiration heat causes chamber temperature to rise > 24.5°C, the Node commands a 3-revolution tumble and opens the exhaust damper for evaporative cooling.
 4. **Automated AGV Handshake & Harvest**: At Hour 96, the Node flags harvest readiness to the Central Controller over Wi-Fi. The Central Controller dispatches the Ground Track AGV. When the AGV docks, the bioreactor rotates the hatch to $180^\circ$ (downward) and actuates the latch release solenoid, dumping ~3.5 kg of prime hypocotyls directly into the AGV transport tote.
 5. **Post-Harvest Ozonated Sanitation Wash**: Immediately following harvest confirmation, the Node signals `DEV_OZONE_GEN`, running the corona ozone generator and mist pump for 3 minutes. Ozonated water (0.4 ppm dissolved $O_3$) blankets every mesh pore, destroying fungal spores and bacteria with zero chemical residue.
 6. **250ms Fail-Safe Watchdog Protocol**: If BLE communication between Node and any Tool drops for $> 250$ ms, that Tool trips into high-Z safe state. If Wi-Fi link to Central Controller is lost, the Node continues the current 96-hour stage timer autonomously.

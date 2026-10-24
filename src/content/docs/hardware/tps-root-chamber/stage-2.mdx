@@ -59,7 +59,7 @@ Under [RFC-0004](/rfcs/rfc-0004-controller-node-tool) and [RFC-0006](/rfcs/rfc-0
 
 ### Autonomous Vision & Telemetry Architecture
 - **Root Chamber Node (ESP32-S3)**: Dual-Core Xtensa LX7 (240 MHz, 8 MB PSRAM) mounted inside an IP65 enclosure on the tub exterior governed by the **Strict Two-Control Physical Standard** (Master DC Power Switch and Recessed SD Reset Button alongside 0.96" I2C OLED `[NODE: ROOT-01 | LINK -> 4096]`). Uplinks to Central Controller via Wi-Fi; downlinks to Tools via BLE Central.
-- **Infrared Root Transpiration Sensing**: Melexis MLX90614 non-contact infrared pyrometer sensor mounted in the tub lid, measuring root-zone surface temperature to $\pm 0.2^\circ	ext{C}$ to detect crop transpiration stress in real time.
+- **Infrared Root Transpiration Sensing**: Melexis MLX90614 non-contact infrared pyrometer sensor mounted in the tub lid, measuring root-zone surface temperature to ± 0.2°C to detect crop transpiration stress in real time.
 - **Dedicated Modular Edge Tools (ESP32-C3)**: Driven 1:1 by micro ESP32-C3 controllers equipped with 0.42" micro OLED displays and **250ms hardware deadman watchdogs**:
   - `DEV_PUMP_RELAY`: Micro ESP32-C3 with 0.42" OLED (`TOOL: PUMP_RELAY | LINK: OK`) + 250ms watchdog driving 24V 120 PSI booster pump and 24V fast-bleed depressurization solenoid with dry-run float interrupt.
   - `DEV_ROOT_TELE`: Micro ESP32-C3 with 0.42" OLED (`TOOL: ROOT_TELE | LINK: OK`) reading the MLX90614 infrared root surface thermometer and dual optical liquid level sensors.

@@ -61,7 +61,7 @@ Under [RFC-0004](/rfcs/rfc-0004-controller-node-tool) and [RFC-0006](/rfcs/rfc-0
 ### Autonomous Vision & Telemetry Architecture
 - **Doser Machine Node (ESP32-S3)**: Dual-Core Xtensa LX7 (240 MHz, 8 MB PSRAM) mounted inside an IP65 enclosure governed by the **Strict Two-Control Physical Standard** (Master DC Power Switch and Recessed SD Reset Button alongside 0.96" I2C OLED `[NODE: DOSER-01 | LINK -> 4096]`). Uplinks to Central Controller via Wi-Fi; collects telemetry and downlinks to Tools via BLE Central.
 - **Galvanically Isolated Chemistry Probes**: Dual-junction sealed lab-grade pH probe and platinum dual-pin EC electrode connected via Atlas Scientific galvanic isolation circuits, eliminating ground-loop electrical noise from submersible pumps.
-- **Photoacoustic Ambient Gas Sensor**: Sensirion SCD41 photoacoustic NDIR sensor measuring atmospheric $CO_2$ (400 to 5,000 ppm $\pm 40$ ppm), air temperature ($\pm 0.8^\circ	ext{C}$), and relative humidity ($\pm 2\%$).
+- **Photoacoustic Ambient Gas Sensor**: Sensirion SCD41 photoacoustic NDIR sensor measuring atmospheric $CO_2$ (400 to 5,000 ppm $\pm 40$ ppm), air temperature (± 0.8°C), and relative humidity ($\pm 2\%$).
 - **Dedicated Modular Edge Tools (ESP32-C3)**: Driven 1:1 by micro ESP32-C3 controllers equipped with 0.42" micro OLED displays and **250ms hardware deadman watchdogs**:
   - `DEV_PUMP_BANK1`: Micro ESP32-C3 with 0.42" OLED (`TOOL: PUMP_BANK1 | LINK: OK`) + 250ms watchdog driving peristaltic pumps 1–3 (N, P, K).
   - `DEV_PUMP_BANK2`: Micro ESP32-C3 with 0.42" OLED (`TOOL: PUMP_BANK2 | LINK: OK`) + 250ms watchdog driving peristaltic pumps 4–6 (Micro, pH Down, pH Up).
@@ -119,7 +119,7 @@ Under [RFC-0004](/rfcs/rfc-0004-controller-node-tool) and [RFC-0006](/rfcs/rfc-0
 #### Step 3.2: Sensirion SCD41 NDIR $CO_2$ & Gas Tool (`DEV_GAS_CTL`)
 1. Mount the Sensirion SCD41 sensor inside an aspirated, light-shielded duct adapter positioned at canopy level ($Z = 900$ mm).
 2. Wire sensor and 12V $CO_2$ solenoid to `DEV_GAS_CTL` tool board (ESP32-C3).
-3. Verify baseline reading in outdoor ambient air (must read $415	ext{ ppm} \pm 25	ext{ ppm}$).
+3. Verify baseline reading in outdoor ambient air (must read 415 ppm ± 25 ppm).
 
 #### Step 3.3: Doser Node & Pump Bank Wiring
 1. Mount the ESP32-S3 Node with 0.96" I2C OLED display and physical setup push-button inside the IP65 enclosure.
@@ -128,7 +128,7 @@ Under [RFC-0004](/rfcs/rfc-0004-controller-node-tool) and [RFC-0006](/rfcs/rfc-0
 
 #### Step 3.4: Closed-Loop Telemetry Tuning
 1. Configure Central Controller PID setpoints: pH target = 6.4 (Deadband $\pm 0.15$), EC target = 1.8 mS/cm (Deadband $\pm 0.1$), $CO_2$ target = 1,000 ppm (Deadband $\pm 50$ ppm).
-2. Tune proportional gain ($K_p = 0.45$) and integral time ($T_i = 180	ext{ s}$) to prevent chemical overshooting in the recirculating reservoir.
+2. Tune proportional gain ($K_p = 0.45$) and integral time (T_i = 180 s) to prevent chemical overshooting in the recirculating reservoir.
 
 #### Step 3.5: Provisioning & 250ms Watchdog Verification
 1. Power on Central Controller; verify active Cluster ID on OLED, terminal stdout, or BLE beacon (`POTFRM-4096`).

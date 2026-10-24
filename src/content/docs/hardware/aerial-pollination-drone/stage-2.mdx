@@ -150,7 +150,7 @@ stateDiagram-v2
 
 ### Step-by-Step Autonomous Multi-Agent Runbook
 
-1. **Scheduled Morning Wakeup**: At 09:00 AM, the Central Controller broadcasts an autonomous pollination sortie over Wi-Fi. The drone confirms battery $\ge 8.35	ext{ V}$ and signals `DEV_FLIGHT_CTL` to spin up motors.
+1. **Scheduled Morning Wakeup**: At 09:00 AM, the Central Controller broadcasts an autonomous pollination sortie over Wi-Fi. The drone confirms battery ≥ 8.35 V and signals `DEV_FLIGHT_CTL` to spin up motors.
 2. **Centimeter-Accurate Optical Takeoff**: The drone lifts vertically out of the conical perch to $Z = 1,200$ mm. The `DEV_OPT_FLOW` tool locks position over ground texture with zero horizontal drift.
 3. **AprilTag Waypoint Navigation**: The drone traverses the perimeter rail; the Central Controller reads ceiling tags from the camera feed and streams real-time pose corrections to the Drone Node.
 4. **Autonomous Buzz Pollination Sortie**: Upon reaching pre-mapped flower targets, the drone drops to $Z = 600$ mm (150 mm above flowers), pulses downwash at 2.4 m/s, and signals `DEV_BUZZ_ACT` to fire its piezo transducer for 3.0 seconds, buzz-pollinating blossoms.

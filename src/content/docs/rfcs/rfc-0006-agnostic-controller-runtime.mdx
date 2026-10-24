@@ -47,7 +47,7 @@ A compute host must satisfy the following hardware and software capabilities to 
 | **System Memory (RAM)**| 4 GB unified or system RAM | 8 GB to 16 GB RAM |
 | **Storage Capacity** | 16 GB NVMe / SSD / eMMC / high-end Class 10 SD | 64 GB NVMe SSD (for telemetry databases and GGUFs) |
 | **Wireless NIC** | 802.11 b/g/n/ac adapter with AP (Master) mode support | Dual-band (2.4 GHz / 5 GHz) AP-capable wireless chipset |
-| **Python Runtime** | Python $\ge 3.10$ | Python 3.11 or 3.12 |
+| **Python Runtime** | Python ≥ 3.10 | Python 3.11 or 3.12 |
 | **Inference Backend** | `llama-cpp-python` compiled with native acceleration | Metal (macOS), CUDA (Nvidia), OpenCL/ROCm, or AVX2 (CPU) |
 
 > [!NOTE]
@@ -136,7 +136,7 @@ The Controller runtime is composed of three lightweight, decoupled daemon layers
 
 ### 4.2 Controller Orchestration Daemon (`biosphere-core`)
 - High-performance asynchronous Python daemon listening on secure WebSocket and HTTPS port `8443`.
-- Maintains the in-memory global state tree of all paired Nodes (`/nodes/{node_id}/tools`).
+- Maintains the in-memory global state tree of all paired Nodes (`/nodes/:node_id/tools`).
 - **250ms Heartbeat Dispatcher**: Transmits periodic heartbeat packets over WebSocket to every connected Node. If a Node fails to respond within 500 ms, it is flagged as disconnected, triggering local Tool fail-safes.
 - Provides a stateless REST / JSON-RPC status API consumed by the Flutter companion app.
 

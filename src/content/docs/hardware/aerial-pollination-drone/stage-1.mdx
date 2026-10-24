@@ -144,14 +144,14 @@ flowchart LR
 
 ### Step-by-Step BLE Virtual Panel Operating Runbook
 
-1. **Pre-Flight Battery Check**: Verify 2S 450mAh LiPo battery voltage reads $8.40\text{ V}$ ($4.20\text{ V/cell}$) on a digital battery checker. Slide pack into silicone battery strap; connect XT30 plug.
+1. **Pre-Flight Battery Check**: Verify 2S 450mAh LiPo battery voltage reads 8.40 V (4.20 V/cell) on a digital battery checker. Slide pack into silicone battery strap; connect XT30 plug.
 2. **Master Power Engagement**: Flip the inline master DC switch to ON. The onboard 0.91" OLED illuminates: `[DRONE-A1 | BLE READY]`.
 3. **Walk-Up BLE Virtual Panel Connection**: Open the Flutter companion app on mobile device. Select `DRONE-A1` from discovered BLE peripherals. The app instantly renders the Flight Virtual Panel.
 4. **Arming the Quadcopter**: Place the drone on a flat, clear section of the greenhouse path. Tap the virtual ARM button in the app (props idle at 5.5% RPM).
 5. **Canopy Hover & Traverse**: Raise the virtual throttle slider to 45% hover. Fly along the trellised crop row at 0.5 m/s, maintaining 150 mm to 300 mm clearance directly above blooming pepper clusters.
 6. **Engaging Buzz Pollination**: Position the drone directly above an open flower cluster. Tap the virtual BUZZ button in the app. The flight controller holds altitude while pulsing throttle $\pm 8\%$ and oscillating the piezo transducer at 310 Hz for 2 seconds. The combined prop-wash and acoustic vibration releases pollen clouds instantly.
 7. **"Nuke & Pave" SD Recovery Protocol**: If flight firmware locks up or parameter corruption occurs, hold the recessed SD reset button for 5 seconds during power-on. The bootloader reflashes golden firmware from micro-SD in 4 seconds.
-8. **Return & Battery Swap**: When battery voltage sags to 7.0V ($3.5\text{ V/cell}$ under load), land on the path, disarm motors via virtual panel, flip master DC switch OFF, and swap in a fresh LiPo pack.
+8. **Return & Battery Swap**: When battery voltage sags to 7.0V (3.5 V/cell under load), land on the path, disarm motors via virtual panel, flip master DC switch OFF, and swap in a fresh LiPo pack.
 
 ---
 
