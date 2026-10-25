@@ -438,8 +438,14 @@ export default function ModelViewer({
           const rny2 = uny * cosX - rnz1 * sinX;
           const rnz2 = uny * sinX + rnz1 * cosX;
 
+          // Backface Culling: In solid shaded mode, discard faces pointing away from the camera.
+          // rnz2 <= 0 means the outward normal points away from the viewer. Culling backfaces
+          // prevents interior and rear faces from being drawn over foreground faces in Painter's sort,
+          // completely eliminating inside-out transparency/x-ray artifacts.
+          if (!wireframe && rnz2 <= 0.0) return;
+
           // Diffuse illumination dot product
-          const intensity = Math.max(0.18, (rnx1 * lx + rny2 * ly + rnz2 * lz + 1) / 2);
+          const intensity = Math.max(0.22, (rnx1 * lx + rny2 * ly + rnz2 * lz + 1) / 2);
 
           // Base theme color based on material
           let r = 56, g = 189, b = 248; // Sky cyan
@@ -486,8 +492,9 @@ export default function ModelViewer({
             ctx.fillStyle = f.color;
             ctx.fill();
 
-            ctx.strokeStyle = 'rgba(56, 189, 248, 0.25)';
-            ctx.lineWidth = 0.6;
+            // Subtle dark facet seam to define edges without creating bright translucent grid lines
+            ctx.strokeStyle = 'rgba(15, 23, 42, 0.45)';
+            ctx.lineWidth = 0.5;
             ctx.stroke();
           });
         } else {

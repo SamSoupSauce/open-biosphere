@@ -60,12 +60,12 @@ def add_cylinder_z(verts, faces, x, y, r, z0, z1, n_seg=8):
         verts.append([x + r * math.cos(ang), y + r * math.sin(ang), z1])
     for i in range(n_seg):
         nxt = (i + 1) % n_seg
-        v0 = base_idx + i * 2
-        v1 = base_idx + i * 2 + 1
-        v2 = base_idx + nxt * 2
-        v3 = base_idx + nxt * 2 + 1
-        faces.append([v0, v1, v3])
-        faces.append([v0, v3, v2])
+        b0 = base_idx + i * 2
+        t0 = base_idx + i * 2 + 1
+        b1 = base_idx + nxt * 2
+        t1 = base_idx + nxt * 2 + 1
+        faces.append([b0, b1, t0])
+        faces.append([b1, t1, t0])
     c_bot = len(verts); verts.append([x, y, z0])
     c_top = len(verts); verts.append([x, y, z1])
     for i in range(n_seg):
@@ -81,12 +81,12 @@ def add_cylinder_x(verts, faces, x0, x1, y, z, r, n_seg=8):
         verts.append([x1, y + r * math.cos(ang), z + r * math.sin(ang)])
     for i in range(n_seg):
         nxt = (i + 1) % n_seg
-        v0 = base_idx + i * 2
-        v1 = base_idx + i * 2 + 1
-        v2 = base_idx + nxt * 2
-        v3 = base_idx + nxt * 2 + 1
-        faces.append([v0, v1, v3])
-        faces.append([v0, v3, v2])
+        b0 = base_idx + i * 2
+        t0 = base_idx + i * 2 + 1
+        b1 = base_idx + nxt * 2
+        t1 = base_idx + nxt * 2 + 1
+        faces.append([b0, b1, t0])
+        faces.append([b1, t1, t0])
     c_left = len(verts); verts.append([x0, y, z])
     c_right = len(verts); verts.append([x1, y, z])
     for i in range(n_seg):
