@@ -84,8 +84,8 @@ Because the system engine already generates parametric 3D geometry for all struc
   * PBR (Physically Based Rendering) standard material channels: Base Color, Metallic-Roughness, Normal.
   * Strict avoidance of non-standard vendor extensions to preserve client-side WebGL/Three.js render parity.
 * **Coordinate Conventions:**
-  * Axis alignment: Standard glTF coordinate space (Right-handed, $+Y$ Up, $+Z$ Forward).
-  * Units: Meters ($1.0 = 1\text{ m}$) across all component and assembly models to avoid runtime unit transforms.
+  * Axis alignment: Standard glTF coordinate space (Right-handed, +Y Up, +Z Forward).
+  * Units: Meters (1.0 = 1 m) across all component and assembly models to avoid runtime unit transforms.
 
 ### 3.2 Hierarchical Composition & Direct Sub-Model Referencing
 
@@ -136,9 +136,9 @@ To improve accessibility on desktop terminals, mobile browsers, and touchscreen 
   * **Zoom In (`<button id="zoom-in">+</button>`):** Incremental camera dolly along the current view vector toward the target orbit center.
   * **Zoom Out (`<button id="zoom-out">−</button>`):** Incremental camera dolly away from the target orbit center along the view vector.
 * **Camera Bounds:**
-  * Dynamic clamp on minimum distance ($r_{\text{min}}$) based on model bounding box radius to prevent clipping into interior geometry.
-  * Clamped maximum distance ($r_{\text{max}}$) to keep the assembly framed within the frustum.
-* **Step-Action Sync:** Step progression controls trigger camera interpolation (lerp) to predefined focus targets, ghosting preceding sub-assemblies (opacity $0.25$) while highlighting the newly inserted component ($1.0$ opacity, accent edge).
+  * Dynamic clamp on minimum distance (r_min) based on model bounding box radius to prevent clipping into interior geometry.
+  * Clamped maximum distance (r_max) to keep the assembly framed within the frustum.
+* **Step-Action Sync:** Step progression controls trigger camera interpolation (lerp) to predefined focus targets, ghosting preceding sub-assemblies (opacity 0.25) while highlighting the newly inserted component (1.0 opacity, accent edge).
 
 ---
 
@@ -170,7 +170,7 @@ repo/
 | Milestone Component | Status | Verification Detail |
 | :--- | :--- | :--- |
 | **glTF 2.0 / GLB Generator** | `Implemented` | `scripts/build_gltf_pipeline.py` exports compliant binary GLB buffers |
-| **Atomic CAD Sub-Models** | `Implemented` | `cad/components/{hardware,drive}/*.glb` generated with PBR materials |
+| **Atomic CAD Sub-Models** | `Implemented` | `cad/components/(hardware, drive)/*.glb` generated with PBR materials |
 | **Composite Hierarchies** | `Implemented` | `cad/assemblies/*.gltf` with declarative `extras.ref` references |
 | **Scene Graph Resolver** | `Implemented` | `web/viewer/loader/SceneGraphResolver.js` concurrent mesh cache & linker |
 | **ZoomHUD Discrete Overlay** | `Implemented` | `<button id="zoom-in">` & `<button id="zoom-out">` with smooth damping |
