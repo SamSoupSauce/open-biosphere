@@ -252,6 +252,29 @@ export default function ModelViewer({
           minZoomRef.current = Math.max(0.25, 45 / (boundingR * 1.5));
           maxZoomRef.current = Math.min(4.5, 320 / (boundingR * 0.4));
 
+          // Normal orientation audit: auto-detect and correct inverted mesh winding
+          const mcx = parsed.vertices.reduce((s, v) => s + v[0], 0) / parsed.vertices.length;
+          const mcy = parsed.vertices.reduce((s, v) => s + v[1], 0) / parsed.vertices.length;
+          const mcz = parsed.vertices.reduce((s, v) => s + v[2], 0) / parsed.vertices.length;
+          let outwardSum = 0;
+          for (let fi = 0; fi < parsed.faces.length; fi++) {
+            const [a, b, c] = parsed.faces[fi];
+            const v0 = parsed.vertices[a], v1 = parsed.vertices[b], v2 = parsed.vertices[c];
+            if (!v0 || !v1 || !v2) continue;
+            const ax = v1[0] - v0[0], ay = v1[1] - v0[1], az = v1[2] - v0[2];
+            const bx = v2[0] - v0[0], by = v2[1] - v0[1], bz = v2[2] - v0[2];
+            const fnx = ay * bz - az * by;
+            const fny = az * bx - ax * bz;
+            const fnz = ax * by - ay * bx;
+            const fcx = (v0[0] + v1[0] + v2[0]) / 3 - mcx;
+            const fcy = (v0[1] + v1[1] + v2[1]) / 3 - mcy;
+            const fcz = (v0[2] + v1[2] + v2[2]) / 3 - mcz;
+            outwardSum += (fnx * fcx + fny * fcy + fnz * fcz);
+          }
+          if (outwardSum < 0) {
+            parsed.faces = parsed.faces.map(([a, b, c]) => [a, c, b]);
+          }
+
           setMesh(parsed);
           setModelLoaded(true);
         }
