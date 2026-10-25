@@ -1,0 +1,105 @@
+---
+title: "BCA Packaging Engine — Stage 0: Zero-Power Baseline"
+description: "Stage 0 pure mechanical build instructions, isolated BOM, vector blueprint, and manual operating runbook for Bio-Pitch & Ceramic Packaging Engine."
+---
+
+import { Card, CardGrid, LinkButton } from '@astrojs/starlight/components';
+
+# BCA Packaging Engine — Stage 0: Zero-Power Baseline
+
+* **System ID:** `SYS-BCA-PRESS-00`
+* **Classification:** Open Hardware / Processing Machinery / Zero-Plastic Agriculture
+* **Build Stage:** `Stage 0: Pure Mechanical Baseline (Zero Electricity)`
+* **Standard Specification:** [RFC-0013: Closed-Loop BCA Packaging Engine](/open-biosphere/rfcs/rfc-0013-bca-packaging-engine/)
+
+---
+
+## 1. Subsystem Overview & Baseline Operating Principles
+
+Stage 0 establishes the foundational mechanical chassis, crushing chamber, and compaction extruder for the Bio-Pitch & Ceramic Aggregate (BCA) packaging engine. It requires **zero electrical power, zero microcontrollers, and zero automated sensors**.
+
+The builder uses manual ratchet cranks to power the counter-rotating toothed shafts, gravity to feed coarse grog into the heated barrel, an Acme hand-wheel lead screw to tamp and extrude the warm bio-pitch mastic through the die face, and a hand-tensioned music wire bow to slice extruded container profiles to length.
+
+---
+
+## 2. Isolated Stage 0 Bill of Materials (BOM)
+
+| Part ID | Part Name | Qty | Fabrication Type | Material | Estimated Cost |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| [`PART-FAB-BREAKER-TOOTHED-SHAFT`](/open-biosphere/parts/part-custom-breaker-toothed-shaft/) | Twin Counter-Rotating Toothed Breaker Shafts | 1 set | Custom Fab (Milled) | Manganese Steel | $65.00 |
+| [`PART-FAB-PUG-AUGER-JACKETED`](/open-biosphere/parts/part-custom-pug-auger-jacketed/) | Jacketed 304 SS Pug Mill Barrel & Auger | 1 | Custom Fab (Welded) | 304 Stainless Steel | $85.00 |
+| `PART-MECH-CHASSIS-STEEL-2MM` | Welded Angle-Iron Machine Chassis (50x50x4mm) | 1 | Stock Metal / Welded | Structural Steel | $45.00 |
+| `PART-MECH-SHAFT-SS-8MM` | Acme Lead-Screw Ram with Hand Wheel (Tr16x4) | 1 | Commercial COTS | Hardened Steel | $55.00 |
+| `PART-MECH-FASTENER-M5-PACK` | Grade 8.8 Hex Bolts, Lock Washers & M8 Hardware | 1 pk | Commercial COTS | Zinc-Plated Steel | $15.00 |
+| [`PART-FAB-SHEAR-CARRIAGE-WIRE`](/open-biosphere/parts/part-custom-shear-carriage-wire/) | Music Wire Tension Bow Slicer (0.6mm spring wire) | 1 | Custom Fab (Bowed) | Spring Steel / Alum | $20.00 |
+| **Total Stage 0 Direct Cost** | — | — | — | — | **$285.00** |
+
+---
+
+## 3. Tooling & Fastener Requirements
+
+* **Wrenches & Sockets:** 10 mm, 13 mm, 17 mm open-end wrenches and ratchets
+* **Hex Keys:** 3 mm, 4 mm, 5 mm, 6 mm metric Allen keys
+* **Drill & Bits:** Drill press or hand drill with 5.5 mm, 6.8 mm, 8.5 mm HSS cobalt drill bits
+* **Thread Taps:** M6 × 1.0 and M8 × 1.25 metric machine taps
+* **Safety Gear:** High-temperature leather welding gloves (rated for 300°C), face shield, and heat-resistant apron
+
+---
+
+## 4. Standalone Full SVG Blueprint
+
+![Stage 0 Technical Blueprint](/open-biosphere/blueprints/bca-packaging-engine-stage-0.svg)
+
+---
+
+## 5. Step-by-Step Mechanical Fabrication & Assembly Runbook
+
+### Step 0.1: Structural Chassis Assembly
+1. Lay out the 50 × 50 × 4 mm structural angle-iron uprights on a flat datum welding table.
+2. Square the base frame to within ±0.5 mm diagonal tolerance ($1,450 \times 680$ mm).
+3. Bolt the lateral mounting brackets using M8 Grade 8.8 bolts torqued to 28 N·m.
+4. Mount the heavy base leveling feet and anchor to the shop floor datum line.
+
+### Step 0.2: Thermal Breaker Chamber & Toothed Shaft Installation
+1. Position the twin counter-rotating manganese toothed shafts ([`PART-FAB-BREAKER-TOOTHED-SHAFT`](/open-biosphere/parts/part-custom-breaker-toothed-shaft/)) inside the upper hopper housing.
+2. Seat the shafts into heavy-duty UC205-16 cast-iron flanged pillow block bearings.
+3. Verify that the tooth-to-tooth clearance is locked to exactly 2.0 mm across the entire 320 mm axial length.
+4. Affix the spur gear synchronization pair on the exterior drive side and test smooth hand rotation via the 1/2" square ratchet drive adapter.
+
+### Step 0.3: Jacketed Pug Barrel & Auger Mount
+1. Fasten the 304 stainless steel jacketed pug mill barrel ([`PART-FAB-PUG-AUGER-JACKETED`](/open-biosphere/parts/part-custom-pug-auger-jacketed/)) horizontally beneath the breaker discharge chute.
+2. Insert the central progressive-pitch auger shaft, locking the rear thrust collar against the bronze bronze sleeve bearing.
+3. Install the top gravity-feed hopper collar with high-temperature graphite gasket seals.
+4. Connect the thermal exhaust pre-heating jacket duct to receive waste hot air from the retort flue.
+
+### Step 0.4: Acme Screw Ram Extrusion Head Mounting
+1. Align the Acme Tr16x4 lead-screw ram along the longitudinal centerline of the extrusion chamber.
+2. Mount the 250 mm cast-iron hand wheel to the screw tail with a 5 mm hardened roll pin.
+3. Fasten the steel die face flange to the barrel muzzle using eight M8 high-tensile studs.
+4. Verify axial travel: the compaction piston must stroke smoothly forward 120 mm without binding against barrel sidewalls.
+
+### Step 0.5: Wire Cutoff Bow Rigging & Hot-Plate Bed
+1. Mount the spring-tensioned music wire bow ([`PART-FAB-SHEAR-CARRIAGE-WIRE`](/open-biosphere/parts/part-custom-shear-carriage-wire/)) to the dual 12 mm ground guide rods at the die exit.
+2. Tension the 0.6 mm spring steel piano wire to 150 N using the knurled turnbuckle.
+3. Position the flat refractory firebrick curing platform directly beneath the wire slice line.
+4. Calibrate the adjustable mechanical depth stop to 80 mm container height.
+
+---
+
+## 6. Zero-Power / Manual Commissioning & Runbook Protocol
+
+1. **Pre-Heating Binder:** Warm raw biomass pyrolysis tar in a heavy steel pot over hot coals until it reaches pouring viscosity (approx. 90°C).
+2. **Breaker Operation:** Load spent ceramic shards or clean terracotta broken bisque into the top hopper. Turn the hand ratchet clockwise at 30–45 RPM. Verify that crushed aggregate drops as 1–3 mm coarse jagged grog with zero fine powder.
+3. **Compounding:** Pour 15% warm bio-pitch by weight onto the aggregate in the pug barrel. Turn the auger hand crank 20 full revolutions until the mastic reaches a uniform dark, glistening dough consistency.
+4. **Ram Compaction & Extrusion:** Advance the Acme lead screw hand wheel with steady continuous torque (approx. 35 N·m) to force the mastic through the die opening.
+5. **Wire Cutoff:** Pull the spring bow slicer downward in a swift, single motion to cut the formed container. Transfer the rigid green vessel onto the curing plate at 180°C for 5 minutes.
+
+---
+
+## 7. Pre-Flight Verification Checklist
+
+* [ ] Tooth-to-tooth clearance verified to $2.0 \pm 0.2$ mm across both crusher rollers.
+* [ ] Acme lead-screw threads lubricated with high-temperature molybdenum disulphide paste.
+* [ ] Music wire tension produces an audible high-pitch note ($>400$ Hz) and shows zero sagging under finger deflection.
+* [ ] Thermal pre-heat jacket holds pressure without leaking hot gases into the operator breathing zone.
+* [ ] Sample test container holds 500 mL water for 24 hours without softening or wall weeping.

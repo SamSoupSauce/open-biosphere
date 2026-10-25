@@ -1,0 +1,119 @@
+---
+title: "BCA Packaging Engine — Stage 2: Agentic Autonomous AI"
+description: "Stage 2 Controller-Node-Tool edge architecture, isolated BOM, vector blueprint, and autonomous multi-agent runbook for Bio-Pitch & Ceramic Packaging Engine."
+---
+
+import { Card, CardGrid, LinkButton } from '@astrojs/starlight/components';
+
+# BCA Packaging Engine — Stage 2: Agentic Autonomous AI
+
+* **System ID:** `SYS-BCA-PRESS-02`
+* **Classification:** Open Hardware / Processing Machinery / Zero-Plastic Agriculture
+* **Build Stage:** `Stage 2: Full Autonomous Agentic AI & Closed-Loop Extrusion`
+* **Standard Specification:** [RFC-0004: CNT Architecture](/open-biosphere/rfcs/rfc-0004-controller-node-tool/), [RFC-0006: Portable Runtime](/open-biosphere/rfcs/rfc-0006-agnostic-controller-runtime/) & [RFC-0013](/open-biosphere/rfcs/rfc-0013-bca-packaging-engine/)
+
+---
+
+## 1. Subsystem Overview & Agentic Operating Principles
+
+Stage 2 upgrades the BCA Packaging Engine into a fully autonomous cyber-physical production cell. By implementing the **Controller-Node-Tool (CNT)** hierarchical edge standard, the machine operates as an autonomous node within the multi-agent agricultural facility.
+
+A high-level central agent running on the Central Controller (Raspberry Pi 5 or local Linux host) orchestrates container sizing, production quotas, and quality inspection. Dynamic 4-way stepper gate plates ([`PART-FAB-DIE-GATE-4WAY`](/open-biosphere/parts/part-custom-die-gate-4way/)) automatically resize the extrusion profile without tooling swap downtime. A high-speed flying wire shear carriage ([`PART-FAB-SHEAR-CARRIAGE-WIRE`](/open-biosphere/parts/part-custom-shear-carriage-wire/)) cleanly slices containers to programmed height, and an S-beam 200 kg load cell provides real-time compaction density feedback to prevent voids or structural porosity.
+
+---
+
+## 2. Isolated Stage 2 Bill of Materials (BOM)
+
+| Part ID | Part Name | Qty | Fabrication Type | Material | Estimated Cost |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| [`PART-FAB-DIE-GATE-4WAY`](/open-biosphere/parts/part-custom-die-gate-4way/) | 4-Way Stepper-Actuated Variable Aperture Die Assembly | 1 set | Custom Fab (Milled) | Tool Steel | $45.00 |
+| `PART-ELEC-NEMA23-28NM` | NEMA 23 High-Torque 2.8 N·m Stepper Motors (Die & Ram) | 4 | Commercial COTS | Steel / Magnets | $68.00 |
+| `PART-ELEC-TB6600-DVR` | TB6600 Microstepping Stepper Motor Drivers (4A 40V) | 4 | Commercial COTS | Aluminum / PCB | $32.00 |
+| [`PART-FAB-SHEAR-CARRIAGE-WIRE`](/open-biosphere/parts/part-custom-shear-carriage-wire/) | Servo-Driven High-Speed Flying Wire Cutoff Carriage | 1 | Custom Fab (Milled) | 6061-T6 Aluminum | $28.00 |
+| `PART-ELEC-SERVO-MG-WP-180` | High-Speed Waterproof Metal Gear Servo (20 kg·cm) | 1 | Commercial COTS | Aluminum / Steel | $16.00 |
+| `PART-ELEC-SNS-LOADCELL-20N` | 200kg S-Beam Industrial Load Cell & HX711 Sensor | 1 | Commercial COTS | Alloy Steel / PCB | $22.00 |
+| `PART-ELEC-ESP32-C3-TOOL` | ESP32-C3 Modular Tool Controller (Load & Wire Tool) | 1 | Commercial COTS | PCB / ESP32-C3 | $9.00 |
+| `PART-FAB-TARGET-APRILTAG-HARNESS` | Optical AprilTag Datum Tracking Target (Tag36h11) | 1 | Custom Fab (Printed) | Matte PETG / Vinyl | $6.00 |
+| **Total Stage 2 Add-On Cost**| — | — | — | — | **$226.00** |
+| **Cumulative Investment (0+1+2)**| — | — | — | — | **$690.00** |
+
+---
+
+## 3. Tooling & Fastener Requirements
+
+* **Calibration Tools:** 0–150 mm digital dial caliper, laser tachometer, 50 kg test calibration weight
+* **Wiring Tools:** Shielded 4-core twisted pair stepper motor cable, heat-shrink tubing, ferrule crimpers
+* **Fasteners:** M3 × 16 mm socket head cap screws for stepper mounts, M5 × 25 mm high-tensile die studs
+
+---
+
+## 4. Standalone Full SVG Blueprint
+
+![Stage 2 Technical Blueprint](/open-biosphere/blueprints/bca-packaging-engine-stage-2.svg)
+
+---
+
+## 5. Step-by-Step Autonomous Retrofit Runbook
+
+### Step 2.1: 4-Way Stepper Variable Die Gate Assembly
+1. Mount the four precision ground tool steel die plates ([`PART-FAB-DIE-GATE-4WAY`](/open-biosphere/parts/part-custom-die-gate-4way/)) into the front die collar.
+2. Fasten the four NEMA 23 stepper motors to the radial perimeter brackets with flexible jaw couplings.
+3. Align the T8×4 stainless lead screws with the gate brass drive nuts.
+4. Verify full orthogonal travel: test stepping from 60 × 60 mm minimum throat up to 180 × 180 mm maximum throat under driver microstepping (1/8 step).
+
+### Step 2.2: Flying Shear Linear Rail & Servo Cutoff
+1. Bolt twin MGN12H linear guide rails horizontally across the die face output bracket.
+2. Mount the flying shear wire bow carriage ([`PART-FAB-SHEAR-CARRIAGE-WIRE`](/open-biosphere/parts/part-custom-shear-carriage-wire/)) to the rail blocks.
+3. Link the carriage drive linkage to the 20 kg·cm metal-gear servo arm via a ball-joint pushrod.
+4. Execute test sweep: full cutting stroke must complete in under 220 milliseconds with zero rail binding.
+
+### Step 2.3: Compaction Load Cell & Density Feedback Loop
+1. Seat the 200 kg S-beam load cell between the extruder ram thrust bearing block and the lead-screw nut carriage.
+2. Connect the 4-wire Wheatstone bridge to the HX711 24-bit ADC amplifier module.
+3. Wire the HX711 serial clock and data lines to GPIO 4 and GPIO 5 of the modular ESP32-C3 Tool Node.
+4. Calibrate zero offset (tare) and two-point span slope using a certified calibration test mass.
+
+### Step 2.4: AprilTag Spatial Datum & Vision Calibration
+1. Mount the AprilTag 36h11 target plate ([`PART-FAB-TARGET-APRILTAG-HARNESS`](/open-biosphere/parts/part-custom-target-apriltag-harness/)) to the front-left chassis datum pillar ($Z = 450$ mm).
+2. Point the overhead gantry or aerial drone camera at the target to register the machine's exact coordinate origin $(X_0, Y_0, Z_0)$ within the master facility coordinate map.
+3. Test autonomous visual homing: verify that gantry placement aligns within $\pm 0.8$ mm of the finished container pickup platform.
+
+### Step 2.5: CNT Network Provisioning & 250ms Watchdog Test
+1. Connect the Machine Node (ESP32-S3) and Tool Node (ESP32-C3) to the isolated controller network (`POTFRM-4096`).
+2. Verify heartbeat ping exchange: node must publish status payloads every 50 ms.
+3. Test safety fault injection: simulate Wi-Fi disconnect or central controller pause; verify that stepper pulses stop and heaters revert to standby hold within 250 milliseconds.
+
+---
+
+## 6. Autonomous Multi-Agent Production Protocol
+
+```text
+Central Facility Agent (Controller)
+       │
+       │ (1) Request: "Produce 12x Seedling Pots (80x80x100mm)"
+       ▼
+ESP32-S3 Machine Node
+  ├── 1. Move Die Steppers: X=80mm, Y=80mm (Aperture Set)
+  ├── 2. Ramp Barrel: Zone 1=150°C, Zone 2=175°C
+  ├── 3. Engage Breaker & Ram: Monitor Load Cell (Target: 850N Compaction)
+  └── 4. Trigger Cutoff Servo at Z=100mm
+       │
+       │ (2) Telemetry: "Container Ready at Pickup Datum"
+       ▼
+Ground AGV / Overhead Gantry
+  └── Transports finished pots to Nursery Racks
+```
+
+1. **Demand-Driven Sizing:** The crop planning agent determines whether the nursery requires small seedling pots (60 × 60 mm) or bulk produce crates (180 × 180 mm) and issues commands over the local REST/WebSocket API.
+2. **Dynamic Compaction Regulation:** As aggregate density naturally varies between grog batches, the ESP32-C3 Tool Node monitors compaction force via the load cell in real time. If density drops below 1.85 g/cm³, ram speed slows to allow higher consolidation pressure.
+3. **Automated Cutoff & Ejection:** Optical distance sensors track extrusion length; once the target height is reached, the servo shears the wall profile and the bottom pusher tilts the rigid container onto the radiant conveyor belt.
+
+---
+
+## 7. Pre-Flight Verification Checklist
+
+* [ ] 4-Way stepper die gates home reliably against optical limit switches with $\pm 0.1$ mm repeatability.
+* [ ] 200 kg S-beam load cell calibrated with zero drift over a 2-hour thermal cycle.
+* [ ] Flying wire shear completes cutting pass in &lt; 250 ms with clean edge parting.
+* [ ] Hardware deadman watchdog trips in &lt; 250 ms on packet loss, immediately de-energizing stepper drivers.
+* [ ] Central controller agent can query telemetry and initiate complete container production cycle autonomously.

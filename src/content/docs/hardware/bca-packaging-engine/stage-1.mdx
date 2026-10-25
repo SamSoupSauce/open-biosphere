@@ -1,0 +1,123 @@
+---
+title: "BCA Packaging Engine — Stage 1: BLE Electromechanical"
+description: "Stage 1 electromechanical retrofit instructions, isolated BOM, vector blueprint, and Flutter BLE Virtual Panel operating runbook for Bio-Pitch & Ceramic Packaging Engine."
+---
+
+import { Card, CardGrid, LinkButton } from '@astrojs/starlight/components';
+
+# BCA Packaging Engine — Stage 1: BLE Electromechanical
+
+* **System ID:** `SYS-BCA-PRESS-01`
+* **Classification:** Open Hardware / Processing Machinery / Zero-Plastic Agriculture
+* **Build Stage:** `Stage 1: Electromechanical & Minimalist BLE Virtual Panel`
+* **Standard Specification:** [RFC-0005: Hardware Interlocks](/open-biosphere/rfcs/rfc-0005-hardware-interlocks-ble-virtual-panel/) & [RFC-0013](/open-biosphere/rfcs/rfc-0013-bca-packaging-engine/)
+
+---
+
+## 1. Subsystem Overview & Electromechanical Principles
+
+Stage 1 upgrades the purely manual Stage 0 baseline into a semi-automated, temperature-regulated production station. Manual hand cranks are replaced with a high-torque 12V 250W geared DC motor, and manual hearth heating is replaced with dual 300W ceramic band heaters regulated by digital PID controllers.
+
+In accordance with [RFC-0005: Physical Hardware Interlocks & Minimalist BLE Virtual Interface Standard](/open-biosphere/rfcs/rfc-0005-hardware-interlocks-ble-virtual-panel/), physical button panels, dials, and touchscreens are strictly eliminated from the chassis. The machine exposes only the **Strict Two-Control Physical Standard**:
+1. **Master Inline High-Current DC Power Disconnect:** An IP65 red rotary emergency stop cutting all 24V/12V actuator and heater circuits instantly.
+2. **Factory Hardware Restore Button:** A single recessed tactile push button for clearing firmware lockouts and resetting BLE pairings.
+
+All runtime monitoring (temperature telemetry, motor RPM, jog controls, and batch recipes) is conducted through the ephemeral **Flutter BLE Virtual Panel** running on any standard mobile phone or tablet.
+
+---
+
+## 2. Isolated Stage 1 Bill of Materials (BOM)
+
+| Part ID | Part Name | Qty | Fabrication Type | Material | Estimated Cost |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| `PART-ELEC-MTR-DC-250W-GEAR` | 12V 250W High-Torque Planetary Geared DC Motor | 1 | Commercial COTS | Steel / Copper | $55.00 |
+| `PART-ELEC-PSU-24V-250W` | 24V 250W Industrial MeanWell Power Supply | 1 | Commercial COTS | Aluminum / Silicon | $35.00 |
+| `PART-ELEC-DVR-DC-15A-DUAL` | Dual H-Bridge 15A High-Current Motor Driver | 1 | Commercial COTS | PCB / MOSFETs | $20.00 |
+| `PART-ELEC-TWO-CTRL-PACK` | Strict Two-Control Standard Physical Junction Box | 1 | Custom Fab / Standard | Polycarbonate / IP65 | $25.00 |
+| `PART-ELEC-ESP32-S3-NODE` | ESP32-S3 Machine Node Controller with BLE 5.0 | 1 | Commercial COTS | PCB / ESP32-S3 | $14.00 |
+| `PART-ELEC-VR-5V5A-STEPDOWN` | 24V to 5V 5A High-Efficiency Buck Converter | 1 | Commercial COTS | PCB / Inductors | $12.00 |
+| `PART-MECH-BELT-GT2-9MM` | #40 Roller Chain & Sprocket Reduction Pair (3:1) | 1 set | Commercial COTS | Carbon Steel | $18.00 |
+| **Total Stage 1 Add-On Cost**| — | — | — | — | **$179.00** |
+| **Cumulative Investment (0+1)**| — | — | — | — | **$464.00** |
+
+---
+
+## 3. Tooling & Fastener Requirements
+
+* **Crimping & Wire Strippers:** Ferrule crimper (0.5 to 4.0 mm²), automatic wire stripper, heat gun
+* **Multimeter:** True-RMS digital multimeter with thermocouple input
+* **Hardware:** M4 × 12 mm button-head screws, M5 nyloc nuts, DIN rail mounting clips
+* **Wiring:** 12 AWG silicone high-strand copper wire (black/red) and 20 AWG shielded signal cables
+
+---
+
+## 4. Standalone Full SVG Blueprint
+
+![Stage 1 Technical Blueprint](/open-biosphere/blueprints/bca-packaging-engine-stage-1.svg)
+
+---
+
+## 5. Step-by-Step Electromechanical Retrofit Runbook
+
+### Step 1.1: Gear Motor & Chain Drive Installation
+1. Bolt the motor mounting plate to the lower chassis cross-beam using four M6 Grade 8.8 bolts.
+2. Mount the 12V 250W geared DC motor and install the 14-tooth drive sprocket onto its 12 mm D-shaft with twin set screws.
+3. Align the driven 42-tooth sprocket with the Module 1 crusher shaft and link via #40 roller chain. Set chain deflection to 8–10 mm.
+
+### Step 1.2: Ceramic Band Heaters & Thermocouple Clamping
+1. Wrap two 300W ceramic band heaters around the circumference of the 304 SS pug barrel:
+   * **Band A (Zone 1 - Compounding):** Located at $X = 120$ mm from feed chute, set to 150°C.
+   * **Band B (Zone 2 - Die Head):** Located at $X = 380$ mm at die flange, set to 175°C.
+2. Clamp K-type stainless steel sheathed thermocouples firmly beneath the band retention straps, making direct thermal contact with the steel barrel wall.
+3. Wire heater leads through fiberglass high-temperature protective sleeving into the solid-state relay (SSR) heat sink bay.
+
+### Step 1.3: Two-Control Physical Junction Box Assembly
+1. Mount the Two-Control IP65 enclosure ([`PART-ELEC-TWO-CTRL-PACK`](/open-biosphere/parts/part-custom-part-elec-two-ctrl-pack/)) to the operator-facing chassis upright.
+2. Wire the 32A red rotary emergency switch in series with the main 24V DC battery/power bus.
+3. Wire the momentary factory restore push button to GPIO 0 of the ESP32-S3 node controller with a 10 kΩ pull-up resistor.
+4. Verify that pressing the emergency cutoff drops bus voltage to 0.0V in under 15 milliseconds.
+
+### Step 1.4: ESP32-S3 Node & Power Bus Commissioning
+1. Mount the ESP32-S3 Machine Node and dual 15A H-bridge driver inside the vented DIN-rail enclosure.
+2. Connect PWM output pins to driver direction and throttle inputs, configured for 20 kHz ultrasonic switching frequency (eliminating motor whine).
+3. Connect thermocouple leads to the MAX6675 SPI amplifier module on the ESP32-S3 SPI bus.
+4. Flash the canonical Stage 1 firmware image using the web installer at `https://biosphere.local/flash`.
+
+### Step 1.5: BLE Virtual Panel Pairing & Thermal Calibration
+1. Power on the machine and launch the Flutter Open Biosphere Companion App on an Android or iOS device.
+2. Scan for BLE advertisement name `POTFRM-BCA-PRESS` and authenticate using the default physical QR code token.
+3. Command Zone 1 temperature to 150°C; verify that PID loop reaches steady-state within 8 minutes with zero overshoot (&lt;2°C ripple).
+4. Test forward and reverse jog buttons in the virtual panel: verify that the crusher rollers turn smoothly at 50 RPM under motor power.
+
+---
+
+## 6. Flutter BLE Virtual Panel Runbook
+
+```text
+[BCA Packaging Engine - BLE Interface]
+┌──────────────────────────────────────────────┐
+│ STATUS: ONLINE           WATCHDOG: 182ms [OK]│
+├──────────────────────────────────────────────┤
+│ Zone 1 (Barrel):  152.4°C  [SP: 150°C]       │
+│ Zone 2 (Die):     174.8°C  [SP: 175°C]       │
+│ Breaker Motor:    48 RPM   [Current: 3.4A]   │
+├──────────────────────────────────────────────┤
+│ [ JOG FWD ]    [ STOP ]    [ JOG REV (JAM) ] │
+│ [ AUTO EXTRUDE BATCH ]    [ STANDBY CURE ]   │
+└──────────────────────────────────────────────┘
+```
+
+1. **Pre-Heating Hold:** Tap **AUTO PRE-HEAT** in the mobile app. The system ramps band heaters to 150°C and maintains thermal equilibrium for 5 minutes to liquefy residual tar.
+2. **Motorized Crushing:** Tap **JOG FWD** to spin the breaker shafts at 50 RPM. Pour in clean ceramic shards; observe automatic motor current telemetry (nominal 2.5A to 4.5A; over-current trip set at 12A).
+3. **Automated Jam Clearing:** If foreign tramp iron enters the hopper, the H-bridge detects a current spike (&gt;10A) and automatically reverses rotation for 1.5 seconds before resuming forward drive.
+4. **Thermal Watchdog:** If the mobile device disconnects for more than 250 milliseconds, the ESP32-S3 immediately disengages motor PWM and enters safe thermal hold.
+
+---
+
+## 7. Pre-Flight Verification Checklist
+
+* [ ] Master inline DC power cutoff mechanically disconnects all actuator and heater power.
+* [ ] Zero physical potentiometers, dials, or analog switches present outside the Two-Control box.
+* [ ] K-type thermocouples read ambient room temperature ($22 \pm 3$°C) prior to heating.
+* [ ] Roller chain tension correctly aligned with less than 10 mm slack and sprockets coplanar.
+* [ ] BLE advertisement connects reliably at 10 meters distance through enclosure wall.

@@ -1,0 +1,117 @@
+---
+title: "Bio-Pitch & Ceramic Packaging Engine — Subsystem Overview"
+description: "Closed-loop, zero-plastic packaging engine converting pyrolysis bio-pitch and crushed ceramic grog into rigid, biodegradable agricultural containers."
+---
+
+import { Card, CardGrid, LinkButton } from '@astrojs/starlight/components';
+
+## 1. Standalone Homesteading & Off-Grid Utility
+
+Modern food packaging and nursery seedling pots rely heavily on petroleum-based plastics (polypropylene, polystyrene, polyethylene) that leach microplastics into compost and contaminate farm soil. Commercial bioplastics (such as PLA) require industrial composting facilities and persist for years in backyard gardens.
+
+The **Bio-Pitch & Ceramic Aggregate (BCA) Packaging Engine** enables homesteaders, off-grid communities, and bio-facility operators to manufacture waterproof, structurally rigid, and 100% recyclable containers on-site:
+
+<CardGrid>
+  <Card title="Zero-Plastic Rigid Vessels" icon="box">
+    Manufacture durable, water-resistant seedling starter pots, produce packaging, and dry goods storage containers without petrochemicals or microplastics.
+  </Card>
+  <Card title="Pyrolysis Tar Valorization" icon="flame">
+    Utilizes the heavy condensed phenolic pitch fraction collected directly from the condensation traps of wood/biomass pyrolysis retorts and gasifiers.
+  </Card>
+  <Card title="100% Closed-Loop Recyclability" icon="refresh">
+    Spent containers require zero fine ball-milling. A 250°C thermal break softens the binder; low-RPM toothed shafts crush the vessel back into 1–3 mm grog for immediate re-extrusion.
+  </Card>
+  <Card title="Humic Soil Integration" icon="seed">
+    If discarded in field soil, microbes and fungal mycelium metabolize the carbon matrix within 12–24 months, leaving inert porous terracotta gravel that aerates the soil.
+  </Card>
+</CardGrid>
+
+---
+
+## 2. Technical Specifications
+
+| Parameter | Specification |
+| :--- | :--- |
+| **Chassis Dimensions** | 1,450 mm (L) × 680 mm (W) × 920 mm (H) |
+| **Feedstock Aggregate** | 10 to 30 mesh (0.6 mm to 2.0 mm) angular crushed terracotta or bisque grog |
+| **Binder Ratio** | 12% to 18% heavy phenolic bio-pitch by weight (pumpable at 80°C–110°C) |
+| **Compounding Temperature**| 140°C to 160°C within jacketed 304 SS pug barrel |
+| **Extrusion Force** | 1.2 kN (Stage 0 Manual Screw) / 1.5 kN (Stage 1/2 Motorized Ram) |
+| **Variable Die Aperture**| 60 × 60 mm up to 180 × 180 mm (4-way stepper gate plates) |
+| **Cutoff Mechanism** | Spring-tensioned 0.6 mm music wire (adjustable Z-height: 40 mm to 200 mm) |
+| **Cure Cycle** | 3 minutes radiant heat zone at 180°C–200°C; instant rigid drop on ambient cool |
+| **Cycle Throughput** | 12 to 24 rigid containers per hour (continuous batch compounding) |
+| **Power Consumption** | 0W (Stage 0 Manual) / 380W avg (Stage 1 Heated) / 460W peak (Stage 2 Autonomous) |
+| **Standard Specification**| Conforms strictly to [RFC-0013: Closed-Loop BCA Packaging Engine](/open-biosphere/rfcs/rfc-0013-bca-packaging-engine/) |
+
+---
+
+## 3. Four-Module Physical Architecture
+
+The machine comprises four in-line processing modules mounted to a heavy welded angle-iron frame:
+
+![BCA Packaging Engine Architectural Schematic](/open-biosphere/blueprints/bca-packaging-engine-architecture.svg)
+
+1. **Module 1 (Thermal Stripper & Coarse Breaker):** Counter-rotating toothed manganese shafts running at 45–60 RPM with 2.0 mm clearance. A 220°C–250°C exhaust jacket softens incoming binder bonds before tooth contact.
+2. **Module 2 (Jacketed Pug Auger & Injector):** Heavy-wall 304 stainless steel barrel with ceramic band heaters. Progressive pitch flights compound coarse aggregate with hot bio-pitch into a stiff, hydrophobic mastic.
+3. **Module 3 (Variable-Aperture Forming Head & Die):** Overlapping tool steel gate plates dynamically scale wall dimensions ($X \times Y$), while a bottom-stamping ram forms the container floor.
+4. **Module 4 (Flying Shear & Flash Sinter Rack):** High-tensile music wire carriage slices extruded profiles to programmed height ($Z$), followed by a 3-minute radiant tunnel cure.
+
+---
+
+## 4. Staged Upgrade Progression & Cost Summary
+
+### Build Tier Comparison
+
+| Build Stage | Operational Capability | Direct Stage Cost | Cumulative Investment |
+| :--- | :--- | :--- | :--- |
+| **Stage 0: Manual Baseline** | Hand-crank breaker, manual screw ram, gravity aggregate feed, bench hot-plate cure | $215.00 | **$215.00** |
+| **Stage 1: BLE Electromechanical** | 12V 250W geared DC motor, ceramic band heaters with PID temp regulation, BLE Virtual Panel | +$155.00 | **$370.00** |
+| **Stage 2: Agentic Autonomous AI** | 4-way stepper variable die gates, flying wire servo cutoff, load-cell compaction loop, CNT mesh | +$95.00 | **$465.00** |
+
+### Step-by-Step Zero-Waste Conversion Roadmap
+
+#### Path 1: Stage 0 $\rightarrow$ Stage 1 (Electromechanical Retrofit)
+1. Bolt the high-torque 12V 250W geared DC motor to the breaker input shaft via a #40 roller chain coupler.
+2. Clasp dual 300W ceramic band heaters around the 304 SS pug mill barrel and wire to digital REX-C100 PID temperature controllers with K-type thermocouples.
+3. Mount the Strict Two-Control junction box (inline DC master switch and tactile factory restore button) on the front chassis rail.
+4. Pair the machine with the Flutter BLE Companion App to control motor speed, jog direction, and monitor thermal setpoints.
+
+#### Path 2: Stage 1 $\rightarrow$ Stage 2 (Autonomous Edge CNT Production Cell)
+1. Install four NEMA 23 stepper lead-screw actuators on the die head to actuate the overlapping 4-way variable aperture gate plates.
+2. Mount the flying shear wire carriage to linear guide rails and connect to the high-speed MG996R metal-gear servo.
+3. Integrate the 200 kg S-beam load cell onto the lead-screw ram thrust block and connect to the ESP32-C3 Tool Node via HX711 amplifier.
+4. Bind the ESP32-S3 Machine Node to the central controller runtime via private AP (`POTFRM-4096`), enforcing the 250ms hardware watchdog.
+
+---
+
+## 5. Master Biosphere Assembly Interlock
+
+When deployed in the centralized Open Biosphere agricultural ecosystem:
+
+1. **Pyrolysis Retort Liquid Trap Coupling:** Heavy phenolic pitch is piped directly from the biochar retort's secondary liquid condenser into the heated bio-pitch reservoir.
+2. **Automated Seedling Tray Delivery:** Formed BCA biodegradable starter pots are transferred via the Ground Track AGV Pod Carrier to the nursery germination racks in the Perimeter Lower Tier.
+3. **Produce Packaging Loop:** Harvested tomatoes, goldenberries, and bush beans are packed in custom-dimensioned BCA crates before export from the facility airlock.
+4. **Soil Replenishment Circuit:** Spent or damaged containers are collected by the 2-Axis Overhead Gantry, dumped into the Module 1 thermal breaker, and recycled with zero loss of mineral mass.
+
+---
+
+## 6. Select Your Build Stage
+
+<CardGrid>
+  <Card title="Stage 0: Pure Mechanical Baseline" icon="hammer">
+    **100% Zero-Power Manual Operation.** Built with hand cranks, ratchet wrenches, gravity chutes, and benchtop heating. Zero electrical power required.
+    <br/><br/>
+    <LinkButton href="/open-biosphere/hardware/bca-packaging-engine/stage-0/">Enter Stage 0 Assembly Guide →</LinkButton>
+  </Card>
+  <Card title="Stage 1: BLE Electromechanical Pack" icon="setting">
+    **Motorized Drive & BLE Virtual Panel.** 12V geared motor, 300W ceramic band heaters, PID temperature control, and Minimalist Two-Control BLE interface.
+    <br/><br/>
+    <LinkButton href="/open-biosphere/hardware/bca-packaging-engine/stage-1/">Enter Stage 1 Retrofit Guide →</LinkButton>
+  </Card>
+  <Card title="Stage 2: Agentic Autonomous AI Pack" icon="cpu">
+    **Controller-Node-Tool (CNT) Mesh.** Dynamic 4-way stepper variable die gates, flying wire servo cutoff, load-cell compaction loop, and 250ms watchdogs.
+    <br/><br/>
+    <LinkButton href="/open-biosphere/hardware/bca-packaging-engine/stage-2/">Enter Stage 2 Autonomous Guide →</LinkButton>
+  </Card>
+</CardGrid>

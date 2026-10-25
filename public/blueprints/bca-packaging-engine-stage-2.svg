@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" width="100%" height="100%">
+  <defs>
+    <pattern id="grid2" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#1e293b" stroke-width="0.5" />
+    </pattern>
+  </defs>
+  <rect width="960" height="540" fill="#090d16" />
+  <rect width="960" height="540" fill="url(#grid2)" opacity="0.6" />
+  <rect x="15" y="15" width="930" height="510" fill="none" stroke="#334155" stroke-width="1.5" />
+  
+  <!-- Title Block -->
+  <rect x="35" y="35" width="890" height="45" rx="4" fill="#1e293b" stroke="#475569" stroke-width="1" />
+  <text x="55" y="63" fill="#a855f7" font-family="monospace" font-size="14" font-weight="bold">BCA PACKAGING ENGINE // STAGE 2: AUTONOMOUS AGENTIC CLOSED-LOOP AI</text>
+  <text x="750" y="63" fill="#94a3b8" font-family="monospace" font-size="11">AGENTIC AI ELEVATION</text>
+
+  <!-- Subsystem 1: 4-Way Stepper Variable Die Gates -->
+  <g transform="translate(60, 140)">
+    <rect x="0" y="0" width="250" height="270" rx="4" fill="#0f172a" stroke="#a855f7" stroke-width="1.5" />
+    <text x="15" y="25" fill="#c084fc" font-family="monospace" font-size="11" font-weight="bold">1. 4-WAY STEPPER GATES</text>
+    <rect x="45" y="55" width="160" height="70" rx="2" fill="#1e293b" stroke="#a855f7" stroke-width="1" />
+    <rect x="80" y="70" width="90" height="40" rx="2" fill="#090d16" stroke="#c084fc" stroke-width="1.5" />
+    <text x="125" y="150" fill="#e2e8f0" font-family="sans-serif" font-size="10" text-anchor="middle">Independent Lead-Screw Gates</text>
+    <text x="125" y="170" fill="#c084fc" font-family="monospace" font-size="9" text-anchor="middle">Dynamic XxY Box Sizing</text>
+    <text x="125" y="190" fill="#cbd5e1" font-family="sans-serif" font-size="9" text-anchor="middle">Seedling Pots to Harvest Crates</text>
+    <text x="125" y="215" fill="#94a3b8" font-family="monospace" font-size="9" text-anchor="middle">Zero Tooling Swap Downtime</text>
+  </g>
+
+  <!-- Subsystem 2: Flying Wire Servo Shear Carriage -->
+  <g transform="translate(350, 140)">
+    <rect x="0" y="0" width="250" height="270" rx="4" fill="#0f172a" stroke="#38bdf8" stroke-width="1.5" />
+    <text x="15" y="25" fill="#38bdf8" font-family="monospace" font-size="11" font-weight="bold">2. SERVO CUTOFF SHEAR</text>
+    <rect x="40" y="55" width="170" height="60" rx="4" fill="#1e293b" stroke="#38bdf8" stroke-width="1" />
+    <line x1="50" y1="85" x2="200" y2="85" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="3 3" />
+    <text x="125" y="150" fill="#e2e8f0" font-family="sans-serif" font-size="10" text-anchor="middle">Linear Rail Bow Carriage</text>
+    <text x="125" y="170" fill="#38bdf8" font-family="monospace" font-size="9" text-anchor="middle">MG996R Metal-Gear High-Speed Servo</text>
+    <text x="125" y="190" fill="#cbd5e1" font-family="sans-serif" font-size="9" text-anchor="middle">Programmed Z Height Slicing</text>
+    <text x="125" y="215" fill="#10b981" font-family="monospace" font-size="9" text-anchor="middle">Clean Facet Cut Without Edge Burr</text>
+  </g>
+
+  <!-- Subsystem 3: Compaction Load Cell & CNT Edge Telemetry -->
+  <g transform="translate(640, 140)">
+    <rect x="0" y="0" width="260" height="270" rx="4" fill="#0f172a" stroke="#10b981" stroke-width="1.5" />
+    <text x="15" y="25" fill="#10b981" font-family="monospace" font-size="11" font-weight="bold">3. LOAD CELL &amp; CNT LOOP</text>
+    <rect x="45" y="50" width="170" height="65" rx="4" fill="#1e293b" stroke="#10b981" stroke-width="1" />
+    <text x="130" y="87" fill="#10b981" font-family="monospace" font-size="12" font-weight="bold" text-anchor="middle">200kg S-BEAM CELL</text>
+    <text x="130" y="145" fill="#e2e8f0" font-family="sans-serif" font-size="10" text-anchor="middle">Real-Time Density Verification</text>
+    <text x="130" y="165" fill="#10b981" font-family="monospace" font-size="9" text-anchor="middle">ESP32-C3 Tool Node Sensor</text>
+    <text x="130" y="185" fill="#cbd5e1" font-family="sans-serif" font-size="9" text-anchor="middle">Auto-Compensates Aggregate Voids</text>
+    <text x="130" y="210" fill="#38bdf8" font-family="monospace" font-size="9" text-anchor="middle">Autonomous Multi-Agent Telemetry</text>
+  </g>
+
+  <!-- Bottom Automation Bus -->
+  <line x1="60" y1="470" x2="900" y2="470" stroke="#a855f7" stroke-width="1.5" />
+  <text x="480" y="495" fill="#c084fc" font-family="monospace" font-size="10" text-anchor="middle">CONTROLLER-NODE-TOOL HIERARCHICAL EDGE ARCHITECTURE // 250ms DEADMAN WATCHDOG</text>
+</svg>

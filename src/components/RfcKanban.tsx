@@ -134,6 +134,16 @@ const RFC_LIST: RFCItem[] = [
     summary: 'Establishes strict requirements eliminating ambiguous part placeholders and defines dedicated subpages under parts/<slug>/ with canonical 3D assets, technical summaries, and interactive WebGL viewers.',
     docSlug: '/rfcs/rfc-0012-custom-fabricated-part-contracts',
   },
+  {
+    id: 'RFC-0013',
+    title: 'Closed-Loop Bio-Pitch & Ceramic Aggregate (BCA) Packaging Engine',
+    author: 'Materials & Processing Hardware Working Group',
+    targetType: 'Hardware',
+    status: 'Implemented',
+    date: '2026-10-25',
+    summary: 'Zero-plastic, infinitely recyclable rigid packaging architecture combining coarse ceramic grog with biomass pyrolysis heavy pitch binder cured at 140°C–220°C with thermal break recycling.',
+    docSlug: '/rfcs/rfc-0013-bca-packaging-engine',
+  },
 ];
 
 export default function RfcKanban() {

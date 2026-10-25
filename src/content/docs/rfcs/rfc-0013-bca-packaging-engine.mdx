@@ -1,0 +1,167 @@
+---
+title: "RFC-0013: Closed-Loop Bio-Pitch & Ceramic Aggregate (BCA) Packaging Engine"
+description: "Zero-plastic, infinitely recyclable rigid packaging architecture combining coarse ceramic grog with biomass pyrolysis heavy pitch binder."
+sidebar:
+  badge:
+    text: "STANDARD"
+    variant: "success"
+---
+
+import { Card, CardGrid, LinkButton } from '@astrojs/starlight/components';
+
+# RFC-0013: Closed-Loop Bio-Pitch & Ceramic Aggregate (BCA) Packaging Engine
+
+* **RFC ID:** `RFC-0013`
+* **Author:** Open Biosphere Agronomy, Materials & Open-Hardware Working Group
+* **Status:** `Implemented / Canonical Standard`
+* **Target Classification:** Processing Machinery / Open Hardware Specification
+* **Ecosystem:** `ag-diy` (Zero-Plastic Agricultural & Processing Architecture)
+* **Standard Tool ID:** `TOOL-BCA-PRESS-01`
+* **Target Machinery:** [Bio-Pitch & Ceramic Packaging Engine](/open-biosphere/hardware/bca-packaging-engine/)
+
+---
+
+## 1. Executive Summary & Circular Packaging Directive
+
+Current commercial and agricultural "biodegradable" single-use containers suffer from fatal ecological trade-offs:
+1. **High Embodied Energy Vitrification:** Standard ceramics require high-temperature refractory firing (&gt;1,000°C), consuming unsustainable energy per container.
+2. **Fluorinated Coatings & Persistent Polymers:** Paperboard and bagasse clamshells rely on polyfluoroalkyl substances (PFAS) or laminated polyethylene/polypropylene moisture barriers that shed persistent microplastics into soil.
+3. **Industrial-Compost Failure Modes:** Polylactic acid (PLA) and related aliphatic polyesters require municipal composting facilities operating at sustained 60°C and 90% humidity; in ambient topsoil or marine environments, they persist as brittle microplastic contaminants for decades.
+
+**RFC-0013** defines a **closed-loop, zero-plastic, infinitely recyclable rigid packaging architecture**. The system combines coarse mineral aggregate (crushed terracotta shards, bisque grog, or fired clay fines) with the heavy phenolic pitch bottom-fraction collected directly from the condensation trap of a biomass pyrolysis retort.
+
+The resulting **Bio-Pitch Ceramic Aggregate (BCA)** cures rapidly at low temperatures (140°C to 220°C) into waterproof, structurally rigid vessels. Re-processing requires zero fine ball-milling: spent containers are thermally softened at approximately 250°C, broken down to coarse angular gravel via low-RPM toothed shafts, re-metered with binder, and re-extruded in under 5 minutes.
+
+![RFC-0013 BCA Packaging Engine Architecture](/open-biosphere/blueprints/bca-packaging-engine-architecture.svg)
+
+---
+
+## 2. Chemical & Material Dynamics
+
+```text
+Biomass Retort (Pyrolysis) ──> Heavy Phenolic Pitch (Bio-Tar)
+                                            │
+                                            ▼
+Crushed Ceramic Grog (1–3 mm) ──> [Heated Pug Mill (150°C)] ──> [Heated Die Press] ──> Rigid Vessel
+       ▲                                                                                   │
+       └────────────── [Low-RPM Crusher (250°C Thermal Break)] ◄───────────────────────────┘
+```
+
+### 2.1 The Binder Phase (Pyrolysis Heavy Tar)
+
+* **Source:** Heavy condensed bottom-fraction from the secondary and tertiary liquid condensate traps of an on-farm biomass pyrolysis reactor or downdraft gasifier.
+* **Composition:** High-molecular-weight polycyclic aromatics, oligomeric guaiacols, syringols, and heavy bio-pitch residues.
+* **Thermal Behavior:** Viscous, pumpable fluid at 80°C to 110°C; fully reactive and cross-linking between 140°C and 220°C.
+* **Volatilization & Debonding Threshold:** Above 250°C, the phenolic cross-links thermalize and soften, releasing aggregate adhesion cleanly without requiring high-energy mechanical pulverization of the underlying stone.
+
+### 2.2 The Structural Aggregate Phase (Grog / Fired Clay)
+
+* **Mesh Size:** 10 to 30 mesh (approximately 0.6 mm to 2.0 mm). Coarse, jagged angular fracture profiles maximize mechanical interlock.
+* **Embodied Energy Reduction:** Zero vitrification stage during compounding. Raw material consists of recycled broken bisque, spent terracotta pottery, or crushed brick grog.
+* **Function:** Compressive load-bearing skeleton, thermal mass stabilization, and dimensional barrier against warping.
+
+### 2.3 Environmental Failure Mode & Soil Integration
+
+* **Topsoil Decomposition:** If accidentally discarded in open soil or irrigation waterways, soil microbes and fungal hyphae metabolize the phenolic carbon matrix over 12 to 24 months.
+* **Inert Soil Amendment:** The remaining aggregate consists solely of porous fired clay shards that function identically to horticultural perlite or expanded clay pebbles, enhancing root aeration, moisture retention, and cation exchange capacity (CEC).
+* **Zero Contamination:** Zero synthetic polymers, zero fluorochemicals, zero phthalates, and zero microplastic accumulation.
+
+---
+
+## 3. Four-Module Machine Hardware Architecture
+
+The machine is engineered as a standalone, single-chassis recycling and forming system designed to bolt directly into thermal exhaust or low-draw electric loops:
+
+```text
+       [Spent Containers In]
+                 │
+                 ▼
+     ┌───────────────────────┐
+     │ 1. Thermal Stripping  │ ◄── Low-grade pyrolysis syngas / waste heat (~250°C)
+     │    & Toothed Breaker  │
+     └───────────┬───────────┘
+                 │ (1–3 mm Aggregate)
+                 ▼
+     ┌───────────────────────┐
+     │ 2. Jacketed Pug Auger │ ◄── Metered Bio-Pitch Injector (~150°C)
+     └───────────┬───────────┘
+                 │ (Homogeneous Hot Mastic)
+                 ▼
+     ┌───────────────────────┐
+     │ 3. Variable-Aperture  │ ◄── 4-Way Stepper Gate (Width × Depth)
+     │    Ram Extruder & Die │
+     └───────────┬───────────┘
+                 │
+                 ▼
+     ┌───────────────────────┐
+     │ 4. Slicing Wire &     │ ◄── Piano-Wire Shear + Rapid Radiant Zone (180°C)
+     │    Flash Cure Rack    │
+     └───────────────────────┘
+```
+
+### 3.1 Module 1: Thermal Stripper & Coarse Breaker
+
+* **Mechanical Design:** Twin counter-rotating, low-RPM, high-torque toothed shafts machined from manganese or tool steel (`PART-FAB-BREAKER-TOOTHED-SHAFT`).
+* **Thermal Assist:** Exhaust jacket running at 220°C to 250°C softens incoming bio-pitch bonds prior to mechanical tooth engagement.
+* **Tooth Tolerances:** 2.0 mm shaft-to-tooth clearance prevents pulverizing stone grains into fine dust, preserving angular 1–3 mm gravel profiles and minimizing motor drive torque.
+
+### 3.2 Module 2: Heated Pug Auger & Injector
+
+* **Barrel Specification:** Jacketed 304 stainless steel pipe maintained at 140°C to 160°C via electric ceramic band heaters (`PART-FAB-PUG-AUGER-JACKETED`).
+* **Feed System:** Gravity-fed crushed aggregate combined with a positive-displacement heated gear pump injecting liquid heavy tar at a 12% to 18% weight ratio.
+* **Shear Dynamics:** Progressive-pitch flighting shears the mastic into a uniform, hydrophobic, high-viscosity extrusion dough.
+
+### 3.3 Module 3: Variable-Aperture Forming Head & Die
+
+* **Extrusion Ram:** Hydraulic cylinder or AC-geared electric lead-screw ram generating up to 1.5 kN of axial compaction force through the heated die head.
+* **Variable Die Gates:** Four overlapping steel gate plates actuated by independent stepper lead screws (`PART-FAB-DIE-GATE-4WAY`). Automatically resizes box profile dimensions (X × Y) dynamically via the machine controller.
+* **Base Plate Compression:** Secondary bottom-forming ram strokes upward to stamp the container base before vertical wall extrusion begins.
+
+### 3.4 Module 4: Flying Shear & Flash Sinter Rack
+
+* **Cutoff Mechanism:** Spring-tensioned high-tensile music wire mounted to a dual-rail sliding carriage (`PART-FAB-SHEAR-CARRIAGE-WIRE`) cuts extruded container wall profiles cleanly to programmed height (Z).
+* **Rapid Thermal Stabilization:** Formed vessels pass through a 3-minute radiant tunnel (180°C to 200°C) to flash off trace volatile fractions and cross-link surface aromatics. Solidifies into rigid, water-resistant containers immediately upon cooling to ambient temperature.
+
+---
+
+## 4. Operational Specifications & Material Comparison
+
+| Parameter | Traditional Fired Ceramic | PLA Bioplastic | RFC-013 BCA Composite |
+| :--- | :--- | :--- | :--- |
+| **Forming Temperature** | 950°C to 1,200°C | 180°C to 210°C | **140°C to 180°C** |
+| **Embodied Energy** | Massive (Refractory kiln) | High (Chemical synthesis) | **Minimal (Pyrolysis waste heat)** |
+| **Grind Requirement** | Fine Ball Mill (&lt;75 µm) | N/A (Pelletized) | **Coarse Crunch (1,000 to 3,000 µm)** |
+| **Solvent/Water Need** | Critical (Hydration balance) | Industrial solvents | **Zero (Dry aggregate + hot pitch)** |
+| **Cycle Turnaround** | 12 to 36 Hours | Minutes | **&lt;5 Minutes** |
+| **Degradation State** | Geological (Indefinite) | Landfill-Persistent | **Soil Mineral + Humic Carbon** |
+| **Microplastic Risk** | Zero | Severe (Fragmenting) | **Zero (100% Biogenic / Mineral)** |
+| **Water Resistance** | Vitrified / Glazed only | High | **High (Hydrophobic Pitch Matrix)** |
+
+---
+
+## 5. Machine Integration & Implementation Roadmap
+
+<CardGrid>
+  <Card title="Stage 0: Hand-Crank Manual" icon="setting">
+    Gravity aggregate feed, manual ratchet-crank toothed breaker, hand-operated screw ram press, and benchtop hot-plate cure.
+  </Card>
+  <Card title="Stage 1: Electromechanical BLE" icon="laptop">
+    DC geared drive, 12V band heaters with PID temp regulation, and BLE Virtual Panel interface with two-control master interlock.
+  </Card>
+  <Card title="Stage 2: Autonomous Agentic AI" icon="rocket">
+    Closed-loop stepper variable aperture die, automatic wire shear, continuous density monitoring via load cell, and CNT edge node telemetry.
+  </Card>
+</CardGrid>
+
+---
+
+## 6. Related Specifications & Canonical Links
+
+* [Bio-Pitch & Ceramic Packaging Engine Catalog Entry](/open-biosphere/hardware/bca-packaging-engine/)
+* [RFC-0004: Controller-Node-Tool Architecture](/open-biosphere/rfcs/rfc-0004-controller-node-tool/)
+* [RFC-0005: Hardware Interlocks & Minimalist BLE Virtual Panel](/open-biosphere/rfcs/rfc-0005-hardware-interlocks-ble-virtual-panel/)
+* [RFC-0007: Multi-Stage Machine Sub-Page Architecture](/open-biosphere/rfcs/rfc-0007-multi-stage-sub-page-architecture/)
+* [RFC-0008: Global Part Registry & Shared BOM Schema](/open-biosphere/rfcs/rfc-0008-global-part-registry-bom-schema/)
+* [RFC-0010: Stepwise Reverse-Deconstructed Blueprint Standard](/open-biosphere/rfcs/rfc-0010-stepwise-reverse-deconstructed-blueprints/)
+* [RFC-0011: Universal Vector Blueprint Standard](/open-biosphere/rfcs/rfc-0011-vector-blueprint-standard/)
+* [RFC-0012: Custom Fabricated Part Contracts](/open-biosphere/rfcs/rfc-0012-custom-fabricated-part-contracts/)

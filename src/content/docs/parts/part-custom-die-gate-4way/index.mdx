@@ -1,0 +1,64 @@
+---
+id: "part-custom-die-gate-4way"
+title: "4-Way Stepper-Actuated Variable Aperture Die Plates"
+classification: "custom-fabricated"
+fabrication_method: "machined"
+material: "tool-steel"
+model_file: "./model.3ds"
+estimated_cost: 45.00
+dimensions:
+  x_mm: 220.0
+  y_mm: 220.0
+  z_mm: 12.0
+sidebar:
+  badge:
+    text: "CUSTOM-FAB"
+    variant: "note"
+---
+
+import ModelViewer from '../../../../components/ModelViewer';
+
+# 4-Way Stepper-Actuated Variable Aperture Die Plates
+
+**Canonical Part ID:** `PART-FAB-DIE-GATE-4WAY`  
+**Classification:** `custom-fabricated`  
+**Fabrication Method:** `machined`  
+**Primary Material:** `tool-steel`  
+**Estimated Unit Cost:** `$45.00 USD`
+
+---
+
+## 1. Component Overview & Architectural Role
+
+Overlapping tool steel die gate plates actuated by independent stepper lead screws for dynamic continuous container width and depth adjustment.
+
+Ground tool steel die gate assembly comprising four overlapping precision sliding plates. Actuated by independent lead screws to vary extruded wall profile dimensions from 60x60mm up to 180x180mm without breaking machine vacuum or thermal hold.
+
+---
+
+## 2. Interactive 3D Model Inspection
+
+<ModelViewer
+  client:load
+  partId="PART-FAB-DIE-GATE-4WAY"
+  partName="4-Way Stepper-Actuated Variable Aperture Die Plates"
+  material="tool-steel"
+  fabricationMethod="machined"
+  dimensions={{ x_mm: 220.0, y_mm: 220.0, z_mm: 12.0 }}
+  estimatedCost={45.0}
+  modelUrl="/open-biosphere/assets/parts/PART-FAB-DIE-GATE-4WAY/model.3ds"
+/>
+
+* **Direct Canonical Download:** [Download model.3ds (Autodesk 3DS Binary)](/open-biosphere/assets/parts/PART-FAB-DIE-GATE-4WAY/model.3ds)
+* **Local Workspace Asset:** `./model.3ds`
+
+---
+
+## 3. Technical Summary & Engineering Contracts
+
+### 3.1 Purpose & Functional Role
+Essential processing component for the [Bio-Pitch & Ceramic Packaging Engine (BCA Press)](/open-biosphere/hardware/bca-packaging-engine/) conforming to [RFC-0013](/open-biosphere/rfcs/rfc-0013-bca-packaging-engine/).
+
+### 3.2 Engineering Drawings
+* **Dimensional Vector Drawing:** [View Technical Drawing](./assets/dimensional-drawing.svg)
+* **Isometric Vector Schematic:** [View Isometric Render](./assets/isometric-render.svg)

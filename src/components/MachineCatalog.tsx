@@ -33,7 +33,7 @@ export interface StagedBOM {
 export interface OpenMachine {
   id: string;
   name: string;
-  category: 'Harvesters & Separators' | 'Mobile & Flying Robotics' | 'Grow Chambers & Bioreactors' | 'Automation & Dosing';
+  category: 'Harvesters & Separators' | 'Mobile & Flying Robotics' | 'Grow Chambers & Bioreactors' | 'Automation & Dosing' | 'Processing Machinery';
   tagline: string;
   standaloneUseCase: string;
   biosphereRole: string;
@@ -511,6 +511,68 @@ export const MACHINES_DATA: OpenMachine[] = [
       },
     },
   },
+  {
+    id: 'bca-packaging-engine',
+    name: 'Bio-Pitch & Ceramic Packaging Engine (BCA Press)',
+    category: 'Processing Machinery',
+    tagline: 'Zero-plastic rigid container fabrication from crushed ceramic grog and pyrolysis bio-pitch',
+    standaloneUseCase: 'Off-grid production of waterproof, soil-degradable seed starter pots, harvest crates, and storage vessels from farm waste and crushed terracotta.',
+    biosphereRole: 'Processes biomass retort bottom-tar into zero-plastic harvest containers and seedling packaging across all production zones.',
+    estCostUSD: 465,
+    difficulty: 'Intermediate',
+    primaryCOTS: [
+      'Twin Toothed Manganese Rollers',
+      'Jacketed 304 SS Pug Barrel',
+      'Ceramic Band Heaters (220V/12V)',
+      'Lead-Screw Extruder Ram',
+      'NEMA 23 Stepper Motors (4x)',
+      'High-Tensile Piano Cutoff Wire'
+    ],
+    docSlug: 'bca-packaging-engine',
+    controls: {
+      manual: 'Hand-crank ratchet drive for coarse breaker, manual screw ram, gravity aggregate feed, benchtop hot-plate cure.',
+      buttons: 'Toggle-switched DC gear motor drive, digital PID temperature controllers for band heaters, tactile forward/reverse jog buttons.',
+      ai: 'Closed-loop ESP32-S3 node monitoring ram compaction load cells, automated stepper 4-way variable aperture gate resizing, and flying wire servo cut.'
+    },
+    stagedBOM: {
+      manual: {
+        title: 'Stage 0: Hand-Crank & Gravity Baseline',
+        description: 'Manual mechanical crushing, hand-tamped screw ram extrusion, zero-power operation.',
+        cost: 215,
+        items: [
+          { name: 'Twin Toothed Breaker Shafts (Manganese Steel)', sourcing: 'Custom Fab / Machine Shop', cost: 65 },
+          { name: 'Heavy Welded Angle-Iron Chassis', sourcing: 'Stock Steel / Local Metal Supply', cost: 45 },
+          { name: 'Acme Lead-Screw Ram with Hand Wheel', sourcing: 'McMaster-Carr / Surplus COTS', cost: 55 },
+          { name: '304 Stainless Steel Extrusion Die Frame', sourcing: 'Local Metal Supply', cost: 30 },
+          { name: 'Music Wire Tension Bow Slicer', sourcing: 'Hardware Store / COTS', cost: 20 },
+        ],
+      },
+      semiAuto: {
+        title: 'Stage 1: BLE & Electromechanical Augmentation',
+        description: 'Motorized pug auger, electric ceramic band heaters with PID temp regulation, BLE virtual panel.',
+        addonCost: 155,
+        cumulativeCost: 370,
+        items: [
+          { name: 'High-Torque 12V 250W Geared DC Motor', sourcing: 'Amazon / Pololu', cost: 55 },
+          { name: 'Ceramic Band Heaters (140°C–220°C, 300W)', sourcing: 'AutomationDirect / AliExpress', cost: 40 },
+          { name: 'Dual REX-C100 PID Temp Controllers & K-Type Probes', sourcing: 'Amazon / COTS', cost: 30 },
+          { name: 'ESP32-S3 Machine Node & Power MOSFET Relay', sourcing: 'Mouser / Espressif', cost: 30 },
+        ],
+      },
+      agentic: {
+        title: 'Stage 2: Full Autonomous Agentic AI Extrusion',
+        description: 'Dynamic 4-way stepper variable die gates, flying wire servo cutoff, load-cell compaction feedback.',
+        addonCost: 95,
+        cumulativeCost: 465,
+        items: [
+          { name: 'NEMA 23 High-Torque Steppers (4x for Die Gates)', sourcing: 'SteppersOnline / Amazon', cost: 50 },
+          { name: 'S-Beam 200kg Load Cell & HX711 Compaction Sensor', sourcing: 'SparkFun / Adafruit', cost: 20 },
+          { name: 'High-Speed MG996R Metal Gear Cutoff Servo', sourcing: 'Pololu / Amazon', cost: 15 },
+          { name: 'ESP32-C3 Tool Interlock & AprilTag Datum Mount', sourcing: 'Mouser / Custom Fab', cost: 10 },
+        ],
+      },
+    },
+  },
 ];
 
 export default function MachineCatalog() {
@@ -521,7 +583,7 @@ export default function MachineCatalog() {
   const [expandedBOMId, setExpandedBOMId] = useState<string | null>(null);
   const [activeStageTab, setActiveStageTab] = useState<Record<string, 'manual' | 'semiAuto' | 'agentic'>>({});
 
-  const categories = ['ALL', 'Harvesters & Separators', 'Mobile & Flying Robotics', 'Grow Chambers & Bioreactors', 'Automation & Dosing'];
+  const categories = ['ALL', 'Harvesters & Separators', 'Mobile & Flying Robotics', 'Grow Chambers & Bioreactors', 'Automation & Dosing', 'Processing Machinery'];
 
   const filteredMachines = useMemo(() => {
     return MACHINES_DATA.filter((m) => {

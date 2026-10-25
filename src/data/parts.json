@@ -5184,5 +5184,161 @@
       "mating": "Features a broached 25T standard servo spline hub with an integrated M2.5 grade 12.9 pinch clamp screw for zero backlash. Opposing bellcrank yoke features dual 3.0 mm H7 reamed clevis pin bores equipped with flanged oilite bronze bushings and stainless steel retaining E-clips.",
       "instructions": "CNC milled from 6061-T6 aluminum or precision 3D-printed in Continuous Carbon-Fiber PETG (100% infill). Spline hub reamed and broached with 25T involute cutter; clevis ears drilled undersize and line-reamed to 3.00 mm (+0.01/-0.00 mm). Deburr all slot edges and hard-coat anodize (black, Mil-A-8625 Type III)."
     }
+  },
+  {
+    "name": "Twin Counter-Rotating Toothed Breaker Shafts (Manganese Steel)",
+    "category": "custom-fab",
+    "summary": "Twin counter-rotating toothed crusher shafts with 2mm tooth clearance for thermal debonding and crushing of spent ceramic packaging without fine dust generation.",
+    "dimensions": {
+      "length_mm": 320.0,
+      "width_mm": 75.0,
+      "thickness_mm": 75.0,
+      "tolerance_mm": "\u00b10.1",
+      "weight_grams": 1200.0
+    },
+    "fabrication": {
+      "is_custom_fab": true,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "machined",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-BREAKER-TOOTHED-SHAFT/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-FAB-BREAKER-TOOTHED-SHAFT/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-FAB-BREAKER-TOOTHED-SHAFT/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "In-House Machine Shop / Custom Fab",
+        "sku": "PART-FAB-BREAKER-TOOTHED-SHAFT",
+        "direct_url": "/open-biosphere/parts/part-custom-breaker-toothed-shaft/",
+        "unit_price_usd": 65.0,
+        "moq": 1,
+        "lead_time_days": 2
+      }
+    ],
+    "part_id": "PART-FAB-BREAKER-TOOTHED-SHAFT",
+    "used_by": [
+      {
+        "machine_slug": "bca-packaging-engine",
+        "stage": 0,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "Jacketed 304 SS Pug Mill Barrel & Continuous Auger Screw",
+    "category": "custom-fab",
+    "summary": "304 stainless steel heated jacketed pug mill barrel (140\u00b0C\u2013160\u00b0C) with internal progressive pitch auger screw for continuous high-shear mastic compounding.",
+    "dimensions": {
+      "length_mm": 450.0,
+      "width_mm": 90.0,
+      "thickness_mm": 90.0,
+      "tolerance_mm": "\u00b10.1",
+      "weight_grams": 1200.0
+    },
+    "fabrication": {
+      "is_custom_fab": true,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "machined",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-PUG-AUGER-JACKETED/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-FAB-PUG-AUGER-JACKETED/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-FAB-PUG-AUGER-JACKETED/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "In-House Machine Shop / Custom Fab",
+        "sku": "PART-FAB-PUG-AUGER-JACKETED",
+        "direct_url": "/open-biosphere/parts/part-custom-pug-auger-jacketed/",
+        "unit_price_usd": 85.0,
+        "moq": 1,
+        "lead_time_days": 2
+      }
+    ],
+    "part_id": "PART-FAB-PUG-AUGER-JACKETED",
+    "used_by": [
+      {
+        "machine_slug": "bca-packaging-engine",
+        "stage": 0,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "4-Way Stepper-Actuated Variable Aperture Die Plates",
+    "category": "custom-fab",
+    "summary": "Overlapping tool steel die gate plates actuated by independent stepper lead screws for dynamic continuous container width and depth adjustment.",
+    "dimensions": {
+      "length_mm": 220.0,
+      "width_mm": 220.0,
+      "thickness_mm": 12.0,
+      "tolerance_mm": "\u00b10.1",
+      "weight_grams": 1200.0
+    },
+    "fabrication": {
+      "is_custom_fab": true,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "machined",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-DIE-GATE-4WAY/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-FAB-DIE-GATE-4WAY/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-FAB-DIE-GATE-4WAY/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "In-House Machine Shop / Custom Fab",
+        "sku": "PART-FAB-DIE-GATE-4WAY",
+        "direct_url": "/open-biosphere/parts/part-custom-die-gate-4way/",
+        "unit_price_usd": 45.0,
+        "moq": 1,
+        "lead_time_days": 2
+      }
+    ],
+    "part_id": "PART-FAB-DIE-GATE-4WAY",
+    "used_by": [
+      {
+        "machine_slug": "bca-packaging-engine",
+        "stage": 0,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "High-Tensile Music Wire Flying Cutoff Shear Carriage",
+    "category": "custom-fab",
+    "summary": "Spring-tensioned high-tensile music wire carriage actuated along linear guide rails by metal-gear servo for cleanly slicing extruded container profiles to programmed Z-height.",
+    "dimensions": {
+      "length_mm": 260.0,
+      "width_mm": 140.0,
+      "thickness_mm": 45.0,
+      "tolerance_mm": "\u00b10.1",
+      "weight_grams": 1200.0
+    },
+    "fabrication": {
+      "is_custom_fab": true,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "machined",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-SHEAR-CARRIAGE-WIRE/model.3ds",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-FAB-SHEAR-CARRIAGE-WIRE/dimensional-drawing.svg",
+      "photo_url": "/open-biosphere/assets/parts/PART-FAB-SHEAR-CARRIAGE-WIRE/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "In-House Machine Shop / Custom Fab",
+        "sku": "PART-FAB-SHEAR-CARRIAGE-WIRE",
+        "direct_url": "/open-biosphere/parts/part-custom-shear-carriage-wire/",
+        "unit_price_usd": 28.0,
+        "moq": 1,
+        "lead_time_days": 2
+      }
+    ],
+    "part_id": "PART-FAB-SHEAR-CARRIAGE-WIRE",
+    "used_by": [
+      {
+        "machine_slug": "bca-packaging-engine",
+        "stage": 0,
+        "quantity_required": 1
+      }
+    ]
   }
 ]
