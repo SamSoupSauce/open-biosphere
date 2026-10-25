@@ -213,7 +213,7 @@ export default defineConfig({
             { label: 'RFC-0011: Universal Vector Blueprint Standard', slug: 'rfcs/rfc-0011-vector-blueprint-standard' },
             { label: 'RFC-0012: Custom Fabricated Part Contracts', slug: 'rfcs/rfc-0012-custom-fabricated-part-contracts' },
             { label: 'RFC-0013: Closed-Loop Bio-Pitch Packaging Engine', slug: 'rfcs/rfc-0013-bca-packaging-engine' },
-            { label: 'RFC-0014: Interactive 3D Composite Assemblies', slug: 'rfcs/rfc-0014-interactive-3d-composite-assembly-standard' },
+            { label: 'RFC-0014: Standardized glTF Pipeline & Viewer Navigation', slug: 'rfcs/rfc-0014-interactive-3d-composite-assembly-standard' },
           ],
         },
       ],

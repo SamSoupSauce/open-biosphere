@@ -146,12 +146,12 @@ const RFC_LIST: RFCItem[] = [
   },
   {
     id: 'RFC-0014',
-    title: 'Interactive 3D Composite Assembly Standard',
+    title: 'Standardized GLTF Pipeline, Hierarchical Sub-Models & Web Viewer Navigation',
     author: 'Documentation Systems & CAD Engineering Team',
     targetType: 'Infrastructure',
     status: 'Implemented',
     date: '2026-10-25',
-    summary: 'Supersedes static 2D vector blueprints with interactive client-side 3D composite assemblies, progressive assembly step models, and visibility-gated CAD rendering.',
+    summary: 'glTF 2.0/GLB asset pipeline, hierarchical scene graph assembly with declarative extras.ref sub-model linking, and discrete HUD zoom navigation controls.',
     docSlug: '/rfcs/rfc-0014-interactive-3d-composite-assembly-standard',
   },
 ];

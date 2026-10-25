@@ -1,0 +1,116 @@
+{
+  "asset": {
+    "version": "2.0",
+    "generator": "OpenBiosphere-ParametricCAD-GLTF (RFC-014)"
+  },
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "PugAuger_Drive_Master_Scene",
+      "nodes": [
+        0,
+        1,
+        2,
+        3
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "name": "PugAuger_Shaft_Assembly",
+      "translation": [
+        0.0,
+        0.45,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "extras": {
+        "ref": "../components/drive/shaft_hex_12mm.glb",
+        "partId": "PART-DRIVE-SHAFT-HEX-12MM",
+        "focusStep": 1
+      }
+    },
+    {
+      "name": "Bearing_PillowBlock_L",
+      "translation": [
+        -0.25,
+        0.45,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "extras": {
+        "ref": "../components/hardware/bearing_ucp204.glb",
+        "partId": "PART-MECH-BEARING-UCP204-L",
+        "focusStep": 2
+      }
+    },
+    {
+      "name": "Bearing_PillowBlock_R",
+      "translation": [
+        0.25,
+        0.45,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "extras": {
+        "ref": "../components/hardware/bearing_ucp204.glb",
+        "partId": "PART-MECH-BEARING-UCP204-R",
+        "focusStep": 2
+      }
+    },
+    {
+      "name": "Spur_Gear_Drive_40T",
+      "translation": [
+        0.18,
+        0.45,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.7071,
+        0.0,
+        0.7071
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "extras": {
+        "ref": "../components/drive/spur_gear_40t.glb",
+        "partId": "PART-DRIVE-GEAR-SPUR-40T",
+        "focusStep": 3
+      }
+    }
+  ]
+}

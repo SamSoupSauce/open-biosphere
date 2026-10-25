@@ -1,6 +1,6 @@
 ---
-title: "RFC-0014: Interactive 3D Composite Assembly Standard"
-description: "Supersedes static 2D vector blueprints with zero-dependency client-side 3D composite assemblies, progressive assembly step models, and visibility-gated CAD rendering."
+title: "RFC-0014: Standardized GLTF Asset Pipeline, Hierarchical Sub-Model Composition, and Web Viewer Navigation"
+description: "Formalizes the transition from flat 2D blueprint exports to native glTF 2.0/GLB assets, declarative extras.ref hierarchical scene graphs, and discrete WebGL zoom navigation controls."
 sidebar:
   badge:
     text: "STANDARD"
@@ -10,28 +10,57 @@ sidebar:
 import { Card, CardGrid, LinkButton } from '@astrojs/starlight/components';
 import ModelViewer from '../../../components/ModelViewer';
 
-# RFC-0014: Interactive 3D Composite Assembly Standard
+# RFC-0014: Standardized GLTF Asset Pipeline, Hierarchical Sub-Model Composition, and Web Viewer Navigation
 
-* **RFC ID:** `RFC-0014` (Supersedes `RFC-0010` & `RFC-0011` for machine manuals)
+* **RFC ID:** `RFC-0014` (Supersedes `RFC-0010` & `RFC-0011` for machine visuals)
 * **Author:** Documentation Systems, Technical CAD & Physical Assembly Engineering Team
+* **Category:** Software Architecture / CAD & Visualization Pipeline
+* **Ecosystem:** `ag-diy` (Zero-Plastic Agricultural & Processing Architecture)
 * **Status:** `Implemented / Canonical Standard`
-* **Target Classification:** Technical Illustration / CAD Systems / Interactive Visualization
-* **Applicable Scope:** All 27 Machine Stage Manuals (`hardware/<machine-slug>/stage-{0,1,2}.mdx`), Global Part Registry, and Machine Overview Pages
 
 ---
 
-## 1. Executive Summary & Problem Statement
+## 1. Context & Motivation
 
-Prior standards (`RFC-0010` and `RFC-0011`) established vector SVG blueprints as the canonical format for machine manuals. While vector line drawings provide resolution independence, 2D projections inherently suffer from severe physical assembly limitations:
-1. **Blind Fastener & Reverse Obstruction:** 2D projections cannot be rotated in real time, concealing reverse fastener heads, T-nut channels, and blind clearance cavities.
-2. **Kinematic Ambiguity:** Complex spatial linkages (such as dog clutch dog teeth, auger flights, scissor crawler linkages, and gantry carriage V-wheels) are difficult to comprehend from static orthographic or isometric cross-sections.
-3. **Disconnected Part-to-Assembly Context:** Builders inspecting a static blueprint have to manually cross-reference 2D drawing callouts with separate 3D part registry downloads.
+Previous visual documentation relied on 2D vector graphic projections (SVGs) and fragmented export pipelines. This generated duplicate maintenance overhead, occluded critical mating faces, and required fragile line-clipping workarounds for complex mechanical steps.
 
-**RFC-0014** mandates that **all 2D static blueprints across machine stage manuals are completely replaced by interactive, client-side 3D models**. Full physical composite assemblies are procedurally synthesized from underlying sub-models, providing 360° orbit rotation, directional lighting, wireframe toggles, and zero-latency inspection.
+Because the system engine already generates parametric 3D geometry for all structural components (such as the BCA box press, pyrolytic retort assemblies, and extruder mounts), maintaining legacy vector drafting is redundant. **RFC-0014** formalizes a transition to a standardized 3D runtime pipeline:
+
+1. **Deprecates flat 2D blueprint exports** in favor of native web-rendered **glTF 2.0 / GLB** assets.
+2. **Enhances the embedded 3D step viewer** with discrete UI zoom controls (`<button id="zoom-in">+</button>` and `<button id="zoom-out">−</button>`) alongside standard touch/mouse orbital interaction.
+3. **Establishes a hierarchical scene graph architecture** where composite models directly reference reusable, modular sub-models via relative URIs (`extras.ref`) rather than flattening assemblies into bloated monolithic files.
 
 ---
 
-## 2. Interactive Master Composite Demonstration
+## 2. Interactive Demonstrations with Zoom HUD
+
+### 2.1 Reusable Atomic Drive Sub-Model (`shaft_hex_12mm.glb`)
+
+<ModelViewer
+  client:visible
+  partId="PART-DRIVE-SHAFT-HEX-12MM"
+  partName="12mm Precision Hex Drive Shaft (glTF 2.0 PBR)"
+  material="ground-steel"
+  fabricationMethod="cnc-machined"
+  dimensions={{ x_mm: 12.0, y_mm: 12.0, z_mm: 450.0 }}
+  estimatedCost={28.50}
+  modelUrl="/open-biosphere/cad/components/drive/shaft_hex_12mm.glb"
+/>
+
+### 2.2 Reusable Atomic Hardware Sub-Model (`bearing_ucp204.glb`)
+
+<ModelViewer
+  client:visible
+  partId="PART-MECH-BEARING-UCP204"
+  partName="UCP204 Pillow Block Cast Housing & Bearing (glTF 2.0 PBR)"
+  material="cast-iron-steel"
+  fabricationMethod="cast-and-ground"
+  dimensions={{ x_mm: 130.0, y_mm: 36.0, z_mm: 65.0 }}
+  estimatedCost={18.00}
+  modelUrl="/open-biosphere/cad/components/hardware/bearing_ucp204.glb"
+/>
+
+### 2.3 Master Composite Machine Assembly
 
 <ModelViewer
   client:visible
@@ -44,49 +73,106 @@ Prior standards (`RFC-0010` and `RFC-0011`) established vector SVG blueprints as
   modelUrl="/open-biosphere/assets/machines/overhead-gantry-system/stage-2.3ds"
 />
 
-* **Direct 3D Assembly Download:** [Download stage-2.3ds (Autodesk 3DS Binary)](/open-biosphere/assets/machines/overhead-gantry-system/stage-2.3ds)
+---
+
+## 3. Technical Specification
+
+### 3.1 Standardized Delivery Format: GLTF/GLB
+
+* **Format Standard:** glTF 2.0 (`.gltf` with external buffers or single-file binary `.glb`).
+* **Geometry & Materials:**
+  * PBR (Physically Based Rendering) standard material channels: Base Color, Metallic-Roughness, Normal.
+  * Strict avoidance of non-standard vendor extensions to preserve client-side WebGL/Three.js render parity.
+* **Coordinate Conventions:**
+  * Axis alignment: Standard glTF coordinate space (Right-handed, $+Y$ Up, $+Z$ Forward).
+  * Units: Meters ($1.0 = 1\text{ m}$) across all component and assembly models to avoid runtime unit transforms.
+
+### 3.2 Hierarchical Composition & Direct Sub-Model Referencing
+
+Monolithic scene exports duplicate common hardware (bearings, lead screws, stepper motors, structural tubing) across multiple assembly files.
+
+Under RFC-014, all composite models define their scene graph using declarative node references:
+
+```json
+{
+  "asset": {
+    "version": "2.0",
+    "generator": "OpenBiosphere-ParametricCAD-GLTF (RFC-014)"
+  },
+  "scene": 0,
+  "scenes": [
+    {
+      "nodes": [0, 1]
+    }
+  ],
+  "nodes": [
+    {
+      "name": "PugAuger_Shaft_Assembly",
+      "translation": [0.0, 0.45, 0.0],
+      "rotation": [0.0, 0.0, 0.0, 1.0],
+      "extras": {
+        "ref": "../components/drive/shaft_hex_12mm.glb"
+      }
+    },
+    {
+      "name": "Bearing_PillowBlock_L",
+      "translation": [-0.25, 0.45, 0.0],
+      "extras": {
+        "ref": "../components/hardware/bearing_ucp204.glb"
+      }
+    }
+  ]
+}
+```
+
+* **Runtime Resolver:** The client-side asset loader (`SceneGraphResolver.js`) resolves external sub-model URIs concurrently, deduplicating mesh memory across identical structural instances.
+* **Parametric Alignment:** Reusable off-the-shelf components remain isolated in `components/`, while machine assemblies reside in `assemblies/` and pull children into explicit transform matrices.
+
+### 3.3 Interactive Viewer Enhancements (Zoom Controls & Navigation)
+
+To improve accessibility on desktop terminals, mobile browsers, and touchscreen field hardware without relying solely on pinch-to-zoom or scroll wheels:
+
+* **UI Overlay:** Dedicated on-screen HUD layer positioned on the viewer canvas displaying discrete zoom buttons:
+  * **Zoom In (`<button id="zoom-in">+</button>`):** Incremental camera dolly along the current view vector toward the target orbit center.
+  * **Zoom Out (`<button id="zoom-out">−</button>`):** Incremental camera dolly away from the target orbit center along the view vector.
+* **Camera Bounds:**
+  * Dynamic clamp on minimum distance ($r_{\text{min}}$) based on model bounding box radius to prevent clipping into interior geometry.
+  * Clamped maximum distance ($r_{\text{max}}$) to keep the assembly framed within the frustum.
+* **Step-Action Sync:** Step progression controls trigger camera interpolation (lerp) to predefined focus targets, ghosting preceding sub-assemblies (opacity $0.25$) while highlighting the newly inserted component ($1.0$ opacity, accent edge).
 
 ---
 
-## 3. Core Architectural Directives
+## 4. Directory & Asset Layout
 
-### 3.1 Composite Assembly Synthesis
-1. **Hierarchical Merging:** Machine stages are composed of discrete physical sub-models from the global part registry (`src/data/parts.json`).
-2. **Spatial Alignment & Constraints:** Each sub-model is placed with exact Cartesian translational offsets ($dx, dy, dz$) and spatial rotations corresponding to its real-world mechanical mating datum.
-3. **Unified Autodesk 3DS Chunk Pipeline:** Sub-model vertices (`0x4110`) and triangular face indices (`0x4120`) are compiled into a single optimized Autodesk 3DS binary container, eliminating external texture dependencies and multi-file network waterfalls.
-
-### 3.2 1:1 Stepwise 3D Model Invariant
-1. **Part 4 (Stage Assembly):** Every machine stage manual features an interactive `<ModelViewer>` loading the complete composite 3D assembly (`/open-biosphere/assets/machines/<slug>/stage-<N>.3ds`).
-2. **Part 5 (Step-by-Step Execution):** Each individual assembly step (`### Step X.Y`) renders the interactive 3D sub-model of the component being installed, with its live material properties, fabrication classification, and unit cost badges.
-3. **Final Step Integration:** The final step of each stage displays the completed stage assembly seated in its mounting fixtures.
-
-### 3.3 Zero-Overhead Performance & Visibility Gating
-1. **`client:visible` Mounting:** All 3D viewers leverage Astro's `client:visible` hydration directive, preventing DOM instantiation until the user scrolls near the component.
-2. **`IntersectionObserver` Render Throttling:** Each active canvas observes its own viewport intersection; when offscreen, the internal `requestAnimationFrame` render loop pauses automatically.
-3. **Decoupled Animation Loop:** Continuous orbital rotation is tracked via mutable reference counters (`rotYRef`), preventing React re-render cascades and achieving sustained 60 FPS performance across multiple viewers.
-
----
-
-## 4. Implementation Matrix Across 9 Machines
-
-| Machine Subsystem | Stage 0 (Manual) | Stage 1 (Semi-Auto BLE) | Stage 2 (Autonomous CNT) |
-| :--- | :--- | :--- | :--- |
-| **Aerial Pollination Drone** | Telescopic Wand, Tuning Fork & Mirror | 85mm Whoop Frame, BLDC Motors & FC | Dual Optical Flow, ToF Lidar & Conical Perch |
-| **BCA Packaging Engine** | Angle-Iron Frame, Breaker Shaft & Pug Mill | 250W Geared DC Motor, Band Heaters & PSU | 4-Way Stepper Die, Flying Shear & Load Cell |
-| **Fluidic Skimmer Loop** | HDPE/Acrylic Flume, Wedge Screen & Auger | 24V Mag Pump, Dog Clutch & Optical Shutter | 50W LED Grow Puck, Flow Sensor & Solenoid |
-| **Ground Track AGV** | Steel Chassis, Rubber Treads & Tiller Handle | Dual 250W DC Motors & 24V LiFePO4 Pack | 360° 2D Lidar Turret, Arm & Mag Sensor |
-| **Mantis Branch Crawler** | 5052 Scissor Plates & Silicone Rollers | Dual NEMA 14 Steppers & 5015 Vacuum Blower | Stereo NIR Vision, Clamping Load Cell & Dock |
-| **Microclimate Dosing Array** | 2020 Aluminum Tower & Pressure Tanks | 4-Channel Peristaltic Pump Bank & OLED | Sensirion SCD41 NDIR & IP65 Sealed Enclosure |
-| **Overhead Gantry System** | 4040 Extrusion Rails & Magnetic Tool Dock | Dual NEMA 23 Drives & 15x30 Drag Chains | 4K IMX519 Survey Camera & Dual Toolheads |
-| **Revolving Sprout Bioreactor** | Perforated SS304 Drum & Ratchet Crank | NEMA 17 Stepper & Pressurized Misting Loop | Ozone Generator & SHT40 Environmental Probe |
-| **TPS Root Chamber** | 160L HDPE Basin, Neoprene Collars & Spray Wand | 120 PSI Booster Pump & Brass Mist Spider | MLX90614 IR Pyrometer & Optical Level Floats |
+```
+repo/
+├── specs/
+│   ├── RFC-012-bca-packaging-engine.md
+│   └── RFC-014-gltf-pipeline-submodel-referencing.md
+├── cad/
+│   ├── components/            # Atomic, reusable sub-models
+│   │   ├── hardware/          # Bearings, fasteners, springs
+│   │   └── drive/             # Rollers, shafts, gears
+│   └── assemblies/            # Composite scene graphs referencing components
+└── web/
+    └── viewer/
+        ├── controls/
+        │   ├── OrbitControls.js
+        │   └── ZoomHUD.js     # Discrete zoom in/out button overlay
+        └── loader/
+            └── SceneGraphResolver.js
+```
 
 ---
 
-## 5. Related Standards & Canonical References
+## 5. Implementation Status
 
-* [RFC-0004: Controller-Node-Tool Architecture](/open-biosphere/rfcs/rfc-0004-controller-node-tool/)
-* [RFC-0007: Multi-Stage Machine Sub-Page Architecture](/open-biosphere/rfcs/rfc-0007-multi-stage-sub-page-architecture/)
-* [RFC-0008: Global Part Registry & BOM Schema](/open-biosphere/rfcs/rfc-0008-global-part-registry-bom-schema/)
-* [RFC-0012: Custom Fabricated Part Contracts](/open-biosphere/rfcs/rfc-0012-custom-fabricated-part-contracts/)
-* [RFC-0013: Closed-Loop Bio-Pitch Packaging Engine](/open-biosphere/rfcs/rfc-0013-bca-packaging-engine/)
+| Milestone Component | Status | Verification Detail |
+| :--- | :--- | :--- |
+| **glTF 2.0 / GLB Generator** | `Implemented` | `scripts/build_gltf_pipeline.py` exports compliant binary GLB buffers |
+| **Atomic CAD Sub-Models** | `Implemented` | `cad/components/{hardware,drive}/*.glb` generated with PBR materials |
+| **Composite Hierarchies** | `Implemented` | `cad/assemblies/*.gltf` with declarative `extras.ref` references |
+| **Scene Graph Resolver** | `Implemented` | `web/viewer/loader/SceneGraphResolver.js` concurrent mesh cache & linker |
+| **ZoomHUD Discrete Overlay** | `Implemented` | `<button id="zoom-in">` & `<button id="zoom-out">` with smooth damping |
+| **ModelViewer Integration** | `Implemented` | `src/components/ModelViewer.tsx` multi-format GLB/GLTF/3DS + Zoom HUD |
+| **Specification Repository** | `Implemented` | `specs/RFC-012-*.md` and `specs/RFC-014-*.md` published |

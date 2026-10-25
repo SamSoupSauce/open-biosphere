@@ -1,0 +1,116 @@
+{
+  "asset": {
+    "version": "2.0",
+    "generator": "OpenBiosphere-ParametricCAD-GLTF (RFC-014)"
+  },
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "BCA_Packaging_Engine_Composite_Scene",
+      "nodes": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "name": "Extruder_LeadScrew_Z",
+      "translation": [
+        0.0,
+        0.15,
+        0.35
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "extras": {
+        "ref": "../components/drive/lead_screw_tr8.glb",
+        "partId": "PART-DRIVE-LEADSCREW-TR8",
+        "focusStep": 1
+      }
+    },
+    {
+      "name": "Auger_Drive_Shaft",
+      "translation": [
+        0.0,
+        -0.1,
+        0.15
+      ],
+      "rotation": [
+        0.7071,
+        0.0,
+        0.0,
+        0.7071
+      ],
+      "extras": {
+        "ref": "../components/drive/shaft_hex_12mm.glb",
+        "partId": "PART-DRIVE-SHAFT-HEX-12MM",
+        "focusStep": 2
+      }
+    },
+    {
+      "name": "Feed_Silicone_Roller_Pair",
+      "translation": [
+        -0.12,
+        0.05,
+        0.2
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "extras": {
+        "ref": "../components/drive/silicone_roller.glb",
+        "partId": "PART-DRIVE-ROLLER-SILICONE",
+        "focusStep": 3
+      }
+    },
+    {
+      "name": "Bearing_Flange_Support",
+      "translation": [
+        0.15,
+        -0.1,
+        0.15
+      ],
+      "rotation": [
+        0.0,
+        0.7071,
+        0.7071,
+        0.0
+      ],
+      "extras": {
+        "ref": "../components/hardware/bearing_ucp204.glb",
+        "partId": "PART-MECH-BEARING-UCP204",
+        "focusStep": 4
+      }
+    },
+    {
+      "name": "Die_Tension_Spring_Array",
+      "translation": [
+        0.0,
+        0.25,
+        0.08
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "extras": {
+        "ref": "../components/hardware/tension_spring.glb",
+        "partId": "PART-MECH-SPRING-TENSION",
+        "focusStep": 5
+      }
+    }
+  ]
+}
