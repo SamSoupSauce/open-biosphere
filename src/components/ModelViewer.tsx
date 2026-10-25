@@ -30,39 +30,10 @@ interface ParsedMesh {
 }
 
 /**
- * High-performance, zero-dependency client-side glTF 2.0 binary (.glb) chunk parser.
- * Reads JSON chunk (0x4E4F534A) and BIN chunk (0x004E4942) without external runtime dependencies.
+ * High-performance, zero-dependency client-side glTF 2.0 accessor/bufferView mesh extractor.
  */
-function parseGLB(buffer: ArrayBuffer): ParsedMesh | null {
+function parseGLTFData(jsonData: any, binBuffer: ArrayBuffer, format: 'gltf' | 'glb'): ParsedMesh | null {
   try {
-    const view = new DataView(buffer);
-    const magic = view.getUint32(0, true);
-    if (magic !== 0x46546c67) return null; // 'glTF'
-    const version = view.getUint32(4, true);
-    if (version !== 2) return null;
-    const totalLength = view.getUint32(8, true);
-
-    let offset = 12;
-    let jsonData: any = null;
-    let binBuffer: ArrayBuffer | null = null;
-
-    while (offset < totalLength) {
-      const chunkLen = view.getUint32(offset, true);
-      const chunkType = view.getUint32(offset + 4, true);
-      offset += 8;
-
-      if (chunkType === 0x4e4f534a) {
-        // 'JSON'
-        const jsonBytes = new Uint8Array(buffer, offset, chunkLen);
-        const jsonStr = new TextDecoder().decode(jsonBytes);
-        jsonData = JSON.parse(jsonStr);
-      } else if (chunkType === 0x004e4942) {
-        // 'BIN\0'
-        binBuffer = buffer.slice(offset, offset + chunkLen);
-      }
-      offset += chunkLen;
-    }
-
     if (!jsonData || !jsonData.meshes || jsonData.meshes.length === 0 || !binBuffer) {
       return null;
     }
@@ -105,8 +76,81 @@ function parseGLB(buffer: ArrayBuffer): ParsedMesh | null {
     }
 
     if (vertices.length > 0 && faces.length > 0) {
-      return { vertices, faces, format: 'glb' };
+      return { vertices, faces, format };
     }
+  } catch (err) {
+    console.warn(`Could not extract mesh from ${format}:`, err);
+  }
+  return null;
+}
+
+/**
+ * Client-side glTF 2.0 JSON text / embedded base64 parser (.gltf).
+ */
+function parseGLTF(buffer: ArrayBuffer): ParsedMesh | null {
+  try {
+    const text = new TextDecoder().decode(buffer);
+    if (!text.trimStart().startsWith('{')) return null;
+    const jsonData = JSON.parse(text);
+    if (!jsonData.asset || !jsonData.asset.version) return null;
+    if (!jsonData.buffers || jsonData.buffers.length === 0) return null;
+
+    const uri = jsonData.buffers[0].uri;
+    if (!uri || !uri.startsWith('data:')) return null;
+
+    const base64Index = uri.indexOf('base64,');
+    if (base64Index === -1) return null;
+    const base64Str = uri.slice(base64Index + 7);
+    const binaryStr = atob(base64Str);
+    const len = binaryStr.length;
+    const bytes = new Uint8Array(len);
+    for (let i = 0; i < len; i++) {
+      bytes[i] = binaryStr.charCodeAt(i);
+    }
+
+    return parseGLTFData(jsonData, bytes.buffer, 'gltf');
+  } catch (err) {
+    // Not valid JSON glTF or parse error
+  }
+  return null;
+}
+
+/**
+ * High-performance, zero-dependency client-side glTF 2.0 binary (.glb) chunk parser.
+ * Reads JSON chunk (0x4E4F534A) and BIN chunk (0x004E4942) without external runtime dependencies.
+ */
+function parseGLB(buffer: ArrayBuffer): ParsedMesh | null {
+  try {
+    const view = new DataView(buffer);
+    const magic = view.getUint32(0, true);
+    if (magic !== 0x46546c67) return null; // 'glTF'
+    const version = view.getUint32(4, true);
+    if (version !== 2) return null;
+    const totalLength = view.getUint32(8, true);
+
+    let offset = 12;
+    let jsonData: any = null;
+    let binBuffer: ArrayBuffer | null = null;
+
+    while (offset < totalLength) {
+      const chunkLen = view.getUint32(offset, true);
+      const chunkType = view.getUint32(offset + 4, true);
+      offset += 8;
+
+      if (chunkType === 0x4e4f534a) {
+        // 'JSON'
+        const jsonBytes = new Uint8Array(buffer, offset, chunkLen);
+        const jsonStr = new TextDecoder().decode(jsonBytes);
+        jsonData = JSON.parse(jsonStr);
+      } else if (chunkType === 0x004e4942) {
+        // 'BIN\0'
+        binBuffer = buffer.slice(offset, offset + chunkLen);
+      }
+      offset += chunkLen;
+    }
+
+    if (!jsonData || !binBuffer) return null;
+    return parseGLTFData(jsonData, binBuffer, 'glb');
   } catch (err) {
     console.warn('Could not parse GLB binary:', err);
   }
@@ -235,8 +279,11 @@ export default function ModelViewer({
       })
       .then((buf) => {
         if (!active) return;
-        // Attempt GLB parse first, then fallback to 3DS
-        let parsed = parseGLB(buf);
+        // Attempt glTF (embedded JSON) first, then binary GLB, then legacy 3DS fallback
+        let parsed = parseGLTF(buf);
+        if (!parsed) {
+          parsed = parseGLB(buf);
+        }
         if (!parsed) {
           parsed = parse3DS(buf);
         }
@@ -641,6 +688,7 @@ export default function ModelViewer({
     setZoomLevel(next);
   };
 
+  const isGltf = mesh?.format === 'gltf' || modelUrl.toLowerCase().endsWith('.gltf');
   const isGlb = mesh?.format === 'glb' || modelUrl.toLowerCase().endsWith('.glb');
 
   return (
@@ -739,7 +787,7 @@ export default function ModelViewer({
           {mesh ? (
             <div className="flex items-center gap-1.5 text-emerald-400">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-              <span className="font-semibold">{isGlb ? 'glTF 2.0 (GLB):' : 'Autodesk 3DS:'}</span>
+              <span className="font-semibold">{isGltf ? 'glTF 2.0 Standard:' : isGlb ? 'glTF 2.0 (GLB):' : 'Autodesk 3DS:'}</span>
               <span className="text-slate-300">{mesh.vertices.length} vertices / {mesh.faces.length} faces</span>
             </div>
           ) : (
@@ -762,7 +810,7 @@ export default function ModelViewer({
       <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-3 bg-slate-950 border-t border-slate-800 text-xs">
         <div className="flex items-center gap-2 text-slate-400">
           <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-          <span>{isGlb ? 'glTF 2.0 PBR Standard' : 'Autodesk 3DS Canonical CAD'} • Drag to Orbit / Use Zoom HUD</span>
+          <span>{isGltf || isGlb ? 'glTF 2.0 CAD Standard' : 'Autodesk 3DS Canonical CAD'} • Drag to Orbit / Use Zoom HUD</span>
         </div>
 
         <a
@@ -771,7 +819,7 @@ export default function ModelViewer({
           className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-sky-500/10 hover:bg-sky-500/20 text-sky-400 border border-sky-500/30 rounded-md font-mono text-xs font-semibold transition"
         >
           <Download className="w-3.5 h-3.5" />
-          <span>Download {modelUrl.split('/').pop() || 'model.3ds'}</span>
+          <span>Download {modelUrl.split('/').pop() || 'model.gltf'}</span>
         </a>
       </div>
     </div>

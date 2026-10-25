@@ -49,7 +49,7 @@ Every custom-fabricated component must reside within its own dedicated directory
 src/content/docs/parts/
 └── <part-slug>/
     ├── index.mdx              # Technical summary, metadata frontmatter & interactive viewer
-    ├── model.3ds              # Canonical Autodesk 3DS binary geometry asset
+    ├── model.gltf              # Canonical glTF 2.0 format geometry asset
     └── assets/                # Supporting engineering figures
         ├── dimensional-drawing.svg  # Multi-view orthographic drafting schematic
         └── isometric-render.svg     # Shaded 3D perspective vector projection
@@ -68,7 +68,7 @@ title: "<Human-Readable Part Name>"
 classification: "custom-fabricated"
 fabrication_method: "3d-printed | machined | laser-cut | manual-stock"
 material: "aluminum | copper | brass | glass | rubber | petg"
-model_file: "./model.3ds"
+model_file: "./model.gltf"
 estimated_cost: 0.00
 dimensions:
   x_mm: 0.0
@@ -139,7 +139,7 @@ Below is a live rendering of the canonical `PART-FAB-BRACKET-SOLAR-CONE` compone
   fabricationMethod="machined"
   dimensions={{ x_mm: 120.0, y_mm: 65.0, z_mm: 45.0 }}
   estimatedCost={16.50}
-  modelUrl="/open-biosphere/assets/parts/PART-FAB-BRACKET-SOLAR-CONE/model.3ds"
+  modelUrl="/open-biosphere/assets/parts/PART-FAB-BRACKET-SOLAR-CONE/model.gltf"
 />
 
 ---
@@ -150,7 +150,7 @@ Below is a live rendering of the canonical `PART-FAB-BRACKET-SOLAR-CONE` compone
 | :--- | :--- | :--- |
 | **Zero Placeholder Invariant** | 全 Codebase Audit | Pass (`0` unresolved placeholders) |
 | **Dedicated Route Standard** | `src/content/docs/parts/<slug>/index.mdx` | Pass (32 dedicated custom part subpages created) |
-| **Canonical 3D Model Asset** | `src/content/docs/parts/<slug>/model.3ds` | Pass (32 binary 3DS assets instantiated) |
+| **Canonical 3D Model Asset** | `src/content/docs/parts/<slug>/model.gltf` | Pass (32 binary 3DS assets instantiated) |
 | **Vector Drawing Standard** | `assets/dimensional-drawing.svg` & `isometric-render.svg` | Pass (64 vector schematics generated) |
 | **Client-Side 3D Viewer** | `src/components/ModelViewer.tsx` | Pass (Canvas/WebGL orbit viewport with wireframe & HUD) |
 | **Global Part Registry Rollup** | `src/data/parts.json` | Pass (4 new parts merged; schema validated) |

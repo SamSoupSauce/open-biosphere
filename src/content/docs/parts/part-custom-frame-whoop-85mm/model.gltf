@@ -1,0 +1,104 @@
+{
+  "asset": {
+    "version": "2.0",
+    "generator": "OpenBiosphere-ParametricCAD-GLTF (RFC-014)"
+  },
+  "scene": 0,
+  "scenes": [
+    {
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "name": "model",
+      "mesh": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "model_Geometry",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 1
+          },
+          "indices": 0,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "materials": [
+    {
+      "name": "PBR_Standard",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.7,
+          0.75,
+          0.8,
+          1.0
+        ],
+        "metallicFactor": 0.7,
+        "roughnessFactor": 0.35
+      },
+      "doubleSided": true
+    }
+  ],
+  "accessors": [
+    {
+      "bufferView": 0,
+      "byteOffset": 0,
+      "componentType": 5123,
+      "count": 324,
+      "type": "SCALAR",
+      "max": [
+        103
+      ],
+      "min": [
+        0
+      ]
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 0,
+      "componentType": 5126,
+      "count": 104,
+      "type": "VEC3",
+      "max": [
+        65.9586410522461,
+        65.9586410522461,
+        8.0
+      ],
+      "min": [
+        -65.9586410522461,
+        -65.9586410522461,
+        -8.0
+      ]
+    }
+  ],
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteOffset": 0,
+      "byteLength": 648,
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 648,
+      "byteLength": 1248,
+      "byteStride": 12,
+      "target": 34962
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 1896,
+      "uri": "data:application/octet-stream;base64,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"
+    }
+  ]
+}

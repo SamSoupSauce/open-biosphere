@@ -62,10 +62,10 @@ All runtime monitoring (temperature telemetry, motor RPM, jog controls, and batc
   fabricationMethod="composite-assembly"
   dimensions={{ x_mm: 380.0, y_mm: 160.0, z_mm: 120.0 }}
   estimatedCost={480.00}
-  modelUrl="/open-biosphere/assets/machines/bca-packaging-engine/stage-1.3ds"
+  modelUrl="/open-biosphere/assets/machines/bca-packaging-engine/stage-1.gltf"
 />
 
-* **Direct 3D Assembly Download:** [Download stage-1.3ds (Autodesk 3DS Binary)](/open-biosphere/assets/machines/bca-packaging-engine/stage-1.3ds)
+* **Direct 3D Assembly Download:** [Download stage-1.gltf (glTF 2.0 Standard)](/open-biosphere/assets/machines/bca-packaging-engine/stage-1.gltf)
 
 ---
 
@@ -81,7 +81,7 @@ All runtime monitoring (temperature telemetry, motor RPM, jog controls, and batc
   fabricationMethod="stock-motor"
   dimensions={{ x_mm: 145.0, y_mm: 60.0, z_mm: 60.0 }}
   estimatedCost={38.00}
-  modelUrl="/open-biosphere/assets/parts/PART-ELEC-MTR-DC-250W-GEAR/model.3ds"
+  modelUrl="/open-biosphere/assets/parts/PART-ELEC-MTR-DC-250W-GEAR/model.gltf"
 />
 1. Bolt the motor mounting plate to the lower chassis cross-beam using four M6 Grade 8.8 bolts.
 2. Mount the 12V 250W geared DC motor and install the 14-tooth drive sprocket onto its 12 mm D-shaft with twin set screws.
@@ -97,7 +97,7 @@ All runtime monitoring (temperature telemetry, motor RPM, jog controls, and batc
   fabricationMethod="stock-power-supply"
   dimensions={{ x_mm: 215.0, y_mm: 115.0, z_mm: 30.0 }}
   estimatedCost={32.00}
-  modelUrl="/open-biosphere/assets/parts/PART-ELEC-PSU-24V-250W/model.3ds"
+  modelUrl="/open-biosphere/assets/parts/PART-ELEC-PSU-24V-250W/model.gltf"
 />
 1. Wrap two 300W ceramic band heaters around the circumference of the 304 SS pug barrel:
    * **Band A (Zone 1 - Compounding):** Located at $X = 120$ mm from feed chute, set to 150°C.
@@ -115,7 +115,7 @@ All runtime monitoring (temperature telemetry, motor RPM, jog controls, and batc
   fabricationMethod="3d-print-/-assembly"
   dimensions={{ x_mm: 115.0, y_mm: 65.0, z_mm: 40.0 }}
   estimatedCost={22.00}
-  modelUrl="/open-biosphere/assets/parts/PART-ELEC-TWO-CTRL-PACK/model.3ds"
+  modelUrl="/open-biosphere/assets/parts/PART-ELEC-TWO-CTRL-PACK/model.gltf"
 />
 1. Mount the Two-Control IP65 enclosure ([`PART-ELEC-TWO-CTRL-PACK`](/open-biosphere/parts/part-custom-part-elec-two-ctrl-pack/)) to the operator-facing chassis upright.
 2. Wire the 32A red rotary emergency switch in series with the main 24V DC battery/power bus.
@@ -132,7 +132,7 @@ All runtime monitoring (temperature telemetry, motor RPM, jog controls, and batc
   fabricationMethod="stock-electronics"
   dimensions={{ x_mm: 51.0, y_mm: 28.0, z_mm: 8.5 }}
   estimatedCost={14.00}
-  modelUrl="/open-biosphere/assets/parts/PART-ELEC-ESP32-S3-NODE/model.3ds"
+  modelUrl="/open-biosphere/assets/parts/PART-ELEC-ESP32-S3-NODE/model.gltf"
 />
 1. Mount the ESP32-S3 Machine Node and dual 15A H-bridge driver inside the vented DIN-rail enclosure.
 2. Connect PWM output pins to driver direction and throttle inputs, configured for 20 kHz ultrasonic switching frequency (eliminating motor whine).
@@ -149,7 +149,7 @@ All runtime monitoring (temperature telemetry, motor RPM, jog controls, and batc
   fabricationMethod="composite-assembly"
   dimensions={{ x_mm: 380.0, y_mm: 220.0, z_mm: 160.0 }}
   estimatedCost={0.00}
-  modelUrl="/open-biosphere/assets/machines/bca-packaging-engine/stage-1.3ds"
+  modelUrl="/open-biosphere/assets/machines/bca-packaging-engine/stage-1.gltf"
 />
 1. Power on the machine and launch the Flutter Open Biosphere Companion App on an Android or iOS device.
 2. Scan for BLE advertisement name `POTFRM-BCA-PRESS` and authenticate using the default physical QR code token.

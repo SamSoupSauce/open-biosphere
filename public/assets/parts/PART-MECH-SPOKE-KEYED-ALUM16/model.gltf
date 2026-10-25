@@ -1,0 +1,104 @@
+{
+  "asset": {
+    "version": "2.0",
+    "generator": "OpenBiosphere-ParametricCAD-GLTF (RFC-014)"
+  },
+  "scene": 0,
+  "scenes": [
+    {
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "name": "model",
+      "mesh": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "model_Geometry",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 1
+          },
+          "indices": 0,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "materials": [
+    {
+      "name": "PBR_Standard",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.7,
+          0.75,
+          0.8,
+          1.0
+        ],
+        "metallicFactor": 0.7,
+        "roughnessFactor": 0.35
+      },
+      "doubleSided": true
+    }
+  ],
+  "accessors": [
+    {
+      "bufferView": 0,
+      "byteOffset": 0,
+      "componentType": 5123,
+      "count": 60,
+      "type": "SCALAR",
+      "max": [
+        11
+      ],
+      "min": [
+        0
+      ]
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 0,
+      "componentType": 5126,
+      "count": 12,
+      "type": "VEC3",
+      "max": [
+        22.5,
+        114.0,
+        2.200000047683716
+      ],
+      "min": [
+        -22.5,
+        -114.0,
+        -1.7999999523162842
+      ]
+    }
+  ],
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteOffset": 0,
+      "byteLength": 120,
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 120,
+      "byteLength": 144,
+      "byteStride": 12,
+      "target": 34962
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 264,
+      "uri": "data:application/octet-stream;base64,AAABAAIAAAACAAMAAAADAAUAAwAEAAUABgAIAAcABgAJAAgABgALAAkACQALAAoAAAABAAcAAAAHAAYAAQACAAgAAQAIAAcAAgADAAkAAgAJAAgAAwAEAAoAAwAKAAkABAAFAAsABAALAAoABQAAAAYABQAGAAsAAAC0wQAA5MJmZua/AAC0wQAA5EJmZua/AAC0wQAA5ELNzAxAAAC0wQAA3MLNzAxAAAC0wQAA3MJmZuY/AAC0wQAA5MJmZuY/AAC0QQAA5MJmZua/AAC0QQAA5EJmZua/AAC0QQAA5ELNzAxAAAC0QQAA3MLNzAxAAAC0QQAA3MJmZuY/AAC0QQAA5MJmZuY/"
+    }
+  ]
+}

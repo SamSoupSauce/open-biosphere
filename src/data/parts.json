@@ -15,7 +15,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Electronics",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-ESP32-S3-NODE/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-ESP32-S3-NODE/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-ESP32-S3-NODE/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-ELEC-ESP32-S3-NODE/photo.webp"
     },
@@ -79,7 +79,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Electronics",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-ESP32-C3-TOOL/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-ESP32-C3-TOOL/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-ESP32-C3-TOOL/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-ELEC-ESP32-C3-TOOL/photo.webp"
     },
@@ -152,7 +152,7 @@
         "filament_weight_grams": 95.0
       },
       "fab_type": "3D Print / Assembly",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-TWO-CTRL-PACK/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-TWO-CTRL-PACK/model.gltf",
       "stl_asset_url": "/open-biosphere/assets/parts/PART-ELEC-TWO-CTRL-PACK/print.stl",
       "step_asset_url": "/open-biosphere/assets/parts/PART-ELEC-TWO-CTRL-PACK/cad.step",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-TWO-CTRL-PACK/dimensional-drawing.svg",
@@ -223,7 +223,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Electronics",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-OLED-091-I2C/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-OLED-091-I2C/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-OLED-091-I2C/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-ELEC-OLED-091-I2C/photo.webp"
     },
@@ -272,7 +272,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Electronics",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-OLED-042-TOOL/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-OLED-042-TOOL/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-OLED-042-TOOL/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-ELEC-OLED-042-TOOL/photo.webp"
     },
@@ -305,7 +305,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Motor",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-NEMA23-28NM/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-NEMA23-28NM/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-NEMA23-28NM/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-ELEC-NEMA23-28NM/photo.webp"
     },
@@ -344,7 +344,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Motor",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-NEMA17-PLANET/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-NEMA17-PLANET/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-NEMA17-PLANET/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-ELEC-NEMA17-PLANET/photo.webp"
     },
@@ -383,7 +383,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Motor",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-NEMA14-PANCAKE/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-NEMA14-PANCAKE/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-NEMA14-PANCAKE/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-ELEC-NEMA14-PANCAKE/photo.webp"
     },
@@ -422,7 +422,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Electronics",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-TB6600-DVR/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-TB6600-DVR/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-TB6600-DVR/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-ELEC-TB6600-DVR/photo.webp"
     },
@@ -461,7 +461,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Electronics",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-TMC2209-DVR/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-TMC2209-DVR/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-TMC2209-DVR/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-ELEC-TMC2209-DVR/photo.webp"
     },
@@ -515,7 +515,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Power Supply",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-PSU-24V-150W/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-PSU-24V-150W/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-PSU-24V-150W/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-ELEC-PSU-24V-150W/photo.webp"
     },
@@ -548,7 +548,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Power Supply",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-PSU-24V-250W/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-PSU-24V-250W/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-PSU-24V-250W/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-ELEC-PSU-24V-250W/photo.webp"
     },
@@ -587,7 +587,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Power Supply",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-PSU-24V-60W/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-PSU-24V-60W/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-PSU-24V-60W/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-ELEC-PSU-24V-60W/photo.webp"
     },
@@ -626,7 +626,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Power Supply",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-PSU-24V-72W/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-PSU-24V-72W/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-PSU-24V-72W/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-ELEC-PSU-24V-72W/photo.webp"
     },
@@ -665,7 +665,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Power Supply",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-PSU-12V-60W/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-PSU-12V-60W/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-PSU-12V-60W/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-ELEC-PSU-12V-60W/photo.webp"
     },
@@ -704,7 +704,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Sensor",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-CAM-4K-IMX519/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-CAM-4K-IMX519/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-CAM-4K-IMX519/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-ELEC-CAM-4K-IMX519/photo.webp"
     },
@@ -743,7 +743,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Sensor",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-CAM-RUNCAM-HD/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-CAM-RUNCAM-HD/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-CAM-RUNCAM-HD/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-ELEC-CAM-RUNCAM-HD/photo.webp"
     },
@@ -782,7 +782,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Sensor",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-CAM-STEREO-NIR/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-CAM-STEREO-NIR/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-CAM-STEREO-NIR/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-ELEC-CAM-STEREO-NIR/photo.webp"
     },
@@ -821,7 +821,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Sensor",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-SHT40/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-SHT40/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-SHT40/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-SHT40/photo.webp"
     },
@@ -860,7 +860,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Sensor",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-SCD41-NDIR/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-SCD41-NDIR/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-SCD41-NDIR/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-SCD41-NDIR/photo.webp"
     },
@@ -899,7 +899,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Sensor",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-MLX90614/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-MLX90614/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-MLX90614/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-MLX90614/photo.webp"
     },
@@ -938,7 +938,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Sensor",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-USONIC-JSN/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-USONIC-JSN/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-USONIC-JSN/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-USONIC-JSN/photo.webp"
     },
@@ -971,7 +971,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Sensor",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-LIDAR-C1-2D/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-LIDAR-C1-2D/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-LIDAR-C1-2D/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-ELEC-LIDAR-C1-2D/photo.webp"
     },
@@ -1010,7 +1010,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Sensor",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-ENC-AS5600-MAG/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-ENC-AS5600-MAG/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-ENC-AS5600-MAG/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-ELEC-ENC-AS5600-MAG/photo.webp"
     },
@@ -1049,7 +1049,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Electronics",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-WLESS-CHG-120W/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-WLESS-CHG-120W/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-WLESS-CHG-120W/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-ELEC-WLESS-CHG-120W/photo.webp"
     },
@@ -1088,7 +1088,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Motor",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-MTR-DC-250W-GEAR/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-MTR-DC-250W-GEAR/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-MTR-DC-250W-GEAR/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-ELEC-MTR-DC-250W-GEAR/photo.webp"
     },
@@ -1127,7 +1127,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Electronics",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-DVR-DC-15A-DUAL/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-DVR-DC-15A-DUAL/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-DVR-DC-15A-DUAL/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-ELEC-DVR-DC-15A-DUAL/photo.webp"
     },
@@ -1166,7 +1166,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Battery",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-BAT-LIFEPO4-24V15A/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-BAT-LIFEPO4-24V15A/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-BAT-LIFEPO4-24V15A/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-ELEC-BAT-LIFEPO4-24V15A/photo.webp"
     },
@@ -1205,7 +1205,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Battery",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-BAT-LIPO-2S450/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-BAT-LIPO-2S450/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-BAT-LIPO-2S450/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-ELEC-BAT-LIPO-2S450/photo.webp"
     },
@@ -1244,7 +1244,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Motor",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-MTR-BLDC-1103/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-MTR-BLDC-1103/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-MTR-BLDC-1103/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-ELEC-MTR-BLDC-1103/photo.webp"
     },
@@ -1283,7 +1283,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Electronics",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-FC-STM32F4-AIO/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-FC-STM32F4-AIO/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-FC-STM32F4-AIO/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-ELEC-FC-STM32F4-AIO/photo.webp"
     },
@@ -1322,7 +1322,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Component",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-PZO-BUZZ-27MM/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-PZO-BUZZ-27MM/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-PZO-BUZZ-27MM/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-ELEC-PZO-BUZZ-27MM/photo.webp"
     },
@@ -1361,7 +1361,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Sensor",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-PMW3901-FLOW/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-PMW3901-FLOW/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-PMW3901-FLOW/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-PMW3901-FLOW/photo.webp"
     },
@@ -1400,7 +1400,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Actuator",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-SOL-LATCH-25N/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-SOL-LATCH-25N/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-SOL-LATCH-25N/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-ELEC-SOL-LATCH-25N/photo.webp"
     },
@@ -1439,7 +1439,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Sensor",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-MAG-TRACK-5CH/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-MAG-TRACK-5CH/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-MAG-TRACK-5CH/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-MAG-TRACK-5CH/photo.webp"
     },
@@ -1478,7 +1478,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Robotics",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-ARM-3AXIS-KIT/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-ARM-3AXIS-KIT/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-ARM-3AXIS-KIT/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-ELEC-ARM-3AXIS-KIT/photo.webp"
     },
@@ -1526,7 +1526,7 @@
         "filament_weight_grams": 65.0
       },
       "fab_type": "3D Print / Assembly",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-BAT-ADAPT-18V/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-BAT-ADAPT-18V/model.gltf",
       "stl_asset_url": "/open-biosphere/assets/parts/PART-ELEC-BAT-ADAPT-18V/print.stl",
       "step_asset_url": "/open-biosphere/assets/parts/PART-ELEC-BAT-ADAPT-18V/cad.step",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-BAT-ADAPT-18V/dimensional-drawing.svg",
@@ -1567,7 +1567,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Motor",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-MTR-CORELESS-12V/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-MTR-CORELESS-12V/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-MTR-CORELESS-12V/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-ELEC-MTR-CORELESS-12V/photo.webp"
     },
@@ -1606,7 +1606,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Sensor",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-LOADCELL-20N/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-LOADCELL-20N/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-LOADCELL-20N/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-LOADCELL-20N/photo.webp"
     },
@@ -1645,7 +1645,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Electronics",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-VR-5V5A-STEPDOWN/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-VR-5V5A-STEPDOWN/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-VR-5V5A-STEPDOWN/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-ELEC-VR-5V5A-STEPDOWN/photo.webp"
     },
@@ -1684,7 +1684,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Sanitizer",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-GEN-OZONE-12V/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-GEN-OZONE-12V/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-GEN-OZONE-12V/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-ELEC-GEN-OZONE-12V/photo.webp"
     },
@@ -1723,7 +1723,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Robotics",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-LATCH-MAG-ALIGN/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-LATCH-MAG-ALIGN/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-LATCH-MAG-ALIGN/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-ELEC-LATCH-MAG-ALIGN/photo.webp"
     },
@@ -1762,7 +1762,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Sensor",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-OPT-LEVEL/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-OPT-LEVEL/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-OPT-LEVEL/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-OPT-LEVEL/photo.webp"
     },
@@ -1801,7 +1801,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Electronics",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-DVR-MOSFET-8CH/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-DVR-MOSFET-8CH/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-DVR-MOSFET-8CH/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-ELEC-DVR-MOSFET-8CH/photo.webp"
     },
@@ -1840,7 +1840,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Actuator",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-ACTUATOR-LIN-12V/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-ACTUATOR-LIN-12V/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-ACTUATOR-LIN-12V/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-ELEC-ACTUATOR-LIN-12V/photo.webp"
     },
@@ -1873,7 +1873,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Enclosure",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-ENC-WEATHER-IP65/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-ENC-WEATHER-IP65/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-ENC-WEATHER-IP65/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-ELEC-ENC-WEATHER-IP65/photo.webp"
     },
@@ -1912,7 +1912,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Precision Filtration Panel",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-WEDGE-150U/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-WEDGE-150U/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-FLUID-WEDGE-150U/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-FLUID-WEDGE-150U/photo.webp"
     },
@@ -1945,7 +1945,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Pump",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-PUMP-MAG-24V/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-PUMP-MAG-24V/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-FLUID-PUMP-MAG-24V/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-FLUID-PUMP-MAG-24V/photo.webp"
     },
@@ -1978,7 +1978,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Pump",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-PUMP-BOOST-120P/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-PUMP-BOOST-120P/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-FLUID-PUMP-BOOST-120P/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-FLUID-PUMP-BOOST-120P/photo.webp"
     },
@@ -2017,7 +2017,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Pump",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-PUMP-MIST-100P/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-PUMP-MIST-100P/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-FLUID-PUMP-MIST-100P/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-FLUID-PUMP-MIST-100P/photo.webp"
     },
@@ -2056,7 +2056,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Pump",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-PUMP-PERI-12V/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-PUMP-PERI-12V/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-FLUID-PUMP-PERI-12V/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-FLUID-PUMP-PERI-12V/photo.webp"
     },
@@ -2095,7 +2095,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Precision Nozzle",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-NOZZLE-BRASS-03/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-NOZZLE-BRASS-03/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-FLUID-NOZZLE-BRASS-03/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-FLUID-NOZZLE-BRASS-03/photo.webp"
     },
@@ -2139,7 +2139,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Valve",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-SOLENOID-CO2/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-SOLENOID-CO2/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-FLUID-SOLENOID-CO2/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-FLUID-SOLENOID-CO2/photo.webp"
     },
@@ -2172,7 +2172,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Valve",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-VALVE-3WAY-L/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-VALVE-3WAY-L/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-FLUID-VALVE-3WAY-L/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-FLUID-VALVE-3WAY-L/photo.webp"
     },
@@ -2211,7 +2211,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Valve",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-VALVE-BALL-34B/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-VALVE-BALL-34B/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-FLUID-VALVE-BALL-34B/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-FLUID-VALVE-BALL-34B/photo.webp"
     },
@@ -2250,7 +2250,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Plumbing",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-VALVE-BALL-1IN/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-VALVE-BALL-1IN/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-FLUID-VALVE-BALL-1IN/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-FLUID-VALVE-BALL-1IN/photo.webp"
     },
@@ -2289,7 +2289,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Valve",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-SOLENOID-BLEED-24V/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-SOLENOID-BLEED-24V/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-FLUID-SOLENOID-BLEED-24V/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-FLUID-SOLENOID-BLEED-24V/photo.webp"
     },
@@ -2328,7 +2328,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Sump",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-SUMP-SILICONE-34/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-SUMP-SILICONE-34/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-FLUID-SUMP-SILICONE-34/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-FLUID-SUMP-SILICONE-34/photo.webp"
     },
@@ -2367,7 +2367,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Appliance",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-SPRAYER-HAND-2G/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-SPRAYER-HAND-2G/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-FLUID-SPRAYER-HAND-2G/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-FLUID-SPRAYER-HAND-2G/photo.webp"
     },
@@ -2406,7 +2406,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Sensor",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-MTR-FLOW-HALL/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-MTR-FLOW-HALL/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-FLUID-MTR-FLOW-HALL/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-FLUID-MTR-FLOW-HALL/photo.webp"
     },
@@ -2439,7 +2439,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Diffuser",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-DIFFUSER-CERAMIC/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-DIFFUSER-CERAMIC/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-FLUID-DIFFUSER-CERAMIC/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-FLUID-DIFFUSER-CERAMIC/photo.webp"
     },
@@ -2472,7 +2472,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "CNC Milled Acrylic",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-MANIFOLD-4CH-GRAD/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-MANIFOLD-4CH-GRAD/model.gltf",
       "stl_asset_url": "/open-biosphere/assets/parts/PART-FLUID-MANIFOLD-4CH-GRAD/print.stl",
       "step_asset_url": "/open-biosphere/assets/parts/PART-FLUID-MANIFOLD-4CH-GRAD/cad.step",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-FLUID-MANIFOLD-4CH-GRAD/dimensional-drawing.svg",
@@ -2507,7 +2507,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Tubing",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-TUBE-SILICONE-MED/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-TUBE-SILICONE-MED/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-FLUID-TUBE-SILICONE-MED/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-FLUID-TUBE-SILICONE-MED/photo.webp"
     },
@@ -2540,7 +2540,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Reservoir",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-TOTE-HDPE-160L/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-TOTE-HDPE-160L/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-FLUID-TOTE-HDPE-160L/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-FLUID-TOTE-HDPE-160L/photo.webp"
     },
@@ -2579,7 +2579,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Foam Discs",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-COLLAR-NEOPRENE-2IN/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-COLLAR-NEOPRENE-2IN/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-FLUID-COLLAR-NEOPRENE-2IN/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-FLUID-COLLAR-NEOPRENE-2IN/photo.webp"
     },
@@ -2618,7 +2618,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Gasket",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-SEAL-EPDM-WEATHER/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-SEAL-EPDM-WEATHER/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-FLUID-SEAL-EPDM-WEATHER/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-FLUID-SEAL-EPDM-WEATHER/photo.webp"
     },
@@ -2657,7 +2657,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Bio-Media",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-MEDIA-K1-10L/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-MEDIA-K1-10L/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-FLUID-MEDIA-K1-10L/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-FLUID-MEDIA-K1-10L/photo.webp"
     },
@@ -2690,7 +2690,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Fan + Fab Pod",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-BLOWER-5015-24V/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FLUID-BLOWER-5015-24V/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-FLUID-BLOWER-5015-24V/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-FLUID-BLOWER-5015-24V/photo.webp"
     },
@@ -2729,7 +2729,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Extrusion",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-ALUM-2020-6M/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-ALUM-2020-6M/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-ALUM-2020-6M/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-MECH-ALUM-2020-6M/photo.webp"
     },
@@ -2823,7 +2823,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Extrusion",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-ALUM-2040-3M/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-ALUM-2040-3M/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-ALUM-2040-3M/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-MECH-ALUM-2040-3M/photo.webp"
     },
@@ -2862,7 +2862,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Extrusion",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-ALUM-4040-3M/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-ALUM-4040-3M/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-ALUM-4040-3M/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-MECH-ALUM-4040-3M/photo.webp"
     },
@@ -2901,7 +2901,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Motion Hardware",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-BELT-GT2-9MM/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-BELT-GT2-9MM/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-BELT-GT2-9MM/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-MECH-BELT-GT2-9MM/photo.webp"
     },
@@ -2940,7 +2940,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Motion Hardware",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-PULLEY-GT2-SET/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-PULLEY-GT2-SET/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-PULLEY-GT2-SET/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-MECH-PULLEY-GT2-SET/photo.webp"
     },
@@ -2979,7 +2979,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "CNC Machined Aluminum / Delrin",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-CLUTCH-DOG-AXIAL/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-CLUTCH-DOG-AXIAL/model.gltf",
       "stl_asset_url": "/open-biosphere/assets/parts/PART-MECH-CLUTCH-DOG-AXIAL/print.stl",
       "step_asset_url": "/open-biosphere/assets/parts/PART-MECH-CLUTCH-DOG-AXIAL/cad.step",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-CLUTCH-DOG-AXIAL/dimensional-drawing.svg",
@@ -3020,7 +3020,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "CNC Steel / Machined",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-CLUTCH-DOG-STEEL/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-CLUTCH-DOG-STEEL/model.gltf",
       "stl_asset_url": "/open-biosphere/assets/parts/PART-MECH-CLUTCH-DOG-STEEL/print.stl",
       "step_asset_url": "/open-biosphere/assets/parts/PART-MECH-CLUTCH-DOG-STEEL/cad.step",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-CLUTCH-DOG-STEEL/dimensional-drawing.svg",
@@ -3061,7 +3061,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Bearings",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-BEARING-6082RS/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-BEARING-6082RS/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-BEARING-6082RS/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-MECH-BEARING-6082RS/photo.webp"
     },
@@ -3100,7 +3100,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Bearings",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-BEARING-FLANGED/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-BEARING-FLANGED/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-BEARING-FLANGED/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-MECH-BEARING-FLANGED/photo.webp"
     },
@@ -3133,7 +3133,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Motion Hardware",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-VWHEEL-KIT-PC/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-VWHEEL-KIT-PC/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-VWHEEL-KIT-PC/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-MECH-VWHEEL-KIT-PC/photo.webp"
     },
@@ -3172,7 +3172,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Precision Shaft",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-SHAFT-SS-8MM/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-SHAFT-SS-8MM/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-SHAFT-SS-8MM/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-MECH-SHAFT-SS-8MM/photo.webp"
     },
@@ -3211,7 +3211,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Perforated Metal",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-SHEET-SS304-PERF/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-SHEET-SS304-PERF/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-SHEET-SS304-PERF/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-MECH-SHEET-SS304-PERF/photo.webp"
     },
@@ -3250,7 +3250,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Laser-Cut / Welded Steel",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-CHASSIS-STEEL-2MM/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-CHASSIS-STEEL-2MM/model.gltf",
       "stl_asset_url": "/open-biosphere/assets/parts/PART-MECH-CHASSIS-STEEL-2MM/print.stl",
       "step_asset_url": "/open-biosphere/assets/parts/PART-MECH-CHASSIS-STEEL-2MM/cad.step",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-CHASSIS-STEEL-2MM/dimensional-drawing.svg",
@@ -3291,7 +3291,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Molded Rubber",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-TREAD-RUBBER-50MM/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-TREAD-RUBBER-50MM/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-TREAD-RUBBER-50MM/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-MECH-TREAD-RUBBER-50MM/photo.webp"
     },
@@ -3330,7 +3330,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Machined Aluminum + Die Spring",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-SUSP-BOGIE-ARM/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-SUSP-BOGIE-ARM/model.gltf",
       "stl_asset_url": "/open-biosphere/assets/parts/PART-MECH-SUSP-BOGIE-ARM/print.stl",
       "step_asset_url": "/open-biosphere/assets/parts/PART-MECH-SUSP-BOGIE-ARM/cad.step",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-SUSP-BOGIE-ARM/dimensional-drawing.svg",
@@ -3371,7 +3371,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Tubular Steel Fabrication",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-HANDLE-TILLER-22MM/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-HANDLE-TILLER-22MM/model.gltf",
       "stl_asset_url": "/open-biosphere/assets/parts/PART-MECH-HANDLE-TILLER-22MM/print.stl",
       "step_asset_url": "/open-biosphere/assets/parts/PART-MECH-HANDLE-TILLER-22MM/cad.step",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-HANDLE-TILLER-22MM/dimensional-drawing.svg",
@@ -3412,7 +3412,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Laser Steel / Spring Clamp",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-CLAMP-FOOT-CAM/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-CLAMP-FOOT-CAM/model.gltf",
       "stl_asset_url": "/open-biosphere/assets/parts/PART-MECH-CLAMP-FOOT-CAM/print.stl",
       "step_asset_url": "/open-biosphere/assets/parts/PART-MECH-CLAMP-FOOT-CAM/cad.step",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-CLAMP-FOOT-CAM/dimensional-drawing.svg",
@@ -3453,7 +3453,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Carbon Fiber",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-POLE-CF-TELESCOPIC/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-POLE-CF-TELESCOPIC/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-POLE-CF-TELESCOPIC/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-MECH-POLE-CF-TELESCOPIC/photo.webp"
     },
@@ -3492,7 +3492,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Fiberglass Pole",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-POLE-FIBERGLASS-EXT/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-POLE-FIBERGLASS-EXT/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-POLE-FIBERGLASS-EXT/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-MECH-POLE-FIBERGLASS-EXT/photo.webp"
     },
@@ -3531,7 +3531,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Calibrated Instrument",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-FORK-ACOUSTIC-310HZ/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-FORK-ACOUSTIC-310HZ/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-FORK-ACOUSTIC-310HZ/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-MECH-FORK-ACOUSTIC-310HZ/photo.webp"
     },
@@ -3570,7 +3570,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Tool",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-MIRROR-CONVEX-BALL/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-MIRROR-CONVEX-BALL/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-MIRROR-CONVEX-BALL/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-MECH-MIRROR-CONVEX-BALL/photo.webp"
     },
@@ -3609,7 +3609,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Botanical Tool",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-BRUSH-CAMEL-HAIR/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-BRUSH-CAMEL-HAIR/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-BRUSH-CAMEL-HAIR/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-MECH-BRUSH-CAMEL-HAIR/photo.webp"
     },
@@ -3648,7 +3648,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Cable Assembly",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-CABLE-BOWDEN-25M/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-CABLE-BOWDEN-25M/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-CABLE-BOWDEN-25M/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-MECH-CABLE-BOWDEN-25M/photo.webp"
     },
@@ -3687,7 +3687,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Hardware",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-LEVER-BRAKE-ALUM/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-LEVER-BRAKE-ALUM/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-LEVER-BRAKE-ALUM/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-MECH-LEVER-BRAKE-ALUM/photo.webp"
     },
@@ -3726,7 +3726,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Tool Blades",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-SNIP-BYPASS-STEEL/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-SNIP-BYPASS-STEEL/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-SNIP-BYPASS-STEEL/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-MECH-SNIP-BYPASS-STEEL/photo.webp"
     },
@@ -3765,7 +3765,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Composite Assembly",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-WAND-CF-BOWDEN/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-WAND-CF-BOWDEN/model.gltf",
       "stl_asset_url": "/open-biosphere/assets/parts/PART-MECH-WAND-CF-BOWDEN/print.stl",
       "step_asset_url": "/open-biosphere/assets/parts/PART-MECH-WAND-CF-BOWDEN/cad.step",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-WAND-CF-BOWDEN/dimensional-drawing.svg",
@@ -3806,7 +3806,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Winch",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-WINCH-CRANK-PLANET/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-WINCH-CRANK-PLANET/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-WINCH-CRANK-PLANET/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-MECH-WINCH-CRANK-PLANET/photo.webp"
     },
@@ -3848,7 +3848,7 @@
         "filament_weight_grams": 110.0
       },
       "fab_type": "3D Print / CNC Pawl",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-CRANK-RATCHET-DELRIN/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-CRANK-RATCHET-DELRIN/model.gltf",
       "stl_asset_url": "/open-biosphere/assets/parts/PART-MECH-CRANK-RATCHET-DELRIN/print.stl",
       "step_asset_url": "/open-biosphere/assets/parts/PART-MECH-CRANK-RATCHET-DELRIN/cad.step",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-CRANK-RATCHET-DELRIN/dimensional-drawing.svg",
@@ -3889,7 +3889,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Hardware Pack",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-FASTENER-M5-PACK/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-FASTENER-M5-PACK/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-FASTENER-M5-PACK/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-MECH-FASTENER-M5-PACK/photo.webp"
     },
@@ -3928,7 +3928,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Cable Carrier",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-DRAGCHAIN-15X30/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-DRAGCHAIN-15X30/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-DRAGCHAIN-15X30/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-MECH-DRAGCHAIN-15X30/photo.webp"
     },
@@ -3976,7 +3976,7 @@
         "filament_weight_grams": 130.0
       },
       "fab_type": "3D Print / CNC Delrin",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-LEVER-WEIR-GATE/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-LEVER-WEIR-GATE/model.gltf",
       "stl_asset_url": "/open-biosphere/assets/parts/PART-MECH-LEVER-WEIR-GATE/print.stl",
       "step_asset_url": "/open-biosphere/assets/parts/PART-MECH-LEVER-WEIR-GATE/cad.step",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-LEVER-WEIR-GATE/dimensional-drawing.svg",
@@ -4020,7 +4020,7 @@
         "filament_weight_grams": 115.0
       },
       "fab_type": "3D Print / Hardware",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-BASE-MAG-KINEMATIC/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-BASE-MAG-KINEMATIC/model.gltf",
       "stl_asset_url": "/open-biosphere/assets/parts/PART-MECH-BASE-MAG-KINEMATIC/print.stl",
       "step_asset_url": "/open-biosphere/assets/parts/PART-MECH-BASE-MAG-KINEMATIC/cad.step",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-BASE-MAG-KINEMATIC/dimensional-drawing.svg",
@@ -4070,7 +4070,7 @@
         "filament_weight_grams": 350.0
       },
       "fab_type": "3D Print FDM",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-AUGER-PETG-50P/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-AUGER-PETG-50P/model.gltf",
       "stl_asset_url": "/open-biosphere/assets/parts/PART-FAB-AUGER-PETG-50P/print.stl",
       "step_asset_url": "/open-biosphere/assets/parts/PART-FAB-AUGER-PETG-50P/cad.step",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-FAB-AUGER-PETG-50P/dimensional-drawing.svg",
@@ -4114,7 +4114,7 @@
         "filament_weight_grams": 90.0
       },
       "fab_type": "3D Mold + Silicone Cast",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-ROLLER-SILICONE-40A/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-ROLLER-SILICONE-40A/model.gltf",
       "stl_asset_url": "/open-biosphere/assets/parts/PART-FAB-ROLLER-SILICONE-40A/print.stl",
       "step_asset_url": "/open-biosphere/assets/parts/PART-FAB-ROLLER-SILICONE-40A/cad.step",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-FAB-ROLLER-SILICONE-40A/dimensional-drawing.svg",
@@ -4164,7 +4164,7 @@
         "filament_weight_grams": 125.0
       },
       "fab_type": "3D Print + Brass Contacts",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-PERCH-CONICAL-DOCK/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-PERCH-CONICAL-DOCK/model.gltf",
       "stl_asset_url": "/open-biosphere/assets/parts/PART-FAB-PERCH-CONICAL-DOCK/print.stl",
       "step_asset_url": "/open-biosphere/assets/parts/PART-FAB-PERCH-CONICAL-DOCK/cad.step",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-FAB-PERCH-CONICAL-DOCK/dimensional-drawing.svg",
@@ -4205,7 +4205,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "CNC Laser Cut Aluminum",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-PLATES-GANTRY-6061/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-PLATES-GANTRY-6061/model.gltf",
       "stl_asset_url": "/open-biosphere/assets/parts/PART-FAB-PLATES-GANTRY-6061/print.stl",
       "step_asset_url": "/open-biosphere/assets/parts/PART-FAB-PLATES-GANTRY-6061/cad.step",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-FAB-PLATES-GANTRY-6061/dimensional-drawing.svg",
@@ -4246,7 +4246,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "CNC Laser Cut Aluminum",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-PLATES-MANTIS-5052/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-PLATES-MANTIS-5052/model.gltf",
       "stl_asset_url": "/open-biosphere/assets/parts/PART-FAB-PLATES-MANTIS-5052/print.stl",
       "step_asset_url": "/open-biosphere/assets/parts/PART-FAB-PLATES-MANTIS-5052/cad.step",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-FAB-PLATES-MANTIS-5052/dimensional-drawing.svg",
@@ -4296,7 +4296,7 @@
         "filament_weight_grams": 310.0
       },
       "fab_type": "3D Print FDM",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-DRUM-FLANGES-PETG/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-DRUM-FLANGES-PETG/model.gltf",
       "stl_asset_url": "/open-biosphere/assets/parts/PART-FAB-DRUM-FLANGES-PETG/print.stl",
       "step_asset_url": "/open-biosphere/assets/parts/PART-FAB-DRUM-FLANGES-PETG/cad.step",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-FAB-DRUM-FLANGES-PETG/dimensional-drawing.svg",
@@ -4337,7 +4337,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Molded Polycarbonate Frame",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-FRAME-WHOOP-85MM/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-FRAME-WHOOP-85MM/model.gltf",
       "stl_asset_url": "/open-biosphere/assets/parts/PART-FAB-FRAME-WHOOP-85MM/print.stl",
       "step_asset_url": "/open-biosphere/assets/parts/PART-FAB-FRAME-WHOOP-85MM/cad.step",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-FAB-FRAME-WHOOP-85MM/dimensional-drawing.svg",
@@ -4387,7 +4387,7 @@
         "filament_weight_grams": 85.0
       },
       "fab_type": "3D Print + Fabric Sewn",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-CHUTE-RIPSTOP-PETG/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-CHUTE-RIPSTOP-PETG/model.gltf",
       "stl_asset_url": "/open-biosphere/assets/parts/PART-FAB-CHUTE-RIPSTOP-PETG/print.stl",
       "step_asset_url": "/open-biosphere/assets/parts/PART-FAB-CHUTE-RIPSTOP-PETG/cad.step",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-FAB-CHUTE-RIPSTOP-PETG/dimensional-drawing.svg",
@@ -4437,7 +4437,7 @@
         "filament_weight_grams": 45.0
       },
       "fab_type": "Precision SLA / FDM Hybrid",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-TOOL-TWEEZER-SAFFRON/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-TOOL-TWEEZER-SAFFRON/model.gltf",
       "stl_asset_url": "/open-biosphere/assets/parts/PART-FAB-TOOL-TWEEZER-SAFFRON/print.stl",
       "step_asset_url": "/open-biosphere/assets/parts/PART-FAB-TOOL-TWEEZER-SAFFRON/cad.step",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-FAB-TOOL-TWEEZER-SAFFRON/dimensional-drawing.svg",
@@ -4487,7 +4487,7 @@
         "filament_weight_grams": 75.0
       },
       "fab_type": "3D Print + Steel Blades",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-TOOL-SHEAR-PURSLANE/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-TOOL-SHEAR-PURSLANE/model.gltf",
       "stl_asset_url": "/open-biosphere/assets/parts/PART-FAB-TOOL-SHEAR-PURSLANE/print.stl",
       "step_asset_url": "/open-biosphere/assets/parts/PART-FAB-TOOL-SHEAR-PURSLANE/cad.step",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-FAB-TOOL-SHEAR-PURSLANE/dimensional-drawing.svg",
@@ -4537,7 +4537,7 @@
         "filament_weight_grams": 35.0
       },
       "fab_type": "3D Print + Pogo Contacts",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-DOCK-POGO-GANTRY/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-DOCK-POGO-GANTRY/model.gltf",
       "stl_asset_url": "/open-biosphere/assets/parts/PART-FAB-DOCK-POGO-GANTRY/print.stl",
       "step_asset_url": "/open-biosphere/assets/parts/PART-FAB-DOCK-POGO-GANTRY/cad.step",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-FAB-DOCK-POGO-GANTRY/dimensional-drawing.svg",
@@ -4578,7 +4578,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Laser Etched Plate + Harness",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-TARGET-APRILTAG-HARNESS/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-TARGET-APRILTAG-HARNESS/model.gltf",
       "stl_asset_url": "/open-biosphere/assets/parts/PART-FAB-TARGET-APRILTAG-HARNESS/print.stl",
       "step_asset_url": "/open-biosphere/assets/parts/PART-FAB-TARGET-APRILTAG-HARNESS/cad.step",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-FAB-TARGET-APRILTAG-HARNESS/dimensional-drawing.svg",
@@ -4619,7 +4619,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "CNC Milled Acrylic / Solvent Welded",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-FLUME-HDPE-ACRYLIC/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-FLUME-HDPE-ACRYLIC/model.gltf",
       "stl_asset_url": "/open-biosphere/assets/parts/PART-FAB-FLUME-HDPE-ACRYLIC/print.stl",
       "step_asset_url": "/open-biosphere/assets/parts/PART-FAB-FLUME-HDPE-ACRYLIC/cad.step",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-FAB-FLUME-HDPE-ACRYLIC/dimensional-drawing.svg",
@@ -4655,7 +4655,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Precision Float Glass",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-OPT-MIRROR-FLOAT-GLASS/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-OPT-MIRROR-FLOAT-GLASS/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-OPT-MIRROR-FLOAT-GLASS/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-OPT-MIRROR-FLOAT-GLASS/photo.webp"
     },
@@ -4700,7 +4700,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Borosilicate Glass Optical Disc",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-OPT-WINDOW-BOROSILICATE-50MM/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-OPT-WINDOW-BOROSILICATE-50MM/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-OPT-WINDOW-BOROSILICATE-50MM/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-OPT-WINDOW-BOROSILICATE-50MM/photo.webp"
     },
@@ -4744,7 +4744,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "CNC Laser Cut / Stamped 5052-H32 Aluminum",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-SPOKE-KEYED-ALUM16/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-SPOKE-KEYED-ALUM16/model.gltf",
       "stl_asset_url": "/open-biosphere/assets/parts/PART-MECH-SPOKE-KEYED-ALUM16/print.stl",
       "step_asset_url": "/open-biosphere/assets/parts/PART-MECH-SPOKE-KEYED-ALUM16/cad.step",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-SPOKE-KEYED-ALUM16/dimensional-drawing.svg",
@@ -4791,7 +4791,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Precision Drawn Seamless Aluminum",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-TUBE-SHUTTER-ALUM100/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-TUBE-SHUTTER-ALUM100/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-TUBE-SHUTTER-ALUM100/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-MECH-TUBE-SHUTTER-ALUM100/photo.webp"
     },
@@ -4835,7 +4835,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock Sealed Servo Motor",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-SERVO-MG-WP-180/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-SERVO-MG-WP-180/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-SERVO-MG-WP-180/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-ELEC-SERVO-MG-WP-180/photo.webp"
     },
@@ -4879,7 +4879,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "CNC Milled & Specular Polished Aluminum",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-OPT-CONE-DIFFUSER-PYRAMID/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-OPT-CONE-DIFFUSER-PYRAMID/model.gltf",
       "stl_asset_url": "/open-biosphere/assets/parts/PART-OPT-CONE-DIFFUSER-PYRAMID/print.stl",
       "step_asset_url": "/open-biosphere/assets/parts/PART-OPT-CONE-DIFFUSER-PYRAMID/cad.step",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-OPT-CONE-DIFFUSER-PYRAMID/dimensional-drawing.svg",
@@ -4926,7 +4926,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "Stock High-Efficiency Horticulture LED",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-LED-HYBRID-PUCK-50W/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-LED-HYBRID-PUCK-50W/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-LED-HYBRID-PUCK-50W/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-ELEC-LED-HYBRID-PUCK-50W/photo.webp"
     },
@@ -4972,7 +4972,7 @@
       "slug": "part-custom-solar-cone-bracket",
       "material": "aluminum",
       "fabrication_method": "machined",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-BRACKET-SOLAR-CONE/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-BRACKET-SOLAR-CONE/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-FAB-BRACKET-SOLAR-CONE/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-FAB-BRACKET-SOLAR-CONE/photo.webp"
     },
@@ -5038,7 +5038,7 @@
       "slug": "part-custom-weir-overflow-adapter",
       "material": "petg",
       "fabrication_method": "3d-printed",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-ADAPTER-WEIR-OVERFLOW/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-ADAPTER-WEIR-OVERFLOW/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-FAB-ADAPTER-WEIR-OVERFLOW/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-FAB-ADAPTER-WEIR-OVERFLOW/photo.webp"
     },
@@ -5095,7 +5095,7 @@
       "slug": "part-custom-manifold-junction",
       "material": "aluminum",
       "fabrication_method": "machined",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-JUNCTION-MANIFOLD-4WAY/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-JUNCTION-MANIFOLD-4WAY/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-FAB-JUNCTION-MANIFOLD-4WAY/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-FAB-JUNCTION-MANIFOLD-4WAY/photo.webp"
     },
@@ -5152,7 +5152,7 @@
       "slug": "part-custom-servo-linkage",
       "material": "aluminum",
       "fabrication_method": "machined",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-LINKAGE-SERVO-DUAL-YOKE/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-LINKAGE-SERVO-DUAL-YOKE/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-FAB-LINKAGE-SERVO-DUAL-YOKE/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-FAB-LINKAGE-SERVO-DUAL-YOKE/photo.webp"
     },
@@ -5201,7 +5201,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "machined",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-BREAKER-TOOTHED-SHAFT/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-BREAKER-TOOTHED-SHAFT/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-FAB-BREAKER-TOOTHED-SHAFT/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-FAB-BREAKER-TOOTHED-SHAFT/photo.webp"
     },
@@ -5240,7 +5240,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "machined",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-PUG-AUGER-JACKETED/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-PUG-AUGER-JACKETED/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-FAB-PUG-AUGER-JACKETED/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-FAB-PUG-AUGER-JACKETED/photo.webp"
     },
@@ -5279,7 +5279,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "machined",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-DIE-GATE-4WAY/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-DIE-GATE-4WAY/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-FAB-DIE-GATE-4WAY/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-FAB-DIE-GATE-4WAY/photo.webp"
     },
@@ -5318,7 +5318,7 @@
       "is_3d_printed": false,
       "print_spec": null,
       "fab_type": "machined",
-      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-SHEAR-CARRIAGE-WIRE/model.3ds",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-SHEAR-CARRIAGE-WIRE/model.gltf",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-FAB-SHEAR-CARRIAGE-WIRE/dimensional-drawing.svg",
       "photo_url": "/open-biosphere/assets/parts/PART-FAB-SHEAR-CARRIAGE-WIRE/photo.webp"
     },

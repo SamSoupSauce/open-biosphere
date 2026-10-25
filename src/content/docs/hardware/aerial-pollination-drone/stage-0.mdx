@@ -34,10 +34,10 @@ The Stage 0 baseline build of the **Aerial Spotter & Pollination Drone** is a **
 
 | Item | Part ID & Registry Link | Component & Specification | Sourcing / Supplier | Fab Type | Qty | Unit Cost | CAD Asset | Total Cost |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **D-01** | [`PART-MECH-POLE-CF-TELESCOPIC`](/open-biosphere/parts/mechanical/part-mech-pole-cf-telescopic/) | Telescopic 3-Section Carbon-Fiber Pole (1.2–2.4m) | [Photography / pole supplier](https://bhphotovideo.com) | Stock Carbon Fiber | 1 | $18.00 | [Download .3DS](/open-biosphere/assets/parts/PART-MECH-POLE-CF-TELESCOPIC/model.3ds) | $18.00 |
-| **D-02** | [`PART-MECH-FORK-ACOUSTIC-310HZ`](/open-biosphere/parts/mechanical/part-mech-fork-acoustic-310hz/) | 310 Hz Calibrated Acoustic Tuning Fork + Silicone Dip | [Acoustic supplier / DIY file](https://amazon.com) | Calibrated Instrument | 1 | $14.00 | [Download .3DS](/open-biosphere/assets/parts/PART-MECH-FORK-ACOUSTIC-310HZ/model.3ds) | $14.00 |
-| **D-03** | [`PART-MECH-MIRROR-CONVEX-BALL`](/open-biosphere/parts/mechanical/part-mech-mirror-convex-ball/) | Swiveling Ball-Joint Convex Inspection Mirror (50mm) | [Inspection tool supplier](https://mcmaster.com) | Stock Tool | 1 | $11.00 | [Download .3DS](/open-biosphere/assets/parts/PART-MECH-MIRROR-CONVEX-BALL/model.3ds) | $11.00 |
-| **D-04** | [`PART-MECH-BRUSH-CAMEL-HAIR`](/open-biosphere/parts/mechanical/part-mech-brush-camel-hair/) | Natural Camel-Hair Botanical Dusting Brush + Gooseneck | [Botanical laboratory supply](https://tedpella.com) | Stock Botanical Tool | 1 | $9.00 | [Download .3DS](/open-biosphere/assets/parts/PART-MECH-BRUSH-CAMEL-HAIR/model.3ds) | $9.00 |
+| **D-01** | [`PART-MECH-POLE-CF-TELESCOPIC`](/open-biosphere/parts/mechanical/part-mech-pole-cf-telescopic/) | Telescopic 3-Section Carbon-Fiber Pole (1.2–2.4m) | [Photography / pole supplier](https://bhphotovideo.com) | Stock Carbon Fiber | 1 | $18.00 | [Download .gltf](/open-biosphere/assets/parts/PART-MECH-POLE-CF-TELESCOPIC/model.gltf) | $18.00 |
+| **D-02** | [`PART-MECH-FORK-ACOUSTIC-310HZ`](/open-biosphere/parts/mechanical/part-mech-fork-acoustic-310hz/) | 310 Hz Calibrated Acoustic Tuning Fork + Silicone Dip | [Acoustic supplier / DIY file](https://amazon.com) | Calibrated Instrument | 1 | $14.00 | [Download .gltf](/open-biosphere/assets/parts/PART-MECH-FORK-ACOUSTIC-310HZ/model.gltf) | $14.00 |
+| **D-03** | [`PART-MECH-MIRROR-CONVEX-BALL`](/open-biosphere/parts/mechanical/part-mech-mirror-convex-ball/) | Swiveling Ball-Joint Convex Inspection Mirror (50mm) | [Inspection tool supplier](https://mcmaster.com) | Stock Tool | 1 | $11.00 | [Download .gltf](/open-biosphere/assets/parts/PART-MECH-MIRROR-CONVEX-BALL/model.gltf) | $11.00 |
+| **D-04** | [`PART-MECH-BRUSH-CAMEL-HAIR`](/open-biosphere/parts/mechanical/part-mech-brush-camel-hair/) | Natural Camel-Hair Botanical Dusting Brush + Gooseneck | [Botanical laboratory supply](https://tedpella.com) | Stock Botanical Tool | 1 | $9.00 | [Download .gltf](/open-biosphere/assets/parts/PART-MECH-BRUSH-CAMEL-HAIR/model.gltf) | $9.00 |
 | **Total** | **Base Zero-Power Pollination Wand** | **Complete off-grid manual tool** | | | | | | **$52.00** |
 
 ---
@@ -52,10 +52,10 @@ The Stage 0 baseline build of the **Aerial Spotter & Pollination Drone** is a **
   fabricationMethod="composite-assembly"
   dimensions={{ x_mm: 350.0, y_mm: 200.0, z_mm: 150.0 }}
   estimatedCost={0.00}
-  modelUrl="/open-biosphere/assets/machines/aerial-pollination-drone/stage-0.3ds"
+  modelUrl="/open-biosphere/assets/machines/aerial-pollination-drone/stage-0.gltf"
 />
 
-* **Direct 3D Assembly Download:** [Download stage-0.3ds (Autodesk 3DS Binary)](/open-biosphere/assets/machines/aerial-pollination-drone/stage-0.3ds)
+* **Direct 3D Assembly Download:** [Download stage-0.gltf (glTF 2.0 Standard)](/open-biosphere/assets/machines/aerial-pollination-drone/stage-0.gltf)
 
 
 
@@ -75,7 +75,7 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
   fabricationMethod="stock-carbon-fiber"
   dimensions={{ x_mm: 2400.0, y_mm: 32.0, z_mm: 32.0 }}
   estimatedCost={42.00}
-  modelUrl="/open-biosphere/assets/parts/PART-MECH-POLE-CF-TELESCOPIC/model.3ds"
+  modelUrl="/open-biosphere/assets/parts/PART-MECH-POLE-CF-TELESCOPIC/model.gltf"
 />
 
 1. **Alignment & Positioning:** TORQUE: 1.2 N·m | AXIAL CLEARANCE: 0.2mm
@@ -93,7 +93,7 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
   fabricationMethod="calibrated-instrument"
   dimensions={{ x_mm: 175.0, y_mm: 24.0, z_mm: 8.0 }}
   estimatedCost={14.00}
-  modelUrl="/open-biosphere/assets/parts/PART-MECH-FORK-ACOUSTIC-310HZ/model.3ds"
+  modelUrl="/open-biosphere/assets/parts/PART-MECH-FORK-ACOUSTIC-310HZ/model.gltf"
 />
 
 1. **Alignment & Positioning:** RESONANCE: 310 Hz ± 2 Hz | SILICONE DIP DEPTH: 12mm
@@ -111,7 +111,7 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
   fabricationMethod="stock-tool"
   dimensions={{ x_mm: 110.0, y_mm: 52.0, z_mm: 15.0 }}
   estimatedCost={9.00}
-  modelUrl="/open-biosphere/assets/parts/PART-MECH-MIRROR-CONVEX-BALL/model.3ds"
+  modelUrl="/open-biosphere/assets/parts/PART-MECH-MIRROR-CONVEX-BALL/model.gltf"
 />
 
 1. **Alignment & Positioning:** SWIVEL RANGE: 360° | GLASS DIAMETER: Ø50.0mm
@@ -129,7 +129,7 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
   fabricationMethod="stock-botanical-tool"
   dimensions={{ x_mm: 220.0, y_mm: 18.0, z_mm: 18.0 }}
   estimatedCost={7.00}
-  modelUrl="/open-biosphere/assets/parts/PART-MECH-BRUSH-CAMEL-HAIR/model.3ds"
+  modelUrl="/open-biosphere/assets/parts/PART-MECH-BRUSH-CAMEL-HAIR/model.gltf"
 />
 
 1. **Alignment & Positioning:** GOOSENECK LENGTH: 150mm | BRISTLE SPREAD: Ø18mm
@@ -147,7 +147,7 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
   fabricationMethod="composite-assembly"
   dimensions={{ x_mm: 350.0, y_mm: 200.0, z_mm: 150.0 }}
   estimatedCost={0.00}
-  modelUrl="/open-biosphere/assets/machines/aerial-pollination-drone/stage-0.3ds"
+  modelUrl="/open-biosphere/assets/machines/aerial-pollination-drone/stage-0.gltf"
 />
 
 1. **Alignment & Positioning:** RETENTION FORCE: 8.5 N | WEIGHT: 14.5g

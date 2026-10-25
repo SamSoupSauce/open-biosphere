@@ -1,0 +1,104 @@
+{
+  "asset": {
+    "version": "2.0",
+    "generator": "OpenBiosphere-ParametricCAD-GLTF (RFC-014)"
+  },
+  "scene": 0,
+  "scenes": [
+    {
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "name": "model",
+      "mesh": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "model_Geometry",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 1
+          },
+          "indices": 0,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "materials": [
+    {
+      "name": "PBR_Standard",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.7,
+          0.75,
+          0.8,
+          1.0
+        ],
+        "metallicFactor": 0.7,
+        "roughnessFactor": 0.35
+      },
+      "doubleSided": true
+    }
+  ],
+  "accessors": [
+    {
+      "bufferView": 0,
+      "byteOffset": 0,
+      "componentType": 5123,
+      "count": 360,
+      "type": "SCALAR",
+      "max": [
+        69
+      ],
+      "min": [
+        0
+      ]
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 0,
+      "componentType": 5126,
+      "count": 70,
+      "type": "VEC3",
+      "max": [
+        90.0,
+        22.5,
+        3.5
+      ],
+      "min": [
+        -90.0,
+        -18.0,
+        -3.5
+      ]
+    }
+  ],
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteOffset": 0,
+      "byteLength": 720,
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 720,
+      "byteLength": 840,
+      "byteStride": 12,
+      "target": 34962
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 1560,
+      "uri": "data:application/octet-stream;base64,AAADAAIAAAACAAEABAAFAAYABAAGAAcAAAABAAUAAAAFAAQAAgADAAcAAgAHAAYAAAAEAAcAAAAHAAMAAQACAAYAAQAGAAUACAAJAAsACAALAAoACgALAA0ACgANAAwADAANAA8ADAAPAA4ADgAPABEADgARABAAEAARABMAEAATABIAEgATABUAEgAVABQAFAAVABcAFAAXABYAFgAXAAkAFgAJAAgAGAAKAAgAGQAJAAsAGAAMAAoAGQALAA0AGAAOAAwAGQANAA8AGAAQAA4AGQAPABEAGAASABAAGQARABMAGAAUABIAGQATABUAGAAWABQAGQAVABcAGAAIABYAGQAXAAkAGgAbAB0AGgAdABwAHAAdAB8AHAAfAB4AHgAfACEAHgAhACAAIAAhACMAIAAjACIAIgAjACUAIgAlACQAJAAlACcAJAAnACYAJgAnACkAJgApACgAKAApABsAKAAbABoAKgAcABoAKwAbAB0AKgAeABwAKwAdAB8AKgAgAB4AKwAfACEAKgAiACAAKwAhACMAKgAkACIAKwAjACUAKgAmACQAKwAlACcAKgAoACYAKwAnACkAKgAaACgAKwApABsALAAtAC8ALAAvAC4ALgAvADEALgAxADAAMAAxADMAMAAzADIAMgAzADUAMgA1ADQANAA1ADcANAA3ADYANgA3ADkANgA5ADgAOAA5ADsAOAA7ADoAOgA7AC0AOgAtACwAPAAuACwAPQAtAC8APAAwAC4APQAvADEAPAAyADAAPQAxADMAPAA0ADIAPQAzADUAPAA2ADQAPQA1ADcAPAA4ADYAPQA3ADkAPAA6ADgAPQA5ADsAPAAsADoAPQA7AC0APgBBAEAAPgBAAD8AQgBDAEQAQgBEAEUAPgA/AEMAPgBDAEIAQABBAEUAQABFAEQAPgBCAEUAPgBFAEEAPwBAAEQAPwBEAEMAAAC0wgAAkMEAAADAAAC0QgAAkMEAAADAAAC0QgAAkEEAAADAAAC0wgAAkEEAAADAAAC0wgAAkMEAAABAAAC0QgAAkMEAAABAAAC0QgAAkEEAAABAAAC0wgAAkEEAAABAAABowgAAAAAAAGDAAABowgAAAAAAAGBAEg92wrbDB0EAAGDAEg92wrbDB0EAAGBAAACMwgAAQEEAAGDAAACMwgAAQEEAAGBAd/icwrbDB0EAAGDAd/icwrbDB0EAAGBAAACkwsrJ0yYAAGDAAACkwsrJ0yYAAGBAd/icwrbDB8EAAGDAd/icwrbDB8EAAGBAAACMwgAAQMEAAGDAAACMwgAAQMEAAGBAEg92wrbDB8EAAGDAEg92wrbDB8EAAGBAAACMwgAAAAAAAGDAAACMwgAAAAAAAGBAAABAQQAAAAAAAGDAAABAQQAAAAAAAGBAtsMHQbbDB0EAAGDAtsMHQbbDB0EAAGBAyslTJgAAQEEAAGDAyslTJgAAQEEAAGBAtsMHwbbDB0EAAGDAtsMHwbbDB0EAAGBAAABAwcrJ0yYAAGDAAABAwcrJ0yYAAGBAtsMHwbbDB8EAAGDAtsMHwbbDB8EAAGBAWNcepwAAQMEAAGDAWNcepwAAQMEAAGBAtsMHQbbDB8EAAGDAtsMHQbbDB8EAAGBAAAAAAAAAAAAAAGDAAAAAAAAAAAAAAGBAAACkQgAAAAAAAGDAAACkQgAAAAAAAGBAd/icQrbDB0EAAGDAd/icQrbDB0EAAGBAAACMQgAAQEEAAGDAAACMQgAAQEEAAGBAEg92QrbDB0EAAGDAEg92QrbDB0EAAGBAAABoQsrJ0yYAAGDAAABoQsrJ0yYAAGBAEg92QrbDB8EAAGDAEg92QrbDB8EAAGBAAACMQgAAQMEAAGDAAACMQgAAQMEAAGBAd/icQrbDB8EAAGDAd/icQrbDB8EAAGBAAACMQgAAAAAAAGDAAACMQgAAAAAAAGBAAAAgwgAAkEEAAADAAAAgQgAAkEEAAADAAAAgQgAAtEEAAADAAAAgwgAAtEEAAADAAAAgwgAAkEEAAABAAAAgQgAAkEEAAABAAAAgQgAAtEEAAABAAAAgwgAAtEEAAABA"
+    }
+  ]
+}
