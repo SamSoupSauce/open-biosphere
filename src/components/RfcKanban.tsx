@@ -144,6 +144,16 @@ const RFC_LIST: RFCItem[] = [
     summary: 'Zero-plastic, infinitely recyclable rigid packaging architecture combining coarse ceramic grog with biomass pyrolysis heavy pitch binder cured at 140°C–220°C with thermal break recycling.',
     docSlug: '/rfcs/rfc-0013-bca-packaging-engine',
   },
+  {
+    id: 'RFC-0014',
+    title: 'Interactive 3D Composite Assembly Standard',
+    author: 'Documentation Systems & CAD Engineering Team',
+    targetType: 'Infrastructure',
+    status: 'Implemented',
+    date: '2026-10-25',
+    summary: 'Supersedes static 2D vector blueprints with interactive client-side 3D composite assemblies, progressive assembly step models, and visibility-gated CAD rendering.',
+    docSlug: '/rfcs/rfc-0014-interactive-3d-composite-assembly-standard',
+  },
 ];
 
 export default function RfcKanban() {

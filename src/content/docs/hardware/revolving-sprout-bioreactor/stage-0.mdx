@@ -4,6 +4,7 @@ description: "Stage 0 pure mechanical build instructions, isolated BOM, vector b
 ---
 
 import { Card, CardGrid, LinkButton } from '@astrojs/starlight/components';
+import ModelViewer from '../../../components/ModelViewer';
 
 ## Part 1: Stage Header & Executive Summary
 
@@ -46,9 +47,20 @@ The Stage 0 baseline build of the **Revolving Sprout Bioreactor Drum** is a **10
 
 ---
 
-## Part 4: Standalone Full SVG Blueprint
+## Part 4: Interactive 3D Composite Assembly Model
 
-![Stage 0 Technical Blueprint](/open-biosphere/blueprints/revolving-sprout-bioreactor-stage-0.svg)
+<ModelViewer
+  client:visible
+  partId="ASM-REVOLVING_SPROUT_BIOREACTOR-STAGE-0"
+  partName="Revolving Sprout Bioreactor Drum (Stage 0 Full Composite Assembly)"
+  material="multi-material"
+  fabricationMethod="composite-assembly"
+  dimensions={{ x_mm: 350.0, y_mm: 200.0, z_mm: 150.0 }}
+  estimatedCost={0.00}
+  modelUrl="/open-biosphere/assets/machines/revolving-sprout-bioreactor/stage-0.3ds"
+/>
+
+* **Direct 3D Assembly Download:** [Download stage-0.3ds (Autodesk 3DS Binary)](/open-biosphere/assets/machines/revolving-sprout-bioreactor/stage-0.3ds)
 
 
 
@@ -60,7 +72,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 1.1: Chassis Cutting & 2020 Aluminum Extrusion Assembly
 
-![Step 1.1 Technical Blueprint](/open-biosphere/hardware/revolving-sprout-bioreactor/assets/stage-0/step-1-extrusion-chassis.svg)
+<ModelViewer
+  client:visible
+  partId="PART-MECH-ALUM-2020-6M"
+  partName="2020 T-Slot Black Anodized Aluminum Extrusion (6-Meter Stock)"
+  material="aluminum"
+  fabricationMethod="stock-extrusion"
+  dimensions={{ x_mm: 6000.0, y_mm: 20.0, z_mm: 20.0 }}
+  estimatedCost={28.00}
+  modelUrl="/open-biosphere/assets/parts/PART-MECH-ALUM-2020-6M/model.3ds"
+/>
 
 1. **Alignment & Positioning:** PROFILE: 2020 Black Anodized | FOOTPRINT: 500x400mm
 2. **Mechanical & Electrical Execution:** Rigid rectangular base frame assembled with 2020 extrusions, corner brackets, and leveling feet.
@@ -69,7 +90,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 1.2: 304 Stainless Perforated Drum & End Flange Assembly
 
-![Step 1.2 Technical Blueprint](/open-biosphere/hardware/revolving-sprout-bioreactor/assets/stage-0/step-2-perforated-drum.svg)
+<ModelViewer
+  client:visible
+  partId="PART-MECH-SHEET-SS304-PERF"
+  partName="304 Stainless Steel Perforated Sheet (1.5mm Holes, 300x450mm)"
+  material="steel"
+  fabricationMethod="stock-perforated-metal"
+  dimensions={{ x_mm: 450.0, y_mm: 300.0, z_mm: 0.8 }}
+  estimatedCost={42.00}
+  modelUrl="/open-biosphere/assets/parts/PART-MECH-SHEET-SS304-PERF/model.3ds"
+/>
 
 1. **Alignment & Positioning:** SHEET: 304 SS 1.5mm Holes | DRUM VOLUME: 32 Liters
 2. **Mechanical & Electrical Execution:** 1.5mm perforated stainless steel sheet rolled and clamped into food-grade PETG end flanges.
@@ -78,7 +108,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 1.3: 8mm D-Profile Axle Spindle & 608-2RS Bearing Seating
 
-![Step 1.3 Technical Blueprint](/open-biosphere/hardware/revolving-sprout-bioreactor/assets/stage-0/step-3-axle-bearings.svg)
+<ModelViewer
+  client:visible
+  partId="PART-FAB-DRUM-FLANGES-PETG"
+  partName="3D-Printed PETG Bioreactor Drum End Flanges & Axle Hubs"
+  material="petg"
+  fabricationMethod="3d-print-fdm"
+  dimensions={{ x_mm: 220.0, y_mm: 220.0, z_mm: 35.0 }}
+  estimatedCost={12.00}
+  modelUrl="/open-biosphere/assets/parts/PART-FAB-DRUM-FLANGES-PETG/model.3ds"
+/>
 
 1. **Alignment & Positioning:** SHAFT: Ø8.0mm D-Profile | BEARINGS: 608-2RS Deep Groove
 2. **Mechanical & Electrical Execution:** Precision ground 8mm stainless D-shaft pressed through dual 608-2RS sealed skate bearings.
@@ -87,7 +126,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 1.4: Detachable Hand Crank & Delrin Ratchet Pawl Alignment
 
-![Step 1.4 Technical Blueprint](/open-biosphere/hardware/revolving-sprout-bioreactor/assets/stage-0/step-4-crank-ratchet-pawl.svg)
+<ModelViewer
+  client:visible
+  partId="PART-MECH-CRANK-RATCHET-DELRIN"
+  partName="Detachable Hand Crank + Ratchet Wheel & Delrin Pawl"
+  material="electronics"
+  fabricationMethod="3d-print-/-cnc-pawl"
+  dimensions={{ x_mm: 165.0, y_mm: 80.0, z_mm: 35.0 }}
+  estimatedCost={11.00}
+  modelUrl="/open-biosphere/assets/parts/PART-MECH-CRANK-RATCHET-DELRIN/model.3ds"
+/>
 
 1. **Alignment & Positioning:** CRANK RADIUS: 120mm | RATCHET TEETH: 36T Delrin
 2. **Mechanical & Electrical Execution:** 120mm aluminum hand crank with spring-loaded Delrin pawl preventing reverse drum roll.
@@ -96,7 +144,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 1.5: Silicone Catchment Sump & Manual Drain Ball Valve
 
-![Step 1.5 Technical Blueprint](/open-biosphere/hardware/revolving-sprout-bioreactor/assets/stage-0/step-5-sump-gravity-drain.svg)
+<ModelViewer
+  client:visible
+  partId="PART-FLUID-SUMP-SILICONE-34"
+  partName="Food-Grade Silicone Sump Tray + 3/4&quot; Bulkhead Fitting"
+  material="silicone"
+  fabricationMethod="stock-sump"
+  dimensions={{ x_mm: 520.0, y_mm: 380.0, z_mm: 45.0 }}
+  estimatedCost={12.00}
+  modelUrl="/open-biosphere/assets/parts/PART-FLUID-SUMP-SILICONE-34/model.3ds"
+/>
 
 1. **Alignment & Positioning:** DRAIN VALVE: 3/4" Full-Port Brass | SUMP: Silicone
 2. **Mechanical & Electrical Execution:** Sloped food-grade silicone sump pan with 3/4" brass bulkhead and full-port manual drain valve.

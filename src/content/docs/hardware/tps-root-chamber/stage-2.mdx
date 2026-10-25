@@ -4,6 +4,7 @@ description: "Stage 2 Controller-Node-Tool edge architecture, isolated BOM, vect
 ---
 
 import { Card, CardGrid, LinkButton } from '@astrojs/starlight/components';
+import ModelViewer from '../../../components/ModelViewer';
 
 ## Part 1: Stage Header & Executive Summary
 
@@ -44,9 +45,20 @@ The Stage 2 agentic pack elevates the **TPS Aeroponic Root-Zone Chamber** into a
 
 ---
 
-## Part 4: Standalone Full SVG Blueprint
+## Part 4: Interactive 3D Composite Assembly Model
 
-![Stage 2 Technical Blueprint](/open-biosphere/blueprints/tps-root-chamber-stage-2.svg)
+<ModelViewer
+  client:visible
+  partId="ASM-TPS_ROOT_CHAMBER-STAGE-2"
+  partName="TPS Aeroponic Root-Zone Chamber (Stage 2 Full Composite Assembly)"
+  material="multi-material"
+  fabricationMethod="composite-assembly"
+  dimensions={{ x_mm: 400.0, y_mm: 250.0, z_mm: 180.0 }}
+  estimatedCost={0.00}
+  modelUrl="/open-biosphere/assets/machines/tps-root-chamber/stage-2.3ds"
+/>
+
+* **Direct 3D Assembly Download:** [Download stage-2.3ds (Autodesk 3DS Binary)](/open-biosphere/assets/machines/tps-root-chamber/stage-2.3ds)
 
 
 
@@ -58,7 +70,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 2.1: Root Chamber Node & Fast-Bleed Solenoid Assembly
 
-![Step 2.1 Technical Blueprint](/open-biosphere/hardware/tps-root-chamber/assets/stage-2/step-1-root-node-assembly.svg)
+<ModelViewer
+  client:visible
+  partId="PART-FLUID-SOLENOID-BLEED-24V"
+  partName="24V DC Fast-Bleed Solenoid Depressurization Valve"
+  material="electronics"
+  fabricationMethod="stock-valve"
+  dimensions={{ x_mm: 50.0, y_mm: 28.0, z_mm: 58.0 }}
+  estimatedCost={16.00}
+  modelUrl="/open-biosphere/assets/parts/PART-FLUID-SOLENOID-BLEED-24V/model.3ds"
+/>
 
 1. **Alignment & Positioning:** NODE: ESP32-S3 8MB PSRAM | VALVE: 24V Fast Exhaust
 2. **Mechanical & Electrical Execution:** ESP32-S3 dual-core node controller wired to 24V fast-bleed depressurization exhaust valve.
@@ -67,7 +88,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 2.2: Melexis MLX90614 Non-Contact IR Root Sensor Rigging
 
-![Step 2.2 Technical Blueprint](/open-biosphere/hardware/tps-root-chamber/assets/stage-2/step-2-infrared-root-temp.svg)
+<ModelViewer
+  client:visible
+  partId="PART-ELEC-SNS-MLX90614"
+  partName="Melexis MLX90614 Non-Contact Infrared Root Temperature Sensor"
+  material="electronics"
+  fabricationMethod="stock-sensor"
+  dimensions={{ x_mm: 18.0, y_mm: 14.0, z_mm: 7.5 }}
+  estimatedCost={16.00}
+  modelUrl="/open-biosphere/assets/parts/PART-ELEC-SNS-MLX90614/model.3ds"
+/>
 
 1. **Alignment & Positioning:** ACCURACY: ±0.5°C | FIELD OF VIEW: 35° Cone
 2. **Mechanical & Electrical Execution:** Medical-grade optical pyrometer aimed at bare root mass to measure transpiration stress.
@@ -76,7 +106,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 2.3: Dual Optical Infrared Liquid Level Sensor Mounting
 
-![Step 2.3 Technical Blueprint](/open-biosphere/hardware/tps-root-chamber/assets/stage-2/step-3-optical-level-floats.svg)
+<ModelViewer
+  client:visible
+  partId="PART-ELEC-SNS-OPT-LEVEL"
+  partName="Dual Optical Liquid Level Sensors (Infrared Prism)"
+  material="electronics"
+  fabricationMethod="stock-sensor"
+  dimensions={{ x_mm: 35.0, y_mm: 18.0, z_mm: 18.0 }}
+  estimatedCost={18.00}
+  modelUrl="/open-biosphere/assets/parts/PART-ELEC-SNS-OPT-LEVEL/model.3ds"
+/>
 
 1. **Alignment & Positioning:** PROBES: 2x Optical Prism | DRY-RUN RESPONSE: < 10ms
 2. **Mechanical & Electrical Execution:** Solid-state polysulfone level probes detecting high nutrient level and pump dry-run cutoff.
@@ -85,7 +124,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 2.4: Universal Solar Roof Shutter Integration (TOOL-OPT-SHUTTER-01)
 
-![Step 2.4 Technical Blueprint](/open-biosphere/hardware/tps-root-chamber/assets/stage-2/step-4-canopy-light-shutter.svg)
+<ModelViewer
+  client:visible
+  partId="PART-ELEC-ESP32-S3-NODE"
+  partName="ESP32-S3 Dual-Core Xtensa LX7 Node Controller (8MB PSRAM)"
+  material="electronics"
+  fabricationMethod="stock-electronics"
+  dimensions={{ x_mm: 51.0, y_mm: 28.0, z_mm: 8.5 }}
+  estimatedCost={14.00}
+  modelUrl="/open-biosphere/assets/parts/PART-ELEC-ESP32-S3-NODE/model.3ds"
+/>
 
 1. **Alignment & Positioning:** STANDARD: RFC-0009 | SHUTTER ACTUATION: 0° - 90°
 2. **Mechanical & Electrical Execution:** Interfacing central tower rotary helical shutter to balance canopy PAR and root zone heat.
@@ -94,7 +142,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 2.5: 250ms Watchdog & High-Pressure Fail-Safe Verification
 
-![Step 2.5 Technical Blueprint](/open-biosphere/hardware/tps-root-chamber/assets/stage-2/step-5-watchdog-verification.svg)
+<ModelViewer
+  client:visible
+  partId="ASM-TPS_ROOT_CHAMBER-STAGE-2-STEP-5"
+  partName="TPS Aeroponic Root-Zone Chamber Step Assembly (250ms Watchdog & High-Pressure Fail-Safe Verification)"
+  material="multi-material"
+  fabricationMethod="composite-assembly"
+  dimensions={{ x_mm: 400.0, y_mm: 250.0, z_mm: 180.0 }}
+  estimatedCost={0.00}
+  modelUrl="/open-biosphere/assets/machines/tps-root-chamber/stage-2.3ds"
+/>
 
 1. **Alignment & Positioning:** DEPRESSURIZE TIME: < 120ms | TIMEOUT: 250ms
 2. **Mechanical & Electrical Execution:** Tripping fast-exhaust valve to zero PSI within 250ms of heartbeat interruption.

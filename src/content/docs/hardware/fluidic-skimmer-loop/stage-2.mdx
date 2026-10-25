@@ -4,6 +4,7 @@ description: "Stage 2 Controller-Node-Tool edge architecture, isolated BOM, vect
 ---
 
 import { Card, CardGrid, LinkButton } from '@astrojs/starlight/components';
+import ModelViewer from '../../../components/ModelViewer';
 
 ## Part 1: Stage Header & Executive Summary
 
@@ -38,13 +39,33 @@ The Stage 2 agentic pack elevates the **Fluidic Skimmer & Dewatering Separator**
 
 ---
 
-## Part 4: Standalone Full SVG Blueprint
+## Part 4: Interactive 3D Composite Assembly Model
 
-![Stage 2 Technical Blueprint](/open-biosphere/blueprints/fluidic-skimmer-loop-stage-2.svg)
+<ModelViewer
+  client:visible
+  partId="ASM-FLUIDIC_SKIMMER_LOOP-STAGE-2"
+  partName="Fluidic Skimmer & Dewatering Separator (Stage 2 Full Composite Assembly)"
+  material="multi-material"
+  fabricationMethod="composite-assembly"
+  dimensions={{ x_mm: 400.0, y_mm: 250.0, z_mm: 180.0 }}
+  estimatedCost={0.00}
+  modelUrl="/open-biosphere/assets/machines/fluidic-skimmer-loop/stage-2.3ds"
+/>
 
-### Add-On 2 Cyber-Physical Edge Architecture Blueprint
+* **Direct 3D Assembly Download:** [Download stage-2.3ds (Autodesk 3DS Binary)](/open-biosphere/assets/machines/fluidic-skimmer-loop/stage-2.3ds)
 
-![Add-On 2 Cyber-Physical Edge Architecture Blueprint](/open-biosphere/blueprints/fluidic-skimmer-loop-stage-2-architecture.svg)
+### Add-On 2 Cyber-Physical Edge Node 3D Hardware Model
+
+<ModelViewer
+  client:visible
+  partId="PART-ELEC-ESP32-S3-NODE"
+  partName="ESP32-S3 Dual-Core Xtensa LX7 Node Controller (8MB PSRAM)"
+  material="electronics"
+  fabricationMethod="stock"
+  dimensions={{ x_mm: 51.0, y_mm: 28.0, z_mm: 8.5 }}
+  estimatedCost={14.00}
+  modelUrl="/open-biosphere/assets/parts/PART-ELEC-ESP32-S3-NODE/model.3ds"
+/>
 
 ---
 
@@ -54,7 +75,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 2.1: Overhead Optical Sensor & Camera Rigging
 
-![Step 2.1 Technical Blueprint](/open-biosphere/hardware/fluidic-skimmer-loop/assets/stage-2/step-1-overhead-camera.svg)
+<ModelViewer
+  client:visible
+  partId="PART-ELEC-LED-HYBRID-PUCK-50W"
+  partName="Recessed 50W Full-Spectrum High-CRI Supplemental LED Puck"
+  material="electronics"
+  fabricationMethod="stock-high-efficiency-horticulture-led"
+  dimensions={{ x_mm: 75.0, y_mm: 75.0, z_mm: 45.0 }}
+  estimatedCost={28.00}
+  modelUrl="/open-biosphere/assets/parts/PART-ELEC-LED-HYBRID-PUCK-50W/model.3ds"
+/>
 
 1. **Alignment & Positioning:** MOUNT HEIGHT: Z=1400mm | FOV: 78° Over Flume
 2. **Mechanical & Electrical Execution:** Sony IMX519 16MP camera mounted on 2020 overhead strut for biomass density estimation.
@@ -63,7 +93,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 2.2: Linear Actuator Linkage & Weir Tool Rigging
 
-![Step 2.2 Technical Blueprint](/open-biosphere/hardware/fluidic-skimmer-loop/assets/stage-2/step-2-actuator-linkage.svg)
+<ModelViewer
+  client:visible
+  partId="PART-FAB-LINKAGE-SERVO-DUAL-YOKE"
+  partName="Dual-Yoke Articulated Servo Bellcrank Linkage (Zero-Backlash)"
+  material="electronics"
+  fabricationMethod="cnc-machined-aluminum-/-cf-petg"
+  dimensions={{ x_mm: 85.0, y_mm: 24.0, z_mm: 16.0 }}
+  estimatedCost={9.50}
+  modelUrl="/open-biosphere/assets/parts/PART-FAB-LINKAGE-SERVO-DUAL-YOKE/model.3ds"
+/>
 
 1. **Alignment & Positioning:** STROKE: 50.0mm | FEEDBACK: Internal Potentiometer
 2. **Mechanical & Electrical Execution:** 12V micro linear actuator (50mm stroke, 64N force) coupled to floating weir gate control arm.
@@ -72,7 +111,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 2.3: Sump Telemetry & Ultrasonic Float Tool
 
-![Step 2.3 Technical Blueprint](/open-biosphere/hardware/fluidic-skimmer-loop/assets/stage-2/step-3-sump-telemetry.svg)
+<ModelViewer
+  client:visible
+  partId="PART-FLUID-MTR-FLOW-HALL"
+  partName="Rotary Vane Flow Meter with Hall Sensor (1/2&quot; Barb)"
+  material="electronics"
+  fabricationMethod="stock-sensor"
+  dimensions={{ x_mm: 62.0, y_mm: 36.0, z_mm: 36.0 }}
+  estimatedCost={9.50}
+  modelUrl="/open-biosphere/assets/parts/PART-FLUID-MTR-FLOW-HALL/model.3ds"
+/>
 
 1. **Alignment & Positioning:** RANGE: 200mm - 6000mm | OPTICAL FLOAT: Dual Prism
 2. **Mechanical & Electrical Execution:** JSN-SR04T waterproof ultrasonic sensor and dual optical level probes for dry-run prevention.
@@ -81,7 +129,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 2.4: Skimmer Node Provisioning & BLE Tool Binding
 
-![Step 2.4 Technical Blueprint](/open-biosphere/hardware/fluidic-skimmer-loop/assets/stage-2/step-4-node-provisioning.svg)
+<ModelViewer
+  client:visible
+  partId="PART-ELEC-ESP32-S3-NODE"
+  partName="ESP32-S3 Dual-Core Xtensa LX7 Node Controller (8MB PSRAM)"
+  material="electronics"
+  fabricationMethod="stock-electronics"
+  dimensions={{ x_mm: 51.0, y_mm: 28.0, z_mm: 8.5 }}
+  estimatedCost={14.00}
+  modelUrl="/open-biosphere/assets/parts/PART-ELEC-ESP32-S3-NODE/model.3ds"
+/>
 
 1. **Alignment & Positioning:** BUS: RS-485 / Native UART | PROTOCOL: CNT Standard
 2. **Mechanical & Electrical Execution:** ESP32-S3 Node binding DEV_WEIR_ACT, DEV_AUGER_STEP, DEV_PUMP_VFD, and DEV_SUMP_LEVEL.
@@ -90,7 +147,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 2.5: 250ms Watchdog & Fail-Safe Verification
 
-![Step 2.5 Technical Blueprint](/open-biosphere/hardware/fluidic-skimmer-loop/assets/stage-2/step-5-watchdog-verification.svg)
+<ModelViewer
+  client:visible
+  partId="ASM-FLUIDIC_SKIMMER_LOOP-STAGE-2-STEP-5"
+  partName="Fluidic Skimmer & Dewatering Separator Step Assembly (250ms Watchdog & Fail-Safe Verification)"
+  material="multi-material"
+  fabricationMethod="composite-assembly"
+  dimensions={{ x_mm: 400.0, y_mm: 250.0, z_mm: 180.0 }}
+  estimatedCost={0.00}
+  modelUrl="/open-biosphere/assets/machines/fluidic-skimmer-loop/stage-2.3ds"
+/>
 
 1. **Alignment & Positioning:** HEARTBEAT TIMEOUT: 250ms | SAFE STATE: Sump Open
 2. **Mechanical & Electrical Execution:** Trip testing pump and auger shutoffs upon heartbeat loss; weir defaults to full-open overflow.

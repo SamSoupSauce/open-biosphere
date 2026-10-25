@@ -4,6 +4,7 @@ description: "Stage 0 pure mechanical build instructions, isolated BOM, vector b
 ---
 
 import { Card, CardGrid, LinkButton } from '@astrojs/starlight/components';
+import ModelViewer from '../../../components/ModelViewer';
 
 ## Part 1: Stage Header & Executive Summary
 
@@ -41,9 +42,20 @@ The Stage 0 baseline build of the **Aerial Spotter & Pollination Drone** is a **
 
 ---
 
-## Part 4: Standalone Full SVG Blueprint
+## Part 4: Interactive 3D Composite Assembly Model
 
-![Stage 0 Technical Blueprint](/open-biosphere/blueprints/aerial-pollination-drone-stage-0.svg)
+<ModelViewer
+  client:visible
+  partId="ASM-AERIAL_POLLINATION_DRONE-STAGE-0"
+  partName="Aerial Spotter & Pollination Drone (Stage 0 Full Composite Assembly)"
+  material="multi-material"
+  fabricationMethod="composite-assembly"
+  dimensions={{ x_mm: 350.0, y_mm: 200.0, z_mm: 150.0 }}
+  estimatedCost={0.00}
+  modelUrl="/open-biosphere/assets/machines/aerial-pollination-drone/stage-0.3ds"
+/>
+
+* **Direct 3D Assembly Download:** [Download stage-0.3ds (Autodesk 3DS Binary)](/open-biosphere/assets/machines/aerial-pollination-drone/stage-0.3ds)
 
 
 
@@ -55,7 +67,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 1.1: Carbon-Fiber Wand Assembly & Collar Fitting
 
-![Step 1.1 Technical Blueprint](/open-biosphere/hardware/aerial-pollination-drone/assets/stage-0/step-1-carbon-fiber-wand.svg)
+<ModelViewer
+  client:visible
+  partId="PART-MECH-POLE-CF-TELESCOPIC"
+  partName="Telescopic 3-Section Carbon-Fiber Pole (1.2–2.4m)"
+  material="carbon-fiber"
+  fabricationMethod="stock-carbon-fiber"
+  dimensions={{ x_mm: 2400.0, y_mm: 32.0, z_mm: 32.0 }}
+  estimatedCost={42.00}
+  modelUrl="/open-biosphere/assets/parts/PART-MECH-POLE-CF-TELESCOPIC/model.3ds"
+/>
 
 1. **Alignment & Positioning:** TORQUE: 1.2 N·m | AXIAL CLEARANCE: 0.2mm
 2. **Mechanical & Electrical Execution:** Rigid 3k carbon-fiber telescopic shaft with twist-lock friction collars and 1/4"-20 base mount.
@@ -64,7 +85,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 1.2: Acoustic Tuning Fork Tip Fabrication (310 Hz)
 
-![Step 1.2 Technical Blueprint](/open-biosphere/hardware/aerial-pollination-drone/assets/stage-0/step-2-acoustic-tuning-fork.svg)
+<ModelViewer
+  client:visible
+  partId="PART-MECH-FORK-ACOUSTIC-310HZ"
+  partName="310 Hz Calibrated Acoustic Tuning Fork + Silicone Dip"
+  material="electronics"
+  fabricationMethod="calibrated-instrument"
+  dimensions={{ x_mm: 175.0, y_mm: 24.0, z_mm: 8.0 }}
+  estimatedCost={14.00}
+  modelUrl="/open-biosphere/assets/parts/PART-MECH-FORK-ACOUSTIC-310HZ/model.3ds"
+/>
 
 1. **Alignment & Positioning:** RESONANCE: 310 Hz ± 2 Hz | SILICONE DIP DEPTH: 12mm
 2. **Mechanical & Electrical Execution:** Calibrated 310 Hz aluminum tuning fork dipped in medical silicone tip for non-destructive flower sonication.
@@ -73,7 +103,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 1.3: Swiveling Ball-Joint Inspection Mirror Mounting
 
-![Step 1.3 Technical Blueprint](/open-biosphere/hardware/aerial-pollination-drone/assets/stage-0/step-3-inspection-mirror-loupe.svg)
+<ModelViewer
+  client:visible
+  partId="PART-MECH-MIRROR-CONVEX-BALL"
+  partName="Swiveling Ball-Joint Convex Inspection Mirror (50mm)"
+  material="glass"
+  fabricationMethod="stock-tool"
+  dimensions={{ x_mm: 110.0, y_mm: 52.0, z_mm: 15.0 }}
+  estimatedCost={9.00}
+  modelUrl="/open-biosphere/assets/parts/PART-MECH-MIRROR-CONVEX-BALL/model.3ds"
+/>
 
 1. **Alignment & Positioning:** SWIVEL RANGE: 360° | GLASS DIAMETER: Ø50.0mm
 2. **Mechanical & Electrical Execution:** 50mm optical inspection mirror on 360° stainless ball-joint for underside blossom inspection.
@@ -82,7 +121,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 1.4: Natural Camel-Hair Botanical Dusting Brush Rigging
 
-![Step 1.4 Technical Blueprint](/open-biosphere/hardware/aerial-pollination-drone/assets/stage-0/step-4-dusting-brush-rigging.svg)
+<ModelViewer
+  client:visible
+  partId="PART-MECH-BRUSH-CAMEL-HAIR"
+  partName="Natural Camel-Hair Botanical Dusting Brush + Gooseneck"
+  material="electronics"
+  fabricationMethod="stock-botanical-tool"
+  dimensions={{ x_mm: 220.0, y_mm: 18.0, z_mm: 18.0 }}
+  estimatedCost={7.00}
+  modelUrl="/open-biosphere/assets/parts/PART-MECH-BRUSH-CAMEL-HAIR/model.3ds"
+/>
 
 1. **Alignment & Positioning:** GOOSENECK LENGTH: 150mm | BRISTLE SPREAD: Ø18mm
 2. **Mechanical & Electrical Execution:** Static-free camel-hair brush mounted to flexible gooseneck for manual cross-pollination transfer.
@@ -91,7 +139,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 1.5: Drone Skid Quick-Snap Cradle Assembly
 
-![Step 1.5 Technical Blueprint](/open-biosphere/hardware/aerial-pollination-drone/assets/stage-0/step-5-quick-snap-cradle.svg)
+<ModelViewer
+  client:visible
+  partId="ASM-AERIAL_POLLINATION_DRONE-STAGE-0-STEP-5"
+  partName="Aerial Spotter & Pollination Drone Step Assembly (Drone Skid Quick-Snap Cradle Assembly)"
+  material="multi-material"
+  fabricationMethod="composite-assembly"
+  dimensions={{ x_mm: 350.0, y_mm: 200.0, z_mm: 150.0 }}
+  estimatedCost={0.00}
+  modelUrl="/open-biosphere/assets/machines/aerial-pollination-drone/stage-0.3ds"
+/>
 
 1. **Alignment & Positioning:** RETENTION FORCE: 8.5 N | WEIGHT: 14.5g
 2. **Mechanical & Electrical Execution:** Snap-fit lightweight mounting cradle for resting and securing wand on drone skids.

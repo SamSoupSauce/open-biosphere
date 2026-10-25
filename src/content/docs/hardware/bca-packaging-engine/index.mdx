@@ -4,6 +4,7 @@ description: "Closed-loop, zero-plastic packaging engine converting pyrolysis bi
 ---
 
 import { Card, CardGrid, LinkButton } from '@astrojs/starlight/components';
+import ModelViewer from '../../../components/ModelViewer';
 
 ## 1. Standalone Homesteading & Off-Grid Utility
 
@@ -50,7 +51,16 @@ The **Bio-Pitch & Ceramic Aggregate (BCA) Packaging Engine** enables homesteader
 
 The machine comprises four in-line processing modules mounted to a heavy welded angle-iron frame:
 
-![BCA Packaging Engine Architectural Schematic](/open-biosphere/blueprints/bca-packaging-engine-architecture.svg)
+<ModelViewer
+  client:visible
+  partId="SYS-BCA-PACKAGING-ENGINE"
+  partName="Bio-Pitch & Ceramic Aggregate (BCA) Packaging Engine — Full Assembly"
+  material="tool-steel"
+  fabricationMethod="composite-assembly"
+  dimensions={{ x_mm: 380.0, y_mm: 160.0, z_mm: 120.0 }}
+  estimatedCost={480.00}
+  modelUrl="/open-biosphere/assets/machines/bca-packaging-engine/architecture.3ds"
+/>
 
 1. **Module 1 (Thermal Stripper & Coarse Breaker):** Counter-rotating toothed manganese shafts running at 45–60 RPM with 2.0 mm clearance. A 220°C–250°C exhaust jacket softens incoming binder bonds before tooth contact.
 2. **Module 2 (Jacketed Pug Auger & Injector):** Heavy-wall 304 stainless steel barrel with ceramic band heaters. Progressive pitch flights compound coarse aggregate with hot bio-pitch into a stiff, hydrophobic mastic.

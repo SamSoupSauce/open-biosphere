@@ -4,6 +4,7 @@ description: "Stage 0 pure mechanical build instructions, isolated BOM, vector b
 ---
 
 import { Card, CardGrid, LinkButton } from '@astrojs/starlight/components';
+import ModelViewer from '../../../components/ModelViewer';
 
 ## Part 1: Stage Header & Executive Summary
 
@@ -44,9 +45,20 @@ The Stage 0 baseline build of the **Mantis Branch-Crawler Robot** is a **100% me
 
 ---
 
-## Part 4: Standalone Full SVG Blueprint
+## Part 4: Interactive 3D Composite Assembly Model
 
-![Stage 0 Technical Blueprint](/open-biosphere/blueprints/mantis-branch-crawler-stage-0.svg)
+<ModelViewer
+  client:visible
+  partId="ASM-MANTIS_BRANCH_CRAWLER-STAGE-0"
+  partName="Mantis Branch-Crawler Robot (Stage 0 Full Composite Assembly)"
+  material="multi-material"
+  fabricationMethod="composite-assembly"
+  dimensions={{ x_mm: 350.0, y_mm: 200.0, z_mm: 150.0 }}
+  estimatedCost={0.00}
+  modelUrl="/open-biosphere/assets/machines/mantis-branch-crawler/stage-0.3ds"
+/>
+
+* **Direct 3D Assembly Download:** [Download stage-0.3ds (Autodesk 3DS Binary)](/open-biosphere/assets/machines/mantis-branch-crawler/stage-0.3ds)
 
 
 
@@ -58,7 +70,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 1.1: Scissor Chassis Plate Cutting & Deburring
 
-![Step 1.1 Technical Blueprint](/open-biosphere/hardware/mantis-branch-crawler/assets/stage-0/step-1-chassis-cutting-plates.svg)
+<ModelViewer
+  client:visible
+  partId="PART-FAB-PLATES-MANTIS-5052"
+  partName="Laser-Cut 2mm 5052 Aluminum Scissor Chassis Plates"
+  material="aluminum"
+  fabricationMethod="cnc-laser-cut-aluminum"
+  dimensions={{ x_mm: 160.0, y_mm: 70.0, z_mm: 2.0 }}
+  estimatedCost={22.00}
+  modelUrl="/open-biosphere/assets/parts/PART-FAB-PLATES-MANTIS-5052/model.3ds"
+/>
 
 1. **Alignment & Positioning:** ALUMINUM: 5052-H32 2.0mm | PIVOTS: Reamed 6mm
 2. **Mechanical & Electrical Execution:** 2mm 5052-H32 aluminum plates laser-cut and deburred for dual articulated scissor arms.
@@ -67,7 +88,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 1.2: Shore 40A Silicone Hourglass Roller Casting
 
-![Step 1.2 Technical Blueprint](/open-biosphere/hardware/mantis-branch-crawler/assets/stage-0/step-2-silicone-rollers-casting.svg)
+<ModelViewer
+  client:visible
+  partId="PART-FAB-ROLLER-SILICONE-40A"
+  partName="Shore 40A Silicone Pinch Rollers & Mold Assembly"
+  material="silicone"
+  fabricationMethod="3d-mold-+-silicone-cast"
+  dimensions={{ x_mm: 65.0, y_mm: 50.0, z_mm: 30.0 }}
+  estimatedCost={15.00}
+  modelUrl="/open-biosphere/assets/parts/PART-FAB-ROLLER-SILICONE-40A/model.3ds"
+/>
 
 1. **Alignment & Positioning:** DUROMETER: Shore 40A | CORE BEARING: 608-2RS
 2. **Mechanical & Electrical Execution:** Platinum silicone cast in 3D-printed molds with dual sealed bearings for vine climbing.
@@ -76,7 +106,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 1.3: Scissor Linkage & Torsion Spring Rigging
 
-![Step 1.3 Technical Blueprint](/open-biosphere/hardware/mantis-branch-crawler/assets/stage-0/step-3-scissor-torsion-springs.svg)
+<ModelViewer
+  client:visible
+  partId="PART-MECH-CABLE-BOWDEN-25M"
+  partName="Bowden Cable Assembly (2.5m Stainless + Lined Housing)"
+  material="electronics"
+  fabricationMethod="stock-cable-assembly"
+  dimensions={{ x_mm: 2500.0, y_mm: 5.0, z_mm: 5.0 }}
+  estimatedCost={8.00}
+  modelUrl="/open-biosphere/assets/parts/PART-MECH-CABLE-BOWDEN-25M/model.3ds"
+/>
 
 1. **Alignment & Positioning:** SPRING FORCE: 28 N Preload | TRAVEL: 15-45mm Stems
 2. **Mechanical & Electrical Execution:** High-tensile stainless torsion springs providing 28 N clamping force onto espalier branches.
@@ -85,7 +124,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 1.4: Bypass Micro-Snip & Bowden Cable Rigging
 
-![Step 1.4 Technical Blueprint](/open-biosphere/hardware/mantis-branch-crawler/assets/stage-0/step-4-bypass-snip-bowden.svg)
+<ModelViewer
+  client:visible
+  partId="PART-MECH-SNIP-BYPASS-STEEL"
+  partName="Carbon Steel Spring-Loaded Bypass Micro-Snip Blades"
+  material="steel"
+  fabricationMethod="stock-tool-blades"
+  dimensions={{ x_mm: 115.0, y_mm: 40.0, z_mm: 12.0 }}
+  estimatedCost={16.00}
+  modelUrl="/open-biosphere/assets/parts/PART-MECH-SNIP-BYPASS-STEEL/model.3ds"
+/>
 
 1. **Alignment & Positioning:** JAW OPENING: 18mm | CABLE TRAVEL: 12mm
 2. **Mechanical & Electrical Execution:** Carbon steel spring-loaded bypass jaws actuated via 2.5m Teflon-lined Bowden cable.
@@ -94,7 +142,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 1.5: Telescopic Pole & Ripstop Nylon Chute Rigging
 
-![Step 1.5 Technical Blueprint](/open-biosphere/hardware/mantis-branch-crawler/assets/stage-0/step-5-pole-chute-mounting.svg)
+<ModelViewer
+  client:visible
+  partId="PART-FAB-CHUTE-RIPSTOP-PETG"
+  partName="3D-Printed PETG Funnel + Ripstop Nylon Gravity Drop Chute"
+  material="petg"
+  fabricationMethod="3d-print-+-fabric-sewn"
+  dimensions={{ x_mm: 1800.0, y_mm: 120.0, z_mm: 120.0 }}
+  estimatedCost={14.00}
+  modelUrl="/open-biosphere/assets/parts/PART-FAB-CHUTE-RIPSTOP-PETG/model.3ds"
+/>
 
 1. **Alignment & Positioning:** CHUTE LENGTH: 2500mm | MATERIAL: Ripstop Nylon
 2. **Mechanical & Electrical Execution:** 1.8–3.6m extension pole bracket with wide-mouth collector funnel and gravity delivery chute.

@@ -4,6 +4,7 @@ description: "Stage 2 Controller-Node-Tool edge architecture, isolated BOM, vect
 ---
 
 import { Card, CardGrid, LinkButton } from '@astrojs/starlight/components';
+import ModelViewer from '../../../components/ModelViewer';
 
 ## Part 1: Stage Header & Executive Summary
 
@@ -44,9 +45,20 @@ The Stage 2 agentic pack elevates the **Ground Track AGV Pod Carrier** into a fu
 
 ---
 
-## Part 4: Standalone Full SVG Blueprint
+## Part 4: Interactive 3D Composite Assembly Model
 
-![Stage 2 Technical Blueprint](/open-biosphere/blueprints/ground-track-agv-stage-2.svg)
+<ModelViewer
+  client:visible
+  partId="ASM-GROUND_TRACK_AGV-STAGE-2"
+  partName="Ground Track AGV Pod Carrier (Stage 2 Full Composite Assembly)"
+  material="multi-material"
+  fabricationMethod="composite-assembly"
+  dimensions={{ x_mm: 400.0, y_mm: 250.0, z_mm: 180.0 }}
+  estimatedCost={0.00}
+  modelUrl="/open-biosphere/assets/machines/ground-track-agv/stage-2.3ds"
+/>
+
+* **Direct 3D Assembly Download:** [Download stage-2.3ds (Autodesk 3DS Binary)](/open-biosphere/assets/machines/ground-track-agv/stage-2.3ds)
 
 
 
@@ -58,7 +70,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 2.1: AGV Master Machine Node & Power Board Rigging
 
-![Step 2.1 Technical Blueprint](/open-biosphere/hardware/ground-track-agv/assets/stage-2/step-1-agv-node-assembly.svg)
+<ModelViewer
+  client:visible
+  partId="PART-ELEC-ESP32-S3-NODE"
+  partName="ESP32-S3 Dual-Core Xtensa LX7 Node Controller (8MB PSRAM)"
+  material="electronics"
+  fabricationMethod="stock-electronics"
+  dimensions={{ x_mm: 51.0, y_mm: 28.0, z_mm: 8.5 }}
+  estimatedCost={14.00}
+  modelUrl="/open-biosphere/assets/parts/PART-ELEC-ESP32-S3-NODE/model.3ds"
+/>
 
 1. **Alignment & Positioning:** PROCESSOR: Dual LX7 240MHz | PSRAM: 8MB Octal
 2. **Mechanical & Electrical Execution:** ESP32-S3 dual-core node with 8MB PSRAM coordinating dead-reckoning and tool peripherals.
@@ -67,7 +88,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 2.2: 5-Channel Magnetic Induction & 2D LiDAR Rigging
 
-![Step 2.2 Technical Blueprint](/open-biosphere/hardware/ground-track-agv/assets/stage-2/step-2-magnetic-track-lidar.svg)
+<ModelViewer
+  client:visible
+  partId="PART-ELEC-SNS-MAG-TRACK-5CH"
+  partName="5-Channel Magnetic Track Induction Sensor Array"
+  material="electronics"
+  fabricationMethod="stock-sensor"
+  dimensions={{ x_mm: 80.0, y_mm: 25.0, z_mm: 6.0 }}
+  estimatedCost={35.00}
+  modelUrl="/open-biosphere/assets/parts/PART-ELEC-SNS-MAG-TRACK-5CH/model.3ds"
+/>
 
 1. **Alignment & Positioning:** LIDAR RANGE: 12m | SAMPLE: 5000 Hz | TRACK: 5-Channel
 2. **Mechanical & Electrical Execution:** Floor track magnetic follower sensor paired with RPLiDAR C1 360° laser obstacle scanner.
@@ -76,7 +106,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 2.3: 3-Axis Mini Articulated Pod Coupling Arm
 
-![Step 2.3 Technical Blueprint](/open-biosphere/hardware/ground-track-agv/assets/stage-2/step-3-articulated-arm-dock.svg)
+<ModelViewer
+  client:visible
+  partId="PART-ELEC-ARM-3AXIS-KIT"
+  partName="3-Axis Mini Articulated Arm Kit + Digital Metal-Gear Servos"
+  material="electronics"
+  fabricationMethod="stock-robotics"
+  dimensions={{ x_mm: 220.0, y_mm: 70.0, z_mm: 70.0 }}
+  estimatedCost={55.00}
+  modelUrl="/open-biosphere/assets/parts/PART-ELEC-ARM-3AXIS-KIT/model.3ds"
+/>
 
 1. **Alignment & Positioning:** DEGREES OF FREEDOM: 3-DOF | SERVO TORQUE: 25 kg·cm
 2. **Mechanical & Electrical Execution:** Aluminum mini articulated arm with metal gear servos for automatic crop pod hitching.
@@ -85,7 +124,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 2.4: 120W Magnetic Inductive Charging Receiver Coil
 
-![Step 2.4 Technical Blueprint](/open-biosphere/hardware/ground-track-agv/assets/stage-2/step-4-wireless-charging-coil.svg)
+<ModelViewer
+  client:visible
+  partId="PART-ELEC-WLESS-CHG-120W"
+  partName="120W Magnetic Inductive Wireless Charging Receiver Module"
+  material="electronics"
+  fabricationMethod="stock-electronics"
+  dimensions={{ x_mm: 85.0, y_mm: 85.0, z_mm: 12.0 }}
+  estimatedCost={42.00}
+  modelUrl="/open-biosphere/assets/parts/PART-ELEC-WLESS-CHG-120W/model.3ds"
+/>
 
 1. **Alignment & Positioning:** POWER: 120W Inductive | ALIGNMENT TOLERANCE: ±20mm
 2. **Mechanical & Electrical Execution:** Underside inductive power receiver coil for autonomous contact-free dock charging.
@@ -94,7 +142,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 2.5: 250ms Watchdog & Track Fail-Safe Verification
 
-![Step 2.5 Technical Blueprint](/open-biosphere/hardware/ground-track-agv/assets/stage-2/step-5-watchdog-verification.svg)
+<ModelViewer
+  client:visible
+  partId="ASM-GROUND_TRACK_AGV-STAGE-2-STEP-5"
+  partName="Ground Track AGV Pod Carrier Step Assembly (250ms Watchdog & Track Fail-Safe Verification)"
+  material="multi-material"
+  fabricationMethod="composite-assembly"
+  dimensions={{ x_mm: 400.0, y_mm: 250.0, z_mm: 180.0 }}
+  estimatedCost={0.00}
+  modelUrl="/open-biosphere/assets/machines/ground-track-agv/stage-2.3ds"
+/>
 
 1. **Alignment & Positioning:** BRAKE TIME: < 180ms | WATCHDOG LIMIT: 250ms
 2. **Mechanical & Electrical Execution:** Validating automatic emergency deadman braking within 250ms of beacon signal drop.

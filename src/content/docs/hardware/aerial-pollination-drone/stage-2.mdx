@@ -4,6 +4,7 @@ description: "Stage 2 Controller-Node-Tool edge architecture, isolated BOM, vect
 ---
 
 import { Card, CardGrid, LinkButton } from '@astrojs/starlight/components';
+import ModelViewer from '../../../components/ModelViewer';
 
 ## Part 1: Stage Header & Executive Summary
 
@@ -44,9 +45,20 @@ The Stage 2 agentic pack elevates the **Aerial Spotter & Pollination Drone** int
 
 ---
 
-## Part 4: Standalone Full SVG Blueprint
+## Part 4: Interactive 3D Composite Assembly Model
 
-![Stage 2 Technical Blueprint](/open-biosphere/blueprints/aerial-pollination-drone-stage-2.svg)
+<ModelViewer
+  client:visible
+  partId="ASM-AERIAL_POLLINATION_DRONE-STAGE-2"
+  partName="Aerial Spotter & Pollination Drone (Stage 2 Full Composite Assembly)"
+  material="multi-material"
+  fabricationMethod="composite-assembly"
+  dimensions={{ x_mm: 400.0, y_mm: 250.0, z_mm: 180.0 }}
+  estimatedCost={0.00}
+  modelUrl="/open-biosphere/assets/machines/aerial-pollination-drone/stage-2.3ds"
+/>
+
+* **Direct 3D Assembly Download:** [Download stage-2.3ds (Autodesk 3DS Binary)](/open-biosphere/assets/machines/aerial-pollination-drone/stage-2.3ds)
 
 
 
@@ -58,7 +70,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 2.1: Drone Flight Node & Power Harness Rigging
 
-![Step 2.1 Technical Blueprint](/open-biosphere/hardware/aerial-pollination-drone/assets/stage-2/step-1-drone-node-wiring.svg)
+<ModelViewer
+  client:visible
+  partId="PART-ELEC-ESP32-S3-NODE"
+  partName="ESP32-S3 Dual-Core Xtensa LX7 Node Controller (8MB PSRAM)"
+  material="electronics"
+  fabricationMethod="stock-electronics"
+  dimensions={{ x_mm: 51.0, y_mm: 28.0, z_mm: 8.5 }}
+  estimatedCost={14.00}
+  modelUrl="/open-biosphere/assets/parts/PART-ELEC-ESP32-S3-NODE/model.3ds"
+/>
 
 1. **Alignment & Positioning:** VOLTAGE: 5.0V Regulated | CURRENT: 450mA Peak
 2. **Mechanical & Electrical Execution:** ESP32-S3 node controller with 8MB Octal PSRAM for local visual odometry and trajectory tracking.
@@ -67,7 +88,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 2.2: PMW3901 Optical Flow & Laser ToF Integration
 
-![Step 2.2 Technical Blueprint](/open-biosphere/hardware/aerial-pollination-drone/assets/stage-2/step-2-optical-flow-tof.svg)
+<ModelViewer
+  client:visible
+  partId="PART-ELEC-SNS-PMW3901-FLOW"
+  partName="PMW3901 Optical Flow Breakout + VL53L1X Laser ToF Sensor"
+  material="electronics"
+  fabricationMethod="stock-sensor"
+  dimensions={{ x_mm: 25.0, y_mm: 19.0, z_mm: 4.5 }}
+  estimatedCost={28.00}
+  modelUrl="/open-biosphere/assets/parts/PART-ELEC-SNS-PMW3901-FLOW/model.3ds"
+/>
 
 1. **Alignment & Positioning:** FLOW SAMPLE: 100 Hz | RANGE: 20mm - 4000mm
 2. **Mechanical & Electrical Execution:** Ground texture motion tracking paired with 4-meter infrared laser time-of-flight sensor.
@@ -76,7 +106,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 2.3: AprilTag Visual Camera & RTSP Stream Link
 
-![Step 2.3 Technical Blueprint](/open-biosphere/hardware/aerial-pollination-drone/assets/stage-2/step-3-camera-wifi-stream.svg)
+<ModelViewer
+  client:visible
+  partId="PART-ELEC-CAM-RUNCAM-HD"
+  partName="RunCam Split HD Micro RGB-NIR Camera Module with Wi-Fi Link"
+  material="electronics"
+  fabricationMethod="stock-sensor"
+  dimensions={{ x_mm: 29.0, y_mm: 29.0, z_mm: 11.0 }}
+  estimatedCost={32.00}
+  modelUrl="/open-biosphere/assets/parts/PART-ELEC-CAM-RUNCAM-HD/model.3ds"
+/>
 
 1. **Alignment & Positioning:** RESOLUTION: 1080p60 | LATENCY: < 80ms
 2. **Mechanical & Electrical Execution:** RunCam Split HD camera with 850nm NIR bandpass filter transmitting low-latency RTSP video.
@@ -85,7 +124,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 2.4: Automated Conical Charging Perch Fabrication
 
-![Step 2.4 Technical Blueprint](/open-biosphere/hardware/aerial-pollination-drone/assets/stage-2/step-4-conical-charging-perch.svg)
+<ModelViewer
+  client:visible
+  partId="PART-FAB-PERCH-CONICAL-DOCK"
+  partName="3D-Printed Conical Perch Funnel with Concentric Brass Wiper Contacts"
+  material="electronics"
+  fabricationMethod="3d-print-+-brass-contacts"
+  dimensions={{ x_mm: 110.0, y_mm: 110.0, z_mm: 75.0 }}
+  estimatedCost={18.00}
+  modelUrl="/open-biosphere/assets/parts/PART-FAB-PERCH-CONICAL-DOCK/model.3ds"
+/>
 
 1. **Alignment & Positioning:** LANDING TOLERANCE: ±25mm | CHARGE CURRENT: 2.0A
 2. **Mechanical & Electrical Execution:** 3D-printed alignment funnel with concentric brass wiper rings for autonomous docking and charging.
@@ -94,7 +142,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 2.5: 250ms CNT Watchdog & Fail-Safe Verification
 
-![Step 2.5 Technical Blueprint](/open-biosphere/hardware/aerial-pollination-drone/assets/stage-2/step-5-watchdog-verification.svg)
+<ModelViewer
+  client:visible
+  partId="ASM-AERIAL_POLLINATION_DRONE-STAGE-2-STEP-5"
+  partName="Aerial Spotter & Pollination Drone Step Assembly (250ms CNT Watchdog & Fail-Safe Verification)"
+  material="multi-material"
+  fabricationMethod="composite-assembly"
+  dimensions={{ x_mm: 400.0, y_mm: 250.0, z_mm: 180.0 }}
+  estimatedCost={0.00}
+  modelUrl="/open-biosphere/assets/machines/aerial-pollination-drone/stage-2.3ds"
+/>
 
 1. **Alignment & Positioning:** DEADMAN TIMEOUT: 250ms | FAIL-SAFE: Auto-Disarm
 2. **Mechanical & Electrical Execution:** Hardware deadman loop verification tripping drone to soft landing upon signal interruption.

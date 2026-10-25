@@ -4,6 +4,7 @@ description: "Stage 0 pure mechanical build instructions, isolated BOM, vector b
 ---
 
 import { Card, CardGrid, LinkButton } from '@astrojs/starlight/components';
+import ModelViewer from '../../../components/ModelViewer';
 
 ## Part 1: Stage Header & Executive Summary
 
@@ -43,9 +44,20 @@ The Stage 0 baseline build of the **Ground Track AGV Pod Carrier** is a **100% m
 
 ---
 
-## Part 4: Standalone Full SVG Blueprint
+## Part 4: Interactive 3D Composite Assembly Model
 
-![Stage 0 Technical Blueprint](/open-biosphere/blueprints/ground-track-agv-stage-0.svg)
+<ModelViewer
+  client:visible
+  partId="ASM-GROUND_TRACK_AGV-STAGE-0"
+  partName="Ground Track AGV Pod Carrier (Stage 0 Full Composite Assembly)"
+  material="multi-material"
+  fabricationMethod="composite-assembly"
+  dimensions={{ x_mm: 350.0, y_mm: 200.0, z_mm: 150.0 }}
+  estimatedCost={0.00}
+  modelUrl="/open-biosphere/assets/machines/ground-track-agv/stage-0.3ds"
+/>
+
+* **Direct 3D Assembly Download:** [Download stage-0.3ds (Autodesk 3DS Binary)](/open-biosphere/assets/machines/ground-track-agv/stage-0.3ds)
 
 
 
@@ -57,7 +69,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 1.1: Steel Chassis Box Cutting & Structural Welding
 
-![Step 1.1 Technical Blueprint](/open-biosphere/hardware/ground-track-agv/assets/stage-0/step-1-chassis-cutting-welding.svg)
+<ModelViewer
+  client:visible
+  partId="PART-MECH-CHASSIS-STEEL-2MM"
+  partName="Welded 2mm Steel Tracked Chassis Box & Bulkheads"
+  material="steel"
+  fabricationMethod="laser-cut-/-welded-steel"
+  dimensions={{ x_mm: 520.0, y_mm: 360.0, z_mm: 140.0 }}
+  estimatedCost={85.00}
+  modelUrl="/open-biosphere/assets/parts/PART-MECH-CHASSIS-STEEL-2MM/model.3ds"
+/>
 
 1. **Alignment & Positioning:** STEEL GAUGE: 2.0mm | PAYLOAD CAP: 300 lbs
 2. **Mechanical & Electrical Execution:** 2mm cold-rolled steel tub chassis welded with internal bulkheads and transport tow hooks.
@@ -66,7 +87,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 1.2: Bogie Suspension Arms & Rubber Track Assembly
 
-![Step 1.2 Technical Blueprint](/open-biosphere/hardware/ground-track-agv/assets/stage-0/step-2-bogie-suspension-tracks.svg)
+<ModelViewer
+  client:visible
+  partId="PART-MECH-TREAD-RUBBER-50MM"
+  partName="Continuous Rubber Track Treads (50mm W x 38-Link Pair)"
+  material="electronics"
+  fabricationMethod="stock-molded-rubber"
+  dimensions={{ x_mm: 640.0, y_mm: 50.0, z_mm: 18.0 }}
+  estimatedCost={38.00}
+  modelUrl="/open-biosphere/assets/parts/PART-MECH-TREAD-RUBBER-50MM/model.3ds"
+/>
 
 1. **Alignment & Positioning:** TRACK WIDTH: 50mm | DIE SPRINGS: 4x Heavy Duty
 2. **Mechanical & Electrical Execution:** Pivoting die-spring bogies with dual-bearing polyurethane wheels and 50mm Kevlar tracks.
@@ -75,7 +105,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 1.3: Freewheel Dog Clutch Neutral Hub Installation
 
-![Step 1.3 Technical Blueprint](/open-biosphere/hardware/ground-track-agv/assets/stage-0/step-3-dog-clutch-neutral.svg)
+<ModelViewer
+  client:visible
+  partId="PART-MECH-CLUTCH-DOG-STEEL"
+  partName="Sliding Steel Dog Clutch Neutral Hubs & Levers"
+  material="steel"
+  fabricationMethod="cnc-steel-/-machined"
+  dimensions={{ x_mm: 65.0, y_mm: 45.0, z_mm: 45.0 }}
+  estimatedCost={28.00}
+  modelUrl="/open-biosphere/assets/parts/PART-MECH-CLUTCH-DOG-STEEL/model.3ds"
+/>
 
 1. **Alignment & Positioning:** CLUTCH: Sliding Steel Dog | OVER-CENTER LEVER: Manual
 2. **Mechanical & Electrical Execution:** Sliding steel face gear clutch allowing instant disconnect for unpowered manual towing.
@@ -84,7 +123,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 1.4: Fold-Out Steering Tiller & Hand Brake Rigging
 
-![Step 1.4 Technical Blueprint](/open-biosphere/hardware/ground-track-agv/assets/stage-0/step-4-tiller-brake-rigging.svg)
+<ModelViewer
+  client:visible
+  partId="PART-MECH-HANDLE-TILLER-22MM"
+  partName="Fold-Out 22mm Tubular Steel Tiller Handle + Grips"
+  material="steel"
+  fabricationMethod="tubular-steel-fabrication"
+  dimensions={{ x_mm: 850.0, y_mm: 380.0, z_mm: 45.0 }}
+  estimatedCost={22.00}
+  modelUrl="/open-biosphere/assets/parts/PART-MECH-HANDLE-TILLER-22MM/model.3ds"
+/>
 
 1. **Alignment & Positioning:** TILLER DIAMETER: Ø22mm | CABLE: Lined Bowden
 2. **Mechanical & Electrical Execution:** 22mm tubular steel folding tiller handle with ergonomic bicycle squeeze brake levers.
@@ -93,7 +141,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 1.5: Foot-Pedal Spring Cam Clamp & Cargo Bed Mounting
 
-![Step 1.5 Technical Blueprint](/open-biosphere/hardware/ground-track-agv/assets/stage-0/step-5-foot-cam-latch.svg)
+<ModelViewer
+  client:visible
+  partId="ASM-GROUND_TRACK_AGV-STAGE-0-STEP-5"
+  partName="Ground Track AGV Pod Carrier Step Assembly (Foot-Pedal Spring Cam Clamp & Cargo Bed Mounting)"
+  material="multi-material"
+  fabricationMethod="composite-assembly"
+  dimensions={{ x_mm: 350.0, y_mm: 200.0, z_mm: 150.0 }}
+  estimatedCost={0.00}
+  modelUrl="/open-biosphere/assets/machines/ground-track-agv/stage-0.3ds"
+/>
 
 1. **Alignment & Positioning:** CLAMP FORCE: 400 N | TRAVEL: 28mm
 2. **Mechanical & Electrical Execution:** Over-center foot pedal mechanical clamp locking AGV onto crop pod loading rails.

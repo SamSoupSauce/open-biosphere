@@ -4,6 +4,7 @@ description: "Stage 0 pure mechanical build instructions, isolated BOM, vector b
 ---
 
 import { Card, CardGrid, LinkButton } from '@astrojs/starlight/components';
+import ModelViewer from '../../../components/ModelViewer';
 
 # BCA Packaging Engine — Stage 0: Zero-Power Baseline
 
@@ -46,39 +47,105 @@ The builder uses manual ratchet cranks to power the counter-rotating toothed sha
 
 ---
 
-## 4. Standalone Full SVG Blueprint
+## 4. Interactive 3D Composite Assembly Model
 
-![Stage 0 Technical Blueprint](/open-biosphere/blueprints/bca-packaging-engine-stage-0.svg)
+<ModelViewer
+  client:visible
+  partId="ASM-BCA_PACKAGING_ENGINE-STAGE-0"
+  partName="Bio-Pitch & Ceramic Aggregate Packaging Engine (Stage 0 Full Assembly)"
+  material="tool-steel"
+  fabricationMethod="composite-assembly"
+  dimensions={{ x_mm: 380.0, y_mm: 160.0, z_mm: 120.0 }}
+  estimatedCost={{480.00}}
+  modelUrl="/open-biosphere/assets/machines/bca-packaging-engine/stage-0.3ds"
+/>
+
+* **Direct 3D Assembly Download:** [Download stage-0.3ds (Autodesk 3DS Binary)](/open-biosphere/assets/machines/bca-packaging-engine/stage-0.3ds)
 
 ---
 
 ## 5. Step-by-Step Mechanical Fabrication & Assembly Runbook
 
 ### Step 0.1: Structural Chassis Assembly
+
+<ModelViewer
+  client:visible
+  partId="PART-MECH-CHASSIS-STEEL-2MM"
+  partName="Welded 2mm Steel Tracked Chassis Box & Bulkheads"
+  material="steel"
+  fabricationMethod="laser-cut-/-welded-steel"
+  dimensions={{ x_mm: 520.0, y_mm: 360.0, z_mm: 140.0 }}
+  estimatedCost={85.00}
+  modelUrl="/open-biosphere/assets/parts/PART-MECH-CHASSIS-STEEL-2MM/model.3ds"
+/>
 1. Lay out the 50 × 50 × 4 mm structural angle-iron uprights on a flat datum welding table.
 2. Square the base frame to within ±0.5 mm diagonal tolerance ($1,450 \times 680$ mm).
 3. Bolt the lateral mounting brackets using M8 Grade 8.8 bolts torqued to 28 N·m.
 4. Mount the heavy base leveling feet and anchor to the shop floor datum line.
 
 ### Step 0.2: Thermal Breaker Chamber & Toothed Shaft Installation
+
+<ModelViewer
+  client:visible
+  partId="PART-FAB-BREAKER-TOOTHED-SHAFT"
+  partName="Twin Counter-Rotating Toothed Breaker Shafts (Manganese Steel)"
+  material="steel"
+  fabricationMethod="machined"
+  dimensions={{ x_mm: 320.0, y_mm: 75.0, z_mm: 75.0 }}
+  estimatedCost={65.00}
+  modelUrl="/open-biosphere/assets/parts/PART-FAB-BREAKER-TOOTHED-SHAFT/model.3ds"
+/>
 1. Position the twin counter-rotating manganese toothed shafts ([`PART-FAB-BREAKER-TOOTHED-SHAFT`](/open-biosphere/parts/part-custom-breaker-toothed-shaft/)) inside the upper hopper housing.
 2. Seat the shafts into heavy-duty UC205-16 cast-iron flanged pillow block bearings.
 3. Verify that the tooth-to-tooth clearance is locked to exactly 2.0 mm across the entire 320 mm axial length.
 4. Affix the spur gear synchronization pair on the exterior drive side and test smooth hand rotation via the 1/2" square ratchet drive adapter.
 
 ### Step 0.3: Jacketed Pug Barrel & Auger Mount
+
+<ModelViewer
+  client:visible
+  partId="PART-FAB-PUG-AUGER-JACKETED"
+  partName="Jacketed 304 SS Pug Mill Barrel & Continuous Auger Screw"
+  material="electronics"
+  fabricationMethod="machined"
+  dimensions={{ x_mm: 450.0, y_mm: 90.0, z_mm: 90.0 }}
+  estimatedCost={85.00}
+  modelUrl="/open-biosphere/assets/parts/PART-FAB-PUG-AUGER-JACKETED/model.3ds"
+/>
 1. Fasten the 304 stainless steel jacketed pug mill barrel ([`PART-FAB-PUG-AUGER-JACKETED`](/open-biosphere/parts/part-custom-pug-auger-jacketed/)) horizontally beneath the breaker discharge chute.
 2. Insert the central progressive-pitch auger shaft, locking the rear thrust collar against the bronze bronze sleeve bearing.
 3. Install the top gravity-feed hopper collar with high-temperature graphite gasket seals.
 4. Connect the thermal exhaust pre-heating jacket duct to receive waste hot air from the retort flue.
 
 ### Step 0.4: Acme Screw Ram Extrusion Head Mounting
+
+<ModelViewer
+  client:visible
+  partId="PART-MECH-SHAFT-SS-8MM"
+  partName="8 mm Precision Ground D-Profile Stainless Axle Shaft (550mm)"
+  material="electronics"
+  fabricationMethod="stock-precision-shaft"
+  dimensions={{ x_mm: 550.0, y_mm: 8.0, z_mm: 7.5 }}
+  estimatedCost={14.00}
+  modelUrl="/open-biosphere/assets/parts/PART-MECH-SHAFT-SS-8MM/model.3ds"
+/>
 1. Align the Acme Tr16x4 lead-screw ram along the longitudinal centerline of the extrusion chamber.
 2. Mount the 250 mm cast-iron hand wheel to the screw tail with a 5 mm hardened roll pin.
 3. Fasten the steel die face flange to the barrel muzzle using eight M8 high-tensile studs.
 4. Verify axial travel: the compaction piston must stroke smoothly forward 120 mm without binding against barrel sidewalls.
 
 ### Step 0.5: Wire Cutoff Bow Rigging & Hot-Plate Bed
+
+<ModelViewer
+  client:visible
+  partId="PART-FAB-SHEAR-CARRIAGE-WIRE"
+  partName="High-Tensile Music Wire Flying Cutoff Shear Carriage"
+  material="electronics"
+  fabricationMethod="machined"
+  dimensions={{ x_mm: 260.0, y_mm: 140.0, z_mm: 45.0 }}
+  estimatedCost={28.00}
+  modelUrl="/open-biosphere/assets/parts/PART-FAB-SHEAR-CARRIAGE-WIRE/model.3ds"
+/>
 1. Mount the spring-tensioned music wire bow ([`PART-FAB-SHEAR-CARRIAGE-WIRE`](/open-biosphere/parts/part-custom-shear-carriage-wire/)) to the dual 12 mm ground guide rods at the die exit.
 2. Tension the 0.6 mm spring steel piano wire to 150 N using the knurled turnbuckle.
 3. Position the flat refractory firebrick curing platform directly beneath the wire slice line.

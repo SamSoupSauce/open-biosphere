@@ -1,0 +1,92 @@
+---
+title: "RFC-0014: Interactive 3D Composite Assembly Standard"
+description: "Supersedes static 2D vector blueprints with zero-dependency client-side 3D composite assemblies, progressive assembly step models, and visibility-gated CAD rendering."
+sidebar:
+  badge:
+    text: "STANDARD"
+    variant: "success"
+---
+
+import { Card, CardGrid, LinkButton } from '@astrojs/starlight/components';
+import ModelViewer from '../../../components/ModelViewer';
+
+# RFC-0014: Interactive 3D Composite Assembly Standard
+
+* **RFC ID:** `RFC-0014` (Supersedes `RFC-0010` & `RFC-0011` for machine manuals)
+* **Author:** Documentation Systems, Technical CAD & Physical Assembly Engineering Team
+* **Status:** `Implemented / Canonical Standard`
+* **Target Classification:** Technical Illustration / CAD Systems / Interactive Visualization
+* **Applicable Scope:** All 27 Machine Stage Manuals (`hardware/<machine-slug>/stage-{0,1,2}.mdx`), Global Part Registry, and Machine Overview Pages
+
+---
+
+## 1. Executive Summary & Problem Statement
+
+Prior standards (`RFC-0010` and `RFC-0011`) established vector SVG blueprints as the canonical format for machine manuals. While vector line drawings provide resolution independence, 2D projections inherently suffer from severe physical assembly limitations:
+1. **Blind Fastener & Reverse Obstruction:** 2D projections cannot be rotated in real time, concealing reverse fastener heads, T-nut channels, and blind clearance cavities.
+2. **Kinematic Ambiguity:** Complex spatial linkages (such as dog clutch dog teeth, auger flights, scissor crawler linkages, and gantry carriage V-wheels) are difficult to comprehend from static orthographic or isometric cross-sections.
+3. **Disconnected Part-to-Assembly Context:** Builders inspecting a static blueprint have to manually cross-reference 2D drawing callouts with separate 3D part registry downloads.
+
+**RFC-0014** mandates that **all 2D static blueprints across machine stage manuals are completely replaced by interactive, client-side 3D models**. Full physical composite assemblies are procedurally synthesized from underlying sub-models, providing 360° orbit rotation, directional lighting, wireframe toggles, and zero-latency inspection.
+
+---
+
+## 2. Interactive Master Composite Demonstration
+
+<ModelViewer
+  client:visible
+  partId="ASM-OVERHEAD_GANTRY_SYSTEM-STAGE-2"
+  partName="Overhead Cartesian Gantry (Stage 2 Autonomous Multi-Tool Assembly)"
+  material="multi-material"
+  fabricationMethod="composite-assembly"
+  dimensions={{ x_mm: 400.0, y_mm: 250.0, z_mm: 180.0 }}
+  estimatedCost={1420.00}
+  modelUrl="/open-biosphere/assets/machines/overhead-gantry-system/stage-2.3ds"
+/>
+
+* **Direct 3D Assembly Download:** [Download stage-2.3ds (Autodesk 3DS Binary)](/open-biosphere/assets/machines/overhead-gantry-system/stage-2.3ds)
+
+---
+
+## 3. Core Architectural Directives
+
+### 3.1 Composite Assembly Synthesis
+1. **Hierarchical Merging:** Machine stages are composed of discrete physical sub-models from the global part registry (`src/data/parts.json`).
+2. **Spatial Alignment & Constraints:** Each sub-model is placed with exact Cartesian translational offsets ($dx, dy, dz$) and spatial rotations corresponding to its real-world mechanical mating datum.
+3. **Unified Autodesk 3DS Chunk Pipeline:** Sub-model vertices (`0x4110`) and triangular face indices (`0x4120`) are compiled into a single optimized Autodesk 3DS binary container, eliminating external texture dependencies and multi-file network waterfalls.
+
+### 3.2 1:1 Stepwise 3D Model Invariant
+1. **Part 4 (Stage Assembly):** Every machine stage manual features an interactive `<ModelViewer>` loading the complete composite 3D assembly (`/open-biosphere/assets/machines/<slug>/stage-<N>.3ds`).
+2. **Part 5 (Step-by-Step Execution):** Each individual assembly step (`### Step X.Y`) renders the interactive 3D sub-model of the component being installed, with its live material properties, fabrication classification, and unit cost badges.
+3. **Final Step Integration:** The final step of each stage displays the completed stage assembly seated in its mounting fixtures.
+
+### 3.3 Zero-Overhead Performance & Visibility Gating
+1. **`client:visible` Mounting:** All 3D viewers leverage Astro's `client:visible` hydration directive, preventing DOM instantiation until the user scrolls near the component.
+2. **`IntersectionObserver` Render Throttling:** Each active canvas observes its own viewport intersection; when offscreen, the internal `requestAnimationFrame` render loop pauses automatically.
+3. **Decoupled Animation Loop:** Continuous orbital rotation is tracked via mutable reference counters (`rotYRef`), preventing React re-render cascades and achieving sustained 60 FPS performance across multiple viewers.
+
+---
+
+## 4. Implementation Matrix Across 9 Machines
+
+| Machine Subsystem | Stage 0 (Manual) | Stage 1 (Semi-Auto BLE) | Stage 2 (Autonomous CNT) |
+| :--- | :--- | :--- | :--- |
+| **Aerial Pollination Drone** | Telescopic Wand, Tuning Fork & Mirror | 85mm Whoop Frame, BLDC Motors & FC | Dual Optical Flow, ToF Lidar & Conical Perch |
+| **BCA Packaging Engine** | Angle-Iron Frame, Breaker Shaft & Pug Mill | 250W Geared DC Motor, Band Heaters & PSU | 4-Way Stepper Die, Flying Shear & Load Cell |
+| **Fluidic Skimmer Loop** | HDPE/Acrylic Flume, Wedge Screen & Auger | 24V Mag Pump, Dog Clutch & Optical Shutter | 50W LED Grow Puck, Flow Sensor & Solenoid |
+| **Ground Track AGV** | Steel Chassis, Rubber Treads & Tiller Handle | Dual 250W DC Motors & 24V LiFePO4 Pack | 360° 2D Lidar Turret, Arm & Mag Sensor |
+| **Mantis Branch Crawler** | 5052 Scissor Plates & Silicone Rollers | Dual NEMA 14 Steppers & 5015 Vacuum Blower | Stereo NIR Vision, Clamping Load Cell & Dock |
+| **Microclimate Dosing Array** | 2020 Aluminum Tower & Pressure Tanks | 4-Channel Peristaltic Pump Bank & OLED | Sensirion SCD41 NDIR & IP65 Sealed Enclosure |
+| **Overhead Gantry System** | 4040 Extrusion Rails & Magnetic Tool Dock | Dual NEMA 23 Drives & 15x30 Drag Chains | 4K IMX519 Survey Camera & Dual Toolheads |
+| **Revolving Sprout Bioreactor** | Perforated SS304 Drum & Ratchet Crank | NEMA 17 Stepper & Pressurized Misting Loop | Ozone Generator & SHT40 Environmental Probe |
+| **TPS Root Chamber** | 160L HDPE Basin, Neoprene Collars & Spray Wand | 120 PSI Booster Pump & Brass Mist Spider | MLX90614 IR Pyrometer & Optical Level Floats |
+
+---
+
+## 5. Related Standards & Canonical References
+
+* [RFC-0004: Controller-Node-Tool Architecture](/open-biosphere/rfcs/rfc-0004-controller-node-tool/)
+* [RFC-0007: Multi-Stage Machine Sub-Page Architecture](/open-biosphere/rfcs/rfc-0007-multi-stage-sub-page-architecture/)
+* [RFC-0008: Global Part Registry & BOM Schema](/open-biosphere/rfcs/rfc-0008-global-part-registry-bom-schema/)
+* [RFC-0012: Custom Fabricated Part Contracts](/open-biosphere/rfcs/rfc-0012-custom-fabricated-part-contracts/)
+* [RFC-0013: Closed-Loop Bio-Pitch Packaging Engine](/open-biosphere/rfcs/rfc-0013-bca-packaging-engine/)

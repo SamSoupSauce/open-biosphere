@@ -4,6 +4,7 @@ description: "Stage 2 Controller-Node-Tool edge architecture, isolated BOM, vect
 ---
 
 import { Card, CardGrid, LinkButton } from '@astrojs/starlight/components';
+import ModelViewer from '../../../components/ModelViewer';
 
 ## Part 1: Stage Header & Executive Summary
 
@@ -45,9 +46,20 @@ The Stage 2 agentic pack elevates the **Microclimate & Automated Dosing Array** 
 
 ---
 
-## Part 4: Standalone Full SVG Blueprint
+## Part 4: Interactive 3D Composite Assembly Model
 
-![Stage 2 Technical Blueprint](/open-biosphere/blueprints/microclimate-dosing-array-stage-2.svg)
+<ModelViewer
+  client:visible
+  partId="ASM-MICROCLIMATE_DOSING_ARRAY-STAGE-2"
+  partName="Microclimate & Automated Dosing Array (Stage 2 Full Composite Assembly)"
+  material="multi-material"
+  fabricationMethod="composite-assembly"
+  dimensions={{ x_mm: 400.0, y_mm: 250.0, z_mm: 180.0 }}
+  estimatedCost={0.00}
+  modelUrl="/open-biosphere/assets/machines/microclimate-dosing-array/stage-2.3ds"
+/>
+
+* **Direct 3D Assembly Download:** [Download stage-2.3ds (Autodesk 3DS Binary)](/open-biosphere/assets/machines/microclimate-dosing-array/stage-2.3ds)
 
 
 
@@ -59,7 +71,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 2.1: Galvanically Isolated Sensor Carrier Assembly
 
-![Step 2.1 Technical Blueprint](/open-biosphere/hardware/microclimate-dosing-array/assets/stage-2/step-1-sensor-isolators.svg)
+<ModelViewer
+  client:visible
+  partId="PART-ELEC-ESP32-S3-NODE"
+  partName="ESP32-S3 Dual-Core Xtensa LX7 Node Controller (8MB PSRAM)"
+  material="electronics"
+  fabricationMethod="stock-electronics"
+  dimensions={{ x_mm: 51.0, y_mm: 28.0, z_mm: 8.5 }}
+  estimatedCost={14.00}
+  modelUrl="/open-biosphere/assets/parts/PART-ELEC-ESP32-S3-NODE/model.3ds"
+/>
 
 1. **Alignment & Positioning:** ISOLATION: 2.5 kV RMS | BUS: I2C Fast Mode
 2. **Mechanical & Electrical Execution:** I2C optical isolators protecting analog nutrient probes from electrical ground loop noise.
@@ -68,7 +89,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 2.2: Sensirion SCD41 Photoacoustic NDIR CO2 Tool Rigging
 
-![Step 2.2 Technical Blueprint](/open-biosphere/hardware/microclimate-dosing-array/assets/stage-2/step-2-ndir-gas-tool.svg)
+<ModelViewer
+  client:visible
+  partId="PART-ELEC-SNS-SCD41-NDIR"
+  partName="Sensirion SCD41 Photoacoustic NDIR CO2, Temperature & RH Sensor"
+  material="electronics"
+  fabricationMethod="stock-sensor"
+  dimensions={{ x_mm: 10.1, y_mm: 10.1, z_mm: 6.5 }}
+  estimatedCost={38.00}
+  modelUrl="/open-biosphere/assets/parts/PART-ELEC-SNS-SCD41-NDIR/model.3ds"
+/>
 
 1. **Alignment & Positioning:** RANGE: 400-5000 ppm CO2 | ACCURACY: ±40 ppm
 2. **Mechanical & Electrical Execution:** Photoacoustic NDIR sensor and SHT40 temperature/humidity probe inside aspirated radiation shield.
@@ -77,7 +107,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 2.3: Doser Node & Closed-Loop Relay Harness Wiring
 
-![Step 2.3 Technical Blueprint](/open-biosphere/hardware/microclimate-dosing-array/assets/stage-2/step-3-doser-node-wiring.svg)
+<ModelViewer
+  client:visible
+  partId="PART-ELEC-DVR-MOSFET-8CH"
+  partName="Optocoupled 8-Channel High-Side MOSFET Driver Board"
+  material="electronics"
+  fabricationMethod="stock-electronics"
+  dimensions={{ x_mm: 95.0, y_mm: 60.0, z_mm: 18.0 }}
+  estimatedCost={28.00}
+  modelUrl="/open-biosphere/assets/parts/PART-ELEC-DVR-MOSFET-8CH/model.3ds"
+/>
 
 1. **Alignment & Positioning:** CHANNELS: 4 Pump + 2 Gas | WATCHDOG: Hardware Deadman
 2. **Mechanical & Electrical Execution:** ESP32-S3 node controller wiring to nutrient, pH up, pH down, and CO2 injection banks.
@@ -86,7 +125,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 2.4: PID Closed-Loop Microclimate Algorithm Tuning
 
-![Step 2.4 Technical Blueprint](/open-biosphere/hardware/microclimate-dosing-array/assets/stage-2/step-4-closed-loop-tuning.svg)
+<ModelViewer
+  client:visible
+  partId="PART-ELEC-ENC-WEATHER-IP65"
+  partName="IP65 ABS Weatherproof Wall-Mount Enclosure with Cable Glands"
+  material="electronics"
+  fabricationMethod="stock-enclosure"
+  dimensions={{ x_mm: 200.0, y_mm: 150.0, z_mm: 75.0 }}
+  estimatedCost={22.00}
+  modelUrl="/open-biosphere/assets/parts/PART-ELEC-ENC-WEATHER-IP65/model.3ds"
+/>
 
 1. **Alignment & Positioning:** VPD TARGET: 0.8 - 1.2 kPa | HYSTERESIS: ±25 ppm
 2. **Mechanical & Electrical Execution:** Calibrating target VPD (Vapor Pressure Deficit) and automated ppm setpoint tracking.
@@ -95,7 +143,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 2.5: 250ms Watchdog & Chemical Shutoff Verification
 
-![Step 2.5 Technical Blueprint](/open-biosphere/hardware/microclimate-dosing-array/assets/stage-2/step-5-watchdog-verification.svg)
+<ModelViewer
+  client:visible
+  partId="ASM-MICROCLIMATE_DOSING_ARRAY-STAGE-2-STEP-5"
+  partName="Microclimate & Automated Dosing Array Step Assembly (250ms Watchdog & Chemical Shutoff Verification)"
+  material="multi-material"
+  fabricationMethod="composite-assembly"
+  dimensions={{ x_mm: 400.0, y_mm: 250.0, z_mm: 180.0 }}
+  estimatedCost={0.00}
+  modelUrl="/open-biosphere/assets/machines/microclimate-dosing-array/stage-2.3ds"
+/>
 
 1. **Alignment & Positioning:** TIMEOUT: 250ms | FAIL-SAFE: 100% Valves Closed
 2. **Mechanical & Electrical Execution:** Verifying all peristaltic pumps and gas solenoids trip closed within 250ms of heartbeat loss.

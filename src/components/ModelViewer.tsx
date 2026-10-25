@@ -98,15 +98,31 @@ export default function ModelViewer({
   estimatedCost = 0.0,
 }: Props) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const [isRotating, setIsRotating] = useState(true);
   const [wireframe, setWireframe] = useState(false);
-  const [rotX, setRotX] = useState(25);
-  const [rotY, setRotY] = useState(45);
   const [zoom, setZoom] = useState(1.0);
   const [isDragging, setIsDragging] = useState(false);
   const [mesh, setMesh] = useState<ParsedMesh | null>(null);
   const [modelLoaded, setModelLoaded] = useState(false);
   const dragPosRef = useRef({ x: 0, y: 0 });
+  const rotXRef = useRef(25);
+  const rotYRef = useRef(45);
+  const isVisibleRef = useRef(true);
+
+  // Monitor visibility to pause render loop when offscreen
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el || typeof IntersectionObserver === 'undefined') return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisibleRef.current = entry.isIntersecting;
+      },
+      { threshold: 0.05 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   // Load and parse exact .3ds model binary geometry
   useEffect(() => {
@@ -143,13 +159,19 @@ export default function ModelViewer({
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    let currentRotY = rotY;
-
     const render = () => {
-      if (isRotating && !isDragging) {
-        currentRotY = (currentRotY + 0.6) % 360;
-        setRotY(currentRotY);
+      if (!isVisibleRef.current) {
+        // Check back later when visible
+        animId = requestAnimationFrame(render);
+        return;
       }
+
+      if (isRotating && !isDragging) {
+        rotYRef.current = (rotYRef.current + 0.5) % 360;
+      }
+
+      const currentRotX = rotXRef.current;
+      const currentRotY = rotYRef.current;
 
       const w = canvas.width;
       const h = canvas.height;
@@ -177,7 +199,7 @@ export default function ModelViewer({
       const cy = h / 2 + 10;
 
       // Rotation matrix values
-      const radX = (rotX * Math.PI) / 180;
+      const radX = (currentRotX * Math.PI) / 180;
       const radY = (currentRotY * Math.PI) / 180;
       const cosX = Math.cos(radX);
       const sinX = Math.sin(radX);
@@ -416,7 +438,7 @@ export default function ModelViewer({
         });
       }
 
-      if (isRotating && !isDragging) {
+      if (isRotating || isDragging) {
         animId = requestAnimationFrame(render);
       }
     };
@@ -426,7 +448,7 @@ export default function ModelViewer({
     return () => {
       if (animId) cancelAnimationFrame(animId);
     };
-  }, [isRotating, wireframe, rotX, rotY, zoom, isDragging, dimensions, mesh, material]);
+  }, [isRotating, wireframe, zoom, isDragging, dimensions, mesh, material]);
 
   // Orbit drag interaction handlers
   const handleMouseDown = (e: React.MouseEvent) => {
@@ -439,14 +461,14 @@ export default function ModelViewer({
     const dx = e.clientX - dragPosRef.current.x;
     const dy = e.clientY - dragPosRef.current.y;
     dragPosRef.current = { x: e.clientX, y: e.clientY };
-    setRotY((prev) => (prev + dx * 0.7) % 360);
-    setRotX((prev) => Math.max(-85, Math.min(85, prev - dy * 0.7)));
+    rotYRef.current = (rotYRef.current + dx * 0.7) % 360;
+    rotXRef.current = Math.max(-85, Math.min(85, rotXRef.current - dy * 0.7));
   };
 
   const handleMouseUp = () => setIsDragging(false);
 
   return (
-    <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden shadow-2xl my-6 not-content font-sans">
+    <div ref={containerRef} className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden shadow-2xl my-6 not-content font-sans">
       {/* Top Bar */}
       <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-3 bg-slate-950/80 border-b border-slate-800">
         <div className="flex items-center gap-2">

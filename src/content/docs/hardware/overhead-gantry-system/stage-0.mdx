@@ -4,6 +4,7 @@ description: "Stage 0 pure mechanical build instructions, isolated BOM, vector b
 ---
 
 import { Card, CardGrid, LinkButton } from '@astrojs/starlight/components';
+import ModelViewer from '../../../components/ModelViewer';
 
 ## Part 1: Stage Header & Executive Summary
 
@@ -43,9 +44,20 @@ The Stage 0 baseline build of the **2-Axis Overhead Precision Gantry** is a **10
 
 ---
 
-## Part 4: Standalone Full SVG Blueprint
+## Part 4: Interactive 3D Composite Assembly Model
 
-![Stage 0 Technical Blueprint](/open-biosphere/blueprints/overhead-gantry-system-stage-0.svg)
+<ModelViewer
+  client:visible
+  partId="ASM-OVERHEAD_GANTRY_SYSTEM-STAGE-0"
+  partName="2-Axis Overhead Precision Gantry (Stage 0 Full Composite Assembly)"
+  material="multi-material"
+  fabricationMethod="composite-assembly"
+  dimensions={{ x_mm: 350.0, y_mm: 200.0, z_mm: 150.0 }}
+  estimatedCost={0.00}
+  modelUrl="/open-biosphere/assets/machines/overhead-gantry-system/stage-0.3ds"
+/>
+
+* **Direct 3D Assembly Download:** [Download stage-0.3ds (Autodesk 3DS Binary)](/open-biosphere/assets/machines/overhead-gantry-system/stage-0.3ds)
 
 
 
@@ -57,7 +69,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 1.1: 2040 V-Slot Rail Cutting & Outer Frame Alignment
 
-![Step 1.1 Technical Blueprint](/open-biosphere/hardware/overhead-gantry-system/assets/stage-0/step-1-rail-cutting-frame.svg)
+<ModelViewer
+  client:visible
+  partId="PART-MECH-ALUM-4040-3M"
+  partName="4040 V-Slot Aluminum Bridge Beam (3048mm Length)"
+  material="aluminum"
+  fabricationMethod="stock-extrusion"
+  dimensions={{ x_mm: 3048.0, y_mm: 40.0, z_mm: 40.0 }}
+  estimatedCost={52.00}
+  modelUrl="/open-biosphere/assets/parts/PART-MECH-ALUM-4040-3M/model.3ds"
+/>
 
 1. **Alignment & Positioning:** RAIL PROFILE: 2040 V-Slot | SPAN: 3000mm x 3000mm
 2. **Mechanical & Electrical Execution:** Squaring outer perimeter 2040 V-slot aluminum rails with precision cast corner brackets.
@@ -66,7 +87,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 1.2: Gantry End Plates & Eccentric Spacer Tuning
 
-![Step 1.2 Technical Blueprint](/open-biosphere/hardware/overhead-gantry-system/assets/stage-0/step-2-wheel-plates-tuning.svg)
+<ModelViewer
+  client:visible
+  partId="PART-FAB-PLATES-GANTRY-6061"
+  partName="Laser-Cut 4mm 6061-T6 Aluminum Gantry Wheel End-Plates (4x Set)"
+  material="aluminum"
+  fabricationMethod="cnc-laser-cut-aluminum"
+  dimensions={{ x_mm: 140.0, y_mm: 90.0, z_mm: 4.0 }}
+  estimatedCost={34.00}
+  modelUrl="/open-biosphere/assets/parts/PART-FAB-PLATES-GANTRY-6061/model.3ds"
+/>
 
 1. **Alignment & Positioning:** PLATE: 4mm 6061-T6 | WHEELS: Polycarbonate Solid V
 2. **Mechanical & Electrical Execution:** Laser-cut 4mm 6061 aluminum plates with dual POM V-wheels and eccentric preload spacers.
@@ -75,7 +105,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 1.3: 4040 V-Slot Transverse Bridge Beam Assembly
 
-![Step 1.3 Technical Blueprint](/open-biosphere/hardware/overhead-gantry-system/assets/stage-0/step-3-transverse-bridge.svg)
+<ModelViewer
+  client:visible
+  partId="PART-MECH-ALUM-2040-3M"
+  partName="2040 V-Slot Aluminum Rails (3000mm Segment)"
+  material="aluminum"
+  fabricationMethod="stock-extrusion"
+  dimensions={{ x_mm: 3000.0, y_mm: 40.0, z_mm: 20.0 }}
+  estimatedCost={38.00}
+  modelUrl="/open-biosphere/assets/parts/PART-MECH-ALUM-2040-3M/model.3ds"
+/>
 
 1. **Alignment & Positioning:** BEAM: 4040 V-Slot | SAG LIMIT: < 0.2mm Across Span
 2. **Mechanical & Electrical Execution:** Rigid 4040 aluminum bridge beam spanning 3,048mm with under 0.2mm center deflection.
@@ -84,7 +123,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 1.4: Kinematic Magnetic Toolhead Base Fabrication
 
-![Step 1.4 Technical Blueprint](/open-biosphere/hardware/overhead-gantry-system/assets/stage-0/step-4-kinematic-tool-base.svg)
+<ModelViewer
+  client:visible
+  partId="PART-MECH-BASE-MAG-KINEMATIC"
+  partName="Kinematic Magnetic Toolhead Base (N52 Magnets & Steel Balls)"
+  material="steel"
+  fabricationMethod="3d-print-/-hardware"
+  dimensions={{ x_mm: 80.0, y_mm: 80.0, z_mm: 22.0 }}
+  estimatedCost={22.00}
+  modelUrl="/open-biosphere/assets/parts/PART-MECH-BASE-MAG-KINEMATIC/model.3ds"
+/>
 
 1. **Alignment & Positioning:** REPEATABILITY: < 10µm | RETENTION FORCE: 45 N
 2. **Mechanical & Electrical Execution:** 3-point Kelvin kinematic coupling with N52 neodymium magnets and hardened stainless spheres.
@@ -93,7 +141,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 1.5: Manual Carbon-Fiber Squeeze Wand & Cable Rigging
 
-![Step 1.5 Technical Blueprint](/open-biosphere/hardware/overhead-gantry-system/assets/stage-0/step-5-wand-cable-rigging.svg)
+<ModelViewer
+  client:visible
+  partId="PART-MECH-WAND-CF-BOWDEN"
+  partName="Manual Carbon-Fiber Tool Wand + Bowden Bicycle Lever"
+  material="carbon-fiber"
+  fabricationMethod="composite-assembly"
+  dimensions={{ x_mm: 1500.0, y_mm: 35.0, z_mm: 35.0 }}
+  estimatedCost={24.00}
+  modelUrl="/open-biosphere/assets/parts/PART-MECH-WAND-CF-BOWDEN/model.3ds"
+/>
 
 1. **Alignment & Positioning:** WAND LENGTH: 1500mm | MATERIAL: High-Modulus Carbon
 2. **Mechanical & Electrical Execution:** Rigid 1.5m carbon wand with Bowden cable trigger allowing zero-power human end-effector use.

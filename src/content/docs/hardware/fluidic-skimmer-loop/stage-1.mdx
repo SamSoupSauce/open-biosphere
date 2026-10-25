@@ -4,6 +4,7 @@ description: "Stage 1 electromechanical retrofit instructions, isolated BOM, vec
 ---
 
 import { Card, CardGrid, LinkButton } from '@astrojs/starlight/components';
+import ModelViewer from '../../../components/ModelViewer';
 
 ## Part 1: Stage Header & Executive Summary
 
@@ -38,13 +39,33 @@ The Stage 1 electromechanical pack motorizes the **Fluidic Skimmer & Dewatering 
 
 ---
 
-## Part 4: Standalone Full SVG Blueprint
+## Part 4: Interactive 3D Composite Assembly Model
 
-![Stage 1 Technical Blueprint](/open-biosphere/blueprints/fluidic-skimmer-loop-stage-1.svg)
+<ModelViewer
+  client:visible
+  partId="ASM-FLUIDIC_SKIMMER_LOOP-STAGE-1"
+  partName="Fluidic Skimmer & Dewatering Separator (Stage 1 Full Composite Assembly)"
+  material="multi-material"
+  fabricationMethod="composite-assembly"
+  dimensions={{ x_mm: 380.0, y_mm: 220.0, z_mm: 160.0 }}
+  estimatedCost={0.00}
+  modelUrl="/open-biosphere/assets/machines/fluidic-skimmer-loop/stage-1.3ds"
+/>
 
-### Add-On 1 Electromechanical Wiring & BLE Virtual Panel Blueprint
+* **Direct 3D Assembly Download:** [Download stage-1.3ds (Autodesk 3DS Binary)](/open-biosphere/assets/machines/fluidic-skimmer-loop/stage-1.3ds)
 
-![Add-On 1 Electromechanical Wiring & BLE Virtual Panel Blueprint](/open-biosphere/blueprints/fluidic-skimmer-loop-stage-1-schematic.svg)
+### Add-On 1 Electromechanical Wiring & BLE Virtual Panel 3D Hardware Model
+
+<ModelViewer
+  client:visible
+  partId="PART-ELEC-TWO-CTRL-PACK"
+  partName="Strict Two-Control Physical Interlock & BLE Virtual Panel Pack"
+  material="electronics"
+  fabricationMethod="stock"
+  dimensions={{ x_mm: 90.0, y_mm: 60.0, z_mm: 40.0 }}
+  estimatedCost={22.00}
+  modelUrl="/open-biosphere/assets/parts/PART-ELEC-TWO-CTRL-PACK/model.3ds"
+/>
 
 ---
 
@@ -54,7 +75,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 1.1: 24V DC Magnetic Circulation Pump Installation
 
-![Step 1.1 Technical Blueprint](/open-biosphere/hardware/fluidic-skimmer-loop/assets/stage-1/step-1-pump-plumbing.svg)
+<ModelViewer
+  client:visible
+  partId="PART-FLUID-PUMP-MAG-24V"
+  partName="24V DC Brushless Magnetic Drive Circulation Pump (55 GPM, 80W)"
+  material="electronics"
+  fabricationMethod="stock-pump"
+  dimensions={{ x_mm: 175.0, y_mm: 95.0, z_mm: 105.0 }}
+  estimatedCost={68.00}
+  modelUrl="/open-biosphere/assets/parts/PART-FLUID-PUMP-MAG-24V/model.3ds"
+/>
 
 1. **Alignment & Positioning:** FLOW: 55 GPM | PRESSURE: 18 PSI | RATED: 80W
 2. **Mechanical & Electrical Execution:** Brushless magnetic drive pump plumbed into lower sump bulkhead with vibration-isolation mounts.
@@ -63,7 +93,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 1.2: NEMA 23 Stepper & Dog Clutch Coupling
 
-![Step 1.2 Technical Blueprint](/open-biosphere/hardware/fluidic-skimmer-loop/assets/stage-1/step-2-motor-slipclutch.svg)
+<ModelViewer
+  client:visible
+  partId="PART-MECH-CLUTCH-DOG-AXIAL"
+  partName="Axial Spring-Loaded Dog Clutch Sliding Mechanism (1/2&quot; Hex)"
+  material="electronics"
+  fabricationMethod="cnc-machined-aluminum-/-delrin"
+  dimensions={{ x_mm: 55.0, y_mm: 38.0, z_mm: 38.0 }}
+  estimatedCost={14.00}
+  modelUrl="/open-biosphere/assets/parts/PART-MECH-CLUTCH-DOG-AXIAL/model.3ds"
+/>
 
 1. **Alignment & Positioning:** HOLDING TORQUE: 2.8 N·m | SLIP LIMIT: 4.5 N·m
 2. **Mechanical & Electrical Execution:** NEMA 23 stepper motor bracket bolted to auger chassis with spring-loaded axial slip-clutch.
@@ -72,7 +111,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 1.3: Strict Two-Control Enclosure Assembly
 
-![Step 1.3 Technical Blueprint](/open-biosphere/hardware/fluidic-skimmer-loop/assets/stage-1/step-3-two-control-box.svg)
+<ModelViewer
+  client:visible
+  partId="PART-ELEC-TWO-CTRL-PACK"
+  partName="Strict Two-Control Physical Interlock & SD Recovery Pack"
+  material="electronics"
+  fabricationMethod="3d-print-/-assembly"
+  dimensions={{ x_mm: 115.0, y_mm: 65.0, z_mm: 40.0 }}
+  estimatedCost={22.00}
+  modelUrl="/open-biosphere/assets/parts/PART-ELEC-TWO-CTRL-PACK/model.3ds"
+/>
 
 1. **Alignment & Positioning:** STANDARD: RFC-0005 | IP RATING: IP67 Weatherproof
 2. **Mechanical & Electrical Execution:** Heavy-duty IP67 box with Master 24V DC switch, recessed SD reset, Micro-SD slot, and 0.91" OLED.
@@ -81,7 +129,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 1.4: TB6600 Driver Carrier & Power Distribution Wiring
 
-![Step 1.4 Technical Blueprint](/open-biosphere/hardware/fluidic-skimmer-loop/assets/stage-1/step-4-driver-wiring.svg)
+<ModelViewer
+  client:visible
+  partId="PART-MECH-TUBE-SHUTTER-ALUM100"
+  partName="Drawn Aluminum Concentric Shutter Tubing Pair (Outer Ø100mm, Inner Ø95mm)"
+  material="aluminum"
+  fabricationMethod="precision-drawn-seamless-aluminum"
+  dimensions={{ x_mm: 650.0, y_mm: 50.0, z_mm: 2.5 }}
+  estimatedCost={38.00}
+  modelUrl="/open-biosphere/assets/parts/PART-MECH-TUBE-SHUTTER-ALUM100/model.3ds"
+/>
 
 1. **Alignment & Positioning:** SUPPLY: 24V 6.5A (150W) | MICROSTEPPING: 1/8 Step
 2. **Mechanical & Electrical Execution:** Optoisolated 4.0A stepper driver, 24V 150W MeanWell power supply, and ESP32 BLE Virtual Panel.
@@ -90,7 +147,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 1.5: Slip-Clutch Torque Verification & Manual Override
 
-![Step 1.5 Technical Blueprint](/open-biosphere/hardware/fluidic-skimmer-loop/assets/stage-1/step-5-torque-verification.svg)
+<ModelViewer
+  client:visible
+  partId="ASM-FLUIDIC_SKIMMER_LOOP-STAGE-1-STEP-5"
+  partName="Fluidic Skimmer & Dewatering Separator Step Assembly (Slip-Clutch Torque Verification & Manual Override)"
+  material="multi-material"
+  fabricationMethod="composite-assembly"
+  dimensions={{ x_mm: 380.0, y_mm: 220.0, z_mm: 160.0 }}
+  estimatedCost={0.00}
+  modelUrl="/open-biosphere/assets/machines/fluidic-skimmer-loop/stage-1.3ds"
+/>
 
 1. **Alignment & Positioning:** DISCONNECT: Mechanical Slip | OVERRIDE: Instant
 2. **Mechanical & Electrical Execution:** Verifying hand speed-crank rotates freely through slip-clutch while motor is energized.

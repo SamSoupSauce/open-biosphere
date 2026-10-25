@@ -4,6 +4,7 @@ description: "Stage 1 electromechanical retrofit instructions, isolated BOM, vec
 ---
 
 import { Card, CardGrid, LinkButton } from '@astrojs/starlight/components';
+import ModelViewer from '../../../components/ModelViewer';
 
 ## Part 1: Stage Header & Executive Summary
 
@@ -45,9 +46,20 @@ The Stage 1 electromechanical pack motorizes the **Aerial Spotter & Pollination 
 
 ---
 
-## Part 4: Standalone Full SVG Blueprint
+## Part 4: Interactive 3D Composite Assembly Model
 
-![Stage 1 Technical Blueprint](/open-biosphere/blueprints/aerial-pollination-drone-stage-1.svg)
+<ModelViewer
+  client:visible
+  partId="ASM-AERIAL_POLLINATION_DRONE-STAGE-1"
+  partName="Aerial Spotter & Pollination Drone (Stage 1 Full Composite Assembly)"
+  material="multi-material"
+  fabricationMethod="composite-assembly"
+  dimensions={{ x_mm: 380.0, y_mm: 220.0, z_mm: 160.0 }}
+  estimatedCost={0.00}
+  modelUrl="/open-biosphere/assets/machines/aerial-pollination-drone/stage-1.3ds"
+/>
+
+* **Direct 3D Assembly Download:** [Download stage-1.3ds (Autodesk 3DS Binary)](/open-biosphere/assets/machines/aerial-pollination-drone/stage-1.3ds)
 
 
 
@@ -59,7 +71,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 1.1: Whoop Airframe & Motor Installation
 
-![Step 1.1 Technical Blueprint](/open-biosphere/hardware/aerial-pollination-drone/assets/stage-1/step-1-airframe-motors.svg)
+<ModelViewer
+  client:visible
+  partId="PART-FAB-FRAME-WHOOP-85MM"
+  partName="85mm Ducted Polycarbonate Whoop Airframe + Ducts"
+  material="carbon-fiber"
+  fabricationMethod="molded-polycarbonate-frame"
+  dimensions={{ x_mm: 115.0, y_mm: 115.0, z_mm: 38.0 }}
+  estimatedCost={14.00}
+  modelUrl="/open-biosphere/assets/parts/PART-FAB-FRAME-WHOOP-85MM/model.3ds"
+/>
 
 1. **Alignment & Positioning:** MOTOR MOUNT: 3x M1.4 | DUCT CLEARANCE: 1.2mm
 2. **Mechanical & Electrical Execution:** 85mm ducted polycarbonate frame with 1103 10,000KV brushless outrunners and micro 4-blade props.
@@ -68,7 +89,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 1.2: AIO Flight Controller & ESC Mounting
 
-![Step 1.2 Technical Blueprint](/open-biosphere/hardware/aerial-pollination-drone/assets/stage-1/step-2-flight-controller-esc.svg)
+<ModelViewer
+  client:visible
+  partId="PART-ELEC-FC-STM32F4-AIO"
+  partName="STM32F4 AIO Flight Controller + 4-in-1 12A ESC"
+  material="electronics"
+  fabricationMethod="stock-electronics"
+  dimensions={{ x_mm: 26.0, y_mm: 26.0, z_mm: 5.0 }}
+  estimatedCost={42.00}
+  modelUrl="/open-biosphere/assets/parts/PART-ELEC-FC-STM32F4-AIO/model.3ds"
+/>
 
 1. **Alignment & Positioning:** BUS: DShot300 | GYRO SAMPLE: 8 kHz
 2. **Mechanical & Electrical Execution:** STM32F411 AIO flight controller with 4-in-1 12A ESCs and vibration dampening silicone grommets.
@@ -77,7 +107,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 1.3: Two-Control Physical Interlock & BLE Virtual Panel
 
-![Step 1.3 Technical Blueprint](/open-biosphere/hardware/aerial-pollination-drone/assets/stage-1/step-3-two-control-dock.svg)
+<ModelViewer
+  client:visible
+  partId="PART-ELEC-TWO-CTRL-PACK"
+  partName="Strict Two-Control Physical Interlock & SD Recovery Pack"
+  material="electronics"
+  fabricationMethod="3d-print-/-assembly"
+  dimensions={{ x_mm: 115.0, y_mm: 65.0, z_mm: 40.0 }}
+  estimatedCost={22.00}
+  modelUrl="/open-biosphere/assets/parts/PART-ELEC-TWO-CTRL-PACK/model.3ds"
+/>
 
 1. **Alignment & Positioning:** STANDARD: RFC-0005 | WATCHDOG: 250ms
 2. **Mechanical & Electrical Execution:** Master DC slide switch, recessed SD reset button, Micro-SD carrier, and 0.91" I2C status OLED.
@@ -86,7 +125,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 1.4: Piezo Acoustic Vibration Transducer Rigging
 
-![Step 1.4 Technical Blueprint](/open-biosphere/hardware/aerial-pollination-drone/assets/stage-1/step-4-piezo-vibration-buzzer.svg)
+<ModelViewer
+  client:visible
+  partId="PART-ELEC-PZO-BUZZ-27MM"
+  partName="27mm Piezo Acoustic Vibration Transducer + FET Driver"
+  material="electronics"
+  fabricationMethod="stock-component"
+  dimensions={{ x_mm: 27.0, y_mm: 27.0, z_mm: 1.2 }}
+  estimatedCost={4.50}
+  modelUrl="/open-biosphere/assets/parts/PART-ELEC-PZO-BUZZ-27MM/model.3ds"
+/>
 
 1. **Alignment & Positioning:** DRIVE VOLTAGE: 8.4V Peak | SOUND PRESSURE: 92 dB
 2. **Mechanical & Electrical Execution:** 27mm high-output piezoelectric transducer driven by dedicated MOSFET gate at 310 Hz resonance.
@@ -95,7 +143,16 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 
 ### Step 1.5: Bench Flight & BLE Companion Calibration
 
-![Step 1.5 Technical Blueprint](/open-biosphere/hardware/aerial-pollination-drone/assets/stage-1/step-5-bench-flight-calibration.svg)
+<ModelViewer
+  client:visible
+  partId="ASM-AERIAL_POLLINATION_DRONE-STAGE-1-STEP-5"
+  partName="Aerial Spotter & Pollination Drone Step Assembly (Bench Flight & BLE Companion Calibration)"
+  material="multi-material"
+  fabricationMethod="composite-assembly"
+  dimensions={{ x_mm: 380.0, y_mm: 220.0, z_mm: 160.0 }}
+  estimatedCost={0.00}
+  modelUrl="/open-biosphere/assets/machines/aerial-pollination-drone/stage-1.3ds"
+/>
 
 1. **Alignment & Positioning:** HOVER THROTTLE: 48% | BATTERY: 2S 450mAh 75C
 2. **Mechanical & Electrical Execution:** Hover thrust calibration, accelerometer trim, and companion app telemetry pairing.
