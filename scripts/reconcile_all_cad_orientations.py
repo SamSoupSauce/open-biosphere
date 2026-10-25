@@ -1,87 +1,152 @@
 #!/usr/bin/env python3
 """
 scripts/reconcile_all_cad_orientations.py
-Audits and corrects normal orientations and winding orders across all 3DS models
+Audits and corrects normal orientations and winding orders across all glTF models
 in public/assets/ and src/content/docs/parts/. Ensures 100% strictly outward normals.
 """
 
 import os
+import json
+import base64
 import struct
 import math
 
 BASE_DIR = '/mnt/c/Users/samue/Projects/open-biosphere'
 
-def parse_3ds(data):
-    verts = []
-    faces = []
-    total_len = len(data)
-    
-    def parse_chunk(offset, end):
-        while offset < end and offset + 6 <= total_len:
-            cid, clen = struct.unpack('<HI', data[offset:offset+6])
-            if clen < 6 or offset + clen > total_len: break
-            chunk_end = offset + clen
-            offset += 6
-            if cid in (0x4D4D, 0x3D3D, 0x4100):
-                parse_chunk(offset, chunk_end)
-            elif cid == 0x4000:
-                while offset < chunk_end and data[offset] != 0: offset += 1
-                if offset < chunk_end and data[offset] == 0: offset += 1
-                parse_chunk(offset, chunk_end)
-            elif cid == 0x4110:
-                nv = struct.unpack('<H', data[offset:offset+2])[0]
-                offset += 2
-                for _ in range(nv):
-                    verts.append(struct.unpack('<fff', data[offset:offset+12]))
-                    offset += 12
-            elif cid == 0x4120:
-                nf = struct.unpack('<H', data[offset:offset+2])[0]
-                offset += 2
-                for _ in range(nf):
-                    f = struct.unpack('<HHHH', data[offset:offset+8])
-                    faces.append([f[0], f[1], f[2]])
-                    offset += 8
-            offset = chunk_end
+def parse_gltf(json_data):
+    prim = json_data['meshes'][0]['primitives'][0]
+    pos_acc = json_data['accessors'][prim['attributes']['POSITION']]
+    idx_acc = json_data['accessors'][prim['indices']]
 
-    parse_chunk(0, total_len)
+    pos_bv = json_data['bufferViews'][pos_acc['bufferView']]
+    idx_bv = json_data['bufferViews'][idx_acc['bufferView']]
+
+    uri = json_data['buffers'][0]['uri']
+    b64_str = uri.split(',')[1]
+    raw_bin = base64.b64decode(b64_str)
+
+    verts = []
+    pos_offset = pos_bv.get('byteOffset', 0) + pos_acc.get('byteOffset', 0)
+    for i in range(pos_acc['count']):
+        v_offset = pos_offset + i * 12
+        x, y, z = struct.unpack('<fff', raw_bin[v_offset:v_offset+12])
+        verts.append([x, y, z])
+
+    faces = []
+    idx_offset = idx_bv.get('byteOffset', 0) + idx_acc.get('byteOffset', 0)
+    is_short = idx_acc['componentType'] == 5123
+    step = 2 if is_short else 4
+    fmt = '<H' if is_short else '<I'
+
+    for i in range(0, idx_acc['count'], 3):
+        i0 = struct.unpack(fmt, raw_bin[idx_offset + i * step : idx_offset + (i + 1) * step])[0]
+        i1 = struct.unpack(fmt, raw_bin[idx_offset + (i + 1) * step : idx_offset + (i + 2) * step])[0]
+        i2 = struct.unpack(fmt, raw_bin[idx_offset + (i + 2) * step : idx_offset + (i + 3) * step])[0]
+        faces.append([i0, i1, i2])
+
     return verts, faces
 
-def build_3ds(verts, faces):
-    vert_bytes = struct.pack('<H', len(verts))
-    for v in verts:
-        vert_bytes += struct.pack('<fff', float(v[0]), float(v[1]), float(v[2]))
-    vert_chunk = struct.pack('<HI', 0x4110, 6 + len(vert_bytes)) + vert_bytes
+def build_gltf(verts, faces, name="Mesh"):
+    min_x = float(min(v[0] for v in verts))
+    max_x = float(max(v[0] for v in verts))
+    min_y = float(min(v[1] for v in verts))
+    max_y = float(max(v[1] for v in verts))
+    min_z = float(min(v[2] for v in verts))
+    max_z = float(max(v[2] for v in verts))
 
-    face_bytes = struct.pack('<H', len(faces))
+    flat_indices = []
     for f in faces:
-        face_bytes += struct.pack('<HHHH', int(f[0]), int(f[1]), int(f[2]), 0)
-    face_chunk = struct.pack('<HI', 0x4120, 6 + len(face_bytes)) + face_bytes
+        flat_indices.extend([int(f[0]), int(f[1]), int(f[2])])
+    index_bytes = struct.pack('<' + 'H' * len(flat_indices), *flat_indices)
+    index_pad = (4 - (len(index_bytes) % 4)) % 4
+    index_bytes_padded = index_bytes + (b'\x00' * index_pad)
 
-    trimesh_data = vert_chunk + face_chunk
-    trimesh_chunk = struct.pack('<HI', 0x4100, 6 + len(trimesh_data)) + trimesh_data
+    flat_verts = []
+    for v in verts:
+        flat_verts.extend([float(v[0]), float(v[1]), float(v[2])])
+    vertex_bytes = struct.pack('<' + 'f' * len(flat_verts), *flat_verts)
+    vertex_pad = (4 - (len(vertex_bytes) % 4)) % 4
+    vertex_bytes_padded = vertex_bytes + (b'\x00' * vertex_pad)
 
-    obj_name = b'Mesh\x00'
-    obj_data = obj_name + trimesh_chunk
-    obj_chunk = struct.pack('<HI', 0x4000, 6 + len(obj_data)) + obj_data
+    bin_data = index_bytes_padded + vertex_bytes_padded
+    b64_data = base64.b64encode(bin_data).decode('ascii')
+    uri = f"data:application/octet-stream;base64,{b64_data}"
 
-    scale_val = struct.pack('<f', 1.0)
-    scale_chunk = struct.pack('<HI', 0x0100, 6 + len(scale_val)) + scale_val
-
-    edit3ds_data = scale_chunk + obj_chunk
-    edit3ds_chunk = struct.pack('<HI', 0x3D3D, 6 + len(edit3ds_data)) + edit3ds_data
-
-    version_val = struct.pack('<I', 3)
-    version_chunk = struct.pack('<HI', 0x0002, 6 + len(version_val)) + version_val
-
-    main_data = version_chunk + edit3ds_chunk
-    main_chunk = struct.pack('<HI', 0x4D4D, 6 + len(main_data)) + main_data
-    return main_chunk
+    gltf = {
+        "asset": {
+            "version": "2.0",
+            "generator": "OpenBiosphere-ParametricCAD-GLTF (RFC-014)"
+        },
+        "scene": 0,
+        "scenes": [{"nodes": [0]}],
+        "nodes": [{"name": name, "mesh": 0}],
+        "meshes": [{
+            "name": f"{name}_Geometry",
+            "primitives": [{
+                "attributes": {"POSITION": 1},
+                "indices": 0,
+                "material": 0,
+                "mode": 4
+            }]
+        }],
+        "materials": [{
+            "name": "PBR_Standard",
+            "pbrMetallicRoughness": {
+                "baseColorFactor": [0.7, 0.75, 0.8, 1.0],
+                "metallicFactor": 0.7,
+                "roughnessFactor": 0.35
+            },
+            "doubleSided": True
+        }],
+        "accessors": [
+            {
+                "bufferView": 0,
+                "byteOffset": 0,
+                "componentType": 5123,
+                "count": len(flat_indices),
+                "type": "SCALAR",
+                "max": [int(max(flat_indices))],
+                "min": [int(min(flat_indices))]
+            },
+            {
+                "bufferView": 1,
+                "byteOffset": 0,
+                "componentType": 5126,
+                "count": len(verts),
+                "type": "VEC3",
+                "max": [max_x, max_y, max_z],
+                "min": [min_x, min_y, min_z]
+            }
+        ],
+        "bufferViews": [
+            {
+                "buffer": 0,
+                "byteOffset": 0,
+                "byteLength": len(index_bytes),
+                "target": 34963
+            },
+            {
+                "buffer": 0,
+                "byteOffset": len(index_bytes_padded),
+                "byteLength": len(vertex_bytes),
+                "byteStride": 12,
+                "target": 34962
+            }
+        ],
+        "buffers": [
+            {
+                "byteLength": len(bin_data),
+                "uri": uri
+            }
+        ]
+    }
+    return json.dumps(gltf, indent=2)
 
 def audit_and_fix(file_path):
-    with open(file_path, 'rb') as f:
-        raw_data = f.read()
+    with open(file_path, 'r', encoding='utf-8') as f:
+        data = json.load(f)
 
-    verts, faces = parse_3ds(raw_data)
+    verts, faces = parse_gltf(data)
     if not verts or not faces:
         return False, "Empty mesh"
 
@@ -99,54 +164,52 @@ def audit_and_fix(file_path):
         nx = ay * bz - az * by
         ny = az * bx - ax * bz
         nz = ax * by - ay * bx
-        fx = (v0[0] + v1[0] + v2[0]) / 3 - cx
-        fy = (v0[1] + v1[1] + v2[1]) / 3 - cy
-        fz = (v0[2] + v1[2] + v2[2]) / 3 - cz
-        dot = nx * fx + ny * fy + nz * fz
-        if dot < 0:
-            inward_faces += 1
-        elif dot > 0:
+        fcx = (v0[0] + v1[0] + v2[0]) / 3.0 - cx
+        fcy = (v0[1] + v1[1] + v2[1]) / 3.0 - cy
+        fcz = (v0[2] + v1[2] + v2[2]) / 3.0 - cz
+        dot = nx * fcx + ny * fcy + nz * fcz
+        if dot >= 0:
             outward_faces += 1
+        else:
+            inward_faces += 1
 
-    # If predominantly inward, flip the winding
-    if inward_faces > outward_faces:
+    needs_flip = inward_faces > outward_faces
+    if needs_flip:
         fixed_faces = [[f[0], f[2], f[1]] for f in faces]
-        new_data = build_3ds(verts, fixed_faces)
-        with open(file_path, 'wb') as f:
-            f.write(new_data)
-        return True, f"Flipped {len(faces)} faces (was in={inward_faces}, out={outward_faces})"
-
-    return False, f"Already outward (out={outward_faces}, in={inward_faces})"
+        base_name = os.path.splitext(os.path.basename(file_path))[0]
+        new_json = build_gltf(verts, fixed_faces, name=base_name)
+        with open(file_path, 'w', encoding='utf-8') as f:
+            f.write(new_json)
+        return True, f"Flipped winding: {inward_faces} inward vs {outward_faces} outward"
+    return False, f"Pristine outward: {outward_faces} outward vs {inward_faces} inward"
 
 def main():
-    target_dirs = [
-        os.path.join(BASE_DIR, 'public', 'assets'),
-        os.path.join(BASE_DIR, 'src', 'content', 'docs', 'parts'),
+    search_dirs = [
+        f'{BASE_DIR}/public/assets/machines',
+        f'{BASE_DIR}/public/assets/parts',
+        f'{BASE_DIR}/src/content/docs/parts'
     ]
-
-    fixed_count = 0
-    already_clean = 0
+    
     total = 0
+    flipped = 0
+    pristine = 0
 
-    for tdir in target_dirs:
-        for root, _, files in os.walk(tdir):
+    for sdir in search_dirs:
+        for root, dirs, files in os.walk(sdir):
             for file in files:
-                if file.endswith('.3ds'):
+                if file.endswith('.gltf'):
+                    p = os.path.join(root, file)
                     total += 1
-                    full_path = os.path.join(root, file)
-                    rel_path = os.path.relpath(full_path, BASE_DIR)
-                    was_fixed, msg = audit_and_fix(full_path)
-                    if was_fixed:
-                        fixed_count += 1
-                        print(f"  [FIXED] {rel_path}: {msg}")
+                    was_flipped, msg = audit_and_fix(p)
+                    if was_flipped:
+                        flipped += 1
+                        print(f"RECONCILED: {p} -> {msg}")
                     else:
-                        already_clean += 1
+                        pristine += 1
 
-    print("\n" + "="*60)
-    print(f"Audit Complete across {total} 3DS models:")
-    print(f"  - Fixed (Inverted -> Outward): {fixed_count}")
-    print(f"  - Verified Clean Outward:     {already_clean}")
-    print("="*60)
+    print(f"\nAudit Complete across {total} glTF models:")
+    print(f"  Pristine Outward Models: {pristine}")
+    print(f"  Reconciled Inverted Models: {flipped}")
 
 if __name__ == '__main__':
     main()

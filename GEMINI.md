@@ -23,7 +23,7 @@ When authoring or modifying procedural geometry generators (`scripts/*.py`):
 
 1. **Standard glTF 2.0 Specification:**
    * All 3D models across `public/assets/machines/`, `public/assets/parts/`, and `src/content/docs/parts/` are standardized on glTF 2.0 (`.gltf` single-file with embedded base64 binary buffer, or `.glb`).
-   * Proprietary binary Autodesk 3DS (`.3ds`) is deprecated in favor of open, portable glTF 2.0.
+   * All CAD assets are standardized on open, portable glTF 2.0.
 2. **Model References:**
    * All entries in `src/data/parts.json`, machine manuals (`src/content/docs/hardware/**/*.mdx`), and custom part documentation (`src/content/docs/parts/**/*.mdx`) must reference `.gltf`.
 

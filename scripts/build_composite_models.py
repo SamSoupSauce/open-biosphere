@@ -1,37 +1,104 @@
-import os, struct, math
+import os, struct, math, json, base64
 
 BASE = '/mnt/c/Users/samue/Projects/open-biosphere'
 
-def build_3ds(verts, faces):
-    vert_bytes = struct.pack('<H', len(verts))
-    for v in verts:
-        vert_bytes += struct.pack('<fff', float(v[0]), float(v[1]), float(v[2]))
-    vert_chunk = struct.pack('<HI', 0x4110, 6 + len(vert_bytes)) + vert_bytes
+def build_gltf(verts, faces, name="Mesh"):
+    min_x = float(min(v[0] for v in verts))
+    max_x = float(max(v[0] for v in verts))
+    min_y = float(min(v[1] for v in verts))
+    max_y = float(max(v[1] for v in verts))
+    min_z = float(min(v[2] for v in verts))
+    max_z = float(max(v[2] for v in verts))
 
-    face_bytes = struct.pack('<H', len(faces))
+    flat_indices = []
     for f in faces:
-        face_bytes += struct.pack('<HHHH', int(f[0]), int(f[1]), int(f[2]), 0)
-    face_chunk = struct.pack('<HI', 0x4120, 6 + len(face_bytes)) + face_bytes
+        flat_indices.extend([int(f[0]), int(f[1]), int(f[2])])
+    index_bytes = struct.pack('<' + 'H' * len(flat_indices), *flat_indices)
+    index_pad = (4 - (len(index_bytes) % 4)) % 4
+    index_bytes_padded = index_bytes + (b'\x00' * index_pad)
 
-    trimesh_data = vert_chunk + face_chunk
-    trimesh_chunk = struct.pack('<HI', 0x4100, 6 + len(trimesh_data)) + trimesh_data
+    flat_verts = []
+    for v in verts:
+        flat_verts.extend([float(v[0]), float(v[1]), float(v[2])])
+    vertex_bytes = struct.pack('<' + 'f' * len(flat_verts), *flat_verts)
+    vertex_pad = (4 - (len(vertex_bytes) % 4)) % 4
+    vertex_bytes_padded = vertex_bytes + (b'\x00' * vertex_pad)
 
-    obj_name = b'Mesh\x00'
-    obj_data = obj_name + trimesh_chunk
-    obj_chunk = struct.pack('<HI', 0x4000, 6 + len(obj_data)) + obj_data
+    bin_data = index_bytes_padded + vertex_bytes_padded
+    b64_data = base64.b64encode(bin_data).decode('ascii')
+    uri = f"data:application/octet-stream;base64,{b64_data}"
 
-    scale_val = struct.pack('<f', 1.0)
-    scale_chunk = struct.pack('<HI', 0x0100, 6 + len(scale_val)) + scale_val
+    gltf = {
+        "asset": {
+            "version": "2.0",
+            "generator": "OpenBiosphere-ParametricCAD-GLTF (RFC-014)"
+        },
+        "scene": 0,
+        "scenes": [{"nodes": [0]}],
+        "nodes": [{"name": name, "mesh": 0}],
+        "meshes": [{
+            "name": f"{name}_Geometry",
+            "primitives": [{
+                "attributes": {"POSITION": 1},
+                "indices": 0,
+                "material": 0,
+                "mode": 4
+            }]
+        }],
+        "materials": [{
+            "name": "PBR_Standard",
+            "pbrMetallicRoughness": {
+                "baseColorFactor": [0.7, 0.75, 0.8, 1.0],
+                "metallicFactor": 0.7,
+                "roughnessFactor": 0.35
+            },
+            "doubleSided": True
+        }],
+        "accessors": [
+            {
+                "bufferView": 0,
+                "byteOffset": 0,
+                "componentType": 5123,
+                "count": len(flat_indices),
+                "type": "SCALAR",
+                "max": [int(max(flat_indices))],
+                "min": [int(min(flat_indices))]
+            },
+            {
+                "bufferView": 1,
+                "byteOffset": 0,
+                "componentType": 5126,
+                "count": len(verts),
+                "type": "VEC3",
+                "max": [max_x, max_y, max_z],
+                "min": [min_x, min_y, min_z]
+            }
+        ],
+        "bufferViews": [
+            {
+                "buffer": 0,
+                "byteOffset": 0,
+                "byteLength": len(index_bytes),
+                "target": 34963
+            },
+            {
+                "buffer": 0,
+                "byteOffset": len(index_bytes_padded),
+                "byteLength": len(vertex_bytes),
+                "byteStride": 12,
+                "target": 34962
+            }
+        ],
+        "buffers": [
+            {
+                "byteLength": len(bin_data),
+                "uri": uri
+            }
+        ]
+    }
+    return json.dumps(gltf, indent=2)
 
-    edit3ds_data = scale_chunk + obj_chunk
-    edit3ds_chunk = struct.pack('<HI', 0x3D3D, 6 + len(edit3ds_data)) + edit3ds_data
-
-    version_val = struct.pack('<I', 3)
-    version_chunk = struct.pack('<HI', 0x0002, 6 + len(version_val)) + version_val
-
-    main_data = version_chunk + edit3ds_chunk
-    main_chunk = struct.pack('<HI', 0x4D4D, 6 + len(main_data)) + main_data
-    return main_chunk
+build_gltf = build_gltf
 
 def add_box(verts, faces, x0, x1, y0, y1, z0, z1):
     base_idx = len(verts)
@@ -126,7 +193,7 @@ def gen_brush():
     add_cylinder_z(v, f, 0, 0, 4, -40, 0, n_seg=8) # handle
     add_cylinder_z(v, f, 0, 0, 5, 0, 15, n_seg=8)  # brass ferrule
     add_cylinder_z(v, f, 0, 0, 8, 15, 45, n_seg=8) # camel hair bristles
-    return build_3ds(v, f)
+    return build_gltf(v, f)
 submodels['PART-MECH-BRUSH-CAMEL-HAIR'] = gen_brush()
 
 # 2. Convex Inspection Mirror on Ball Joint
@@ -136,7 +203,7 @@ def gen_mirror():
     add_cylinder_z(v, f, 0, 0, 7, -5, 5, n_seg=8)   # swivel ball joint
     add_cylinder_y(v, f, 0, 5, 9, 25, 25, n_seg=12) # 50mm mirror glass disc
     add_cylinder_y(v, f, 0, 3, 5, 25, 27, n_seg=12) # chrome bezel
-    return build_3ds(v, f)
+    return build_gltf(v, f)
 submodels['PART-MECH-MIRROR-CONVEX-BALL'] = gen_mirror()
 
 # 3. Two-Control Master Interlock Pack
@@ -146,7 +213,7 @@ def gen_two_ctrl():
     add_cylinder_z(v, f, -20, 0, 14, 20, 32, n_seg=10) # Red mushroom e-stop
     add_cylinder_z(v, f, 20, 0, 8, 20, 28, n_seg=8)   # Keyed interlock lock switch
     add_cylinder_z(v, f, 0, 15, 4, 20, 24, n_seg=6)   # Pilot status LED
-    return build_3ds(v, f)
+    return build_gltf(v, f)
 submodels['PART-ELEC-TWO-CTRL-PACK'] = gen_two_ctrl()
 
 # 4. OLED 0.91 I2C Display Module
@@ -158,7 +225,7 @@ def gen_oled():
     add_cylinder_z(v, f, -10, -5, 1, -8, -2, n_seg=4)
     add_cylinder_z(v, f, -5, -5, 1, -8, -2, n_seg=4)
     add_cylinder_z(v, f, 0, -5, 1, -8, -2, n_seg=4)
-    return build_3ds(v, f)
+    return build_gltf(v, f)
 submodels['PART-ELEC-OLED-091-I2C'] = gen_oled()
 
 # 5. Telescoping Carbon Fiber Wand
@@ -169,14 +236,14 @@ def gen_cf_wand():
     add_cylinder_z(v, f, 0, 0, 9, -50, 100, n_seg=8)   # Mid tube
     add_cylinder_z(v, f, 0, 0, 11, 95, 105, n_seg=8)   # Twist lock collar 2
     add_cylinder_z(v, f, 0, 0, 6, 100, 250, n_seg=8)  # Top extension tip
-    return build_3ds(v, f)
+    return build_gltf(v, f)
 submodels['PART-MECH-POLE-CF-TELESCOPIC'] = gen_cf_wand()
 
 # Write upgraded sub-models
 for pid, raw in submodels.items():
-    p = f'{BASE}/public/assets/parts/{pid}/model.3ds'
+    p = f'{BASE}/public/assets/parts/{pid}/model.gltf'
     os.makedirs(os.path.dirname(p), exist_ok=True)
-    with open(p, 'wb') as fp: fp.write(raw)
+    with open(p, 'w', encoding='utf-8') as fp: fp.write(raw)
     print(f'Upgraded sub-model {pid}: {len(raw)} bytes')
 
 # ==============================================================
@@ -200,7 +267,7 @@ def comp_drone_stage_0():
     # Brush at X=40, angled down
     add_cylinder_z(v, f, 40, 0, 3, -15, 0, n_seg=6)
     add_cylinder_z(v, f, 40, 0, 7, -35, -15, n_seg=8)
-    return build_3ds(v, f)
+    return build_gltf(v, f)
 machines_composites['aerial-pollination-drone/stage-0'] = comp_drone_stage_0()
 
 # Stage 1: Whoop Drone + Motors + FC + Battery
@@ -222,7 +289,7 @@ def comp_drone_stage_1():
     add_box(v, f, -12, 12, -22, 22, -16, -4)
     # Nose piezo acoustic transducer
     add_cylinder_y(v, f, 0, 20, 28, 6, 6, n_seg=8)
-    return build_3ds(v, f)
+    return build_gltf(v, f)
 machines_composites['aerial-pollination-drone/stage-1'] = comp_drone_stage_1()
 
 # Stage 2: Stage 1 + Optical Flow + RunCam + Conical Charging Dock
@@ -244,7 +311,7 @@ def comp_drone_stage_2():
     add_cylinder_z(v, f, 0, 0, 45, -15, -10, n_seg=12) # Base ring
     add_cylinder_z(v, f, 0, 0, 25, -10, 5, n_seg=10)   # Conical centering funnel
     add_cylinder_z(v, f, 0, 0, 12, 5, 12, n_seg=8)     # Copper contact crown
-    return build_3ds(v, f)
+    return build_gltf(v, f)
 machines_composites['aerial-pollination-drone/stage-2'] = comp_drone_stage_2()
 
 # 2. BCA Packaging Engine
@@ -266,7 +333,7 @@ def comp_bca_stage_0():
     # Flying wire shear carriage at discharge
     add_box(v, f, 100, 140, -45, 45, -20, 25)
     add_cylinder_y(v, f, 120, -40, 40, -5, 1.5, n_seg=6) # Music wire
-    return build_3ds(v, f)
+    return build_gltf(v, f)
 machines_composites['bca-packaging-engine/stage-0'] = comp_bca_stage_0()
 
 def comp_bca_stage_1():
@@ -286,7 +353,7 @@ def comp_bca_stage_1():
     # Two-control safety interlock console
     add_box(v, f, 60, 130, 40, 75, -20, 15)
     add_cylinder_z(v, f, 80, 57, 8, 15, 24, n_seg=8)
-    return build_3ds(v, f)
+    return build_gltf(v, f)
 machines_composites['bca-packaging-engine/stage-1'] = comp_bca_stage_1()
 
 def comp_bca_stage_2():
@@ -308,7 +375,7 @@ def comp_bca_stage_2():
     add_box(v, f, 130, 150, 42, 65, 0, 30) # Servo
     # Edge CNT Controller + Loadcell bracket
     add_box(v, f, 0, 60, -75, -45, -20, 20)
-    return build_3ds(v, f)
+    return build_gltf(v, f)
 machines_composites['bca-packaging-engine/stage-2'] = comp_bca_stage_2()
 machines_composites['bca-packaging-engine/architecture'] = comp_bca_stage_2()
 
@@ -329,7 +396,7 @@ def comp_skimmer_stage_0():
     add_cylinder_x(v, f, 40, 150, 0, -10, 20, n_seg=8)
     # Drainage Sump Basin below
     add_cylinder_z(v, f, 0, 0, 35, -75, -40, n_seg=8)
-    return build_3ds(v, f)
+    return build_gltf(v, f)
 machines_composites['fluidic-skimmer-loop/stage-0'] = comp_skimmer_stage_0()
 
 def comp_skimmer_stage_1():
@@ -347,7 +414,7 @@ def comp_skimmer_stage_1():
     # Concentric Optical Shutter Tubes
     add_cylinder_z(v, f, -40, 0, 22, 0, 45, n_seg=10)
     add_cylinder_z(v, f, -40, 0, 18, 5, 50, n_seg=10)
-    return build_3ds(v, f)
+    return build_gltf(v, f)
 machines_composites['fluidic-skimmer-loop/stage-1'] = comp_skimmer_stage_1()
 
 def comp_skimmer_stage_2():
@@ -364,7 +431,7 @@ def comp_skimmer_stage_2():
     add_cylinder_x(v, f, 120, 155, 50, -5, 10, n_seg=6)
     # Edge CNT Control Node & Weatherproof Enclosure
     add_box(v, f, -110, -50, -85, -55, -10, 35)
-    return build_3ds(v, f)
+    return build_gltf(v, f)
 machines_composites['fluidic-skimmer-loop/stage-2'] = comp_skimmer_stage_2()
 
 # 4. Ground Track AGV
@@ -387,7 +454,7 @@ def comp_agv_stage_0():
     add_cylinder_y(v, f, -140, -25, 25, 15, 6, n_seg=6) # pivot
     add_box(v, f, -150, -135, -12, 12, 15, 120)        # handle shaft
     add_cylinder_y(v, f, -142, -35, 35, 120, 8, n_seg=6) # grip
-    return build_3ds(v, f)
+    return build_gltf(v, f)
 machines_composites['ground-track-agv/stage-0'] = comp_agv_stage_0()
 
 def comp_agv_stage_1():
@@ -409,7 +476,7 @@ def comp_agv_stage_1():
     # Two-Control E-Stop console
     add_box(v, f, -120, -70, -40, 0, 80, 115)
     add_cylinder_z(v, f, -95, -20, 12, 115, 128, n_seg=8)
-    return build_3ds(v, f)
+    return build_gltf(v, f)
 machines_composites['ground-track-agv/stage-1'] = comp_agv_stage_1()
 
 def comp_agv_stage_2():
@@ -431,7 +498,7 @@ def comp_agv_stage_2():
     add_cylinder_x(v, f, 90, 115, 0, 170, 8, n_seg=6) # Gripper wrist
     # Underside 5-Channel Magnetic Track Sensor
     add_box(v, f, -145, -130, -45, 45, -25, -15)
-    return build_3ds(v, f)
+    return build_gltf(v, f)
 machines_composites['ground-track-agv/stage-2'] = comp_agv_stage_2()
 
 # 5. Mantis Branch Crawler
@@ -453,7 +520,7 @@ def comp_mantis_stage_0():
     add_cylinder_z(v, f, 0, 0, 14, -140, -35, n_seg=8)
     # Harvest Funnel Chute below
     add_box(v, f, 60, 130, -35, 35, -50, -15)
-    return build_3ds(v, f)
+    return build_gltf(v, f)
 machines_composites['mantis-branch-crawler/stage-0'] = comp_mantis_stage_0()
 
 def comp_mantis_stage_1():
@@ -472,7 +539,7 @@ def comp_mantis_stage_1():
     add_cylinder_x(v, f, 50, 85, 0, -45, 25, n_seg=10)
     # 18V Tool Battery Slide Adapter
     add_box(v, f, -75, -15, -35, 35, 35, 55)
-    return build_3ds(v, f)
+    return build_gltf(v, f)
 machines_composites['mantis-branch-crawler/stage-1'] = comp_mantis_stage_1()
 
 def comp_mantis_stage_2():
@@ -492,7 +559,7 @@ def comp_mantis_stage_2():
     add_cylinder_x(v, f, -118, -110, 12, 0, 3, n_seg=4)
     # Central ESP32-S3 Compute Enclosure
     add_box(v, f, -40, 40, -35, 35, 35, 65)
-    return build_3ds(v, f)
+    return build_gltf(v, f)
 machines_composites['mantis-branch-crawler/stage-2'] = comp_mantis_stage_2()
 
 # 6. Microclimate Dosing Array
@@ -516,7 +583,7 @@ def comp_dosing_stage_0():
     add_box(v, f, 15, 35, -35, -15, -15, 10)
     # Bottom Collection Basin
     add_box(v, f, -50, 50, -35, 35, -110, -85)
-    return build_3ds(v, f)
+    return build_gltf(v, f)
 machines_composites['microclimate-dosing-array/stage-0'] = comp_dosing_stage_0()
 
 def comp_dosing_stage_1():
@@ -534,7 +601,7 @@ def comp_dosing_stage_1():
     add_box(v, f, -18, 18, -47, -45, 45, 55)
     # 12V 60W Power Supply Unit on bottom tier
     add_box(v, f, -45, 45, -30, 30, -110, -75)
-    return build_3ds(v, f)
+    return build_gltf(v, f)
 machines_composites['microclimate-dosing-array/stage-1'] = comp_dosing_stage_1()
 
 def comp_dosing_stage_2():
@@ -552,7 +619,7 @@ def comp_dosing_stage_2():
     add_cylinder_z(v, f, 0, -42, 10, 50, 75, n_seg=8)
     # 8-Channel High Current MOSFET Bank inside enclosure
     add_box(v, f, -40, 40, -25, 25, 40, 55)
-    return build_3ds(v, f)
+    return build_gltf(v, f)
 machines_composites['microclimate-dosing-array/stage-2'] = comp_dosing_stage_2()
 
 # 7. Overhead Gantry System
@@ -573,7 +640,7 @@ def comp_gantry_stage_0():
     # Central Z-Axis Toolhead Carriage & Magnetic Kinematic Dock
     add_box(v, f, -30, 30, -25, 25, 40, 100)
     add_cylinder_z(v, f, 0, 0, 18, 25, 40, n_seg=8) # Mag dock collar
-    return build_3ds(v, f)
+    return build_gltf(v, f)
 machines_composites['overhead-gantry-system/stage-0'] = comp_gantry_stage_0()
 
 def comp_gantry_stage_1():
@@ -594,7 +661,7 @@ def comp_gantry_stage_1():
     add_box(v, f, -35, -20, -80, 80, 60, 75)
     # TB6600 Stepper Driver & 24V PSU enclosure
     add_box(v, f, 120, 175, 45, 95, 25, 75)
-    return build_3ds(v, f)
+    return build_gltf(v, f)
 machines_composites['overhead-gantry-system/stage-1'] = comp_gantry_stage_1()
 
 def comp_gantry_stage_2():
@@ -616,7 +683,7 @@ def comp_gantry_stage_2():
         add_box(v, f, tx - 2, tx + 2, -12, 12, -45, -35)
     # ESP32-S3 Edge Compute & AS5600 Encoders
     add_box(v, f, -25, 25, -35, -25, 55, 90)
-    return build_3ds(v, f)
+    return build_gltf(v, f)
 machines_composites['overhead-gantry-system/stage-2'] = comp_gantry_stage_2()
 
 # 8. Revolving Sprout Bioreactor
@@ -640,7 +707,7 @@ def comp_sprout_stage_0():
     add_box(v, f, 160, 168, 0, 60, 10, 20)
     # Drainage Sump Basin underneath
     add_box(v, f, -135, 135, -55, 55, -80, -45)
-    return build_3ds(v, f)
+    return build_gltf(v, f)
 machines_composites['revolving-sprout-bioreactor/stage-0'] = comp_sprout_stage_0()
 
 def comp_sprout_stage_1():
@@ -661,7 +728,7 @@ def comp_sprout_stage_1():
     add_cylinder_y(v, f, 80, 50, 95, -70, 22, n_seg=8)
     # Two-Control BLE Box
     add_box(v, f, -100, -40, 50, 85, -75, -35)
-    return build_3ds(v, f)
+    return build_gltf(v, f)
 machines_composites['revolving-sprout-bioreactor/stage-1'] = comp_sprout_stage_1()
 
 def comp_sprout_stage_2():
@@ -682,7 +749,7 @@ def comp_sprout_stage_2():
     add_box(v, f, -145, -135, -45, -30, 10, 25)
     # ESP32-S3 Fermentation & Sprouting Controller Node
     add_box(v, f, -40, 30, 50, 85, -75, -30)
-    return build_3ds(v, f)
+    return build_gltf(v, f)
 machines_composites['revolving-sprout-bioreactor/stage-2'] = comp_sprout_stage_2()
 
 # 9. TPS Root Chamber
@@ -703,7 +770,7 @@ def comp_tps_stage_0():
     add_cylinder_x(v, f, 40, 120, -60, 85, 3, n_seg=4)
     # 1" Drainage Ball Valve at bottom
     add_cylinder_x(v, f, 140, 175, 0, -80, 14, n_seg=8)
-    return build_3ds(v, f)
+    return build_gltf(v, f)
 machines_composites['tps-root-chamber/stage-0'] = comp_tps_stage_0()
 
 def comp_tps_stage_1():
@@ -724,7 +791,7 @@ def comp_tps_stage_1():
     # Two-Control BLE Box & OLED readout
     add_box(v, f, 10, 80, 95, 140, -60, -15)
     add_box(v, f, 30, 60, 138, 142, -45, -30)
-    return build_3ds(v, f)
+    return build_gltf(v, f)
 machines_composites['tps-root-chamber/stage-1'] = comp_tps_stage_1()
 
 def comp_tps_stage_2():
@@ -745,16 +812,16 @@ def comp_tps_stage_2():
     add_cylinder_z(v, f, -50, 120, 12, -75, -45, n_seg=8)
     # ESP32-S3 Root Controller Enclosure
     add_box(v, f, 0, 75, 95, 145, -75, -20)
-    return build_3ds(v, f)
+    return build_gltf(v, f)
 machines_composites['tps-root-chamber/stage-2'] = comp_tps_stage_2()
 
 # Write all 27 composite models + architecture
 written = []
-for key, raw_3ds in machines_composites.items():
-    pub_path = f'{BASE}/public/assets/machines/{key}.3ds'
+for key, raw_gltf in machines_composites.items():
+    pub_path = f'{BASE}/public/assets/machines/{key}.gltf'
     os.makedirs(os.path.dirname(pub_path), exist_ok=True)
-    with open(pub_path, 'wb') as fp: fp.write(raw_3ds)
-    written.append((key, len(raw_3ds)))
-    print(f'Wrote composite model: {key}.3ds ({len(raw_3ds)} bytes)')
+    with open(pub_path, 'w', encoding='utf-8') as fp: fp.write(raw_gltf)
+    written.append((key, len(raw_gltf)))
+    print(f'Wrote composite model: {key}.gltf ({len(raw_gltf)} bytes)')
 
 print(f'\nSuccessfully generated {len(written)} 3D composite machine assemblies!')

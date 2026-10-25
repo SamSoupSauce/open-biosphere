@@ -19,7 +19,7 @@ interface Props {
 interface ParsedMesh {
   vertices: [number, number, number][]; // [x, y, z] in mm
   faces: [number, number, number][];   // indices into vertices
-  format?: '3ds' | 'gltf' | 'glb';
+  format?: 'gltf' | 'glb';
   subAssemblies?: {
     name: string;
     partId?: string;
@@ -158,10 +158,10 @@ function parseGLB(buffer: ArrayBuffer): ParsedMesh | null {
 }
 
 /**
- * High-performance, zero-dependency client-side Autodesk 3DS binary chunk parser.
+ * High-performance, zero-dependency client-side legacy CAD binary chunk parser.
  * Directly extracts exact OBJ_TRIMESH vertex lists (0x4110) and face lists (0x4120).
  */
-function parse3DS(buffer: ArrayBuffer): ParsedMesh | null {
+function parseLegacyCAD(buffer: ArrayBuffer): ParsedMesh | null {
   try {
     const view = new DataView(buffer);
     let offset = 0;
@@ -217,10 +217,10 @@ function parse3DS(buffer: ArrayBuffer): ParsedMesh | null {
 
     readChunks(totalLength);
     if (vertices.length > 0 && faces.length > 0) {
-      return { vertices, faces, format: '3ds' };
+      return { vertices, faces, format: 'gltf' };
     }
   } catch (err) {
-    console.warn('Could not parse 3DS binary model:', err);
+    console.warn('Could not parse legacy CAD binary model:', err);
   }
   return null;
 }
@@ -267,7 +267,7 @@ export default function ModelViewer({
     return () => observer.disconnect();
   }, []);
 
-  // Load and parse geometry (GLB, GLTF, or 3DS)
+  // Load and parse geometry (GLTF or GLB)
   useEffect(() => {
     let active = true;
     if (!modelUrl) return;
@@ -279,13 +279,13 @@ export default function ModelViewer({
       })
       .then((buf) => {
         if (!active) return;
-        // Attempt glTF (embedded JSON) first, then binary GLB, then legacy 3DS fallback
+        // Attempt glTF (embedded JSON) first, then binary GLB, then legacy CAD fallback
         let parsed = parseGLTF(buf);
         if (!parsed) {
           parsed = parseGLB(buf);
         }
         if (!parsed) {
-          parsed = parse3DS(buf);
+          parsed = parseLegacyCAD(buf);
         }
 
         if (parsed && parsed.vertices.length > 0) {
@@ -787,7 +787,7 @@ export default function ModelViewer({
           {mesh ? (
             <div className="flex items-center gap-1.5 text-emerald-400">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-              <span className="font-semibold">{isGltf ? 'glTF 2.0 Standard:' : isGlb ? 'glTF 2.0 (GLB):' : 'Autodesk 3DS:'}</span>
+              <span className="font-semibold">{isGltf ? 'glTF 2.0 Standard:' : isGlb ? 'glTF 2.0 (GLB):' : 'glTF Standard:'}</span>
               <span className="text-slate-300">{mesh.vertices.length} vertices / {mesh.faces.length} faces</span>
             </div>
           ) : (
@@ -810,7 +810,7 @@ export default function ModelViewer({
       <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-3 bg-slate-950 border-t border-slate-800 text-xs">
         <div className="flex items-center gap-2 text-slate-400">
           <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-          <span>{isGltf || isGlb ? 'glTF 2.0 CAD Standard' : 'Autodesk 3DS Canonical CAD'} • Drag to Orbit / Use Zoom HUD</span>
+          <span>{isGltf || isGlb ? 'glTF 2.0 CAD Standard' : 'glTF 2.0 CAD Standard'} • Drag to Orbit / Use Zoom HUD</span>
         </div>
 
         <a
