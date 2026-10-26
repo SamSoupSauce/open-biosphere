@@ -7,6 +7,8 @@ sidebar:
     variant: "note"
 ---
 
+import ModelViewer from '../../../../components/ModelViewer';
+
 > [!NOTE]
 > **RFC-0012 Canonical Specification:** This custom-fabricated part has a dedicated route, interactive 3D WebGL viewer, and direct model download at [`/open-biosphere/parts/part-custom-plates-gantry-6061/`](/open-biosphere/parts/part-custom-plates-gantry-6061/).
 
@@ -37,9 +39,20 @@ Precision CNC laser-cut aluminum end plates with counterbored mounting holes for
 
 ---
 
-## 3. Dimensional Technical Drawing
+## 3. Interactive 3D Model Inspection
 
-![Technical Drawing for PART-FAB-PLATES-GANTRY-6061](/open-biosphere/assets/parts/PART-FAB-PLATES-GANTRY-6061/dimensional-drawing.svg)
+<ModelViewer
+  client:visible
+  partId="PART-FAB-PLATES-GANTRY-6061"
+  partName="Laser-Cut 4mm 6061-T6 Aluminum Gantry Wheel End-Plates (4x Set)"
+  material="aluminum"
+  fabricationMethod="cnc-laser-cut-aluminum"
+  dimensions={{ x_mm: 140.0, y_mm: 90.0, z_mm: 4.0 }}
+  estimatedCost={34.0}
+  modelUrl="/open-biosphere/assets/parts/PART-FAB-PLATES-GANTRY-6061/model.gltf"
+/>
+
+* **Direct 3D CAD Download:** [Download model.gltf (glTF 2.0 Standard)](/open-biosphere/assets/parts/PART-FAB-PLATES-GANTRY-6061/model.gltf)
 
 ---
 
@@ -54,7 +67,6 @@ Precision CNC laser-cut aluminum end plates with counterbored mounting holes for
 ### Direct CAD Asset Downloads
 
 * [Download 3D Model Asset (.gltf)](/open-biosphere/assets/parts/PART-FAB-PLATES-GANTRY-6061/model.gltf)
-* [Download Dimensional Engineering Drawing (.SVG)](/open-biosphere/assets/parts/PART-FAB-PLATES-GANTRY-6061/dimensional-drawing.svg)
 
 * [Download Slicing Mesh (.STL)](/open-biosphere/assets/parts/PART-FAB-PLATES-GANTRY-6061/print.stl)
 * [Download Precision Parametric CAD (.STEP)](/open-biosphere/assets/parts/PART-FAB-PLATES-GANTRY-6061/cad.step)

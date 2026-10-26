@@ -14,6 +14,7 @@ interface Props {
   };
   estimatedCost?: number;
   focusStep?: number;
+  initialWireframe?: boolean;
 }
 
 interface ParsedMesh {
@@ -234,11 +235,12 @@ export default function ModelViewer({
   dimensions = { x_mm: 100, y_mm: 50, z_mm: 30 },
   estimatedCost = 0.0,
   focusStep = 0,
+  initialWireframe = false,
 }: Props) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [isRotating, setIsRotating] = useState(true);
-  const [wireframe, setWireframe] = useState(false);
+  const [wireframe, setWireframe] = useState(initialWireframe);
   const [zoomLevel, setZoomLevel] = useState(1.0);
   const [isDragging, setIsDragging] = useState(false);
   const [mesh, setMesh] = useState<ParsedMesh | null>(null);

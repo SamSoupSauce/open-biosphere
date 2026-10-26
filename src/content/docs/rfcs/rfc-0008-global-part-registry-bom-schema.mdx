@@ -51,7 +51,7 @@ public/
 └── assets/parts/
     └── <part_id>/
         ├── photo.webp                  # Physical component photo or 3D render
-        ├── dimensional-drawing.svg     # Dimensioned engineering vector drawing
+        ├── model.gltf                   # Canonical glTF 2.0 3D CAD model
         ├── model.gltf                   # Scalable 3D CAD mesh
         ├── print.stl                   # Slicer-ready 3D print file (if custom-fab)
         └── cad.step                    # Parametric CAD solid model (if custom-fab)
@@ -82,7 +82,7 @@ Every component registered in `parts.json` conforms to the following strict JSON
     "is_3d_printed": false,
     "print_spec": null,
     "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-WEDGE-150U/model.gltf",
-    "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-WEDGE-150U/dimensional-drawing.svg",
+    "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-WEDGE-150U/model.gltf",
     "photo_url": "/open-biosphere/assets/parts/PART-MECH-WEDGE-150U/photo.webp"
   },
   "procurement": [
@@ -146,7 +146,7 @@ When `"is_3d_printed": true`, the `print_spec` object is populated with recommen
     "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-AUGER-PETG-50P/model.gltf",
     "stl_asset_url": "/open-biosphere/assets/parts/PART-FAB-AUGER-PETG-50P/print.stl",
     "step_asset_url": "/open-biosphere/assets/parts/PART-FAB-AUGER-PETG-50P/cad.step",
-    "drawing_asset_url": "/open-biosphere/assets/parts/PART-FAB-AUGER-PETG-50P/dimensional-drawing.svg",
+    "drawing_asset_url": "/open-biosphere/assets/parts/PART-FAB-AUGER-PETG-50P/model.gltf",
     "photo_url": "/open-biosphere/assets/parts/PART-FAB-AUGER-PETG-50P/photo.webp"
   },
   "procurement": [

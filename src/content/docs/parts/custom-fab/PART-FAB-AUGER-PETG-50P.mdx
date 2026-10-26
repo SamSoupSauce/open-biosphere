@@ -7,6 +7,8 @@ sidebar:
     variant: "note"
 ---
 
+import ModelViewer from '../../../../components/ModelViewer';
+
 > [!NOTE]
 > **RFC-0012 Canonical Specification:** This custom-fabricated part has a dedicated route, interactive 3D WebGL viewer, and direct model download at [`/open-biosphere/parts/part-custom-auger-petg-50p/`](/open-biosphere/parts/part-custom-auger-petg-50p/).
 
@@ -37,9 +39,20 @@ Progressive pitch dewatering flight auger for duckweed cake compression against 
 
 ---
 
-## 3. Dimensional Technical Drawing
+## 3. Interactive 3D Model Inspection
 
-![Technical Drawing for PART-FAB-AUGER-PETG-50P](/open-biosphere/assets/parts/PART-FAB-AUGER-PETG-50P/dimensional-drawing.svg)
+<ModelViewer
+  client:visible
+  partId="PART-FAB-AUGER-PETG-50P"
+  partName="Dewatering Continuous Flight Press Auger (50mm Pitch, PETG)"
+  material="petg"
+  fabricationMethod="3d-print-fdm"
+  dimensions={{ x_mm: 280.0, y_mm: 50.0, z_mm: 30.0 }}
+  estimatedCost={18.0}
+  modelUrl="/open-biosphere/assets/parts/PART-FAB-AUGER-PETG-50P/model.gltf"
+/>
+
+* **Direct 3D CAD Download:** [Download model.gltf (glTF 2.0 Standard)](/open-biosphere/assets/parts/PART-FAB-AUGER-PETG-50P/model.gltf)
 
 ---
 
@@ -66,7 +79,6 @@ Progressive pitch dewatering flight auger for duckweed cake compression against 
 ### Direct CAD Asset Downloads
 
 * [Download 3D Model Asset (.gltf)](/open-biosphere/assets/parts/PART-FAB-AUGER-PETG-50P/model.gltf)
-* [Download Dimensional Engineering Drawing (.SVG)](/open-biosphere/assets/parts/PART-FAB-AUGER-PETG-50P/dimensional-drawing.svg)
 
 * [Download Slicing Mesh (.STL)](/open-biosphere/assets/parts/PART-FAB-AUGER-PETG-50P/print.stl)
 * [Download Precision Parametric CAD (.STEP)](/open-biosphere/assets/parts/PART-FAB-AUGER-PETG-50P/cad.step)

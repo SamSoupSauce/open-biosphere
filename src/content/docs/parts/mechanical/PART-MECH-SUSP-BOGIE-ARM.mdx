@@ -7,6 +7,8 @@ sidebar:
     variant: "note"
 ---
 
+import ModelViewer from '../../../../components/ModelViewer';
+
 # Bogie Suspension Arms + Die Springs + Polyurethane Wheels
 
 **Canonical Part ID:** `PART-MECH-SUSP-BOGIE-ARM`  
@@ -34,9 +36,20 @@ Independent pivoting suspension bogie set with high-compression die springs and 
 
 ---
 
-## 3. Dimensional Technical Drawing
+## 3. Interactive 3D Model Inspection
 
-![Technical Drawing for PART-MECH-SUSP-BOGIE-ARM](/open-biosphere/assets/parts/PART-MECH-SUSP-BOGIE-ARM/dimensional-drawing.svg)
+<ModelViewer
+  client:visible
+  partId="PART-MECH-SUSP-BOGIE-ARM"
+  partName="Bogie Suspension Arms + Die Springs + Polyurethane Wheels"
+  material="aluminum"
+  fabricationMethod="machined-aluminum-die-spring"
+  dimensions={{ x_mm: 120.0, y_mm: 45.0, z_mm: 65.0 }}
+  estimatedCost={32.0}
+  modelUrl="/open-biosphere/assets/parts/PART-MECH-SUSP-BOGIE-ARM/model.gltf"
+/>
+
+* **Direct 3D CAD Download:** [Download model.gltf (glTF 2.0 Standard)](/open-biosphere/assets/parts/PART-MECH-SUSP-BOGIE-ARM/model.gltf)
 
 ---
 
@@ -51,7 +64,6 @@ Independent pivoting suspension bogie set with high-compression die springs and 
 ### Direct CAD Asset Downloads
 
 * [Download 3D Model Asset (.gltf)](/open-biosphere/assets/parts/PART-MECH-SUSP-BOGIE-ARM/model.gltf)
-* [Download Dimensional Engineering Drawing (.SVG)](/open-biosphere/assets/parts/PART-MECH-SUSP-BOGIE-ARM/dimensional-drawing.svg)
 
 * [Download Slicing Mesh (.STL)](/open-biosphere/assets/parts/PART-MECH-SUSP-BOGIE-ARM/print.stl)
 * [Download Precision Parametric CAD (.STEP)](/open-biosphere/assets/parts/PART-MECH-SUSP-BOGIE-ARM/cad.step)

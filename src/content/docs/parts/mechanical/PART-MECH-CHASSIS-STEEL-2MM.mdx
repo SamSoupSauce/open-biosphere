@@ -7,6 +7,8 @@ sidebar:
     variant: "note"
 ---
 
+import ModelViewer from '../../../../components/ModelViewer';
+
 # Welded 2mm Steel Tracked Chassis Box & Bulkheads
 
 **Canonical Part ID:** `PART-MECH-CHASSIS-STEEL-2MM`  
@@ -34,9 +36,20 @@ Heavy-duty laser-cut and welded 2mm cold-rolled steel tub providing rigid struct
 
 ---
 
-## 3. Dimensional Technical Drawing
+## 3. Interactive 3D Model Inspection
 
-![Technical Drawing for PART-MECH-CHASSIS-STEEL-2MM](/open-biosphere/assets/parts/PART-MECH-CHASSIS-STEEL-2MM/dimensional-drawing.svg)
+<ModelViewer
+  client:visible
+  partId="PART-MECH-CHASSIS-STEEL-2MM"
+  partName="Welded 2mm Steel Tracked Chassis Box & Bulkheads"
+  material="steel"
+  fabricationMethod="laser-cut-welded-steel"
+  dimensions={{ x_mm: 520.0, y_mm: 360.0, z_mm: 140.0 }}
+  estimatedCost={85.0}
+  modelUrl="/open-biosphere/assets/parts/PART-MECH-CHASSIS-STEEL-2MM/model.gltf"
+/>
+
+* **Direct 3D CAD Download:** [Download model.gltf (glTF 2.0 Standard)](/open-biosphere/assets/parts/PART-MECH-CHASSIS-STEEL-2MM/model.gltf)
 
 ---
 
@@ -51,7 +64,6 @@ Heavy-duty laser-cut and welded 2mm cold-rolled steel tub providing rigid struct
 ### Direct CAD Asset Downloads
 
 * [Download 3D Model Asset (.gltf)](/open-biosphere/assets/parts/PART-MECH-CHASSIS-STEEL-2MM/model.gltf)
-* [Download Dimensional Engineering Drawing (.SVG)](/open-biosphere/assets/parts/PART-MECH-CHASSIS-STEEL-2MM/dimensional-drawing.svg)
 
 * [Download Slicing Mesh (.STL)](/open-biosphere/assets/parts/PART-MECH-CHASSIS-STEEL-2MM/print.stl)
 * [Download Precision Parametric CAD (.STEP)](/open-biosphere/assets/parts/PART-MECH-CHASSIS-STEEL-2MM/cad.step)

@@ -7,6 +7,8 @@ sidebar:
     variant: "note"
 ---
 
+import ModelViewer from '../../../../components/ModelViewer';
+
 > [!NOTE]
 > **RFC-0012 Canonical Specification:** This custom-fabricated part has a dedicated route, interactive 3D WebGL viewer, and direct model download at [`/open-biosphere/parts/part-custom-manifold-junction/`](/open-biosphere/parts/part-custom-manifold-junction/).
 
@@ -37,9 +39,20 @@ Multi-channel fluidic mixing junction block for simultaneous metering of Macro-N
 
 ---
 
-## 3. Dimensional Technical Drawing
+## 3. Interactive 3D Model Inspection
 
-![Technical Drawing for PART-FAB-JUNCTION-MANIFOLD-4WAY](/open-biosphere/assets/parts/PART-FAB-JUNCTION-MANIFOLD-4WAY/dimensional-drawing.svg)
+<ModelViewer
+  client:visible
+  partId="PART-FAB-JUNCTION-MANIFOLD-4WAY"
+  partName="4-Way Dial-A-Dose Fluidic Manifold Junction Block"
+  material="aluminum"
+  fabricationMethod="cnc-machined-aluminum-delrin"
+  dimensions={{ x_mm: 110.0, y_mm: 48.0, z_mm: 36.0 }}
+  estimatedCost={22.0}
+  modelUrl="/open-biosphere/assets/parts/PART-FAB-JUNCTION-MANIFOLD-4WAY/model.gltf"
+/>
+
+* **Direct 3D CAD Download:** [Download model.gltf (glTF 2.0 Standard)](/open-biosphere/assets/parts/PART-FAB-JUNCTION-MANIFOLD-4WAY/model.gltf)
 
 ---
 
@@ -52,7 +65,6 @@ Multi-channel fluidic mixing junction block for simultaneous metering of Macro-N
 ### Direct CAD Asset Downloads
 
 * [Download 3D Model Asset (.gltf)](/open-biosphere/assets/parts/PART-FAB-JUNCTION-MANIFOLD-4WAY/model.gltf)
-* [Download Dimensional Engineering Drawing (.SVG)](/open-biosphere/assets/parts/PART-FAB-JUNCTION-MANIFOLD-4WAY/dimensional-drawing.svg)
 
 ---
 

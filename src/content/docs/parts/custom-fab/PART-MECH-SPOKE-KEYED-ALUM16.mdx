@@ -7,6 +7,8 @@ sidebar:
     variant: "note"
 ---
 
+import ModelViewer from '../../../../components/ModelViewer';
+
 > [!NOTE]
 > **RFC-0012 Canonical Specification:** This custom-fabricated part has a dedicated route, interactive 3D WebGL viewer, and direct model download at [`/open-biosphere/parts/part-custom-spoke-keyed-alum16/`](/open-biosphere/parts/part-custom-spoke-keyed-alum16/).
 
@@ -37,9 +39,20 @@ Set of 16 indexed laser-cut and stamped aluminum spoke brackets with factory-ben
 
 ---
 
-## 3. Dimensional Technical Drawing
+## 3. Interactive 3D Model Inspection
 
-![Technical Drawing for PART-MECH-SPOKE-KEYED-ALUM16](/open-biosphere/assets/parts/PART-MECH-SPOKE-KEYED-ALUM16/dimensional-drawing.svg)
+<ModelViewer
+  client:visible
+  partId="PART-MECH-SPOKE-KEYED-ALUM16"
+  partName="Keyed Stamped 5052 Aluminum Spoke Bracket Set (16x Radial Rim)"
+  material="aluminum"
+  fabricationMethod="cnc-laser-cut-stamped-5052-h32-aluminum"
+  dimensions={{ x_mm: 380.0, y_mm: 45.0, z_mm: 3.0 }}
+  estimatedCost={48.0}
+  modelUrl="/open-biosphere/assets/parts/PART-MECH-SPOKE-KEYED-ALUM16/model.gltf"
+/>
+
+* **Direct 3D CAD Download:** [Download model.gltf (glTF 2.0 Standard)](/open-biosphere/assets/parts/PART-MECH-SPOKE-KEYED-ALUM16/model.gltf)
 
 ---
 
@@ -52,7 +65,6 @@ Set of 16 indexed laser-cut and stamped aluminum spoke brackets with factory-ben
 ### Direct CAD Asset Downloads
 
 * [Download 3D Model Asset (.gltf)](/open-biosphere/assets/parts/PART-MECH-SPOKE-KEYED-ALUM16/model.gltf)
-* [Download Dimensional Engineering Drawing (.SVG)](/open-biosphere/assets/parts/PART-MECH-SPOKE-KEYED-ALUM16/dimensional-drawing.svg)
 
 * [Download Slicing Mesh (.STL)](/open-biosphere/assets/parts/PART-MECH-SPOKE-KEYED-ALUM16/print.stl)
 * [Download Precision Parametric CAD (.STEP)](/open-biosphere/assets/parts/PART-MECH-SPOKE-KEYED-ALUM16/cad.step)

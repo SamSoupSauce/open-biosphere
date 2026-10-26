@@ -7,6 +7,8 @@ sidebar:
     variant: "note"
 ---
 
+import ModelViewer from '../../../../components/ModelViewer';
+
 # 12V DC Brushed Peristaltic Dosing Pump (100 mL/min)
 
 **Canonical Part ID:** `PART-FLUID-PUMP-PERI-12V`  
@@ -34,9 +36,20 @@ Self-priming positive displacement peristaltic pump with 3-roller rotor and food
 
 ---
 
-## 3. Dimensional Technical Drawing
+## 3. Interactive 3D Model Inspection
 
-![Technical Drawing for PART-FLUID-PUMP-PERI-12V](/open-biosphere/assets/parts/PART-FLUID-PUMP-PERI-12V/dimensional-drawing.svg)
+<ModelViewer
+  client:visible
+  partId="PART-FLUID-PUMP-PERI-12V"
+  partName="12V DC Brushed Peristaltic Dosing Pump (100 mL/min)"
+  material="fluidics"
+  fabricationMethod="stock-pump"
+  dimensions={{ x_mm: 65.0, y_mm: 40.0, z_mm: 40.0 }}
+  estimatedCost={12.0}
+  modelUrl="/open-biosphere/assets/parts/PART-FLUID-PUMP-PERI-12V/model.gltf"
+/>
+
+* **Direct 3D CAD Download:** [Download model.gltf (glTF 2.0 Standard)](/open-biosphere/assets/parts/PART-FLUID-PUMP-PERI-12V/model.gltf)
 
 ---
 
@@ -51,7 +64,6 @@ Self-priming positive displacement peristaltic pump with 3-roller rotor and food
 ### Direct CAD Asset Downloads
 
 * [Download 3D Model Asset (.gltf)](/open-biosphere/assets/parts/PART-FLUID-PUMP-PERI-12V/model.gltf)
-* [Download Dimensional Engineering Drawing (.SVG)](/open-biosphere/assets/parts/PART-FLUID-PUMP-PERI-12V/dimensional-drawing.svg)
 
 
 ---

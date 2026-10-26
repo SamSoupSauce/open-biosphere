@@ -7,6 +7,8 @@ sidebar:
     variant: "note"
 ---
 
+import ModelViewer from '../../../../components/ModelViewer';
+
 > [!NOTE]
 > **RFC-0012 Canonical Specification:** This custom-fabricated part has a dedicated route, interactive 3D WebGL viewer, and direct model download at [`/open-biosphere/parts/part-custom-drum-flanges-petg/`](/open-biosphere/parts/part-custom-drum-flanges-petg/).
 
@@ -37,9 +39,20 @@ Heavy-duty circular end caps with 8mm D-shaft locking hubs, internal perforated 
 
 ---
 
-## 3. Dimensional Technical Drawing
+## 3. Interactive 3D Model Inspection
 
-![Technical Drawing for PART-FAB-DRUM-FLANGES-PETG](/open-biosphere/assets/parts/PART-FAB-DRUM-FLANGES-PETG/dimensional-drawing.svg)
+<ModelViewer
+  client:visible
+  partId="PART-FAB-DRUM-FLANGES-PETG"
+  partName="3D-Printed PETG Bioreactor Drum End Flanges & Axle Hubs"
+  material="petg"
+  fabricationMethod="3d-print-fdm"
+  dimensions={{ x_mm: 220.0, y_mm: 220.0, z_mm: 35.0 }}
+  estimatedCost={12.0}
+  modelUrl="/open-biosphere/assets/parts/PART-FAB-DRUM-FLANGES-PETG/model.gltf"
+/>
+
+* **Direct 3D CAD Download:** [Download model.gltf (glTF 2.0 Standard)](/open-biosphere/assets/parts/PART-FAB-DRUM-FLANGES-PETG/model.gltf)
 
 ---
 
@@ -66,7 +79,6 @@ Heavy-duty circular end caps with 8mm D-shaft locking hubs, internal perforated 
 ### Direct CAD Asset Downloads
 
 * [Download 3D Model Asset (.gltf)](/open-biosphere/assets/parts/PART-FAB-DRUM-FLANGES-PETG/model.gltf)
-* [Download Dimensional Engineering Drawing (.SVG)](/open-biosphere/assets/parts/PART-FAB-DRUM-FLANGES-PETG/dimensional-drawing.svg)
 
 * [Download Slicing Mesh (.STL)](/open-biosphere/assets/parts/PART-FAB-DRUM-FLANGES-PETG/print.stl)
 * [Download Precision Parametric CAD (.STEP)](/open-biosphere/assets/parts/PART-FAB-DRUM-FLANGES-PETG/cad.step)

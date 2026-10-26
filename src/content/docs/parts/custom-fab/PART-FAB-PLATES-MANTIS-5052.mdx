@@ -7,6 +7,8 @@ sidebar:
     variant: "note"
 ---
 
+import ModelViewer from '../../../../components/ModelViewer';
+
 > [!NOTE]
 > **RFC-0012 Canonical Specification:** This custom-fabricated part has a dedicated route, interactive 3D WebGL viewer, and direct model download at [`/open-biosphere/parts/part-custom-plates-mantis-5052/`](/open-biosphere/parts/part-custom-plates-mantis-5052/).
 
@@ -37,9 +39,20 @@ Dual-articulated scissor arm chassis plates providing rigid cantilever support f
 
 ---
 
-## 3. Dimensional Technical Drawing
+## 3. Interactive 3D Model Inspection
 
-![Technical Drawing for PART-FAB-PLATES-MANTIS-5052](/open-biosphere/assets/parts/PART-FAB-PLATES-MANTIS-5052/dimensional-drawing.svg)
+<ModelViewer
+  client:visible
+  partId="PART-FAB-PLATES-MANTIS-5052"
+  partName="Laser-Cut 2mm 5052 Aluminum Scissor Chassis Plates"
+  material="aluminum"
+  fabricationMethod="cnc-laser-cut-aluminum"
+  dimensions={{ x_mm: 160.0, y_mm: 70.0, z_mm: 2.0 }}
+  estimatedCost={22.0}
+  modelUrl="/open-biosphere/assets/parts/PART-FAB-PLATES-MANTIS-5052/model.gltf"
+/>
+
+* **Direct 3D CAD Download:** [Download model.gltf (glTF 2.0 Standard)](/open-biosphere/assets/parts/PART-FAB-PLATES-MANTIS-5052/model.gltf)
 
 ---
 
@@ -54,7 +67,6 @@ Dual-articulated scissor arm chassis plates providing rigid cantilever support f
 ### Direct CAD Asset Downloads
 
 * [Download 3D Model Asset (.gltf)](/open-biosphere/assets/parts/PART-FAB-PLATES-MANTIS-5052/model.gltf)
-* [Download Dimensional Engineering Drawing (.SVG)](/open-biosphere/assets/parts/PART-FAB-PLATES-MANTIS-5052/dimensional-drawing.svg)
 
 * [Download Slicing Mesh (.STL)](/open-biosphere/assets/parts/PART-FAB-PLATES-MANTIS-5052/print.stl)
 * [Download Precision Parametric CAD (.STEP)](/open-biosphere/assets/parts/PART-FAB-PLATES-MANTIS-5052/cad.step)

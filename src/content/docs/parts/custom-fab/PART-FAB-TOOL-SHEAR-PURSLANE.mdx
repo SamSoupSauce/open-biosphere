@@ -7,6 +7,8 @@ sidebar:
     variant: "note"
 ---
 
+import ModelViewer from '../../../../components/ModelViewer';
+
 > [!NOTE]
 > **RFC-0012 Canonical Specification:** This custom-fabricated part has a dedicated route, interactive 3D WebGL viewer, and direct model download at [`/open-biosphere/parts/part-custom-tool-shear-purslane/`](/open-biosphere/parts/part-custom-tool-shear-purslane/).
 
@@ -37,9 +39,20 @@ Dual reciprocating surgical steel blade assembly with cam eccentric drive for cl
 
 ---
 
-## 3. Dimensional Technical Drawing
+## 3. Interactive 3D Model Inspection
 
-![Technical Drawing for PART-FAB-TOOL-SHEAR-PURSLANE](/open-biosphere/assets/parts/PART-FAB-TOOL-SHEAR-PURSLANE/dimensional-drawing.svg)
+<ModelViewer
+  client:visible
+  partId="PART-FAB-TOOL-SHEAR-PURSLANE"
+  partName="Purslane Reciprocating Lateral Shear Toolhead (12V Motor)"
+  material="petg"
+  fabricationMethod="3d-print-steel-blades"
+  dimensions={{ x_mm: 95.0, y_mm: 50.0, z_mm: 40.0 }}
+  estimatedCost={32.0}
+  modelUrl="/open-biosphere/assets/parts/PART-FAB-TOOL-SHEAR-PURSLANE/model.gltf"
+/>
+
+* **Direct 3D CAD Download:** [Download model.gltf (glTF 2.0 Standard)](/open-biosphere/assets/parts/PART-FAB-TOOL-SHEAR-PURSLANE/model.gltf)
 
 ---
 
@@ -66,7 +79,6 @@ Dual reciprocating surgical steel blade assembly with cam eccentric drive for cl
 ### Direct CAD Asset Downloads
 
 * [Download 3D Model Asset (.gltf)](/open-biosphere/assets/parts/PART-FAB-TOOL-SHEAR-PURSLANE/model.gltf)
-* [Download Dimensional Engineering Drawing (.SVG)](/open-biosphere/assets/parts/PART-FAB-TOOL-SHEAR-PURSLANE/dimensional-drawing.svg)
 
 * [Download Slicing Mesh (.STL)](/open-biosphere/assets/parts/PART-FAB-TOOL-SHEAR-PURSLANE/print.stl)
 * [Download Precision Parametric CAD (.STEP)](/open-biosphere/assets/parts/PART-FAB-TOOL-SHEAR-PURSLANE/cad.step)

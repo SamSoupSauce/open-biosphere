@@ -36,6 +36,11 @@ When authoring or modifying procedural geometry generators (`scripts/*.py`):
 3. **Zero-Remnant Deprecation Policy:**
    * Superseded or converted binary assets must be removed from git tracking (`git rm`) immediately upon conversion to prevent duplicate file baggage, stale links, and cache desynchronization.
 
+4. **Replacement of 2D Vector Drawings with Native glTF Models:**
+   * All 2D vector technical drawings (`dimensional-drawing.svg`, `isometric-render.svg`) are completely deprecated across the part catalog and subpages.
+   * Every component in the registry (`src/content/docs/parts/**/*.mdx`) must embed interactive 3D inspection using `<ModelViewer />` with canonical `.gltf` model assets.
+   * In `src/data/parts.json`, `drawing_asset_url` points directly to the canonical `.gltf` model asset URL. Legacy drawing SVGs must be purged from tracking.
+
 ---
 
 ## 3. 3D Web Viewport Shading, Backface Culling & Orbit Controls

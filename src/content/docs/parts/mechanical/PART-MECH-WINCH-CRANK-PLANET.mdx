@@ -7,6 +7,8 @@ sidebar:
     variant: "note"
 ---
 
+import ModelViewer from '../../../../components/ModelViewer';
+
 # Hand-Crank Planetary Winch & Spool (4:1 Ratio)
 
 **Canonical Part ID:** `PART-MECH-WINCH-CRANK-PLANET`  
@@ -34,9 +36,20 @@ Enclosed manual cable winch with 4:1 internal epicyclic gearing, friction brake,
 
 ---
 
-## 3. Dimensional Technical Drawing
+## 3. Interactive 3D Model Inspection
 
-![Technical Drawing for PART-MECH-WINCH-CRANK-PLANET](/open-biosphere/assets/parts/PART-MECH-WINCH-CRANK-PLANET/dimensional-drawing.svg)
+<ModelViewer
+  client:visible
+  partId="PART-MECH-WINCH-CRANK-PLANET"
+  partName="Hand-Crank Planetary Winch & Spool (4:1 Ratio)"
+  material="aluminum"
+  fabricationMethod="stock-winch"
+  dimensions={{ x_mm: 160.0, y_mm: 120.0, z_mm: 110.0 }}
+  estimatedCost={38.0}
+  modelUrl="/open-biosphere/assets/parts/PART-MECH-WINCH-CRANK-PLANET/model.gltf"
+/>
+
+* **Direct 3D CAD Download:** [Download model.gltf (glTF 2.0 Standard)](/open-biosphere/assets/parts/PART-MECH-WINCH-CRANK-PLANET/model.gltf)
 
 ---
 
@@ -51,7 +64,6 @@ Enclosed manual cable winch with 4:1 internal epicyclic gearing, friction brake,
 ### Direct CAD Asset Downloads
 
 * [Download 3D Model Asset (.gltf)](/open-biosphere/assets/parts/PART-MECH-WINCH-CRANK-PLANET/model.gltf)
-* [Download Dimensional Engineering Drawing (.SVG)](/open-biosphere/assets/parts/PART-MECH-WINCH-CRANK-PLANET/dimensional-drawing.svg)
 
 
 ---

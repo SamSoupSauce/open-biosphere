@@ -7,6 +7,8 @@ sidebar:
     variant: "note"
 ---
 
+import ModelViewer from '../../../../components/ModelViewer';
+
 > [!NOTE]
 > **RFC-0012 Canonical Specification:** This custom-fabricated part has a dedicated route, interactive 3D WebGL viewer, and direct model download at [`/open-biosphere/parts/part-custom-target-apriltag-harness/`](/open-biosphere/parts/part-custom-target-apriltag-harness/).
 
@@ -37,9 +39,20 @@ Laser-etched rigid aluminum fiducial plate (AprilTag 36h11 family) bundled with 
 
 ---
 
-## 3. Dimensional Technical Drawing
+## 3. Interactive 3D Model Inspection
 
-![Technical Drawing for PART-FAB-TARGET-APRILTAG-HARNESS](/open-biosphere/assets/parts/PART-FAB-TARGET-APRILTAG-HARNESS/dimensional-drawing.svg)
+<ModelViewer
+  client:visible
+  partId="PART-FAB-TARGET-APRILTAG-HARNESS"
+  partName="Custom Wire Harness & AprilTag Optical Alignment Plate"
+  material="aluminum"
+  fabricationMethod="laser-etched-plate-harness"
+  dimensions={{ x_mm: 60.0, y_mm: 60.0, z_mm: 3.0 }}
+  estimatedCost={5.0}
+  modelUrl="/open-biosphere/assets/parts/PART-FAB-TARGET-APRILTAG-HARNESS/model.gltf"
+/>
+
+* **Direct 3D CAD Download:** [Download model.gltf (glTF 2.0 Standard)](/open-biosphere/assets/parts/PART-FAB-TARGET-APRILTAG-HARNESS/model.gltf)
 
 ---
 
@@ -54,7 +67,6 @@ Laser-etched rigid aluminum fiducial plate (AprilTag 36h11 family) bundled with 
 ### Direct CAD Asset Downloads
 
 * [Download 3D Model Asset (.gltf)](/open-biosphere/assets/parts/PART-FAB-TARGET-APRILTAG-HARNESS/model.gltf)
-* [Download Dimensional Engineering Drawing (.SVG)](/open-biosphere/assets/parts/PART-FAB-TARGET-APRILTAG-HARNESS/dimensional-drawing.svg)
 
 * [Download Slicing Mesh (.STL)](/open-biosphere/assets/parts/PART-FAB-TARGET-APRILTAG-HARNESS/print.stl)
 * [Download Precision Parametric CAD (.STEP)](/open-biosphere/assets/parts/PART-FAB-TARGET-APRILTAG-HARNESS/cad.step)

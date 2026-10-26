@@ -7,6 +7,8 @@ sidebar:
     variant: "note"
 ---
 
+import ModelViewer from '../../../../components/ModelViewer';
+
 > [!NOTE]
 > **RFC-0012 Canonical Specification:** This custom-fabricated part has a dedicated route, interactive 3D WebGL viewer, and direct model download at [`/open-biosphere/parts/part-custom-servo-linkage/`](/open-biosphere/parts/part-custom-servo-linkage/).
 
@@ -37,9 +39,20 @@ Dual-clevis zero-backlash bellcrank linkage translating 25T servo rotation into 
 
 ---
 
-## 3. Dimensional Technical Drawing
+## 3. Interactive 3D Model Inspection
 
-![Technical Drawing for PART-FAB-LINKAGE-SERVO-DUAL-YOKE](/open-biosphere/assets/parts/PART-FAB-LINKAGE-SERVO-DUAL-YOKE/dimensional-drawing.svg)
+<ModelViewer
+  client:visible
+  partId="PART-FAB-LINKAGE-SERVO-DUAL-YOKE"
+  partName="Dual-Yoke Articulated Servo Bellcrank Linkage (Zero-Backlash)"
+  material="petg"
+  fabricationMethod="cnc-machined-aluminum-cf-petg"
+  dimensions={{ x_mm: 85.0, y_mm: 24.0, z_mm: 16.0 }}
+  estimatedCost={9.5}
+  modelUrl="/open-biosphere/assets/parts/PART-FAB-LINKAGE-SERVO-DUAL-YOKE/model.gltf"
+/>
+
+* **Direct 3D CAD Download:** [Download model.gltf (glTF 2.0 Standard)](/open-biosphere/assets/parts/PART-FAB-LINKAGE-SERVO-DUAL-YOKE/model.gltf)
 
 ---
 
@@ -52,7 +65,6 @@ Dual-clevis zero-backlash bellcrank linkage translating 25T servo rotation into 
 ### Direct CAD Asset Downloads
 
 * [Download 3D Model Asset (.gltf)](/open-biosphere/assets/parts/PART-FAB-LINKAGE-SERVO-DUAL-YOKE/model.gltf)
-* [Download Dimensional Engineering Drawing (.SVG)](/open-biosphere/assets/parts/PART-FAB-LINKAGE-SERVO-DUAL-YOKE/dimensional-drawing.svg)
 
 ---
 

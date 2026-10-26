@@ -7,6 +7,8 @@ sidebar:
     variant: "note"
 ---
 
+import ModelViewer from '../../../../components/ModelViewer';
+
 # 304 Stainless Steel Perforated Sheet (1.5mm Holes, 300x450mm)
 
 **Canonical Part ID:** `PART-MECH-SHEET-SS304-PERF`  
@@ -34,9 +36,20 @@ Precision punched 304 stainless sheet with 1.5mm staggered hole pattern (38% ope
 
 ---
 
-## 3. Dimensional Technical Drawing
+## 3. Interactive 3D Model Inspection
 
-![Technical Drawing for PART-MECH-SHEET-SS304-PERF](/open-biosphere/assets/parts/PART-MECH-SHEET-SS304-PERF/dimensional-drawing.svg)
+<ModelViewer
+  client:visible
+  partId="PART-MECH-SHEET-SS304-PERF"
+  partName="304 Stainless Steel Perforated Sheet (1.5mm Holes, 300x450mm)"
+  material="steel"
+  fabricationMethod="stock-perforated-metal"
+  dimensions={{ x_mm: 450.0, y_mm: 300.0, z_mm: 0.8 }}
+  estimatedCost={42.0}
+  modelUrl="/open-biosphere/assets/parts/PART-MECH-SHEET-SS304-PERF/model.gltf"
+/>
+
+* **Direct 3D CAD Download:** [Download model.gltf (glTF 2.0 Standard)](/open-biosphere/assets/parts/PART-MECH-SHEET-SS304-PERF/model.gltf)
 
 ---
 
@@ -51,7 +64,6 @@ Precision punched 304 stainless sheet with 1.5mm staggered hole pattern (38% ope
 ### Direct CAD Asset Downloads
 
 * [Download 3D Model Asset (.gltf)](/open-biosphere/assets/parts/PART-MECH-SHEET-SS304-PERF/model.gltf)
-* [Download Dimensional Engineering Drawing (.SVG)](/open-biosphere/assets/parts/PART-MECH-SHEET-SS304-PERF/dimensional-drawing.svg)
 
 
 ---

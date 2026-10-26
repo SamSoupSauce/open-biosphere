@@ -51,8 +51,8 @@ src/content/docs/parts/
     ├── index.mdx              # Technical summary, metadata frontmatter & interactive viewer
     ├── model.gltf              # Canonical glTF 2.0 format geometry asset
     └── assets/                # Supporting engineering figures
-        ├── dimensional-drawing.svg  # Multi-view orthographic drafting schematic
-        └── isometric-render.svg     # Shaded 3D perspective vector projection
+        ├── model.gltf               # Canonical glTF 2.0 3D CAD asset
+        └── print.stl                # Sliced 3D fabrication geometry
 ```
 
 * Reused parts across machines or stage levels (e.g., from Stage 0 manual operation through Stage 2 agentic control) link directly to this canonical `<part-slug>` rather than duplicating inline specifications.
@@ -151,7 +151,7 @@ Below is a live rendering of the canonical `PART-FAB-BRACKET-SOLAR-CONE` compone
 | **Zero Placeholder Invariant** | 全 Codebase Audit | Pass (`0` unresolved placeholders) |
 | **Dedicated Route Standard** | `src/content/docs/parts/<slug>/index.mdx` | Pass (32 dedicated custom part subpages created) |
 | **Canonical 3D Model Asset** | `src/content/docs/parts/<slug>/model.gltf` | Pass (32 binary glTF assets instantiated) |
-| **Vector Drawing Standard** | `assets/dimensional-drawing.svg` & `isometric-render.svg` | Pass (64 vector schematics generated) |
+| **Vector Drawing Standard** | `assets/model.gltf` (glTF 2.0 Standard) | Pass (100% glTF 3D CAD models reconciled) |
 | **Client-Side 3D Viewer** | `src/components/ModelViewer.tsx` | Pass (Canvas/WebGL orbit viewport with wireframe & HUD) |
 | **Global Part Registry Rollup** | `src/data/parts.json` | Pass (4 new parts merged; schema validated) |
 | **Catalog & Navigation** | `astro.config.mjs` & `custom-fab.mdx` | Pass (Grouped sidebar navigation & updated catalog) |

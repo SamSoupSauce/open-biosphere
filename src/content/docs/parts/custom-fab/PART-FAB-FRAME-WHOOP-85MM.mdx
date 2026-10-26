@@ -7,6 +7,8 @@ sidebar:
     variant: "note"
 ---
 
+import ModelViewer from '../../../../components/ModelViewer';
+
 > [!NOTE]
 > **RFC-0012 Canonical Specification:** This custom-fabricated part has a dedicated route, interactive 3D WebGL viewer, and direct model download at [`/open-biosphere/parts/part-custom-frame-whoop-85mm/`](/open-biosphere/parts/part-custom-frame-whoop-85mm/).
 
@@ -37,9 +39,20 @@ High-durability injection-molded/custom-routed polycarbonate ducted frame with p
 
 ---
 
-## 3. Dimensional Technical Drawing
+## 3. Interactive 3D Model Inspection
 
-![Technical Drawing for PART-FAB-FRAME-WHOOP-85MM](/open-biosphere/assets/parts/PART-FAB-FRAME-WHOOP-85MM/dimensional-drawing.svg)
+<ModelViewer
+  client:visible
+  partId="PART-FAB-FRAME-WHOOP-85MM"
+  partName="85mm Ducted Polycarbonate Whoop Airframe + Ducts"
+  material="aluminum"
+  fabricationMethod="molded-polycarbonate-frame"
+  dimensions={{ x_mm: 115.0, y_mm: 115.0, z_mm: 38.0 }}
+  estimatedCost={14.0}
+  modelUrl="/open-biosphere/assets/parts/PART-FAB-FRAME-WHOOP-85MM/model.gltf"
+/>
+
+* **Direct 3D CAD Download:** [Download model.gltf (glTF 2.0 Standard)](/open-biosphere/assets/parts/PART-FAB-FRAME-WHOOP-85MM/model.gltf)
 
 ---
 
@@ -54,7 +67,6 @@ High-durability injection-molded/custom-routed polycarbonate ducted frame with p
 ### Direct CAD Asset Downloads
 
 * [Download 3D Model Asset (.gltf)](/open-biosphere/assets/parts/PART-FAB-FRAME-WHOOP-85MM/model.gltf)
-* [Download Dimensional Engineering Drawing (.SVG)](/open-biosphere/assets/parts/PART-FAB-FRAME-WHOOP-85MM/dimensional-drawing.svg)
 
 * [Download Slicing Mesh (.STL)](/open-biosphere/assets/parts/PART-FAB-FRAME-WHOOP-85MM/print.stl)
 * [Download Precision Parametric CAD (.STEP)](/open-biosphere/assets/parts/PART-FAB-FRAME-WHOOP-85MM/cad.step)
