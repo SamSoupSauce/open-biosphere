@@ -674,7 +674,7 @@ export default function ModelViewer({
     const dy = e.clientY - dragPosRef.current.y;
     dragPosRef.current = { x: e.clientX, y: e.clientY };
     rotYRef.current = (rotYRef.current + dx * 0.7) % 360;
-    rotXRef.current = Math.max(-85, Math.min(85, rotXRef.current - dy * 0.7));
+    rotXRef.current = Math.max(-85, Math.min(85, rotXRef.current + dy * 0.7));
   };
 
   const handleMouseUp = () => setIsDragging(false);
