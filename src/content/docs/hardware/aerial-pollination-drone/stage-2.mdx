@@ -22,7 +22,7 @@ The Stage 2 agentic pack elevates the **Aerial Spotter & Pollination Drone** int
 ## Part 2: Capability Delta (Features Introduced)
 
 * **Controller-Node-Tool (CNT) Hierarchy**: Heavy neural perception runs on the Central Biosphere Controller; the Machine Node coordinates local kinematics; tiny Edge Tools drive motors 1:1.
-* **Isolated Farm AP Mesh**: Secure, air-gapped local Wi-Fi (<code>POTFRM-&lt;CLUSTER_ID&gt;</code> on <code>192.168.42.0/24</code>) with WebSocket node registration at <code>ws://192.168.42.1:8443/register</code>.
+* **Isolated Farm AP Mesh**: Secure, air-gapped local Wi-Fi (<code>POTFRM-&lt;CLUSTER_ID&gt;</code> on <code&gt; 192.168.42.0/24</code>) with WebSocket node registration at <code>ws://192.168.42.1:8443/register</code>.
 * **250ms Hardware Deadman Watchdogs**: Every Tool trips into safe, high-Z, zero-power state within 250 ms if signal is interrupted.
 * **Local Zero-Cloud Edge AI**: Multi-agent perception via <code>llama-cpp-python</code> local vision models without internet dependencies.
 
@@ -79,9 +79,7 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
   dimensions={{ x_mm: 51.0, y_mm: 28.0, z_mm: 8.5 }}
   estimatedCost={14.00}
   modelUrl="/open-biosphere/assets/parts/PART-ELEC-ESP32-S3-NODE/model.gltf"
-/>
-
-1. **Alignment & Positioning:** VOLTAGE: 5.0V Regulated | CURRENT: 450mA Peak
+/&gt; 1. **Alignment & Positioning:** VOLTAGE: 5.0V Regulated | CURRENT: 450mA Peak
 2. **Mechanical & Electrical Execution:** ESP32-S3 node controller with 8MB Octal PSRAM for local visual odometry and trajectory tracking.
 3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
 
@@ -97,9 +95,7 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
   dimensions={{ x_mm: 25.0, y_mm: 19.0, z_mm: 4.5 }}
   estimatedCost={28.00}
   modelUrl="/open-biosphere/assets/parts/PART-ELEC-SNS-PMW3901-FLOW/model.gltf"
-/>
-
-1. **Alignment & Positioning:** FLOW SAMPLE: 100 Hz | RANGE: 20mm - 4000mm
+/&gt; 1. **Alignment & Positioning:** FLOW SAMPLE: 100 Hz | RANGE: 20mm - 4000mm
 2. **Mechanical & Electrical Execution:** Ground texture motion tracking paired with 4-meter infrared laser time-of-flight sensor.
 3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
 
@@ -115,9 +111,7 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
   dimensions={{ x_mm: 29.0, y_mm: 29.0, z_mm: 11.0 }}
   estimatedCost={32.00}
   modelUrl="/open-biosphere/assets/parts/PART-ELEC-CAM-RUNCAM-HD/model.gltf"
-/>
-
-1. **Alignment & Positioning:** RESOLUTION: 1080p60 | LATENCY: < 80ms
+/&gt; 1. **Alignment & Positioning:** RESOLUTION: 1080p60 | LATENCY: &lt; 80ms
 2. **Mechanical & Electrical Execution:** RunCam Split HD camera with 850nm NIR bandpass filter transmitting low-latency RTSP video.
 3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
 
@@ -133,9 +127,7 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
   dimensions={{ x_mm: 110.0, y_mm: 110.0, z_mm: 75.0 }}
   estimatedCost={18.00}
   modelUrl="/open-biosphere/assets/parts/PART-FAB-PERCH-CONICAL-DOCK/model.gltf"
-/>
-
-1. **Alignment & Positioning:** LANDING TOLERANCE: ±25mm | CHARGE CURRENT: 2.0A
+/&gt; 1. **Alignment & Positioning:** LANDING TOLERANCE: ±25mm | CHARGE CURRENT: 2.0A
 2. **Mechanical & Electrical Execution:** 3D-printed alignment funnel with concentric brass wiper rings for autonomous docking and charging.
 3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
 
@@ -151,9 +143,7 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
   dimensions={{ x_mm: 400.0, y_mm: 250.0, z_mm: 180.0 }}
   estimatedCost={0.00}
   modelUrl="/open-biosphere/assets/machines/aerial-pollination-drone/stage-2.gltf"
-/>
-
-1. **Alignment & Positioning:** DEADMAN TIMEOUT: 250ms | FAIL-SAFE: Auto-Disarm
+/&gt; 1. **Alignment & Positioning:** DEADMAN TIMEOUT: 250ms | FAIL-SAFE: Auto-Disarm
 2. **Mechanical & Electrical Execution:** Hardware deadman loop verification tripping drone to soft landing upon signal interruption.
 3. **Quality Assurance & Verification:** Inspect fastener seating, verify clearances against the technical drawing, and ensure no binding across the full range of motion.
 

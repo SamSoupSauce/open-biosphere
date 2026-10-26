@@ -59,7 +59,7 @@ This RFC establishes the **Controller-Node-Tool (CNT)** standard across the enti
 * **Display Interface:** Micro OLED screen (0.42" or 0.91") indicating Tool Type, Tool ID, and Link Status (e.g. `TOOL: AUGER_DRV | LINK: OK`).
 * **Fail-Safe & Watchdog:**
   * Implements an uncompromising **250ms hardware watchdog**.
-  * If the Tool loses its BLE connection to its Node for $> 250$ ms, it drops immediately into high-Z safe state: stepper outputs cut to zero holding torque, linear actuators stop in place, solenoid valves snap closed.
+  * If the Tool loses its BLE connection to its Node for $&gt; 250$ ms, it drops immediately into high-Z safe state: stepper outputs cut to zero holding torque, linear actuators stop in place, solenoid valves snap closed.
 
 ---
 
@@ -74,7 +74,7 @@ This RFC establishes the **Controller-Node-Tool (CNT)** standard across the enti
 1. Power up target machine Node (e.g. Skimmer Node).
 2. Mini screen displays `NODE UNPAIRED - PAIR VIA BLE`.
 3. Press physical setup button on Node; select Node in mobile app via BLE; enter `4096`.
-4. Node pairs with hidden Wi-Fi, handshakes with Controller, and switches OLED to `ONLINE | LINK -> 4096`.
+4. Node pairs with hidden Wi-Fi, handshakes with Controller, and switches OLED to `ONLINE | LINK -&gt; 4096`.
 
 ### Phase C: Tool Binding
 1. Power up dedicated Tool controller.
