@@ -36,11 +36,11 @@ In off-grid and homestead scenarios, fresh bioavailable nutrients are often seas
 | **Drum Geometry** | Cylindrical food-grade perforated drum: 300 mm diameter × 450 mm length |
 | **Batch Capacity** | 800 g dry seed (yields ~3.5 kg wet hypocotyls per 96-hour run) |
 | **Rotation Drive** | NEMA 17 planetary geared stepper motor (5.18:1 reduction) or manual crank |
-| **Rotation Speed** | 0.5 to 2.0 RPM intermittent (rotates 15 seconds every 15 minutes) |
+| **Rotation Speed** | 0.5 to 2.0 RPM intermittent (rotates 15 seconds every 15 minutes) / up to 4.0 RPM continuous (Purge & Wash cycle) |
 | **Irrigation System** | Dual high-pressure atomizing misting nozzles (50 µm droplet size) |
 | **Sanitation Subsystem** | 200 mg/h corona-discharge ozone generator with gas diffuser stone |
 | **Power Consumption** | 0W (Manual) / 18W average (Add-On 1) / 22W peak (Add-On 2) |
-| **Controller Architecture** | Standalone manual / Dual-dial analog timer / ESP32-S3 FreeRTOS CAN node |
+| **Controller Architecture** | Standalone manual hand crank (Stage 0) / Strict Two-Control Standard + Flutter BLE Virtual Panel (Stage 1) / Controller-Node-Tool (CNT) Isolated Wi-Fi Mesh (Stage 2) |
 
 ---
 
@@ -60,13 +60,13 @@ The Sprout Bioreactor is intentionally designed so that **not a single bolt or b
 
 ### Step-by-Step Zero-Waste Conversion Roadmap
 
-#### Path 1: Base Machine $\rightarrow$ Add-On 1 (Semi-Autonomous Retrofit)
+#### Path 1: Base Machine → Add-On 1 (Semi-Autonomous Retrofit)
 1. Mount the NEMA 17 motor bracket to the rear vertical extrusion using existing T-slot channels (no drilling required).
 2. Slide the 60T GT2 pulley and axial dog clutch onto the protruding 8 mm D-shaft stub between the pillow block and hand crank.
 3. Install the 24V diaphragm mist pump in the lower frame base, threading the 1/4" mist line through the pre-cast access grommets in the top hood.
 4. Mount the Two-Control IP65 enclosure (Master DC Cut + SD Reset + Micro-SD) and pair Flutter BLE Virtual Panel. The hand crank remains permanently installed for manual zero-power override.
 
-#### Path 2: Add-On 1 $\rightarrow$ Add-On 2 (Agentic Autonomous CNT Upgrade)
+#### Path 2: Add-On 1 → Add-On 2 (Agentic Autonomous CNT Upgrade)
 1. Mount the Sprout Node (ESP32-S3 + OLED + Two-Control Standard) and modular ESP32-C3 Tools on the DIN rail.
 2. Connect the stepper motor 4-wire lead to the TMC2209 driver governed by the `DEV_DRUM_STEP` tool with StallGuard homing.
 3. Insert the SHT40 probe into the pre-molded exhaust flue socket and plug the 4-wire lead into the `DEV_CLIMATE_SNS` tool.

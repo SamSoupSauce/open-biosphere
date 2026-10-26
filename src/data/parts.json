@@ -3196,15 +3196,15 @@
     ]
   },
   {
-    "name": "304 Stainless Steel Perforated Sheet (1.5mm Holes, 300x450mm)",
+    "name": "304 Stainless Steel Perforated Sheet (1.5mm Holes, 955x450mm)",
     "category": "mechanical",
-    "summary": "Precision punched 304 stainless sheet with 1.5mm staggered hole pattern (38% open area) for sprout seed aeration drums.",
+    "summary": "Precision punched 304 stainless sheet with 1.5mm staggered hole pattern (38% open area) and 955mm developed length (wraps full circumference of Ø300mm drum with 12.5mm seam overlap) for sprout seed aeration.",
     "dimensions": {
-      "length_mm": 450.0,
-      "width_mm": 300.0,
+      "length_mm": 955.0,
+      "width_mm": 450.0,
       "thickness_mm": 0.8,
-      "tolerance_mm": "±0.3",
-      "weight_grams": 620.0
+      "tolerance_mm": "±0.5",
+      "weight_grams": 1850.0
     },
     "fabrication": {
       "is_custom_fab": false,
@@ -4272,15 +4272,15 @@
     ]
   },
   {
-    "name": "3D-Printed PETG Bioreactor Drum End Flanges & Axle Hubs",
+    "name": "3D-Printed PETG Bioreactor Drum End Flanges (Ø300mm) & Axle Hubs",
     "category": "custom-fab",
-    "summary": "Heavy-duty circular end caps with 8mm D-shaft locking hubs, internal perforated sheet retaining rim, and quick-latch loading port.",
+    "summary": "Heavy-duty circular Ø300mm end caps with 8mm D-shaft locking hubs, internal perforated sheet retaining rim, and quick-latch loading port.",
     "dimensions": {
-      "length_mm": 220.0,
-      "width_mm": 220.0,
+      "length_mm": 300.0,
+      "width_mm": 300.0,
       "thickness_mm": 35.0,
       "tolerance_mm": "±0.3",
-      "weight_grams": 320.0
+      "weight_grams": 420.0
     },
     "fabrication": {
       "is_custom_fab": true,
@@ -5337,6 +5337,84 @@
       {
         "machine_slug": "bca-packaging-engine",
         "stage": 0,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "200 kg / 2 kN S-Beam Tension & Compression Load Cell + HX711 24-bit ADC",
+    "category": "electrical",
+    "summary": "Heavy-duty alloy steel S-beam load cell calibrated for measuring continuous compaction thrust up to 2,000 N (200 kgf) in high-pressure compounding pug mills.",
+    "dimensions": {
+      "length_mm": 75.0,
+      "width_mm": 50.0,
+      "thickness_mm": 20.0,
+      "tolerance_mm": "±0.2",
+      "weight_grams": 350.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Sensor",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-LOADCELL-2KN/model.gltf",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-LOADCELL-2KN/model.gltf",
+      "photo_url": "/open-biosphere/assets/parts/PART-ELEC-SNS-LOADCELL-2KN/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "CALT / SparkFun / Phidgets",
+        "sku": "DYLY-103-200KG",
+        "direct_url": "https://sparkfun.com",
+        "unit_price_usd": 28.0,
+        "moq": 1,
+        "lead_time_days": 3
+      }
+    ],
+    "part_id": "PART-ELEC-SNS-LOADCELL-2KN",
+    "used_by": [
+      {
+        "machine_slug": "bca-packaging-engine",
+        "stage": 2,
+        "quantity_required": 1
+      }
+    ]
+  },
+  {
+    "name": "#40 Roller Chain & Sprocket Reduction Pair (3:1 Ratio)",
+    "category": "mechanical",
+    "summary": "Heavy-duty 1/2-inch pitch (#40) ANSI roller chain loop with 12T motor drive sprocket and 36T breaker driven sprocket for positive high-torque compounding transmission.",
+    "dimensions": {
+      "length_mm": 220.0,
+      "width_mm": 150.0,
+      "thickness_mm": 25.0,
+      "tolerance_mm": "±0.5",
+      "weight_grams": 850.0
+    },
+    "fabrication": {
+      "is_custom_fab": false,
+      "is_3d_printed": false,
+      "print_spec": null,
+      "fab_type": "Stock Hardware",
+      "model_asset_url": "/open-biosphere/assets/parts/PART-MECH-CHAIN-ROLLER-40/model.gltf",
+      "drawing_asset_url": "/open-biosphere/assets/parts/PART-MECH-CHAIN-ROLLER-40/model.gltf",
+      "photo_url": "/open-biosphere/assets/parts/PART-MECH-CHAIN-ROLLER-40/photo.webp"
+    },
+    "procurement": [
+      {
+        "supplier_name": "McMaster-Carr / Surplus Center",
+        "sku": "6261K11",
+        "direct_url": "https://mcmaster.com",
+        "unit_price_usd": 18.0,
+        "moq": 1,
+        "lead_time_days": 2
+      }
+    ],
+    "part_id": "PART-MECH-CHAIN-ROLLER-40",
+    "used_by": [
+      {
+        "machine_slug": "bca-packaging-engine",
+        "stage": 1,
         "quantity_required": 1
       }
     ]

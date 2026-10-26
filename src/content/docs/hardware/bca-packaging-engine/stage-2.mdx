@@ -32,7 +32,7 @@ A high-level central agent running on the Central Controller (Raspberry Pi 5 or 
 | `PART-ELEC-TB6600-DVR` | TB6600 Microstepping Stepper Motor Drivers (4A 40V) | 4 | Commercial COTS | Aluminum / PCB | $32.00 |
 | [`PART-FAB-SHEAR-CARRIAGE-WIRE`](/open-biosphere/parts/part-custom-shear-carriage-wire/) | Servo-Driven High-Speed Flying Wire Cutoff Carriage | 1 | Custom Fab (Milled) | 6061-T6 Aluminum | $28.00 |
 | `PART-ELEC-SERVO-MG-WP-180` | High-Speed Waterproof Metal Gear Servo (20 kg·cm) | 1 | Commercial COTS | Aluminum / Steel | $16.00 |
-| `PART-ELEC-SNS-LOADCELL-20N` | 200kg S-Beam Industrial Load Cell & HX711 Sensor | 1 | Commercial COTS | Alloy Steel / PCB | $22.00 |
+| `PART-ELEC-SNS-LOADCELL-2KN` | 200kg S-Beam Industrial Load Cell & HX711 Sensor | 1 | Commercial COTS | Alloy Steel / PCB | $22.00 |
 | `PART-ELEC-ESP32-C3-TOOL` | ESP32-C3 Modular Tool Controller (Load & Wire Tool) | 1 | Commercial COTS | PCB / ESP32-C3 | $9.00 |
 | `PART-FAB-TARGET-APRILTAG-HARNESS` | Optical AprilTag Datum Tracking Target (Tag36h11) | 1 | Custom Fab (Printed) | Matte PETG / Vinyl | $6.00 |
 | **Total Stage 2 Add-On Cost**| — | — | — | — | **$226.00** |
@@ -105,13 +105,13 @@ A high-level central agent running on the Central Controller (Raspberry Pi 5 or 
 
 <ModelViewer
   client:visible
-  partId="PART-ELEC-SNS-LOADCELL-20N"
-  partName="20 N Miniature Bending Beam Load Cell + HX711 24-bit ADC"
+  partId="PART-ELEC-SNS-LOADCELL-2KN"
+  partName="200 kg / 2 kN S-Beam Tension & Compression Load Cell + HX711 24-bit ADC"
   material="electronics"
   fabricationMethod="stock-sensor"
   dimensions={{ x_mm: 45.0, y_mm: 9.0, z_mm: 6.0 }}
-  estimatedCost={14.00}
-  modelUrl="/open-biosphere/assets/parts/PART-ELEC-SNS-LOADCELL-20N/model.gltf"
+  estimatedCost={28.00}
+  modelUrl="/open-biosphere/assets/parts/PART-ELEC-SNS-LOADCELL-2KN/model.gltf"
 />
 1. Seat the 200 kg S-beam load cell between the extruder ram thrust bearing block and the lead-screw nut carriage.
 2. Connect the 4-wire Wheatstone bridge to the HX711 24-bit ADC amplifier module.

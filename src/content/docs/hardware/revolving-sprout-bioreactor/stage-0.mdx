@@ -35,8 +35,8 @@ The Stage 0 baseline build of the **Revolving Sprout Bioreactor Drum** is a **10
 | Item | Part ID & Registry Link | Component & Specification | Sourcing / Supplier | Fab Type | Qty | Unit Cost | CAD Asset | Total Cost |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | **B-01** | [`PART-MECH-ALUM-2020-6M`](/open-biosphere/parts/mechanical/part-mech-alum-2020-6m/) | 2020 T-Slot Black Anodized Extrusion (500mm & 400mm) | [Standard structural aluminum](https://openbuildspartstore.com) | Stock Extrusion | 8 | $3.50 | [Download .gltf](/open-biosphere/assets/parts/PART-MECH-ALUM-2020-6M/model.gltf) | $28.00 |
-| **B-02** | [`PART-MECH-SHEET-SS304-PERF`](/open-biosphere/parts/mechanical/part-mech-sheet-ss304-perf/) | 304 Stainless Steel Perforated Sheet (1.5mm holes, 300x450mm) | [McMaster / local sheet supplier](https://mcmaster.com) | Stock Perforated Metal | 1 | $42.00 | [Download .gltf](/open-biosphere/assets/parts/PART-MECH-SHEET-SS304-PERF/model.gltf) | $42.00 |
-| **B-03** | [`PART-FAB-DRUM-FLANGES-PETG`](/open-biosphere/parts/part-custom-drum-flanges-petg/) | Food-Grade PETG Drum End Flanges & Axle Hubs | [3D printed / local fab](https://open-biosphere.org) | 3D Print FDM | 2 | $6.00 | [Download .gltf](/open-biosphere/assets/parts/PART-FAB-DRUM-FLANGES-PETG/model.gltf) | $12.00 |
+| **B-02** | [`PART-MECH-SHEET-SS304-PERF`](/open-biosphere/parts/mechanical/part-mech-sheet-ss304-perf/) | 304 Stainless Steel Perforated Sheet (1.5mm holes, 955x450mm rolled for Ø300mm drum) | [McMaster / local sheet supplier](https://mcmaster.com) | Stock Perforated Metal | 1 | $42.00 | [Download .gltf](/open-biosphere/assets/parts/PART-MECH-SHEET-SS304-PERF/model.gltf) | $42.00 |
+| **B-03** | [`PART-FAB-DRUM-FLANGES-PETG`](/open-biosphere/parts/part-custom-drum-flanges-petg/) | Food-Grade PETG Drum End Flanges (Ø300mm) & Axle Hubs | [3D printed / local fab](https://open-biosphere.org) | 3D Print FDM | 2 | $6.00 | [Download .gltf](/open-biosphere/assets/parts/PART-FAB-DRUM-FLANGES-PETG/model.gltf) | $12.00 |
 | **B-04** | [`PART-MECH-BEARING-6082RS`](/open-biosphere/parts/mechanical/part-mech-bearing-6082rs/) | 608-2RS Deep-Groove Sealed Skate Bearings | [Precision skate hardware](https://fastenal.com) | Stock Bearings | 4 | $1.50 | [Download .gltf](/open-biosphere/assets/parts/PART-MECH-BEARING-6082RS/model.gltf) | $6.00 |
 | **B-05** | [`PART-MECH-SHAFT-SS-8MM`](/open-biosphere/parts/mechanical/part-mech-shaft-ss-8mm/) | 8 mm Precision Ground D-Profile Stainless Axle Shaft (550mm) | [Motion hardware supplier](https://misumi.com) | Stock Precision Shaft | 1 | $14.00 | [Download .gltf](/open-biosphere/assets/parts/PART-MECH-SHAFT-SS-8MM/model.gltf) | $14.00 |
 | **B-06** | [`PART-MECH-CRANK-RATCHET-DELRIN`](/open-biosphere/parts/part-custom-part-mech-crank-ratchet-delrin/) | Detachable Hand Crank + Ratchet Wheel & Delrin Pawl | [3D printed + torsion spring](https://open-biosphere.org) | 3D Print / CNC Pawl | 1 | $11.00 | [Download .gltf](/open-biosphere/assets/parts/PART-MECH-CRANK-RATCHET-DELRIN/model.gltf) | $11.00 |
@@ -93,10 +93,10 @@ The following 5 sequential assembly steps guide the physical fabrication, mounti
 <ModelViewer
   client:visible
   partId="PART-MECH-SHEET-SS304-PERF"
-  partName="304 Stainless Steel Perforated Sheet (1.5mm Holes, 300x450mm)"
+  partName="304 Stainless Steel Perforated Sheet (1.5mm Holes, 955x450mm)"
   material="steel"
   fabricationMethod="stock-perforated-metal"
-  dimensions={{ x_mm: 450.0, y_mm: 300.0, z_mm: 0.8 }}
+  dimensions={{ x_mm: 450.0, y_mm: 955.0, z_mm: 0.8 }}
   estimatedCost={42.00}
   modelUrl="/open-biosphere/assets/parts/PART-MECH-SHEET-SS304-PERF/model.gltf"
 />

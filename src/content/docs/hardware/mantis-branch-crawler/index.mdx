@@ -33,7 +33,7 @@ Delicate soft fruits such as mulberries, blackberries, and goldenberries bruise 
 | Parameter | Specification |
 | :--- | :--- |
 | **Locomotion** | Dual-opposed silicone roller pinch drive (Shore 40A durometer) |
-| **Limb Clamping Force** | Dynamic 2.0 to 8.5 N closed-loop torque control |
+| **Limb Clamping Force** | 28 N mechanical scissor preload (Stage 0) / Dual-bogie 4-point contact (26 N total normal force, ≤6.5 N per contact patch < 8.5 N phloem crushing threshold) with active electronic limit |
 | **End-Effector** | High-precision micro-rotary shear + pneumatic vacuum catch pod |
 | **Harvest Cycle Time** | 4.2 seconds per fruit |
 | **Compute Architecture** | ESP32-S3 Mantis Node + ESP32-C3 Modular Tools (Vision offloaded to Central Controller) |
@@ -52,21 +52,19 @@ Delicate soft fruits such as mulberries, blackberries, and goldenberries bruise 
 
 | Build Stage | Operational Capability | Direct Stage Cost | Cumulative Investment |
 | :--- | :--- | :--- | :--- |
-| **Base: Instructions** | 100% mechanical pole-mounted pruner and squeeze clamp with gravity collection | 3.00 | **3.00** |
-| **Add-On 1: Semi-Auto** | Motorized pinch climb, vacuum fruit funnel with BLE Virtual Panel & 2 physical controls | +35.00 | **28.00** |
-| **Add-On 2: Agentic AI** | Controller-Node-Tool (CNT) automation, 8.5N grip limiting, & 250ms watchdogs | +77.00 | **05.00** |
+| **Base: Instructions** | 100% mechanical pole-mounted pruner and squeeze clamp with gravity collection | $93.00 | **$93.00** |
+| **Add-On 1: Semi-Auto** | Motorized pinch climb, vacuum fruit funnel with BLE Virtual Panel & 2 physical controls | +$135.00 | **$228.00** |
+| **Add-On 2: Agentic AI** | Controller-Node-Tool (CNT) automation, 8.5N grip limiting, & 250ms watchdogs | +$177.00 | **$405.00** |
 
 ### Step-by-Step Zero-Waste Conversion Roadmap
 
-#### Path 1: Base Machine $
-ightarrow$ Add-On 1 (Electromechanical RC Upgrade)
+#### Path 1: Base Machine → Add-On 1 (Electromechanical RC Upgrade)
 1. Remove the manual telescopic pole from the base clamp.
 2. Swing the aluminum motor swing-plates into position and bolt the NEMA 14 pancake steppers onto the chassis plates.
 3. Replace the manual bypass snip blade with the 12V coreless rotary micro-shear tool and 5015 vacuum blower funnel.
 4. Mount the battery shoe and Two-Control enclosure onto the spine, connect the 18V tool battery, and operate via Flutter BLE Virtual Panel. The silicone rollers and scissor frame remain 100% identical.
 
-#### Path 2: Add-On 1 $
-ightarrow$ Add-On 2 (Autonomous Edge CNT Upgrade)
+#### Path 2: Add-On 1 → Add-On 2 (Autonomous Edge CNT Upgrade)
 1. Transition the ESP32 carrier into the Mantis Node configuration.
 2. Mount the Mantis Node (ESP32-S3 + OLED + Button) and modular ESP32-C3 Tools on the chassis spine.
 3. Mount the lightweight dual stereo camera bar on the forward snout for video streaming to the Central Controller.

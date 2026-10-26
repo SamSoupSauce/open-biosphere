@@ -1,0 +1,36 @@
+---
+title: "#40 Roller Chain & Sprocket Reduction Pair (3:1 Ratio)"
+description: "Heavy-duty 1/2-inch pitch (#40) ANSI roller chain loop with 12T motor drive sprocket and 36T breaker driven sprocket for positive high-torque compounding transmission."
+---
+
+import ModelViewer from '../../../../components/ModelViewer';
+
+# PART-MECH-CHAIN-ROLLER-40: #40 Roller Chain & Sprocket Pair
+
+## 1. Specifications & Engineering Envelope
+
+* **Part ID:** `PART-MECH-CHAIN-ROLLER-40`
+* **Chain Pitch:** 0.500 in (12.7 mm) ANSI #40
+* **Tensile Strength:** 3,125 lbf (13.9 kN)
+* **Drive Sprocket:** 12-Tooth, B-Hub, 1/2" round bore with keyway (Motor shaft)
+* **Driven Sprocket:** 36-Tooth, B-Hub, 20 mm bore with keyway (Breaker input shaft)
+* **Center Distance:** 160 mm ± 15 mm adjustable tensioner
+* **Material:** Case-hardened carbon steel with oil-impregnated rollers
+
+## 2. Interactive 3D Model
+
+<ModelViewer
+  client:visible
+  partId="PART-MECH-CHAIN-ROLLER-40"
+  partName="#40 Roller Chain & Sprocket Reduction Pair"
+  material="tool-steel"
+  fabricationMethod="stock-hardware"
+  dimensions={{ x_mm: 220.0, y_mm: 150.0, z_mm: 25.0 }}
+  estimatedCost={18.00}
+  modelUrl="/open-biosphere/assets/parts/PART-MECH-CHAIN-ROLLER-40/model.gltf"
+/>
+
+## 3. Machine Integration
+
+* **Target Subsystem:** [BCA Packaging Engine — Stage 1: BLE Electromechanical](/open-biosphere/hardware/bca-packaging-engine/stage-1/)
+* **Function:** Positive no-slip power transmission between 24V 250W gearmotor and counter-rotating breaker shafts.

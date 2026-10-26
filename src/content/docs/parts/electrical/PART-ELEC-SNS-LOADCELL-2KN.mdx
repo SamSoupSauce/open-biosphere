@@ -1,0 +1,36 @@
+---
+title: "200 kg / 2 kN S-Beam Tension & Compression Load Cell + HX711 24-bit ADC"
+description: "Heavy-duty alloy steel S-beam load cell calibrated for measuring continuous compaction thrust up to 2,000 N (200 kgf) in high-pressure compounding pug mills."
+---
+
+import ModelViewer from '../../../../components/ModelViewer';
+
+# PART-ELEC-SNS-LOADCELL-2KN: 200 kg / 2 kN S-Beam Load Cell
+
+## 1. Specifications & Engineering Envelope
+
+* **Part ID:** `PART-ELEC-SNS-LOADCELL-2KN`
+* **Rated Capacity:** 200 kgf / 2,000 N (2.0 kN)
+* **Safe Overload:** 150% F.S. (3.0 kN)
+* **Sensor Type:** Precision foil strain gauge S-beam (Tension / Compression)
+* **Signal Conditioner:** HX711 24-bit ADC with SPI/I2C bridge to ESP32-C3
+* **Excitation Voltage:** 5V to 10V DC
+* **Body Material:** Nickel-plated alloy tool steel, IP67 sealed
+
+## 2. Interactive 3D Model
+
+<ModelViewer
+  client:visible
+  partId="PART-ELEC-SNS-LOADCELL-2KN"
+  partName="200 kg / 2 kN S-Beam Load Cell"
+  material="tool-steel"
+  fabricationMethod="stock-sensor"
+  dimensions={{ x_mm: 75.0, y_mm: 50.0, z_mm: 20.0 }}
+  estimatedCost={28.00}
+  modelUrl="/open-biosphere/assets/parts/PART-ELEC-SNS-LOADCELL-2KN/model.gltf"
+/>
+
+## 3. Machine Integration
+
+* **Target Subsystem:** [BCA Packaging Engine — Stage 2: Agentic Autonomous AI](/open-biosphere/hardware/bca-packaging-engine/stage-2/)
+* **Function:** Compaction ram thrust telemetry. Governs the closed-loop compaction cycle, ensuring the ceramic aggregate matrix reaches 1.5 kN consolidation pressure before gate cutoff.

@@ -37,9 +37,9 @@ For homesteaders managing raised beds, hydroponic NFT channels, or microgreen tr
 | **Linear Guide** | Dual 2040 / 4040 V-slot aluminum extrusions with polyoxymethylene (POM) wheels |
 | **Repeatability** | $\pm 0.15$ mm across the entire 20 × 10 ft envelope |
 | **Payload Rating** | Up to 8.5 kg toolhead payload |
-| **Toolhead Mount** | Magnetic kinematic 3-point ball-seat quick-swap mount with 8-pin spring pogo bus |
+| **Toolhead Mount** | Dual-Mode: 3-point kinematic magnetic quick-swap (3x N52 pairs, 135N retention for tools ≤2.5 kg) + quarter-turn positive mechanical dovetail clamp (for heavy dynamic tools up to 8.5 kg) with 8-pin gold pogo bus |
 | **Power Consumption**| 0W (Manual) / 85W avg (Add-On 1) / 120W peak (Add-On 2) |
-| **Controller Architecture**| Manual Freewheel / 6-Button CNC Jog Pendant / BTT Octopus Pro (Klipper CAN) |
+| **Controller Architecture**| Manual Freewheel (Stage 0) / Two-Control Standard + Flutter BLE Virtual Panel (Stage 1) / Controller-Node-Tool (CNT) Isolated Wi-Fi Mesh (Stage 2) |
 
 ---
 
@@ -51,20 +51,18 @@ For homesteaders managing raised beds, hydroponic NFT channels, or microgreen tr
 
 | Build Stage | Operational Capability | Direct Stage Cost | Cumulative Investment |
 | :--- | :--- | :--- | :--- |
-| **Base: Instructions** | 100% mechanical manual lead screw carriage with handwheels and analog dial indicator | $177.00 | **$177.00** |
-| **Add-On 1: Semi-Auto** | Motorized NEMA 23 belt drive with Flutter BLE Virtual Panel & Two-Control Standard | +$216.00 | **$393.00** |
+| **Base: Instructions** | 100% mechanical manual lead screw carriage with handwheels and analog dial indicator | $193.40 | **$193.40** |
+| **Add-On 1: Semi-Auto** | Motorized NEMA 23 belt drive with Flutter BLE Virtual Panel & Two-Control Standard | +$216.00 | **$409.40** |
 | **Add-On 2: Agentic AI** | Controller-Node-Tool (CNT) automation, 4K macro vision, kinematic tool change, & 250ms watchdogs | +$194.00 | **$603.40** |
 
 ### Step-by-Step Zero-Waste Conversion Roadmap
 
-#### Path 1: Base Machine $
-ightarrow$ Add-On 1 (Motorized Jog Upgrade)
+#### Path 1: Base Machine → Add-On 1 (Motorized Jog Upgrade)
 1. Bolt the NEMA 23 stepper motor bracket onto the X-axis carriage plate using the pre-drilled M5 holes.
 2. Connect the 9 mm GT2 timing belt to the manual handwheel axle (the handwheels remain 100% functional for zero-power manual indexing).
 3. Mount the IP65 Two-Control enclosure to the outer gantry upright, wire the 24V PSU and TB6600 drivers, and pair the Flutter Companion App BLE Virtual Panel.
 
-#### Path 2: Add-On 1 $
-ightarrow$ Add-On 2 (Autonomous Edge CNT Robot)
+#### Path 2: Add-On 1 → Add-On 2 (Autonomous Edge CNT Robot)
 1. Mount the Gantry Node (ESP32-S3 + OLED + Button) and modular ESP32-C3 Tools (`DEV_X_AXIS`, `DEV_Y_AXIS`, `DEV_TOOL_HEAD`).
 2. Mount the 4K macro camera module on the toolhead carriage with Wi-Fi video streaming to the Central Controller.
 3. Install AS5600 magnetic rotary encoders on motor shafts for closed-loop position verification.

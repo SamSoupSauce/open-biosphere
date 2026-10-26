@@ -17,7 +17,7 @@ import ModelViewer from '../../../../components/ModelViewer';
 
 ## 1. Subsystem Overview & Electromechanical Principles
 
-Stage 1 upgrades the purely manual Stage 0 baseline into a semi-automated, temperature-regulated production station. Manual hand cranks are replaced with a high-torque 12V 250W geared DC motor, and manual hearth heating is replaced with dual 300W ceramic band heaters regulated by digital PID controllers.
+Stage 1 upgrades the purely manual Stage 0 baseline into a semi-automated, temperature-regulated production station. Manual hand cranks are replaced with a high-torque 24V 250W geared DC motor, and manual hearth heating is replaced with dual 300W ceramic band heaters regulated by digital PID controllers.
 
 In accordance with [RFC-0005: Physical Hardware Interlocks & Minimalist BLE Virtual Interface Standard](/open-biosphere/rfcs/rfc-0005-hardware-interlocks-ble-virtual-panel/), physical button panels, dials, and touchscreens are strictly eliminated from the chassis. The machine exposes only the **Strict Two-Control Physical Standard**:
 1. **Master Inline High-Current DC Power Disconnect:** An IP65 red rotary emergency stop cutting all 24V/12V actuator and heater circuits instantly.
@@ -31,17 +31,29 @@ All runtime monitoring (temperature telemetry, motor RPM, jog controls, and batc
 
 | Part ID | Part Name | Qty | Fabrication Type | Material | Estimated Cost |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| `PART-ELEC-MTR-DC-250W-GEAR` | 12V 250W High-Torque Planetary Geared DC Motor | 1 | Commercial COTS | Steel / Copper | $55.00 |
+| `PART-ELEC-MTR-DC-250W-GEAR` | 24V 250W High-Torque Planetary Geared DC Motor | 1 | Commercial COTS | Steel / Copper | $55.00 |
 | `PART-ELEC-PSU-24V-250W` | 24V 250W Industrial MeanWell Power Supply | 1 | Commercial COTS | Aluminum / Silicon | $35.00 |
 | `PART-ELEC-DVR-DC-15A-DUAL` | Dual H-Bridge 15A High-Current Motor Driver | 1 | Commercial COTS | PCB / MOSFETs | $20.00 |
 | `PART-ELEC-TWO-CTRL-PACK` | Strict Two-Control Standard Physical Junction Box | 1 | Custom Fab / Standard | Polycarbonate / IP65 | $25.00 |
 | `PART-ELEC-ESP32-S3-NODE` | ESP32-S3 Machine Node Controller with BLE 5.0 | 1 | Commercial COTS | PCB / ESP32-S3 | $14.00 |
 | `PART-ELEC-VR-5V5A-STEPDOWN` | 24V to 5V 5A High-Efficiency Buck Converter | 1 | Commercial COTS | PCB / Inductors | $12.00 |
-| `PART-MECH-BELT-GT2-9MM` | #40 Roller Chain & Sprocket Reduction Pair (3:1) | 1 set | Commercial COTS | Carbon Steel | $18.00 |
+| `PART-MECH-CHAIN-ROLLER-40` | #40 Roller Chain & Sprocket Reduction Pair (3:1) | 1 set | Commercial COTS | Carbon Steel | $18.00 |
 | **Total Stage 1 Add-On Cost**| — | — | — | — | **$179.00** |
 | **Cumulative Investment (0+1)**| — | — | — | — | **$464.00** |
 
 ---
+
+### Electrical Architecture & Power Budget Breakdown
+
+The Stage 1 retrofit implements a dual-domain power bus separating thermal heating from mechanical actuation:
+* **AC Mains Thermal Heating Loop:** The dual 300W (600W total peak) ceramic band heaters operate directly from 110V/220V AC mains through an industrial opto-isolated 40A solid-state relay (SSR-40DA). A digital REX-C100 PID controller (or ESP32 PWM firing circuit) modulates heater duty cycle (nominally ~35% duty at 150°C steady state = ~210W continuous thermal draw).
+* **24V DC Actuation & Control Bus:** The 24V 250W industrial power supply (`PART-ELEC-PSU-24V-250W`) powers only the 24V 250W geared drive motor (`PART-ELEC-MTR-DC-250W-GEAR`) and the 5V buck converter for the ESP32-S3 node controller. During heavy aggregate crushing, motor load peaks at 240W, well within the 250W continuous DC budget.
+
+| Power Domain | Components Fed | Peak Load | Nominal Steady Load | Power Source | Protection / Interlock |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **AC Mains** | 2x 300W Ceramic Band Heaters | 600 W | 210 W (PWM duty) | Mains 110V/220V AC | SSR-40DA Opto-Isolated + K-Type Thermal Cutoff |
+| **24V DC Bus** | 24V 250W Planetary Motor | 250 W | 120 W | 24V 250W Industrial PSU | 15A Smart H-Bridge + Master DC E-Stop |
+| **5V DC Logic** | ESP32-S3 Node + 0.91" OLED | 2.5 W | 1.2 W | 24V→5V 5A Stepdown Buck | Onboard Thermal & Short-Circuit Foldback |
 
 ## 3. Tooling & Fastener Requirements
 
@@ -84,7 +96,7 @@ All runtime monitoring (temperature telemetry, motor RPM, jog controls, and batc
   modelUrl="/open-biosphere/assets/parts/PART-ELEC-MTR-DC-250W-GEAR/model.gltf"
 />
 1. Bolt the motor mounting plate to the lower chassis cross-beam using four M6 Grade 8.8 bolts.
-2. Mount the 12V 250W geared DC motor and install the 14-tooth drive sprocket onto its 12 mm D-shaft with twin set screws.
+2. Mount the 24V 250W geared DC motor and install the 14-tooth drive sprocket onto its 12 mm D-shaft with twin set screws.
 3. Align the driven 42-tooth sprocket with the Module 1 crusher shaft and link via #40 roller chain. Set chain deflection to 8–10 mm.
 
 ### Step 1.2: Ceramic Band Heaters & Thermocouple Clamping

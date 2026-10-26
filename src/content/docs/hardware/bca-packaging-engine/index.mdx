@@ -42,7 +42,7 @@ The **Bio-Pitch & Ceramic Aggregate (BCA) Packaging Engine** enables homesteader
 | **Cutoff Mechanism** | Spring-tensioned 0.6 mm music wire (adjustable Z-height: 40 mm to 200 mm) |
 | **Cure Cycle** | 3 minutes radiant heat zone at 180°C–200°C; instant rigid drop on ambient cool |
 | **Cycle Throughput** | 12 to 24 rigid containers per hour (continuous batch compounding) |
-| **Power Consumption** | 0W (Stage 0 Manual) / 380W avg (Stage 1 Heated) / 460W peak (Stage 2 Autonomous) |
+| **Power Consumption** | 0W (Stage 0 Manual) / 210W avg (Stage 1 Heated loop) + 120W DC drive / 850W combined peak |
 | **Standard Specification**| Conforms strictly to [RFC-0013: Closed-Loop BCA Packaging Engine](/open-biosphere/rfcs/rfc-0013-bca-packaging-engine/) |
 
 ---
@@ -58,7 +58,7 @@ The machine comprises four in-line processing modules mounted to a heavy welded 
   material="tool-steel"
   fabricationMethod="composite-assembly"
   dimensions={{ x_mm: 380.0, y_mm: 160.0, z_mm: 120.0 }}
-  estimatedCost={480.00}
+  estimatedCost={690.00}
   modelUrl="/open-biosphere/assets/machines/bca-packaging-engine/architecture.gltf"
 />
 
@@ -75,19 +75,19 @@ The machine comprises four in-line processing modules mounted to a heavy welded 
 
 | Build Stage | Operational Capability | Direct Stage Cost | Cumulative Investment |
 | :--- | :--- | :--- | :--- |
-| **Stage 0: Manual Baseline** | Hand-crank breaker, manual screw ram, gravity aggregate feed, bench hot-plate cure | $215.00 | **$215.00** |
-| **Stage 1: BLE Electromechanical** | 12V 250W geared DC motor, ceramic band heaters with PID temp regulation, BLE Virtual Panel | +$155.00 | **$370.00** |
-| **Stage 2: Agentic Autonomous AI** | 4-way stepper variable die gates, flying wire servo cutoff, load-cell compaction loop, CNT mesh | +$95.00 | **$465.00** |
+| **Stage 0: Manual Baseline** | Hand-crank breaker, manual screw ram, gravity aggregate feed, bench hot-plate cure | $285.00 | **$285.00** |
+| **Stage 1: BLE Electromechanical** | 24V 250W geared DC motor, ceramic band heaters with PID temp regulation, BLE Virtual Panel | +$179.00 | **$464.00** |
+| **Stage 2: Agentic Autonomous AI** | 4-way stepper variable die gates, flying wire servo cutoff, load-cell compaction loop, CNT mesh | +$226.00 | **$690.00** |
 
 ### Step-by-Step Zero-Waste Conversion Roadmap
 
-#### Path 1: Stage 0 $\rightarrow$ Stage 1 (Electromechanical Retrofit)
-1. Bolt the high-torque 12V 250W geared DC motor to the breaker input shaft via a #40 roller chain coupler.
+#### Path 1: Stage 0 → Stage 1 (Electromechanical Retrofit)
+1. Bolt the high-torque 24V 250W geared DC motor to the breaker input shaft via a #40 roller chain coupler.
 2. Clasp dual 300W ceramic band heaters around the 304 SS pug mill barrel and wire to digital REX-C100 PID temperature controllers with K-type thermocouples.
 3. Mount the Strict Two-Control junction box (inline DC master switch and tactile factory restore button) on the front chassis rail.
 4. Pair the machine with the Flutter BLE Companion App to control motor speed, jog direction, and monitor thermal setpoints.
 
-#### Path 2: Stage 1 $\rightarrow$ Stage 2 (Autonomous Edge CNT Production Cell)
+#### Path 2: Stage 1 → Stage 2 (Autonomous Edge CNT Production Cell)
 1. Install four NEMA 23 stepper lead-screw actuators on the die head to actuate the overlapping 4-way variable aperture gate plates.
 2. Mount the flying shear wire carriage to linear guide rails and connect to the high-speed MG996R metal-gear servo.
 3. Integrate the 200 kg S-beam load cell onto the lead-screw ram thrust block and connect to the ESP32-C3 Tool Node via HX711 amplifier.

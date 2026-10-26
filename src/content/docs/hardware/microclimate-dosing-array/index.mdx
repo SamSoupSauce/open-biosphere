@@ -14,7 +14,7 @@ Maintaining optimal pH, electrical conductivity (EC), and atmospheric conditions
     Industrial peristaltic pumps meter Nitrates, Phosphates, Potassium, Micronutrients, pH Up, and pH Down with $\pm 0.1$ mL precision.
   </Card>
   <Card title="Closed-Loop Atmospheric PID" icon="activity">
-    Monitors air temperature, relative humidity (RH), and $CO_2$ levels in real time, triggering ultrasonic mist, exhaust dampers, or solenoids.
+    Monitors air temperature, relative humidity (RH), and CO₂ levels in real time, triggering ultrasonic mist, exhaust dampers, or solenoids.
   </Card>
   <Card title="Open Hardware (ESP32 / Pi CM4)" icon="cpu">
     Runs open-source automation firmware (ESPHome, Mycodo, or Home Assistant) with local web dashboards and offline local datalogging.
@@ -34,7 +34,7 @@ Maintaining optimal pH, electrical conductivity (EC), and atmospheric conditions
 | :--- | :--- | :--- |
 | **Nutrient Dosing** | 6-channel industrial 12V peristaltic pumps or gravity burettes | Resolution: $\pm 0.1$ mL per dose |
 | **Water Chemistry** | Dual-junction lab-grade pH probe & platinum EC electrode | pH: 6.0 to 6.8 | EC: 1.2 to 2.4 mS/cm |
-| **Atmospheric $CO_2$** | High-pressure $CO_2$ regulator with electronic solenoid mass flow meter | 800 to 1,200 ppm |
+| **Atmospheric CO₂** | High-pressure CO₂ regulator with electronic solenoid mass flow meter | 800 to 1,200 ppm |
 | **Relative Humidity (RH)** | Ultrasonic mist humidification + dual refrigeration dehumidifiers | 65% to 75% RH |
 | **Air Temperature** | Inverter heat pump with duct distribution manifold | 21°C to 27°C day / 16°C to 19°C night |
 | **Dynamic Spectrum LED** | 8-channel controllable LED bars (Deep Red 660nm, Far Red 730nm, Royal Blue 450nm) | 150 to 600 µmol/m²/s PAR |
@@ -53,22 +53,20 @@ Maintaining optimal pH, electrical conductivity (EC), and atmospheric conditions
 | :--- | :--- | :--- | :--- |
 | **Base: Instructions** | 100% mechanical gravity burettes, manual 3-way L-port valves, and colorimetric drops | $122.00 | **$122.00** |
 | **Add-On 1: Semi-Auto** | Motorized 6-channel peristaltic pumping with Flutter BLE Virtual Panel & Two-Control Standard | +$130.00 | **$252.00** |
-| **Add-On 2: Agentic AI** | Controller-Node-Tool (CNT) automation, 1 Hz closed-loop PID, NDIR $CO_2$, & 250ms watchdogs | +$184.00 | **$436.00** |
+| **Add-On 2: Agentic AI** | Controller-Node-Tool (CNT) automation, 1 Hz closed-loop PID, NDIR CO₂, & 250ms watchdogs | +$184.00 | **$436.00** |
 
 ### Step-by-Step Zero-Waste Conversion Roadmap
 
-#### Path 1: Base Machine $
-ightarrow$ Add-On 1 (Motorized Dosing Panel)
+#### Path 1: Base Machine → Add-On 1 (Motorized Dosing Panel)
 1. Bolt the six 12V peristaltic pumps into the pre-drilled central holes on the acrylic backplane.
 2. Plumb the pump discharge lines into Port 3 of the 3-way L-port bypass valves (the manual burettes remain fully usable).
 3. Install the 12V MeanWell power supply, Two-Control enclosure, and link the Flutter Companion App BLE Virtual Panel.
 
-#### Path 2: Add-On 1 $
-ightarrow$ Add-On 2 (Autonomous Closed-Loop CNT Brain)
+#### Path 2: Add-On 1 → Add-On 2 (Autonomous Closed-Loop CNT Brain)
 1. Mount the Doser Node (ESP32-S3 + OLED + Button) and modular ESP32-C3 Tools inside the IP65 enclosure.
 2. Connect `DEV_WATER_SNS` to the galvanically isolated pH and EC probe BNC headers.
 3. Connect `DEV_PUMP_BANK1` and `DEV_PUMP_BANK2` to the MOSFET driver board in parallel with the manual push buttons.
-4. Mount the Sensirion SCD41 $CO_2$ sensor and wire the $CO_2$ gas solenoid to `DEV_GAS_CTL`.
+4. Mount the Sensirion SCD41 CO₂ sensor and wire the CO₂ gas solenoid to `DEV_GAS_CTL`.
 5. Provision the Doser Node with Central Controller ID via mobile app BLE, and confirm 250ms watchdogs prevent uncommanded chemical release.
 
 ---

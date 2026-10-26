@@ -63,7 +63,7 @@ export const MACHINES_DATA: OpenMachine[] = [
     docSlug: 'fluidic-skimmer-loop',
     controls: {
       manual: 'Counterweighted hand lever raises/lowers weir gate; removable hand crank presses dewatering auger; bypass ball valve.',
-      buttons: 'Waterproof IP67 toggle for pump speed (Low/Med/High); momentary push-button for auger forward/reverse jog.',
+      buttons: 'Strict Two-Control Standard (Master DC Cut + SD Reset) + ephemeral Flutter BLE Virtual Panel for speed selection and auger jog.',
       ai: 'Overhead optical line-scanner measures frond mat thickness (>8 mm); edge AI dynamically modulates pump GPM and auger speed.',
     },
     stagedBOM: {
@@ -121,7 +121,7 @@ export const MACHINES_DATA: OpenMachine[] = [
     docSlug: 'revolving-sprout-bioreactor',
     controls: {
       manual: 'Removable hand-crank handle with ratchet pawl turns drum twice daily; manual brass valve drains rinse water by gravity.',
-      buttons: 'Green tactile panel button jogs drum rotation; rotary mechanical countdown timer dials in misting intervals (0–60 min).',
+      buttons: 'Strict Two-Control Standard (Master DC Cut + SD Reset) + Flutter BLE Virtual Panel for rotation jogging and mist schedules.',
       ai: 'ESP32-S3 executes precise 96-hour growth schedule, tracking humidity and triggering ozone washes; signals AGV when ripe.',
     },
     stagedBOM: {
@@ -179,7 +179,7 @@ export const MACHINES_DATA: OpenMachine[] = [
     docSlug: 'mantis-branch-crawler',
     controls: {
       manual: 'Bowden cable hand-squeeze lever clamps rollers onto wire/branch; spring-loaded snips on extension pole trim pedicels.',
-      buttons: 'Handheld 2.4 GHz RC transmitter with dual thumbsticks for driving and clamping; tactile index trigger fires shear & vacuum.',
+      buttons: 'Strict Two-Control Standard (Master DC Cut + SD Reset) + Flutter BLE Virtual Panel for manual drive and clamp controls.',
       ai: 'On-device YOLOv8 on Raspberry Pi 5 / Jetson Orin detects ripe berries, controls clamping torque to 8.5 N, and auto-shears pedicels.',
     },
     stagedBOM: {
@@ -237,7 +237,7 @@ export const MACHINES_DATA: OpenMachine[] = [
     docSlug: 'ground-track-agv',
     controls: {
       manual: 'Fold-out steel push tiller handle with gearbox neutral lever; mechanical foot pedal unlatches cargo canister clamp.',
-      buttons: 'Heavy-duty 3-button wired pendant (Forward, Reverse, Stop) with speed dial potentiometer; toggle switch for docking latch.',
+      buttons: 'Strict Two-Control Standard (Master DC Cut + SD Reset) + Flutter BLE Virtual Panel for manual teleoperation and docking commands.',
       ai: 'Autonomous ROS2 stack navigates perimeter magnetic line tape and 2D LiDAR SLAM, shuttling canisters on scheduled cycles.',
     },
     stagedBOM: {
@@ -294,8 +294,8 @@ export const MACHINES_DATA: OpenMachine[] = [
     docSlug: 'overhead-gantry-system',
     controls: {
       manual: 'Disengageable belt-clamp tensioners allow gliding carriages freely by hand; squeeze-cable hand trigger operates toolhead shears.',
-      buttons: 'Industrial 6-button directional CNC pendant (X+/-, Y+/-, Z+/-) with Fast/Slow toggle switch; manual toolhead fire button.',
-      ai: 'Klipper CAN bus receives Cartesian trajectories from macro vision models to extract saffron stigmas and shear microgreens.',
+      buttons: 'Strict Two-Control Standard (Master DC Cut + SD Reset) + Flutter BLE Virtual Panel for multi-axis Cartesian jog and tool trigger.',
+      ai: 'Controller-Node-Tool (CNT) Wi-Fi architecture receives Cartesian trajectories from macro vision models to extract saffron stigmas and shear microgreens.',
     },
     stagedBOM: {
       manual: {
@@ -353,7 +353,7 @@ export const MACHINES_DATA: OpenMachine[] = [
     docSlug: 'aerial-pollination-drone',
     controls: {
       manual: 'Handheld telescopic extension wand with passive mechanical vibrating head for direct flower sweeping during inspections.',
-      buttons: 'Standard 2.4 GHz RC radio with dual gimbals and physical toggle switch for one-touch locked hover and buzz vibration.',
+      buttons: 'Strict Two-Control Standard (Master DC Disconnect + SD Reset) + Flutter BLE Virtual Panel / ExpressLRS control.',
       ai: 'Optical flow and AprilTag visual fiducial navigation autonomously flies waypoint grid, holding station over blossoms to vibrate pollen.',
     },
     stagedBOM: {
@@ -409,7 +409,7 @@ export const MACHINES_DATA: OpenMachine[] = [
     docSlug: 'microclimate-dosing-array',
     controls: {
       manual: 'Manual 3-way L-port ball valves gravity-drain measured stock from wall burettes; manual brass needle valve on CO2 tank.',
-      buttons: '6 tactile momentary push-buttons for manual pump priming; analog potentiometer dials set dosing volume directly.',
+      buttons: 'Strict Two-Control Standard (Master DC Cut + SD Reset) + Flutter BLE Virtual Panel for prime cycles and volume calibration.',
       ai: 'Closed-loop 1 Hz PID algorithm reads isolated pH, EC, temperature, and CO2 electrodes, dispensing micro-doses automatically.',
     },
     stagedBOM: {
@@ -467,7 +467,7 @@ export const MACHINES_DATA: OpenMachine[] = [
     docSlug: 'tps-root-chamber',
     controls: {
       manual: 'External hand-pump garden sprayer connects to silicone misting port; light-baffled inspection hatch opens for hand picking.',
-      buttons: 'Rocker switch for continuous pump power; spring-wound mechanical dial timer runs 15-minute misting sessions without code.',
+      buttons: 'Strict Two-Control Standard (Master DC Cut + SD Reset) + Flutter BLE Virtual Panel for mist session cycles.',
       ai: 'ESP32-C3 cycles 50 µm ultrasonic mist every 180 seconds based on transpiration; signals overhead gantry to pick ripe tubers.',
     },
     stagedBOM: {
@@ -531,7 +531,7 @@ export const MACHINES_DATA: OpenMachine[] = [
     docSlug: 'bca-packaging-engine',
     controls: {
       manual: 'Hand-crank ratchet drive for coarse breaker, manual screw ram, gravity aggregate feed, benchtop hot-plate cure.',
-      buttons: 'Toggle-switched DC gear motor drive, digital PID temperature controllers for band heaters, tactile forward/reverse jog buttons.',
+      buttons: 'Strict Two-Control Standard (Master DC Cut + SD Reset) + Flutter BLE Virtual Panel for motor jog and thermal regulation.',
       ai: 'Closed-loop ESP32-S3 node monitoring ram compaction load cells, automated stepper 4-way variable aperture gate resizing, and flying wire servo cut.'
     },
     stagedBOM: {
