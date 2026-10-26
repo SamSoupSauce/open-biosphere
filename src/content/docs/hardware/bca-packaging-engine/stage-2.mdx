@@ -78,7 +78,9 @@ A high-level central agent running on the Central Controller (Raspberry Pi 5 or 
   dimensions={{ x_mm: 220.0, y_mm: 220.0, z_mm: 12.0 }}
   estimatedCost={45.00}
   modelUrl="/open-biosphere/assets/parts/PART-FAB-DIE-GATE-4WAY/model.gltf"
-/> 1. Mount the four precision ground tool steel die plates ([`PART-FAB-DIE-GATE-4WAY`](/open-biosphere/parts/part-custom-die-gate-4way/)) into the front die collar.
+/>
+
+1. Mount the four precision ground tool steel die plates ([`PART-FAB-DIE-GATE-4WAY`](/open-biosphere/parts/part-custom-die-gate-4way/)) into the front die collar.
 2. Fasten the four NEMA 23 stepper motors to the radial perimeter brackets with flexible jaw couplings.
 3. Align the T8×4 stainless lead screws with the gate brass drive nuts.
 4. Verify full orthogonal travel: test stepping from 60 × 60 mm minimum throat up to 180 × 180 mm maximum throat under driver microstepping (1/8 step).
@@ -94,7 +96,9 @@ A high-level central agent running on the Central Controller (Raspberry Pi 5 or 
   dimensions={{ x_mm: 260.0, y_mm: 140.0, z_mm: 45.0 }}
   estimatedCost={28.00}
   modelUrl="/open-biosphere/assets/parts/PART-FAB-SHEAR-CARRIAGE-WIRE/model.gltf"
-/> 1. Bolt twin MGN12H linear guide rails horizontally across the die face output bracket.
+/>
+
+1. Bolt twin MGN12H linear guide rails horizontally across the die face output bracket.
 2. Mount the flying shear wire bow carriage ([`PART-FAB-SHEAR-CARRIAGE-WIRE`](/open-biosphere/parts/part-custom-shear-carriage-wire/)) to the rail blocks.
 3. Link the carriage drive linkage to the 20 kg·cm metal-gear servo arm via a ball-joint pushrod.
 4. Execute test sweep: full cutting stroke must complete in under 220 milliseconds with zero rail binding.
@@ -110,7 +114,9 @@ A high-level central agent running on the Central Controller (Raspberry Pi 5 or 
   dimensions={{ x_mm: 45.0, y_mm: 9.0, z_mm: 6.0 }}
   estimatedCost={28.00}
   modelUrl="/open-biosphere/assets/parts/PART-ELEC-SNS-LOADCELL-2KN/model.gltf"
-/> 1. Seat the 200 kg S-beam load cell between the extruder ram thrust bearing block and the lead-screw nut carriage.
+/>
+
+1. Seat the 200 kg S-beam load cell between the extruder ram thrust bearing block and the lead-screw nut carriage.
 2. Connect the 4-wire Wheatstone bridge to the HX711 24-bit ADC amplifier module.
 3. Wire the HX711 serial clock and data lines to GPIO 4 and GPIO 5 of the modular ESP32-C3 Tool Node.
 4. Calibrate zero offset (tare) and two-point span slope using a certified calibration test mass.
@@ -126,7 +132,9 @@ A high-level central agent running on the Central Controller (Raspberry Pi 5 or 
   dimensions={{ x_mm: 60.0, y_mm: 60.0, z_mm: 3.0 }}
   estimatedCost={5.00}
   modelUrl="/open-biosphere/assets/parts/PART-FAB-TARGET-APRILTAG-HARNESS/model.gltf"
-/> 1. Mount the AprilTag 36h11 target plate ([`PART-FAB-TARGET-APRILTAG-HARNESS`](/open-biosphere/parts/part-custom-target-apriltag-harness/)) to the front-left chassis datum pillar ($Z = 450$ mm).
+/>
+
+1. Mount the AprilTag 36h11 target plate ([`PART-FAB-TARGET-APRILTAG-HARNESS`](/open-biosphere/parts/part-custom-target-apriltag-harness/)) to the front-left chassis datum pillar ($Z = 450$ mm).
 2. Point the overhead gantry or aerial drone camera at the target to register the machine's exact coordinate origin $(X_0, Y_0, Z_0)$ within the master facility coordinate map.
 3. Test autonomous visual homing: verify that gantry placement aligns within $\pm 0.8$ mm of the finished container pickup platform.
 
@@ -141,7 +149,9 @@ A high-level central agent running on the Central Controller (Raspberry Pi 5 or 
   dimensions={{ x_mm: 400.0, y_mm: 250.0, z_mm: 180.0 }}
   estimatedCost={0.00}
   modelUrl="/open-biosphere/assets/machines/bca-packaging-engine/stage-2.gltf"
-/> 1. Connect the Machine Node (ESP32-S3) and Tool Node (ESP32-C3) to the isolated controller network (`POTFRM-4096`).
+/>
+
+1. Connect the Machine Node (ESP32-S3) and Tool Node (ESP32-C3) to the isolated controller network (`POTFRM-4096`).
 2. Verify heartbeat ping exchange: node must publish status payloads every 50 ms.
 3. Test safety fault injection: simulate Wi-Fi disconnect or central controller pause; verify that stepper pulses stop and heaters revert to standby hold within 250 milliseconds.
 
