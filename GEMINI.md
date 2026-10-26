@@ -38,6 +38,8 @@ When maintaining or updating `ModelViewer.tsx` or `web/viewer/`:
    * Use subtle, dark facet contours (`rgba(15, 23, 42, 0.45)` at `0.5px`) rather than high-contrast or translucent bright cyan strokes in solid mode, preventing lattice grid bleed-through. Full bright wireframe (`#38bdf8`) is reserved for explicit wireframe mode (`wireframe === true`).
 3. **Client-Side Orientation Auto-Correction:**
    * Maintain the runtime centroid dot-sum sanity check in `ModelViewer.tsx`. If an imported or third-party mesh has a negative outward dot sum, dynamically reverse vertex winding on load to guarantee robust rendering.
+4. **Viewport Drag Orbit Invariants:**
+   * Vertical mouse-click-drag (`dy = e.clientY - dragPosRef.current.y`) must pitch the perspective up when dragging down (`rotXRef.current + dy * 0.7`). Never invert the UI pitch delta.
 
 ---
 
