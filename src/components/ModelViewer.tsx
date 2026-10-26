@@ -250,7 +250,7 @@ export default function ModelViewer({
   const zoomCurrentRef = useRef(1.0);
   const zoomTargetRef = useRef(1.0);
   const minZoomRef = useRef(0.35);
-  const maxZoomRef = useRef(3.5);
+  const maxZoomRef = useRef(7.0);
   const isVisibleRef = useRef(true);
 
   // Monitor visibility to pause render loop when offscreen
@@ -297,7 +297,7 @@ export default function ModelViewer({
           });
           const boundingR = Math.sqrt(maxDistSq) || 50;
           minZoomRef.current = Math.max(0.25, 45 / (boundingR * 1.5));
-          maxZoomRef.current = Math.min(4.5, 320 / (boundingR * 0.4));
+          maxZoomRef.current = Math.min(9.0, 640 / (boundingR * 0.4));
 
           // Normal orientation audit: auto-detect and correct inverted mesh winding
           const mcx = parsed.vertices.reduce((s, v) => s + v[0], 0) / parsed.vertices.length;

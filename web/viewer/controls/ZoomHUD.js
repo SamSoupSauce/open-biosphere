@@ -15,7 +15,7 @@ export class ZoomHUD {
 
     // Dynamic camera bounds based on model bounding radius
     this.minZoom = options.minZoom ?? 0.35;
-    this.maxZoom = options.maxZoom ?? 3.50;
+    this.maxZoom = options.maxZoom ?? 7.0;
 
     // Step-action synchronization state
     this.activeStep = options.initialStep ?? 0;
@@ -33,7 +33,7 @@ export class ZoomHUD {
     if (!boundingRadius || boundingRadius <= 0) return;
     // Tighter zoom clamp for larger models, wider for smaller components
     this.minZoom = Math.max(0.25, 50 / (boundingRadius * 1.8));
-    this.maxZoom = Math.min(4.5, 300 / (boundingRadius * 0.4));
+    this.maxZoom = Math.min(9.0, 600 / (boundingRadius * 0.4));
   }
 
   /**
