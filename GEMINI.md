@@ -1,6 +1,6 @@
 # Open Biosphere Engineering & Architectural Invariants
 
-This document establishes critical invariants for physical CAD synthesis, interactive 3D visualization, and hardware documentation within the Open Biosphere repository.
+This document establishes critical invariants for physical CAD synthesis, interactive 3D visualization, asset lifecycle management, and hardware documentation within the Open Biosphere repository.
 
 ---
 
@@ -19,17 +19,26 @@ When authoring or modifying procedural geometry generators (`scripts/*.py`):
 
 ---
 
-## 2. Standard 3D Asset Format (glTF 2.0 Standard)
+## 2. Standard 3D Asset Format & Zero-Remnant Deprecation
 
-1. **Standard glTF 2.0 Specification:**
-   * All 3D models across `public/assets/machines/`, `public/assets/parts/`, and `src/content/docs/parts/` are standardized on glTF 2.0 (`.gltf` single-file with embedded base64 binary buffer, or `.glb`).
-   * All CAD assets are standardized on open, portable glTF 2.0.
-2. **Model References:**
-   * All entries in `src/data/parts.json`, machine manuals (`src/content/docs/hardware/**/*.mdx`), and custom part documentation (`src/content/docs/parts/**/*.mdx`) must reference `.gltf`.
+1. **glTF 2.0 CAD Standard:**
+   * All 3D assets across `public/assets/machines/`, `public/assets/parts/`, and `src/content/docs/parts/` are strictly standardized on glTF 2.0 (`.gltf` single-file with embedded base64 binary buffer, or `.glb`).
+   * Geometry buffers in `.gltf` files must use inline Base64 data URIs (`data:application/octet-stream;base64,...`) to guarantee atomic, single-fetch loading without CORS or relative `.bin` path failures.
+   * Proprietary binary Autodesk 3DS (`.3ds`) and legacy CAD binaries are completely deprecated. No `.3ds` files or references may exist in the repository.
+
+2. **Exhaustive Format Migration Scope:**
+   When migrating, renaming, or upgrading asset formats across the repository, changes must be universally applied across all layers:
+   * **Manifests & Code:** `src/data/parts.json`, `ModelViewer.tsx`, and generator scripts (`scripts/*.py`).
+   * **Manuals & Markdown:** All `modelUrl` props and table link anchors (e.g. `[glTF]`, never legacy `[3DS]`).
+   * **Embedded Vector Graphics:** All vector diagrams (`*.svg`) with embedded status chips or download callouts (e.g. `SOLID GEOMETRY VERIFIED [GLTF]`, `• Downloadable STEP / STL / GLTF`).
+   * **Specifications & RFCs:** Active standards and RFC documents in `src/content/docs/rfcs/`.
+
+3. **Zero-Remnant Deprecation Policy:**
+   * Superseded or converted binary assets must be removed from git tracking (`git rm`) immediately upon conversion to prevent duplicate file baggage, stale links, and cache desynchronization.
 
 ---
 
-## 3. 3D Web Viewport Shading & Backface Culling
+## 3. 3D Web Viewport Shading, Backface Culling & Orbit Controls
 
 When maintaining or updating `ModelViewer.tsx` or `web/viewer/`:
 1. **Mandatory Backface Culling:**
@@ -39,7 +48,7 @@ When maintaining or updating `ModelViewer.tsx` or `web/viewer/`:
 3. **Client-Side Orientation Auto-Correction:**
    * Maintain the runtime centroid dot-sum sanity check in `ModelViewer.tsx`. If an imported or third-party mesh has a negative outward dot sum, dynamically reverse vertex winding on load to guarantee robust rendering.
 4. **Viewport Drag Orbit Invariants:**
-   * Vertical mouse-click-drag (`dy = e.clientY - dragPosRef.current.y`) must pitch the perspective up when dragging down (`rotXRef.current + dy * 0.7`). Never invert the UI pitch delta.
+   * Vertical mouse-click-drag (`dy = e.clientY - dragPosRef.current.y`) must pitch the perspective up when dragging down (`rotXRef.current + dy * 0.7`) and pitch down when dragging up. Never invert UI pitch relative to natural orbital intuition.
 
 ---
 
