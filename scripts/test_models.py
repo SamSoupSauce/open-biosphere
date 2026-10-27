@@ -119,7 +119,8 @@ def audit_model(part_id, gltf_path):
         'PART-FAB-DRUM-FLANGES-PETG',
         'PART-FAB-FRAME-WHOOP-85MM',
         'PART-FAB-CHUTE-RIPSTOP-PETG',
-        'PART-FAB-DOCK-POGO-GANTRY'
+        'PART-FAB-DOCK-POGO-GANTRY',
+        'PART-FAB-TARGET-APRILTAG-HARNESS'
     ]
     if part_id in strict_targets:
         if non_two > 0:
