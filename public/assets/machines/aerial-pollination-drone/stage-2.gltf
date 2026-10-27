@@ -1,7 +1,7 @@
 {
   "asset": {
     "version": "2.0",
-    "generator": "OpenBiosphere-ParametricCAD-GLTF (RFC-014)"
+    "generator": "OpenBiosphere-ParametricCAD-GLTF (RFC-014/RFC-018)"
   },
   "scene": 0,
   "scenes": [
@@ -13,13 +13,13 @@
   ],
   "nodes": [
     {
-      "name": "stage-2",
+      "name": "Mesh",
       "mesh": 0
     }
   ],
   "meshes": [
     {
-      "name": "stage-2_Geometry",
+      "name": "Mesh_Geometry",
       "primitives": [
         {
           "attributes": {
@@ -70,12 +70,12 @@
       "type": "VEC3",
       "max": [
         57.0,
-        55.92324447631836,
+        55.92324335849338,
         42.0
       ],
       "min": [
         -57.0,
-        -55.92324447631836,
+        -55.92324335849338,
         -15.0
       ]
     }

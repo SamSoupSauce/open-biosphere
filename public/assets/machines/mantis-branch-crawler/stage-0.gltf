@@ -1,7 +1,7 @@
 {
   "asset": {
     "version": "2.0",
-    "generator": "OpenBiosphere-ParametricCAD-GLTF (RFC-014)"
+    "generator": "OpenBiosphere-ParametricCAD-GLTF (RFC-014/RFC-018)"
   },
   "scene": 0,
   "scenes": [
@@ -13,13 +13,13 @@
   ],
   "nodes": [
     {
-      "name": "stage-0",
+      "name": "Mesh",
       "mesh": 0
     }
   ],
   "meshes": [
     {
-      "name": "stage-0_Geometry",
+      "name": "Mesh_Geometry",
       "primitives": [
         {
           "attributes": {

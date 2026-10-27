@@ -59,6 +59,7 @@ A high-level central agent running on the Central Controller (Raspberry Pi 5 or 
   dimensions={{ x_mm: 380.0, y_mm: 160.0, z_mm: 120.0 }}
   estimatedCost={480.00}
   modelUrl="/open-biosphere/assets/machines/bca-packaging-engine/stage-2.gltf"
+  isComposite={true}
 />
 
 * **Direct 3D Assembly Download:** [Download stage-2.gltf (glTF 2.0 Standard)](/open-biosphere/assets/machines/bca-packaging-engine/stage-2.gltf)
@@ -134,9 +135,9 @@ A high-level central agent running on the Central Controller (Raspberry Pi 5 or 
   modelUrl="/open-biosphere/assets/parts/PART-FAB-TARGET-APRILTAG-HARNESS/model.gltf"
 />
 
-1. Mount the AprilTag 36h11 target plate ([`PART-FAB-TARGET-APRILTAG-HARNESS`](/open-biosphere/parts/part-custom-target-apriltag-harness/)) to the front-left chassis datum pillar ($Z = 450$ mm).
-2. Point the overhead gantry or aerial drone camera at the target to register the machine's exact coordinate origin $(X_0, Y_0, Z_0)$ within the master facility coordinate map.
-3. Test autonomous visual homing: verify that gantry placement aligns within $\pm 0.8$ mm of the finished container pickup platform.
+1. Mount the AprilTag 36h11 target plate ([`PART-FAB-TARGET-APRILTAG-HARNESS`](/open-biosphere/parts/part-custom-target-apriltag-harness/)) to the front-left chassis datum pillar (Z = 450 mm).
+2. Point the overhead gantry or aerial drone camera at the target to register the machine's exact coordinate origin (X0, Y0, Z0) within the master facility coordinate map.
+3. Test autonomous visual homing: verify that gantry placement aligns within ±0.8 mm of the finished container pickup platform.
 
 ### Step 2.5: CNT Network Provisioning & 250ms Watchdog Test
 

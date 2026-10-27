@@ -2,7 +2,7 @@ import os, struct, math, json, base64
 
 BASE = '/mnt/c/Users/samue/Projects/open-biosphere'
 
-def build_gltf(verts, faces, name="Mesh"):
+def build_gltf(verts, faces, colors=None, name="Mesh"):
     min_x = float(min(v[0] for v in verts))
     max_x = float(max(v[0] for v in verts))
     min_y = float(min(v[1] for v in verts))
@@ -24,14 +24,83 @@ def build_gltf(verts, faces, name="Mesh"):
     vertex_pad = (4 - (len(vertex_bytes) % 4)) % 4
     vertex_bytes_padded = vertex_bytes + (b'\x00' * vertex_pad)
 
-    bin_data = index_bytes_padded + vertex_bytes_padded
+    if colors is not None:
+        flat_colors = []
+        for c in colors:
+            flat_colors.extend([float(c[0]), float(c[1]), float(c[2])])
+        color_bytes = struct.pack('<' + 'f' * len(flat_colors), *flat_colors)
+        color_pad = (4 - (len(color_bytes) % 4)) % 4
+        color_bytes_padded = color_bytes + (b'\x00' * color_pad)
+        bin_data = index_bytes_padded + vertex_bytes_padded + color_bytes_padded
+    else:
+        bin_data = index_bytes_padded + vertex_bytes_padded
+
     b64_data = base64.b64encode(bin_data).decode('ascii')
     uri = f"data:application/octet-stream;base64,{b64_data}"
+
+    attributes = {"POSITION": 1}
+    if colors is not None:
+        attributes["COLOR_0"] = 2
+
+    accessors = [
+        {
+            "bufferView": 0,
+            "byteOffset": 0,
+            "componentType": 5123,
+            "count": len(flat_indices),
+            "type": "SCALAR",
+            "max": [int(max(flat_indices))],
+            "min": [int(min(flat_indices))]
+        },
+        {
+            "bufferView": 1,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": len(verts),
+            "type": "VEC3",
+            "max": [max_x, max_y, max_z],
+            "min": [min_x, min_y, min_z]
+        }
+    ]
+
+    bufferViews = [
+        {
+            "buffer": 0,
+            "byteOffset": 0,
+            "byteLength": len(index_bytes),
+            "target": 34963
+        },
+        {
+            "buffer": 0,
+            "byteOffset": len(index_bytes_padded),
+            "byteLength": len(vertex_bytes),
+            "byteStride": 12,
+            "target": 34962
+        }
+    ]
+
+    if colors is not None:
+        accessors.append({
+            "bufferView": 2,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": len(colors),
+            "type": "VEC3",
+            "max": [1.0, 1.0, 1.0],
+            "min": [0.0, 0.0, 0.0]
+        })
+        bufferViews.append({
+            "buffer": 0,
+            "byteOffset": len(index_bytes_padded) + len(vertex_bytes_padded),
+            "byteLength": len(color_bytes),
+            "byteStride": 12,
+            "target": 34962
+        })
 
     gltf = {
         "asset": {
             "version": "2.0",
-            "generator": "OpenBiosphere-ParametricCAD-GLTF (RFC-014)"
+            "generator": "OpenBiosphere-ParametricCAD-GLTF (RFC-014/RFC-018)"
         },
         "scene": 0,
         "scenes": [{"nodes": [0]}],
@@ -39,7 +108,7 @@ def build_gltf(verts, faces, name="Mesh"):
         "meshes": [{
             "name": f"{name}_Geometry",
             "primitives": [{
-                "attributes": {"POSITION": 1},
+                "attributes": attributes,
                 "indices": 0,
                 "material": 0,
                 "mode": 4
@@ -48,47 +117,14 @@ def build_gltf(verts, faces, name="Mesh"):
         "materials": [{
             "name": "PBR_Standard",
             "pbrMetallicRoughness": {
-                "baseColorFactor": [0.7, 0.75, 0.8, 1.0],
-                "metallicFactor": 0.7,
-                "roughnessFactor": 0.35
+                "baseColorFactor": [1.0, 1.0, 1.0, 1.0] if colors is not None else [0.7, 0.75, 0.8, 1.0],
+                "metallicFactor": 0.4 if colors is not None else 0.7,
+                "roughnessFactor": 0.45 if colors is not None else 0.35
             },
             "doubleSided": True
         }],
-        "accessors": [
-            {
-                "bufferView": 0,
-                "byteOffset": 0,
-                "componentType": 5123,
-                "count": len(flat_indices),
-                "type": "SCALAR",
-                "max": [int(max(flat_indices))],
-                "min": [int(min(flat_indices))]
-            },
-            {
-                "bufferView": 1,
-                "byteOffset": 0,
-                "componentType": 5126,
-                "count": len(verts),
-                "type": "VEC3",
-                "max": [max_x, max_y, max_z],
-                "min": [min_x, min_y, min_z]
-            }
-        ],
-        "bufferViews": [
-            {
-                "buffer": 0,
-                "byteOffset": 0,
-                "byteLength": len(index_bytes),
-                "target": 34963
-            },
-            {
-                "buffer": 0,
-                "byteOffset": len(index_bytes_padded),
-                "byteLength": len(vertex_bytes),
-                "byteStride": 12,
-                "target": 34962
-            }
-        ],
+        "accessors": accessors,
+        "bufferViews": bufferViews,
         "buffers": [
             {
                 "byteLength": len(bin_data),
@@ -100,13 +136,16 @@ def build_gltf(verts, faces, name="Mesh"):
 
 build_gltf = build_gltf
 
-def add_box(verts, faces, x0, x1, y0, y1, z0, z1):
+def add_box(verts, faces, x0, x1, y0, y1, z0, z1, colors=None, col=None):
     base_idx = len(verts)
     pts = [
         [x0, y0, z0], [x1, y0, z0], [x1, y1, z0], [x0, y1, z0],
         [x0, y0, z1], [x1, y0, z1], [x1, y1, z1], [x0, y1, z1],
     ]
     verts.extend(pts)
+    if colors is not None and col is not None:
+        for _ in range(8):
+            colors.append(col)
     quads = [
         [0, 3, 2, 1], # Bottom (-Z)
         [4, 5, 6, 7], # Top (+Z)
@@ -119,12 +158,15 @@ def add_box(verts, faces, x0, x1, y0, y1, z0, z1):
         faces.append([base_idx + q[0], base_idx + q[1], base_idx + q[2]])
         faces.append([base_idx + q[0], base_idx + q[2], base_idx + q[3]])
 
-def add_cylinder_z(verts, faces, x, y, r, z0, z1, n_seg=8):
+def add_cylinder_z(verts, faces, x, y, r, z0, z1, n_seg=8, colors=None, col=None):
     base_idx = len(verts)
     for i in range(n_seg):
         ang = (2 * math.pi * i) / n_seg
         verts.append([x + r * math.cos(ang), y + r * math.sin(ang), z0])
         verts.append([x + r * math.cos(ang), y + r * math.sin(ang), z1])
+        if colors is not None and col is not None:
+            colors.append(col)
+            colors.append(col)
     for i in range(n_seg):
         nxt = (i + 1) % n_seg
         b0 = base_idx + i * 2
@@ -134,18 +176,23 @@ def add_cylinder_z(verts, faces, x, y, r, z0, z1, n_seg=8):
         faces.append([b0, b1, t0])
         faces.append([b1, t1, t0])
     c_bot = len(verts); verts.append([x, y, z0])
+    if colors is not None and col is not None: colors.append(col)
     c_top = len(verts); verts.append([x, y, z1])
+    if colors is not None and col is not None: colors.append(col)
     for i in range(n_seg):
         nxt = (i + 1) % n_seg
         faces.append([c_bot, base_idx + nxt * 2, base_idx + i * 2])
         faces.append([c_top, base_idx + i * 2 + 1, base_idx + nxt * 2 + 1])
 
-def add_cylinder_x(verts, faces, x0, x1, y, z, r, n_seg=8):
+def add_cylinder_x(verts, faces, x0, x1, y, z, r, n_seg=8, colors=None, col=None):
     base_idx = len(verts)
     for i in range(n_seg):
         ang = (2 * math.pi * i) / n_seg
         verts.append([x0, y + r * math.cos(ang), z + r * math.sin(ang)])
         verts.append([x1, y + r * math.cos(ang), z + r * math.sin(ang)])
+        if colors is not None and col is not None:
+            colors.append(col)
+            colors.append(col)
     for i in range(n_seg):
         nxt = (i + 1) % n_seg
         b0 = base_idx + i * 2
@@ -155,18 +202,23 @@ def add_cylinder_x(verts, faces, x0, x1, y, z, r, n_seg=8):
         faces.append([b0, b1, t0])
         faces.append([b1, t1, t0])
     c_left = len(verts); verts.append([x0, y, z])
+    if colors is not None and col is not None: colors.append(col)
     c_right = len(verts); verts.append([x1, y, z])
+    if colors is not None and col is not None: colors.append(col)
     for i in range(n_seg):
         nxt = (i + 1) % n_seg
-        faces.append([c_left, base_idx + i * 2, base_idx + nxt * 2])
-        faces.append([c_right, base_idx + nxt * 2 + 1, base_idx + i * 2 + 1])
+        faces.append([c_left, base_idx + nxt * 2, base_idx + i * 2])
+        faces.append([c_right, base_idx + i * 2 + 1, base_idx + nxt * 2 + 1])
 
-def add_cylinder_y(verts, faces, x, y0, y1, z, r, n_seg=8):
+def add_cylinder_y(verts, faces, x, y0, y1, z, r, n_seg=8, colors=None, col=None):
     base_idx = len(verts)
     for i in range(n_seg):
         ang = (2 * math.pi * i) / n_seg
         verts.append([x + r * math.cos(ang), y0, z + r * math.sin(ang)])
         verts.append([x + r * math.cos(ang), y1, z + r * math.sin(ang)])
+        if colors is not None and col is not None:
+            colors.append(col)
+            colors.append(col)
     for i in range(n_seg):
         nxt = (i + 1) % n_seg
         v0 = base_idx + i * 2
@@ -176,7 +228,9 @@ def add_cylinder_y(verts, faces, x, y0, y1, z, r, n_seg=8):
         faces.append([v0, v1, v3])
         faces.append([v0, v3, v2])
     c_front = len(verts); verts.append([x, y0, z])
+    if colors is not None and col is not None: colors.append(col)
     c_back = len(verts); verts.append([x, y1, z])
+    if colors is not None and col is not None: colors.append(col)
     for i in range(n_seg):
         nxt = (i + 1) % n_seg
         faces.append([c_front, base_idx + i * 2, base_idx + nxt * 2])
@@ -314,68 +368,125 @@ def comp_drone_stage_2():
     return build_gltf(v, f)
 machines_composites['aerial-pollination-drone/stage-2'] = comp_drone_stage_2()
 
-# 2. BCA Packaging Engine
+# 2. BCA Packaging Engine (Bio-Pitch & Ceramic Packaging Engine, RFC-013 / RFC-018)
+# Color palette for 4-module multi-part composite representation:
+C_CHASSIS      = [0.45, 0.50, 0.58] # Slate Gray Angle-Iron Welded Frame
+C_MOD1_BREAKER = [0.96, 0.62, 0.04] # Amber Gold Thermal Stripper & Coarse Breaker
+C_MOD2_AUGER   = [0.05, 0.65, 0.91] # Electric Blue Jacketed Pug Auger Barrel
+C_MOD2_HEATER  = [0.85, 0.35, 0.15] # Ceramic Band Heaters & Bio-Pitch Injector Port
+C_MOD3_DIE     = [0.68, 0.35, 0.95] # Violet / Purple 4-Way Stepper Variable Aperture Die
+C_MOD4_SHEAR   = [0.10, 0.72, 0.52] # Emerald Green Flying Wire Shear & Catch Rack
+C_MOTOR        = [0.25, 0.28, 0.35] # Obsidian / Steel Gray Geared DC Drive Motor
+C_ELECTRONICS  = [0.20, 0.55, 0.85] # Cyan / Blue Autonomous CNT Controller & BLE Box
+C_CONTAINER    = [0.78, 0.52, 0.32] # Terracotta BCA Biodegradable Agricultural Container
+
+def add_bca_common_chassis(v, f, c):
+    # Longitudinal angle rails and cross tie plates (Y in [-54, -46])
+    add_box(v, f, -170, 170, -54, -46, -45, -35, colors=c, col=C_CHASSIS) # Front rail
+    add_box(v, f, -170, 170, -54, -46, 35, 45, colors=c, col=C_CHASSIS)   # Rear rail
+    add_box(v, f, -170, -155, -54, -46, -35, 35, colors=c, col=C_CHASSIS) # Left tie plate
+    add_box(v, f, 155, 170, -54, -46, -35, 35, colors=c, col=C_CHASSIS)   # Right tie plate
+    add_box(v, f, -20, 0, -54, -46, -35, 35, colors=c, col=C_CHASSIS)     # Center tie plate
+    # 4 Corner leveling feet / pads (Z in [-40, 40], X in [-165, 165], Y in [-60, -54])
+    for fx in [-165, 165]:
+        for fz in [-40, 40]:
+            add_cylinder_y(v, f, fx, -60, -54, fz, 7, n_seg=6, colors=c, col=C_CHASSIS)
+
+def add_bca_module_1(v, f, c):
+    # Module 1: Thermal Stripper & Coarse Breaker (-X input side: X in [-155, -95])
+    # Breaker lower housing (mounting on chassis rails)
+    add_box(v, f, -155, -95, -46, -10, -35, 35, colors=c, col=C_MOD1_BREAKER)
+    # Breaker upper hopper chute (flared receiver at top Y = 65)
+    add_box(v, f, -150, -100, -10, 65, -30, 30, colors=c, col=C_MOD1_BREAKER)
+    # Hopper top rim / lip
+    add_box(v, f, -153, -97, 60, 65, -33, 33, colors=c, col=C_MOD1_BREAKER)
+    # Manganese Breaker Shaft bearing bosses protruding left
+    add_cylinder_x(v, f, -165, -155, -28, -14, 8, n_seg=8, colors=c, col=C_MOD1_BREAKER)
+    add_cylinder_x(v, f, -165, -155, -28, 14, 8, n_seg=8, colors=c, col=C_MOD1_BREAKER)
+
 def comp_bca_stage_0():
-    v, f = [], []
-    # Steel frame
-    add_box(v, f, -160, 160, -60, 60, -30, -20)
-    # Upper breaker hopper & shaft
-    add_box(v, f, -130, -30, -50, 50, -10, 50) # Hopper chute
-    add_cylinder_x(v, f, -150, -10, 0, 20, 12, n_seg=8) # Breaker shaft
-    for x in [-110, -90, -70, -50, -30]:
-        add_box(v, f, x - 3, x + 3, -20, 20, 16, 24) # Breaker teeth
-    # Lower pug auger barrel & continuous shaft
-    add_cylinder_x(v, f, -80, 100, 0, -5, 24, n_seg=10) # Heated jacket barrel
-    add_cylinder_x(v, f, -140, 120, 0, -5, 12, n_seg=8) # Auger core shaft
-    # Hand ratchet crank on rear
-    add_cylinder_x(v, f, -160, -140, 0, -5, 10, n_seg=6)
-    add_box(v, f, -160, -152, 0, 55, -9, 0)
-    # Flying wire shear carriage at discharge
-    add_box(v, f, 100, 140, -45, 45, -20, 25)
-    add_cylinder_y(v, f, 120, -40, 40, -5, 1.5, n_seg=6) # Music wire
-    return build_gltf(v, f)
+    v, f, c = [], [], []
+    add_bca_common_chassis(v, f, c)
+    add_bca_module_1(v, f, c)
+    # Module 2: Manual auger barrel
+    add_cylinder_x(v, f, -95, 55, -28, 0, 18, n_seg=10, colors=c, col=C_MOD2_AUGER)
+    # Manual crank shaft & handle
+    add_cylinder_x(v, f, -175, -95, -28, 0, 6, n_seg=6, colors=c, col=C_MOD2_AUGER)
+    add_box(v, f, -178, -172, -28, 15, -4, 4, colors=c, col=C_CHASSIS) # Crank arm
+    add_cylinder_x(v, f, -186, -178, 12, 0, 4, n_seg=6, colors=c, col=C_CHASSIS) # Handle
+    # Gravity bio-pitch funnel on top
+    add_cylinder_y(v, f, -75, -10, 25, 0, 8, n_seg=8, colors=c, col=C_MOD2_HEATER)
+    # Module 3: Fixed aperture die plate
+    add_box(v, f, 55, 68, -46, -10, -32, 32, colors=c, col=C_MOD3_DIE)
+    add_box(v, f, 68, 76, -38, -18, -22, 22, colors=c, col=C_MOD3_DIE)
+    # Module 4: Manual wire cutoff shear & catch bed
+    add_cylinder_x(v, f, 76, 160, -16, -24, 3, n_seg=6, colors=c, col=C_MOD4_SHEAR)
+    add_cylinder_x(v, f, 76, 160, -16, 24, 3, n_seg=6, colors=c, col=C_MOD4_SHEAR)
+    add_box(v, f, 105, 116, -42, -14, -26, 26, colors=c, col=C_MOD4_SHEAR)
+    add_cylinder_y(v, f, 110, -14, 25, 24, 4, n_seg=6, colors=c, col=C_MOD4_SHEAR) # manual pull lever
+    add_box(v, f, 120, 165, -46, -40, -22, 22, colors=c, col=C_MOD4_SHEAR)
+    return build_gltf(v, f, colors=c, name="SYS-BCA-STAGE-0")
 machines_composites['bca-packaging-engine/stage-0'] = comp_bca_stage_0()
 
 def comp_bca_stage_1():
-    v, f = [], []
-    # Base mechanics
-    add_box(v, f, -160, 160, -60, 60, -30, -20)
-    add_cylinder_x(v, f, -80, 100, 0, -5, 24, n_seg=10)
-    # DC 250W geared motor mounted in rear
-    add_cylinder_y(v, f, -120, 30, 85, -5, 30, n_seg=10)
-    add_box(v, f, -135, -105, 30, 85, -28, -20)
-    # GT2 Timing belt & pulleys
-    add_cylinder_x(v, f, -145, -135, 0, -5, 25, n_seg=10)
-    add_cylinder_x(v, f, -145, -135, 55, -5, 14, n_seg=8)
-    add_box(v, f, -144, -136, 0, 55, 16, 22)
-    # Industrial 24V 250W PSU and Dual H-Bridge Box
-    add_box(v, f, -50, 40, 40, 75, -20, 15)
-    # Two-control safety interlock console
-    add_box(v, f, 60, 130, 40, 75, -20, 15)
-    add_cylinder_z(v, f, 80, 57, 8, 15, 24, n_seg=8)
-    return build_gltf(v, f)
+    v, f, c = [], [], []
+    add_bca_common_chassis(v, f, c)
+    add_bca_module_1(v, f, c)
+    # Module 2: Motorized auger with ceramic band heaters
+    add_cylinder_x(v, f, -95, 55, -28, 0, 18, n_seg=10, colors=c, col=C_MOD2_AUGER)
+    add_cylinder_x(v, f, -105, -95, -28, 0, 8, n_seg=8, colors=c, col=C_MOD2_AUGER)
+    for hx in [-65, -20, 25]:
+        add_cylinder_x(v, f, hx - 8, hx + 8, -28, 0, 21, n_seg=10, colors=c, col=C_MOD2_HEATER)
+    add_cylinder_y(v, f, -75, -10, 35, 0, 6, n_seg=8, colors=c, col=C_MOD2_HEATER)
+    add_cylinder_y(v, f, -75, 30, 36, 0, 10, n_seg=8, colors=c, col=C_MOD2_HEATER)
+    # Geared 24V DC Drive Motor mounted in rear
+    add_cylinder_x(v, f, -160, -115, -34, -40, 12, n_seg=8, colors=c, col=C_MOTOR)
+    add_box(v, f, -168, -160, -38, -20, -42, 16, colors=c, col=C_MOTOR)
+    # Module 3: Die frame
+    add_box(v, f, 55, 68, -46, -10, -32, 32, colors=c, col=C_MOD3_DIE)
+    add_box(v, f, 68, 76, -38, -18, -22, 22, colors=c, col=C_MOD3_DIE)
+    # Module 4: Wire shear & catch bed
+    add_cylinder_x(v, f, 76, 160, -16, -24, 3, n_seg=6, colors=c, col=C_MOD4_SHEAR)
+    add_cylinder_x(v, f, 76, 160, -16, 24, 3, n_seg=6, colors=c, col=C_MOD4_SHEAR)
+    add_box(v, f, 105, 116, -42, -14, -26, 26, colors=c, col=C_MOD4_SHEAR)
+    add_box(v, f, 120, 165, -46, -40, -22, 22, colors=c, col=C_MOD4_SHEAR)
+    # Two-Control BLE Safety console on front rail
+    add_box(v, f, -20, 35, -45, -22, 38, 48, colors=c, col=C_ELECTRONICS)
+    add_cylinder_y(v, f, 5, -22, -16, 43, 6, n_seg=8, colors=c, col=C_MOD2_HEATER) # E-Stop knob
+    return build_gltf(v, f, colors=c, name="SYS-BCA-STAGE-1")
 machines_composites['bca-packaging-engine/stage-1'] = comp_bca_stage_1()
 
 def comp_bca_stage_2():
-    v, f = [], []
-    # Stage 1 core
-    add_box(v, f, -160, 160, -60, 60, -30, -20)
-    add_cylinder_x(v, f, -80, 100, 0, -5, 24, n_seg=10)
-    add_cylinder_y(v, f, -120, 30, 85, -5, 30, n_seg=10)
-    # 4-Way Stepper Aperture Die Plates on discharge face (X=100)
-    add_box(v, f, 100, 112, -45, 45, -50, 40) # Frame
-    add_box(v, f, 102, 110, -25, 25, -30, 20) # Sliding plates
-    # 4 Stepper motors on 4 cardinals
-    add_cylinder_z(v, f, 106, 0, 12, 40, 75, n_seg=8)  # North stepper
-    add_cylinder_z(v, f, 106, 0, 12, -85, -50, n_seg=8) # South stepper
-    add_cylinder_y(v, f, 106, 45, 80, -5, 12, n_seg=8)  # East stepper
-    add_cylinder_y(v, f, 106, -80, -45, -5, 12, n_seg=8) # West stepper
-    # Robotic Servo Flying Shear
-    add_box(v, f, 125, 155, -40, 40, -35, 25)
-    add_box(v, f, 130, 150, 42, 65, 0, 30) # Servo
-    # Edge CNT Controller + Loadcell bracket
-    add_box(v, f, 0, 60, -75, -45, -20, 20)
-    return build_gltf(v, f)
+    v, f, c = [], [], []
+    add_bca_common_chassis(v, f, c)
+    add_bca_module_1(v, f, c)
+    # Module 2: Pug auger with heaters & pitch injection
+    add_cylinder_x(v, f, -95, 55, -28, 0, 18, n_seg=10, colors=c, col=C_MOD2_AUGER)
+    add_cylinder_x(v, f, -105, -95, -28, 0, 8, n_seg=8, colors=c, col=C_MOD2_AUGER)
+    for hx in [-65, -20, 25]:
+        add_cylinder_x(v, f, hx - 8, hx + 8, -28, 0, 21, n_seg=10, colors=c, col=C_MOD2_HEATER)
+    add_cylinder_y(v, f, -75, -10, 35, 0, 6, n_seg=8, colors=c, col=C_MOD2_HEATER)
+    add_cylinder_y(v, f, -75, 30, 36, 0, 10, n_seg=8, colors=c, col=C_MOD2_HEATER)
+    # Geared Drive Motor
+    add_cylinder_x(v, f, -160, -115, -34, -40, 12, n_seg=8, colors=c, col=C_MOTOR)
+    add_box(v, f, -168, -160, -38, -20, -42, 16, colors=c, col=C_MOTOR)
+    # Module 3: 4-Way Variable Aperture Stepper Die
+    add_box(v, f, 55, 68, -46, -10, -32, 32, colors=c, col=C_MOD3_DIE)
+    add_box(v, f, 68, 76, -38, -18, -22, 22, colors=c, col=C_MOD3_DIE)
+    add_cylinder_y(v, f, 62, -10, 22, 0, 7, n_seg=8, colors=c, col=C_MOD3_DIE) # North (+Y)
+    add_cylinder_y(v, f, 62, -46, -26, 0, 7, n_seg=8, colors=c, col=C_MOD3_DIE) # South (-Y)
+    add_cylinder_z(v, f, 62, -28, 7, 32, 54, n_seg=8, colors=c, col=C_MOD3_DIE)  # East (+Z)
+    add_cylinder_z(v, f, 62, -28, 7, -54, -32, n_seg=8, colors=c, col=C_MOD3_DIE) # West (-Z)
+    # Module 4: Robotic Servo Flying Shear & Cure bed with container
+    add_cylinder_x(v, f, 76, 160, -16, -24, 3, n_seg=6, colors=c, col=C_MOD4_SHEAR)
+    add_cylinder_x(v, f, 76, 160, -16, 24, 3, n_seg=6, colors=c, col=C_MOD4_SHEAR)
+    add_box(v, f, 105, 116, -42, -14, -26, 26, colors=c, col=C_MOD4_SHEAR)
+    add_box(v, f, 106, 115, -14, 6, -10, 10, colors=c, col=C_MOD4_SHEAR) # Servo
+    add_box(v, f, 120, 165, -46, -40, -22, 22, colors=c, col=C_MOD4_SHEAR)
+    add_box(v, f, 125, 155, -40, -20, -15, 15, colors=c, col=C_CONTAINER)
+    # Autonomous CNT Node & Load-cell amplifier box
+    add_box(v, f, -10, 45, -45, -22, 38, 48, colors=c, col=C_ELECTRONICS)
+    return build_gltf(v, f, colors=c, name="SYS-BCA-STAGE-2")
 machines_composites['bca-packaging-engine/stage-2'] = comp_bca_stage_2()
 machines_composites['bca-packaging-engine/architecture'] = comp_bca_stage_2()
 
