@@ -932,6 +932,120 @@ def generate_chute_funnel():
     return verts, faces
 
 
+def generate_dock_pogo_gantry():
+    """
+    Generates a solid, 3D-printable Overhead Gantry Spring-Loaded Pogo-Pin Docking Shoe & Latch.
+    Dimensions: 55.0 mm (X) x 45.0 mm (Y) x 20.0 mm (Z)
+    Features:
+      - Main chassis mounting base plate (55 x 45 x 5 mm, Z = -10 to -5)
+      - Elevated toolhead docking platform (37 x 37 x 8 mm, Z = -5 to +3)
+      - 2 side dovetail alignment guide rails (Z = -5 to 0)
+      - Central pogo pin terminal block (17 x 11 x 2.5 mm, Z = 3 to 5.5)
+      - 2 kinematic self-aligning conical guide posts (Z = 3 to 10, r0 = 3.5 -> r1 = 2.2 mm)
+      - 2 rare-earth magnetic latch retention cups (Z = 3 to 6.5 mm, r = 4.8 mm)
+      - 8-pin spring-loaded gold pogo contacts (2x4 array, 2.54 mm pitch, gold barrel + plunger tip)
+      - 2 chassis M4 mounting counterbore bosses at ends (X = +/- 23.5 mm)
+    100% outward-facing surface normals, 0 non-manifold edges.
+    """
+    verts = []
+    faces = []
+
+    def add_box(v_list, f_list, x0, x1, y0, y1, z0, z1):
+        idx = len(v_list)
+        v_list.extend([
+            (x0, y0, z0), (x1, y0, z0), (x1, y1, z0), (x0, y1, z0), # bottom 0,1,2,3
+            (x0, y0, z1), (x1, y0, z1), (x1, y1, z1), (x0, y1, z1)  # top 4,5,6,7
+        ])
+        f_list.extend([
+            (idx+0, idx+2, idx+1), (idx+0, idx+3, idx+2), # -Z
+            (idx+4, idx+5, idx+6), (idx+4, idx+6, idx+7), # +Z
+            (idx+0, idx+1, idx+5), (idx+0, idx+5, idx+4), # -Y
+            (idx+3, idx+7, idx+6), (idx+3, idx+6, idx+2), # +Y
+            (idx+0, idx+4, idx+7), (idx+0, idx+7, idx+3), # -X
+            (idx+1, idx+2, idx+6), (idx+1, idx+6, idx+5), # +X
+        ])
+
+    def add_cylinder_z(v_list, f_list, x, y, r, z0, z1, n_seg=16):
+        base_idx = len(v_list)
+        for i in range(n_seg):
+            ang = (2 * math.pi * i) / n_seg
+            c, s = math.cos(ang), math.sin(ang)
+            v_list.append((x + r * c, y + r * s, z0))
+            v_list.append((x + r * c, y + r * s, z1))
+        for i in range(n_seg):
+            nxt = (i + 1) % n_seg
+            b0 = base_idx + i * 2
+            t0 = base_idx + i * 2 + 1
+            b1 = base_idx + nxt * 2
+            t1 = base_idx + nxt * 2 + 1
+            f_list.append((b0, b1, t0))
+            f_list.append((b1, t1, t0))
+        c_bot = len(v_list); v_list.append((x, y, z0))
+        c_top = len(v_list); v_list.append((x, y, z1))
+        for i in range(n_seg):
+            nxt = (i + 1) % n_seg
+            f_list.append((c_bot, base_idx + nxt * 2, base_idx + i * 2))
+            f_list.append((c_top, base_idx + i * 2 + 1, base_idx + nxt * 2 + 1))
+
+    def add_cone_z(v_list, f_list, x, y, r0, r1, z0, z1, n_seg=16):
+        base_idx = len(v_list)
+        for i in range(n_seg):
+            ang = (2 * math.pi * i) / n_seg
+            c, s = math.cos(ang), math.sin(ang)
+            v_list.append((x + r0 * c, y + r0 * s, z0))
+            v_list.append((x + r1 * c, y + r1 * s, z1))
+        for i in range(n_seg):
+            nxt = (i + 1) % n_seg
+            b0 = base_idx + i * 2
+            t0 = base_idx + i * 2 + 1
+            b1 = base_idx + nxt * 2
+            t1 = base_idx + nxt * 2 + 1
+            f_list.append((b0, b1, t0))
+            f_list.append((b1, t1, t0))
+        c_bot = len(v_list); v_list.append((x, y, z0))
+        c_top = len(v_list); v_list.append((x, y, z1))
+        for i in range(n_seg):
+            nxt = (i + 1) % n_seg
+            f_list.append((c_bot, base_idx + nxt * 2, base_idx + i * 2))
+            f_list.append((c_top, base_idx + i * 2 + 1, base_idx + nxt * 2 + 1))
+
+    # Centered at Z=0 (-10.0 to +10.0), X in [-27.5, 27.5], Y in [-22.5, 22.5]
+    # 1. Base mounting plate (55 x 45 x 5 mm, Z = -10.0 to -5.0)
+    add_box(verts, faces, -27.5, 27.5, -22.5, 22.5, -10.0, -5.0)
+
+    # 2. Main docking platform (37 x 37 x 8 mm, from Z = -5.0 to 3.0)
+    add_box(verts, faces, -18.5, 18.5, -18.5, 18.5, -5.0, 3.0)
+
+    # 3. 2 Side Dovetail Guide Rails (from Z = -5.0 to 0.0)
+    add_box(verts, faces, -18.5, 18.5, -22.0, -18.5, -5.0, 0.0)
+    add_box(verts, faces, -18.5, 18.5, 18.5, 22.0, -5.0, 0.0)
+
+    # 4. Central Pogo Terminal Pedestal (17 x 11 x 2.5 mm, from Z = 3.0 to 5.5)
+    add_box(verts, faces, -8.5, 8.5, -5.5, 5.5, 3.0, 5.5)
+
+    # 5. 2 Kinematic Alignment Guide Pins (Tapered cones from Z = 3.0 to 10.0, r=3.5 down to 2.2)
+    add_cone_z(verts, faces, -13.0, -13.0, r0=3.5, r1=2.2, z0=3.0, z1=10.0, n_seg=16)
+    add_cone_z(verts, faces, 13.0, 13.0, r0=3.5, r1=2.2, z0=3.0, z1=10.0, n_seg=16)
+
+    # 6. 2 Magnetic Latch Retention Cups (Z = 3.0 to 6.5, r=4.8)
+    add_cylinder_z(verts, faces, -13.0, 13.0, r=4.8, z0=3.0, z1=6.5, n_seg=16)
+    add_cylinder_z(verts, faces, 13.0, -13.0, r=4.8, z0=3.0, z1=6.5, n_seg=16)
+
+    # 7. 8 Gold Pogo Pins (2x4 array, pitch 2.54 mm x 3.5 mm)
+    xs_pogo = [-3.81, -1.27, 1.27, 3.81]
+    ys_pogo = [-1.75, 1.75]
+    for px in xs_pogo:
+        for py in ys_pogo:
+            add_cylinder_z(verts, faces, px, py, r=0.75, z0=5.5, z1=8.5, n_seg=8)
+            add_cylinder_z(verts, faces, px, py, r=0.55, z0=8.5, z1=9.5, n_seg=8)
+
+    # 8. 2 Fastener Counterbore Flange Bosses at ends
+    add_cylinder_z(verts, faces, -23.5, 0.0, r=3.0, z0=-5.0, z1=-3.0, n_seg=12)
+    add_cylinder_z(verts, faces, 23.5, 0.0, r=3.0, z0=-5.0, z1=-3.0, n_seg=12)
+
+    return verts, faces
+
+
 def save_model(part_id, doc_slug, verts, faces):
     pub_path = f"{BASE_DIR}/public/assets/parts/{part_id}/model.gltf"
     doc_path = f"{BASE_DIR}/src/content/docs/parts/{doc_slug}/model.gltf"
@@ -976,6 +1090,10 @@ def main():
     # 6. PART-FAB-CHUTE-RIPSTOP-PETG
     v_chute, f_chute = generate_chute_funnel()
     save_model("PART-FAB-CHUTE-RIPSTOP-PETG", "part-custom-chute-ripstop-petg", v_chute, f_chute)
+
+    # 7. PART-FAB-DOCK-POGO-GANTRY
+    v_pogo, f_pogo = generate_dock_pogo_gantry()
+    save_model("PART-FAB-DOCK-POGO-GANTRY", "part-custom-dock-pogo-gantry", v_pogo, f_pogo)
 
     print("\nAll models successfully generated and saved with verified outward normals!")
 
