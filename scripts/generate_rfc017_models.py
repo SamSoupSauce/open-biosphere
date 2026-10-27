@@ -588,6 +588,81 @@ def generate_perch_dock():
     return verts, faces
 
 
+# ============================================================================
+# 4. PART-FAB-DRUM-FLANGES-PETG
+# ============================================================================
+def generate_drum_flanges():
+    """
+    Generates 3D-Printed PETG Bioreactor Drum End Flange (PART-FAB-DRUM-FLANGES-PETG).
+    Canonical Specs:
+      - Diameter: 300.0 mm (R = 150.0 mm)
+      - Total Height: 35.0 mm (Z from -17.5 to +17.5 mm)
+      - Central Drive Shaft Through-Bore: Ø8.0 mm (R = 4.0 mm)
+      - Axle Hub Boss: Ø48.0 mm (R = 24.0 mm), Z from 0.0 to +17.5 mm
+      - Perforated Sheet Retaining Step: R = 144.0 mm, landing shelf at Z = +5.0 mm
+      - Structural Web Disc: Thickness = 17.5 mm (from bottom Z = -17.5 to Z = 0.0 mm)
+      - 100% Watertight 2-Manifold with 0 non-2 edges.
+      - Strictly Outward Targeted Normals across all bounding faces.
+    """
+    profile = [
+        (4.0, -17.5),    # 0: Bore bottom
+        (150.0, -17.5),  # 1: Bottom outer edge (Z = -17.5 mm)
+        (150.0, 17.5),   # 2: Outer cylinder wall (R = 150.0 mm)
+        (144.0, 17.5),   # 3: Top outer rim face (Z = +17.5 mm)
+        (144.0, 5.0),    # 4: Retaining step inner wall (R = 144.0 mm)
+        (138.0, 5.0),    # 5: Retaining shelf landing (Z = +5.0 mm)
+        (138.0, 0.0),    # 6: Inner rim lower wall (R = 138.0 mm)
+        (24.0, 0.0),     # 7: Web plate top face (Z = 0.0 mm)
+        (24.0, 17.5),    # 8: Axle hub collar outer wall (R = 24.0 mm)
+        (4.0, 17.5),     # 9: Hub top rim face (Z = +17.5 mm)
+    ]
+
+    N = 48
+    verts = []
+    for r, z in profile:
+        for i in range(N):
+            theta = 2.0 * math.pi * i / N
+            verts.append([r * math.cos(theta), r * math.sin(theta), z])
+
+    faces = []
+    P = len(profile)
+
+    def sub(a, b): return (a[0]-b[0], a[1]-b[1], a[2]-b[2])
+    def cross(a, b): return (a[1]*b[2]-a[2]*b[1], a[2]*b[0]-a[0]*b[2], a[0]*b[1]-a[1]*b[0])
+    def dot(a, b): return a[0]*b[0] + a[1]*b[1] + a[2]*b[2]
+
+    for p in range(P):
+        next_p = (p + 1) % P
+        rA, zA = profile[p]
+        rB, zB = profile[next_p]
+        exp_dr = zB - zA
+        exp_dz = rA - rB
+        
+        for i in range(N):
+            ni = (i + 1) % N
+            v0 = p * N + i
+            v1 = p * N + ni
+            v2 = next_p * N + ni
+            v3 = next_p * N + i
+            
+            p0, p1, p2, p3 = verts[v0], verts[v1], verts[v2], verts[v3]
+            fn = cross(sub(p1, p0), sub(p2, p0))
+            c = [(p0[j] + p1[j] + p2[j] + p3[j]) / 4.0 for j in range(3)]
+            cr = math.sqrt(c[0]**2 + c[1]**2)
+            r_dir = (c[0]/cr, c[1]/cr, 0)
+            target = (exp_dr * r_dir[0], exp_dr * r_dir[1], exp_dz)
+            d = dot(fn, target)
+            
+            if d >= 0:
+                faces.append((v0, v1, v2))
+                faces.append((v0, v2, v3))
+            else:
+                faces.append((v0, v2, v1))
+                faces.append((v0, v3, v2))
+
+    return verts, faces
+
+
 def save_model(part_id, doc_slug, verts, faces):
     pub_path = f"{BASE_DIR}/public/assets/parts/{part_id}/model.gltf"
     doc_path = f"{BASE_DIR}/src/content/docs/parts/{doc_slug}/model.gltf"
@@ -620,6 +695,10 @@ def main():
     # 3. PART-FAB-PERCH-CONICAL-DOCK
     v_perch, f_perch = generate_perch_dock()
     save_model("PART-FAB-PERCH-CONICAL-DOCK", "part-custom-perch-conical-dock", v_perch, f_perch)
+
+    # 4. PART-FAB-DRUM-FLANGES-PETG
+    v_flange, f_flange = generate_drum_flanges()
+    save_model("PART-FAB-DRUM-FLANGES-PETG", "part-custom-drum-flanges-petg", v_flange, f_flange)
 
     print("\nAll models successfully generated and saved with verified outward normals!")
 
