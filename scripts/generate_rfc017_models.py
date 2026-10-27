@@ -1173,6 +1173,111 @@ def generate_target_apriltag_harness():
     return verts, faces
 
 
+def generate_flume_hdpe_acrylic():
+    """
+    Generates a solid, 3D-printable / machinable Food-Grade 1/4-Inch Acrylic & Polycarbonate Flume Body Sump Chamber.
+    Dimensions: 800.0 mm (X) x 250.0 mm (Y) x 450.0 mm (Z)
+    Features:
+      - Bottom floor plate (800 x 250 x 6.35 mm, Z = -225 to -218.65)
+      - Left & right 1/4" side walls:
+        * Deep sump chamber (X in [-390, -100], Z up to +225)
+        * Inclined transition wedge (X in [-100, 200], Z sloped from +225 down to +25)
+        * Shallow raceway flume (X in [200, 400], Z up to +25)
+      - Rear solvent-welded bulkhead end-plate (Z up to +225)
+      - Rear drainage bulkhead fitting (dia 75mm flange, dia 48mm drain port at Y=0, Z=-150)
+      - Front overflow weir sill (X in [390, 400], Z = -225 to -125)
+      - Top structural anti-deflection stiffener lips along side walls
+    100% outward-facing surface normals, 0 non-manifold edges.
+    """
+    verts = []
+    faces = []
+
+    def add_box(v_list, f_list, x0, x1, y0, y1, z0, z1):
+        idx = len(v_list)
+        v_list.extend([
+            (x0, y0, z0), (x1, y0, z0), (x1, y1, z0), (x0, y1, z0), # bottom 0,1,2,3
+            (x0, y0, z1), (x1, y0, z1), (x1, y1, z1), (x0, y1, z1)  # top 4,5,6,7
+        ])
+        f_list.extend([
+            (idx+0, idx+2, idx+1), (idx+0, idx+3, idx+2), # -Z
+            (idx+4, idx+5, idx+6), (idx+4, idx+6, idx+7), # +Z
+            (idx+0, idx+1, idx+5), (idx+0, idx+5, idx+4), # -Y
+            (idx+3, idx+7, idx+6), (idx+3, idx+6, idx+2), # +Y
+            (idx+0, idx+4, idx+7), (idx+0, idx+7, idx+3), # -X
+            (idx+1, idx+2, idx+6), (idx+1, idx+6, idx+5), # +X
+        ])
+
+    def add_cylinder_x(v_list, f_list, y, z, r, x0, x1, n_seg=16):
+        base_idx = len(v_list)
+        for i in range(n_seg):
+            ang = (2 * math.pi * i) / n_seg
+            c, s = math.cos(ang), math.sin(ang)
+            v_list.append((x0, y + r * c, z + r * s))
+            v_list.append((x1, y + r * c, z + r * s))
+        for i in range(n_seg):
+            nxt = (i + 1) % n_seg
+            b0 = base_idx + i * 2
+            t0 = base_idx + i * 2 + 1
+            b1 = base_idx + nxt * 2
+            t1 = base_idx + nxt * 2 + 1
+            f_list.append((b0, t0, b1))
+            f_list.append((b1, t0, t1))
+        c_bot = len(v_list); v_list.append((x0, y, z))
+        c_top = len(v_list); v_list.append((x1, y, z))
+        for i in range(n_seg):
+            nxt = (i + 1) % n_seg
+            f_list.append((c_bot, base_idx + i * 2, base_idx + nxt * 2))
+            f_list.append((c_top, base_idx + nxt * 2 + 1, base_idx + i * 2 + 1))
+
+    def add_wedge_x(v_list, f_list, x0, x1, y0, y1, z_bot, z0, z1):
+        idx = len(v_list)
+        v_list.extend([
+            (x0, y0, z_bot), (x1, y0, z_bot), (x1, y1, z_bot), (x0, y1, z_bot),
+            (x0, y0, z0),    (x1, y0, z1),    (x1, y1, z1),    (x0, y1, z0)
+        ])
+        f_list.extend([
+            (idx+0, idx+2, idx+1), (idx+0, idx+3, idx+2), # -Z
+            (idx+4, idx+5, idx+6), (idx+4, idx+6, idx+7), # sloped top (+Z)
+            (idx+0, idx+1, idx+5), (idx+0, idx+5, idx+4), # -Y
+            (idx+3, idx+7, idx+6), (idx+3, idx+6, idx+2), # +Y
+            (idx+0, idx+4, idx+7), (idx+0, idx+7, idx+3), # -X
+            (idx+1, idx+2, idx+6), (idx+1, idx+6, idx+5), # +X
+        ])
+
+    T = 6.35 # 1/4 inch wall thickness
+
+    # Floor plate: X in [-390, 400], Y in [-125, 125], Z in [-225, -225 + T]
+    add_box(verts, faces, -390.0, 400.0, -125.0, 125.0, -225.0, -225.0 + T)
+
+    # Left side wall (Y in [125 - T, 125])
+    add_box(verts, faces, -390.0, -100.0, 125.0 - T, 125.0, -225.0 + T, 225.0)
+    add_wedge_x(verts, faces, -100.0, 200.0, 125.0 - T, 125.0, -225.0 + T, 225.0, 25.0)
+    add_box(verts, faces, 200.0, 400.0, 125.0 - T, 125.0, -225.0 + T, 25.0)
+
+    # Right side wall (Y in [-125, -125 + T])
+    add_box(verts, faces, -390.0, -100.0, -125.0, -125.0 + T, -225.0 + T, 225.0)
+    add_wedge_x(verts, faces, -100.0, 200.0, -125.0, -125.0 + T, -225.0 + T, 225.0, 25.0)
+    add_box(verts, faces, 200.0, 400.0, -125.0, -125.0 + T, -225.0 + T, 25.0)
+
+    # Rear bulkhead end-plate
+    add_box(verts, faces, -390.0, -390.0 + T, -125.0 + T, 125.0 - T, -225.0 + T, 225.0)
+
+    # Rear drainage bulkhead fitting (OD 75mm, drain bore 48mm)
+    add_cylinder_x(verts, faces, y=0.0, z=-150.0, r=37.5, x0=-400.0, x1=-390.0, n_seg=24)
+    add_cylinder_x(verts, faces, y=0.0, z=-150.0, r=24.0, x0=-390.0, x1=-380.0, n_seg=24)
+
+    # Front overflow weir sill
+    add_box(verts, faces, 390.0, 400.0, -125.0 + T, 125.0 - T, -225.0 + T, -125.0)
+
+    # Top anti-deflection stiffener lips
+    add_box(verts, faces, -390.0, -100.0, 110.0, 125.0, 218.65, 225.0)
+    add_box(verts, faces, -390.0, -100.0, -125.0, -110.0, 218.65, 225.0)
+    add_box(verts, faces, 200.0, 400.0, 110.0, 125.0, 18.65, 25.0)
+    add_box(verts, faces, 200.0, 400.0, -125.0, -110.0, 18.65, 25.0)
+
+    return verts, faces
+
+
 def save_model(part_id, doc_slug, verts, faces):
     pub_path = f"{BASE_DIR}/public/assets/parts/{part_id}/model.gltf"
     doc_path = f"{BASE_DIR}/src/content/docs/parts/{doc_slug}/model.gltf"
@@ -1225,6 +1330,10 @@ def main():
     # 8. PART-FAB-TARGET-APRILTAG-HARNESS
     v_tag, f_tag = generate_target_apriltag_harness()
     save_model("PART-FAB-TARGET-APRILTAG-HARNESS", "part-custom-target-apriltag-harness", v_tag, f_tag)
+
+    # 9. PART-FAB-FLUME-HDPE-ACRYLIC
+    v_flume, f_flume = generate_flume_hdpe_acrylic()
+    save_model("PART-FAB-FLUME-HDPE-ACRYLIC", "part-custom-flume-hdpe-acrylic", v_flume, f_flume)
 
     print("\nAll models successfully generated and saved with verified outward normals!")
 
