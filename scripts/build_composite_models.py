@@ -372,6 +372,7 @@ machines_composites['aerial-pollination-drone/stage-2'] = comp_drone_stage_2()
 # Color palette for 4-module multi-part composite representation:
 C_CHASSIS      = [0.45, 0.50, 0.58] # Slate Gray Angle-Iron Welded Frame
 C_MOD1_BREAKER = [0.96, 0.62, 0.04] # Amber Gold Thermal Stripper & Coarse Breaker
+C_MOD1_DARK    = [0.20, 0.22, 0.25] # Dark Recessed Intake Cavity
 C_MOD2_AUGER   = [0.05, 0.65, 0.91] # Electric Blue Jacketed Pug Auger Barrel
 C_MOD2_HEATER  = [0.85, 0.35, 0.15] # Ceramic Band Heaters & Bio-Pitch Injector Port
 C_MOD3_DIE     = [0.68, 0.35, 0.95] # Violet / Purple 4-Way Stepper Variable Aperture Die
@@ -382,49 +383,51 @@ C_CONTAINER    = [0.78, 0.52, 0.32] # Terracotta BCA Biodegradable Agricultural 
 
 def add_bca_common_chassis(v, f, c):
     # Longitudinal angle rails and cross tie plates (Y in [-54, -46])
-    add_box(v, f, -170, 170, -54, -46, -45, -35, colors=c, col=C_CHASSIS) # Front rail
-    add_box(v, f, -170, 170, -54, -46, 35, 45, colors=c, col=C_CHASSIS)   # Rear rail
-    add_box(v, f, -170, -155, -54, -46, -35, 35, colors=c, col=C_CHASSIS) # Left tie plate
-    add_box(v, f, 155, 170, -54, -46, -35, 35, colors=c, col=C_CHASSIS)   # Right tie plate
-    add_box(v, f, -20, 0, -54, -46, -35, 35, colors=c, col=C_CHASSIS)     # Center tie plate
-    # 4 Corner leveling feet / pads (Z in [-40, 40], X in [-165, 165], Y in [-60, -54])
-    for fx in [-165, 165]:
-        for fz in [-40, 40]:
-            add_cylinder_y(v, f, fx, -60, -54, fz, 7, n_seg=6, colors=c, col=C_CHASSIS)
+    add_box(v, f, -165, 165, -54, -46, -42, -32, colors=c, col=C_CHASSIS) # Front rail
+    add_box(v, f, -165, 165, -54, -46, 32, 42, colors=c, col=C_CHASSIS)   # Rear rail
+    add_box(v, f, -165, -150, -54, -46, -32, 32, colors=c, col=C_CHASSIS) # Left tie plate
+    add_box(v, f, 150, 165, -54, -46, -32, 32, colors=c, col=C_CHASSIS)   # Right tie plate
+    add_box(v, f, -10, 10, -54, -46, -32, 32, colors=c, col=C_CHASSIS)    # Center tie plate
+    # 4 Corner leveling feet / pads (Z in [-37, 37], X in [-158, 158], Y in [-60, -54])
+    for fx in [-158, 158]:
+        for fz in [-37, 37]:
+            add_cylinder_y(v, f, fx, -60, -54, fz, 6, n_seg=6, colors=c, col=C_CHASSIS)
 
 def add_bca_module_1(v, f, c):
-    # Module 1: Thermal Stripper & Coarse Breaker (-X input side: X in [-155, -95])
+    # Module 1: Thermal Stripper & Coarse Breaker (-X input side)
     # Breaker lower housing (mounting on chassis rails)
-    add_box(v, f, -155, -95, -46, -10, -35, 35, colors=c, col=C_MOD1_BREAKER)
-    # Breaker upper hopper chute (flared receiver at top Y = 65)
-    add_box(v, f, -150, -100, -10, 65, -30, 30, colors=c, col=C_MOD1_BREAKER)
-    # Hopper top rim / lip
-    add_box(v, f, -153, -97, 60, 65, -33, 33, colors=c, col=C_MOD1_BREAKER)
-    # Manganese Breaker Shaft bearing bosses protruding left
-    add_cylinder_x(v, f, -165, -155, -28, -14, 8, n_seg=8, colors=c, col=C_MOD1_BREAKER)
-    add_cylinder_x(v, f, -165, -155, -28, 14, 8, n_seg=8, colors=c, col=C_MOD1_BREAKER)
+    add_box(v, f, -150, -95, -46, -12, -30, 30, colors=c, col=C_MOD1_BREAKER)
+    # Tapered hopper chute
+    add_box(v, f, -145, -100, -12, 35, -26, 26, colors=c, col=C_MOD1_BREAKER)
+    # Flared hopper rim
+    add_box(v, f, -148, -97, 35, 42, -29, 29, colors=c, col=C_MOD1_BREAKER)
+    # Open hopper dark throat opening
+    add_box(v, f, -143, -102, 41, 42.5, -24, 24, colors=c, col=C_MOD1_DARK)
+    # Breaker shaft journals
+    add_cylinder_x(v, f, -160, -150, -25, -12, 7, n_seg=8, colors=c, col=C_MOD1_BREAKER)
+    add_cylinder_x(v, f, -160, -150, -25, 12, 7, n_seg=8, colors=c, col=C_MOD1_BREAKER)
 
 def comp_bca_stage_0():
     v, f, c = [], [], []
     add_bca_common_chassis(v, f, c)
     add_bca_module_1(v, f, c)
-    # Module 2: Manual auger barrel
+    # Module 2: Continuous manual auger barrel (no heaters)
     add_cylinder_x(v, f, -95, 55, -28, 0, 18, n_seg=10, colors=c, col=C_MOD2_AUGER)
-    # Manual crank shaft & handle
+    # Manual crank shaft & handle extending through rear
     add_cylinder_x(v, f, -175, -95, -28, 0, 6, n_seg=6, colors=c, col=C_MOD2_AUGER)
-    add_box(v, f, -178, -172, -28, 15, -4, 4, colors=c, col=C_CHASSIS) # Crank arm
-    add_cylinder_x(v, f, -186, -178, 12, 0, 4, n_seg=6, colors=c, col=C_CHASSIS) # Handle
-    # Gravity bio-pitch funnel on top
-    add_cylinder_y(v, f, -75, -10, 25, 0, 8, n_seg=8, colors=c, col=C_MOD2_HEATER)
+    add_box(v, f, -178, -172, -28, 12, -4, 4, colors=c, col=C_CHASSIS) # Crank arm
+    add_cylinder_x(v, f, -186, -178, 10, 0, 4, n_seg=6, colors=c, col=C_CHASSIS) # Handle
+    # Gravity bio-pitch funnel on top of barrel
+    add_cylinder_y(v, f, -82, -10, 18, 0, 7, n_seg=8, colors=c, col=C_MOD2_HEATER)
     # Module 3: Fixed aperture die plate
-    add_box(v, f, 55, 68, -46, -10, -32, 32, colors=c, col=C_MOD3_DIE)
-    add_box(v, f, 68, 76, -38, -18, -22, 22, colors=c, col=C_MOD3_DIE)
+    add_box(v, f, 55, 66, -46, -10, -30, 30, colors=c, col=C_MOD3_DIE)
+    add_box(v, f, 66, 78, -36, -20, -18, 18, colors=c, col=C_MOD3_DIE)
     # Module 4: Manual wire cutoff shear & catch bed
-    add_cylinder_x(v, f, 76, 160, -16, -24, 3, n_seg=6, colors=c, col=C_MOD4_SHEAR)
-    add_cylinder_x(v, f, 76, 160, -16, 24, 3, n_seg=6, colors=c, col=C_MOD4_SHEAR)
-    add_box(v, f, 105, 116, -42, -14, -26, 26, colors=c, col=C_MOD4_SHEAR)
-    add_cylinder_y(v, f, 110, -14, 25, 24, 4, n_seg=6, colors=c, col=C_MOD4_SHEAR) # manual pull lever
-    add_box(v, f, 120, 165, -46, -40, -22, 22, colors=c, col=C_MOD4_SHEAR)
+    add_cylinder_x(v, f, 78, 106, -18, -20, 2.5, n_seg=6, colors=c, col=C_MOD4_SHEAR)
+    add_cylinder_x(v, f, 78, 106, -18, 20, 2.5, n_seg=6, colors=c, col=C_MOD4_SHEAR)
+    add_box(v, f, 96, 106, -42, -14, -22, 22, colors=c, col=C_MOD4_SHEAR)
+    add_cylinder_y(v, f, 101, -14, 18, 20, 3.5, n_seg=6, colors=c, col=C_MOD4_SHEAR) # manual pull lever
+    add_box(v, f, 106, 158, -46, -41, -20, 20, colors=c, col=C_MOD4_SHEAR)
     return build_gltf(v, f, colors=c, name="SYS-BCA-STAGE-0")
 machines_composites['bca-packaging-engine/stage-0'] = comp_bca_stage_0()
 
@@ -432,27 +435,36 @@ def comp_bca_stage_1():
     v, f, c = [], [], []
     add_bca_common_chassis(v, f, c)
     add_bca_module_1(v, f, c)
-    # Module 2: Motorized auger with ceramic band heaters
-    add_cylinder_x(v, f, -95, 55, -28, 0, 18, n_seg=10, colors=c, col=C_MOD2_AUGER)
-    add_cylinder_x(v, f, -105, -95, -28, 0, 8, n_seg=8, colors=c, col=C_MOD2_AUGER)
-    for hx in [-65, -20, 25]:
-        add_cylinder_x(v, f, hx - 8, hx + 8, -28, 0, 21, n_seg=10, colors=c, col=C_MOD2_HEATER)
-    add_cylinder_y(v, f, -75, -10, 35, 0, 6, n_seg=8, colors=c, col=C_MOD2_HEATER)
-    add_cylinder_y(v, f, -75, 30, 36, 0, 10, n_seg=8, colors=c, col=C_MOD2_HEATER)
+    # Module 2: Segmented barrel with ceramic band heaters (NO CONCENTRIC OVERLAP!)
+    add_cylinder_x(v, f, -95, -70, -28, 0, 18, n_seg=10, colors=c, col=C_MOD2_AUGER)
+    add_cylinder_x(v, f, -70, -50, -28, 0, 21, n_seg=10, colors=c, col=C_MOD2_HEATER)
+    add_cylinder_x(v, f, -50, -25, -28, 0, 18, n_seg=10, colors=c, col=C_MOD2_AUGER)
+    add_cylinder_x(v, f, -25, -5, -28, 0, 21, n_seg=10, colors=c, col=C_MOD2_HEATER)
+    add_cylinder_x(v, f, -5, 20, -28, 0, 18, n_seg=10, colors=c, col=C_MOD2_AUGER)
+    add_cylinder_x(v, f, 20, 40, -28, 0, 21, n_seg=10, colors=c, col=C_MOD2_HEATER)
+    add_cylinder_x(v, f, 40, 55, -28, 0, 19, n_seg=10, colors=c, col=C_MOD2_AUGER)
+
+    # Bio-Pitch Injector Port on Section 1
+    add_cylinder_y(v, f, -82, -10, 16, 0, 6, n_seg=8, colors=c, col=C_MOD2_HEATER)
+    add_cylinder_y(v, f, -82, 16, 21, 0, 9, n_seg=8, colors=c, col=C_MOD2_HEATER)
+
     # Geared 24V DC Drive Motor mounted in rear
-    add_cylinder_x(v, f, -160, -115, -34, -40, 12, n_seg=8, colors=c, col=C_MOTOR)
-    add_box(v, f, -168, -160, -38, -20, -42, 16, colors=c, col=C_MOTOR)
+    add_cylinder_x(v, f, -155, -115, -34, -38, 11, n_seg=8, colors=c, col=C_MOTOR)
+    add_box(v, f, -162, -155, -38, -18, -40, 5, colors=c, col=C_MOTOR) # Chain guard
+
     # Module 3: Die frame
-    add_box(v, f, 55, 68, -46, -10, -32, 32, colors=c, col=C_MOD3_DIE)
-    add_box(v, f, 68, 76, -38, -18, -22, 22, colors=c, col=C_MOD3_DIE)
+    add_box(v, f, 55, 66, -46, -10, -30, 30, colors=c, col=C_MOD3_DIE)
+    add_box(v, f, 66, 78, -36, -20, -18, 18, colors=c, col=C_MOD3_DIE)
+
     # Module 4: Wire shear & catch bed
-    add_cylinder_x(v, f, 76, 160, -16, -24, 3, n_seg=6, colors=c, col=C_MOD4_SHEAR)
-    add_cylinder_x(v, f, 76, 160, -16, 24, 3, n_seg=6, colors=c, col=C_MOD4_SHEAR)
-    add_box(v, f, 105, 116, -42, -14, -26, 26, colors=c, col=C_MOD4_SHEAR)
-    add_box(v, f, 120, 165, -46, -40, -22, 22, colors=c, col=C_MOD4_SHEAR)
+    add_cylinder_x(v, f, 78, 106, -18, -20, 2.5, n_seg=6, colors=c, col=C_MOD4_SHEAR)
+    add_cylinder_x(v, f, 78, 106, -18, 20, 2.5, n_seg=6, colors=c, col=C_MOD4_SHEAR)
+    add_box(v, f, 96, 106, -42, -14, -22, 22, colors=c, col=C_MOD4_SHEAR)
+    add_box(v, f, 106, 158, -46, -41, -20, 20, colors=c, col=C_MOD4_SHEAR)
+
     # Two-Control BLE Safety console on front rail
-    add_box(v, f, -20, 35, -45, -22, 38, 48, colors=c, col=C_ELECTRONICS)
-    add_cylinder_y(v, f, 5, -22, -16, 43, 6, n_seg=8, colors=c, col=C_MOD2_HEATER) # E-Stop knob
+    add_box(v, f, -15, 30, -45, -26, 34, 44, colors=c, col=C_ELECTRONICS)
+    add_cylinder_y(v, f, 8, -26, -20, 39, 5, n_seg=8, colors=c, col=C_MOD2_HEATER) # E-Stop knob
     return build_gltf(v, f, colors=c, name="SYS-BCA-STAGE-1")
 machines_composites['bca-packaging-engine/stage-1'] = comp_bca_stage_1()
 
@@ -460,32 +472,44 @@ def comp_bca_stage_2():
     v, f, c = [], [], []
     add_bca_common_chassis(v, f, c)
     add_bca_module_1(v, f, c)
-    # Module 2: Pug auger with heaters & pitch injection
-    add_cylinder_x(v, f, -95, 55, -28, 0, 18, n_seg=10, colors=c, col=C_MOD2_AUGER)
-    add_cylinder_x(v, f, -105, -95, -28, 0, 8, n_seg=8, colors=c, col=C_MOD2_AUGER)
-    for hx in [-65, -20, 25]:
-        add_cylinder_x(v, f, hx - 8, hx + 8, -28, 0, 21, n_seg=10, colors=c, col=C_MOD2_HEATER)
-    add_cylinder_y(v, f, -75, -10, 35, 0, 6, n_seg=8, colors=c, col=C_MOD2_HEATER)
-    add_cylinder_y(v, f, -75, 30, 36, 0, 10, n_seg=8, colors=c, col=C_MOD2_HEATER)
-    # Geared Drive Motor
-    add_cylinder_x(v, f, -160, -115, -34, -40, 12, n_seg=8, colors=c, col=C_MOTOR)
-    add_box(v, f, -168, -160, -38, -20, -42, 16, colors=c, col=C_MOTOR)
+
+    # Module 2: Segmented barrel with ceramic band heaters (NO CONCENTRIC OVERLAP!)
+    add_cylinder_x(v, f, -95, -70, -28, 0, 18, n_seg=10, colors=c, col=C_MOD2_AUGER)
+    add_cylinder_x(v, f, -70, -50, -28, 0, 21, n_seg=10, colors=c, col=C_MOD2_HEATER)
+    add_cylinder_x(v, f, -50, -25, -28, 0, 18, n_seg=10, colors=c, col=C_MOD2_AUGER)
+    add_cylinder_x(v, f, -25, -5, -28, 0, 21, n_seg=10, colors=c, col=C_MOD2_HEATER)
+    add_cylinder_x(v, f, -5, 20, -28, 0, 18, n_seg=10, colors=c, col=C_MOD2_AUGER)
+    add_cylinder_x(v, f, 20, 40, -28, 0, 21, n_seg=10, colors=c, col=C_MOD2_HEATER)
+    add_cylinder_x(v, f, 40, 55, -28, 0, 19, n_seg=10, colors=c, col=C_MOD2_AUGER)
+
+    # Bio-Pitch Injector Port on Section 1
+    add_cylinder_y(v, f, -82, -10, 16, 0, 6, n_seg=8, colors=c, col=C_MOD2_HEATER)
+    add_cylinder_y(v, f, -82, 16, 21, 0, 9, n_seg=8, colors=c, col=C_MOD2_HEATER)
+
+    # Geared 24V Drive Motor
+    add_cylinder_x(v, f, -155, -115, -34, -38, 11, n_seg=8, colors=c, col=C_MOTOR)
+    add_box(v, f, -162, -155, -38, -18, -40, 5, colors=c, col=C_MOTOR)
+
     # Module 3: 4-Way Variable Aperture Stepper Die
-    add_box(v, f, 55, 68, -46, -10, -32, 32, colors=c, col=C_MOD3_DIE)
-    add_box(v, f, 68, 76, -38, -18, -22, 22, colors=c, col=C_MOD3_DIE)
-    add_cylinder_y(v, f, 62, -10, 22, 0, 7, n_seg=8, colors=c, col=C_MOD3_DIE) # North (+Y)
-    add_cylinder_y(v, f, 62, -46, -26, 0, 7, n_seg=8, colors=c, col=C_MOD3_DIE) # South (-Y)
-    add_cylinder_z(v, f, 62, -28, 7, 32, 54, n_seg=8, colors=c, col=C_MOD3_DIE)  # East (+Z)
-    add_cylinder_z(v, f, 62, -28, 7, -54, -32, n_seg=8, colors=c, col=C_MOD3_DIE) # West (-Z)
+    add_box(v, f, 55, 66, -46, -10, -30, 30, colors=c, col=C_MOD3_DIE)
+    add_box(v, f, 66, 78, -36, -20, -18, 18, colors=c, col=C_MOD3_DIE)
+    # 4 Compact NEMA Stepper Motor Actuators on cardinals
+    add_box(v, f, 56, 65, -10, 6, -8, 8, colors=c, col=C_MOD3_DIE)     # North Stepper (+Y)
+    add_box(v, f, 56, 65, -35, -21, 30, 46, colors=c, col=C_MOD3_DIE)  # East Stepper (+Z)
+    add_box(v, f, 56, 65, -35, -21, -46, -30, colors=c, col=C_MOD3_DIE)# West Stepper (-Z)
+    add_box(v, f, 56, 65, -46, -38, -8, 8, colors=c, col=C_MOD3_DIE)   # South Stepper (-Y)
+
     # Module 4: Robotic Servo Flying Shear & Cure bed with container
-    add_cylinder_x(v, f, 76, 160, -16, -24, 3, n_seg=6, colors=c, col=C_MOD4_SHEAR)
-    add_cylinder_x(v, f, 76, 160, -16, 24, 3, n_seg=6, colors=c, col=C_MOD4_SHEAR)
-    add_box(v, f, 105, 116, -42, -14, -26, 26, colors=c, col=C_MOD4_SHEAR)
-    add_box(v, f, 106, 115, -14, 6, -10, 10, colors=c, col=C_MOD4_SHEAR) # Servo
-    add_box(v, f, 120, 165, -46, -40, -22, 22, colors=c, col=C_MOD4_SHEAR)
-    add_box(v, f, 125, 155, -40, -20, -15, 15, colors=c, col=C_CONTAINER)
-    # Autonomous CNT Node & Load-cell amplifier box
-    add_box(v, f, -10, 45, -45, -22, 38, 48, colors=c, col=C_ELECTRONICS)
+    add_cylinder_x(v, f, 78, 106, -18, -20, 2.5, n_seg=6, colors=c, col=C_MOD4_SHEAR)
+    add_cylinder_x(v, f, 78, 106, -18, 20, 2.5, n_seg=6, colors=c, col=C_MOD4_SHEAR)
+    add_box(v, f, 96, 106, -42, -14, -22, 22, colors=c, col=C_MOD4_SHEAR)
+    add_box(v, f, 97, 105, -14, 0, -7, 7, colors=c, col=C_MOD4_SHEAR) # Servo
+    add_box(v, f, 106, 158, -46, -41, -20, 20, colors=c, col=C_MOD4_SHEAR) # Cure bed
+    add_box(v, f, 115, 145, -41, -21, -13, 13, colors=c, col=C_CONTAINER)  # Extruded Container
+
+    # Autonomous ESP32-S3 CNT Node on front rail
+    add_box(v, f, -15, 30, -45, -26, 34, 44, colors=c, col=C_ELECTRONICS)
+
     return build_gltf(v, f, colors=c, name="SYS-BCA-STAGE-2")
 machines_composites['bca-packaging-engine/stage-2'] = comp_bca_stage_2()
 machines_composites['bca-packaging-engine/architecture'] = comp_bca_stage_2()
