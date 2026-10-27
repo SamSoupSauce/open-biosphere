@@ -1278,6 +1278,95 @@ def generate_flume_hdpe_acrylic():
     return verts, faces
 
 
+# ============================================================================
+# 10. PART-MECH-SPOKE-KEYED-ALUM16
+# ============================================================================
+def generate_spoke_keyed_alum16():
+    # Grid slices along X:
+    # 0: -190 to -178 (length 12) - Keyed central hub tongue (Y in [-6, 6])
+    # 1: -178 to -140 (length 38) - Inner hub mount plate (Y in [-22.5, 22.5])
+    # 2: -140 to -130 (length 10) - Root bulkhead transition (Y in [-18.5, 18.5])
+    # 3: -130 to -50  (length 80) - Skeletal pocket 1 (Top/bottom rails)
+    # 4: -50 to -38   (length 12) - Mid-span cross-brace 1 (Y in [-18.5, 18.5])
+    # 5: -38 to 38    (length 76) - Skeletal pocket 2 (Top/bottom rails)
+    # 6: 38 to 50     (length 12) - Mid-span cross-brace 2 (Y in [-18.5, 18.5])
+    # 7: 50 to 130    (length 80) - Skeletal pocket 3 (Top/bottom rails)
+    # 8: 130 to 140   (length 10) - Outer bulkhead transition (Y in [-18.5, 18.5])
+    # 9: 140 to 178   (length 38) - Outer rim mounting foot (Y in [-22.5, 22.5])
+    # 10: 178 to 186  (length 8)  - Outer indexing detent pad (Y in [-18.5, 18.5])
+    # 11: 186 to 190  (length 4)  - 90-degree bent outer lip (Y in [-18.5, 18.5], Z in [-1.5, 6.0])
+
+    x_grid = [-190.0, -178.0, -140.0, -130.0, -50.0, -38.0, 38.0, 50.0, 130.0, 140.0, 178.0, 186.0, 190.0]
+    y_grid = [-22.5, -18.5, -11.5, -6.0, 6.0, 11.5, 18.5, 22.5]
+    z_grid = [-1.5, 1.5, 6.0]
+
+    solid = set()
+    # zi = 0 (base sheet 3.0mm)
+    for xi in range(len(x_grid) - 1):
+        if xi == 0:
+            solid.add((xi, 3, 0))  # keyed tongue
+        elif xi in [1, 9]:
+            for yi in range(7):
+                solid.add((xi, yi, 0))  # full width hub & rim pads
+        elif xi in [2, 4, 6, 8, 10, 11]:
+            for yi in range(1, 6):
+                solid.add((xi, yi, 0))  # cross webs and end detent
+        elif xi in [3, 5, 7]:
+            solid.add((xi, 1, 0))  # bottom spar rail
+            solid.add((xi, 5, 0))  # top spar rail
+
+    # zi = 1 (stamped 90-deg detent lip)
+    for yi in range(1, 6):
+        solid.add((11, yi, 1))
+
+    verts = []
+    faces = []
+    vert_map = {}
+
+    def get_vert(x, y, z):
+        key = (round(float(x), 4), round(float(y), 4), round(float(z), 4))
+        if key in vert_map:
+            return vert_map[key]
+        idx = len(verts)
+        verts.append([float(x), float(y), float(z)])
+        vert_map[key] = idx
+        return idx
+
+    def add_quad(p0, p1, p2, p3):
+        i0 = get_vert(*p0)
+        i1 = get_vert(*p1)
+        i2 = get_vert(*p2)
+        i3 = get_vert(*p3)
+        faces.append((i0, i1, i2))
+        faces.append((i0, i2, i3))
+
+    for (xi, yi, zi) in sorted(solid):
+        x0, x1 = x_grid[xi], x_grid[xi + 1]
+        y0, y1 = y_grid[yi], y_grid[yi + 1]
+        z0, z1 = z_grid[zi], z_grid[zi + 1]
+
+        # +X face (normal +X)
+        if (xi + 1, yi, zi) not in solid:
+            add_quad((x1, y0, z0), (x1, y1, z0), (x1, y1, z1), (x1, y0, z1))
+        # -X face (normal -X)
+        if (xi - 1, yi, zi) not in solid:
+            add_quad((x0, y1, z0), (x0, y0, z0), (x0, y0, z1), (x0, y1, z1))
+        # +Y face (normal +Y)
+        if (xi, yi + 1, zi) not in solid:
+            add_quad((x1, y1, z0), (x0, y1, z0), (x0, y1, z1), (x1, y1, z1))
+        # -Y face (normal -Y)
+        if (xi, yi - 1, zi) not in solid:
+            add_quad((x0, y0, z0), (x1, y0, z0), (x1, y0, z1), (x0, y0, z1))
+        # +Z face (normal +Z)
+        if (xi, yi, zi + 1) not in solid:
+            add_quad((x0, y0, z1), (x1, y0, z1), (x1, y1, z1), (x0, y1, z1))
+        # -Z face (normal -Z)
+        if (xi, yi, zi - 1) not in solid:
+            add_quad((x0, y1, z0), (x1, y1, z0), (x1, y0, z0), (x0, y0, z0))
+
+    return verts, faces
+
+
 def save_model(part_id, doc_slug, verts, faces):
     pub_path = f"{BASE_DIR}/public/assets/parts/{part_id}/model.gltf"
     doc_path = f"{BASE_DIR}/src/content/docs/parts/{doc_slug}/model.gltf"
@@ -1334,6 +1423,10 @@ def main():
     # 9. PART-FAB-FLUME-HDPE-ACRYLIC
     v_flume, f_flume = generate_flume_hdpe_acrylic()
     save_model("PART-FAB-FLUME-HDPE-ACRYLIC", "part-custom-flume-hdpe-acrylic", v_flume, f_flume)
+
+    # 10. PART-MECH-SPOKE-KEYED-ALUM16
+    v_spoke, f_spoke = generate_spoke_keyed_alum16()
+    save_model("PART-MECH-SPOKE-KEYED-ALUM16", "part-custom-spoke-keyed-alum16", v_spoke, f_spoke)
 
     print("\nAll models successfully generated and saved with verified outward normals!")
 
