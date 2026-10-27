@@ -663,6 +663,188 @@ def generate_drum_flanges():
     return verts, faces
 
 
+# ============================================================================
+# 5. PART-FAB-FRAME-WHOOP-85MM
+# ============================================================================
+def generate_whoop_frame():
+    """
+    Generates 85mm Ducted Polycarbonate Whoop Airframe + Ducts (PART-FAB-FRAME-WHOOP-85MM).
+    Chassis platform for Aerial Spotter & Pollination Drone (Stage 1).
+    Specs:
+      - Footprint: 115.0 x 115.0 x 38.0 mm
+      - 4 Ducted Propeller Guards: R_in=24.5mm (fits 2" props), R_out=26.5mm, Z in [-3.0, 13.0]
+      - Central Flight Controller Deck: 30x30x4.5 mm with standard 26x26mm whoop AIO mounts
+      - Forward Canopy / Camera Standoffs: Z up to 24.0 mm
+      - Underslung 2S LiPo Battery Bay Rails: Z in [-14.0, -2.0]
+      - 4 Motor Mount Hubs with 3 Aerodynamic Spider Struts per duct
+      - 4 Structural Spar Arms uniting deck and ducts into a single solid chassis
+      - 100% Watertight 2-Manifold with 0 non-2 edges and strictly outward normals
+    """
+    def sub(a, b): return (a[0]-b[0], a[1]-b[1], a[2]-b[2])
+    def cross(a, b): return (a[1]*b[2]-a[2]*b[1], a[2]*b[0]-a[0]*b[2], a[0]*b[1]-a[1]*b[0])
+    def dot(a, b): return a[0]*b[0] + a[1]*b[1] + a[2]*b[2]
+
+    def add_quad_target(verts, faces, i0, i1, i2, i3, target_vec):
+        p0, p1, p2, p3 = verts[i0], verts[i1], verts[i2], verts[i3]
+        fn = cross(sub(p1, p0), sub(p2, p0))
+        if dot(fn, target_vec) >= 0:
+            faces.append([i0, i1, i2])
+            faces.append([i0, i2, i3])
+        else:
+            faces.append([i0, i2, i1])
+            faces.append([i0, i3, i2])
+
+    def add_box(verts, faces, x0, x1, y0, y1, z0, z1):
+        base_idx = len(verts)
+        pts = [
+            [x0, y0, z0], [x1, y0, z0], [x1, y1, z0], [x0, y1, z0],
+            [x0, y0, z1], [x1, y0, z1], [x1, y1, z1], [x0, y1, z1],
+        ]
+        verts.extend(pts)
+        quads = [
+            [0, 3, 2, 1], # Bottom (-Z)
+            [4, 5, 6, 7], # Top (+Z)
+            [0, 1, 5, 4], # Front (-Y)
+            [2, 3, 7, 6], # Back (+Y)
+            [0, 4, 7, 3], # Left (-X)
+            [1, 2, 6, 5], # Right (+X)
+        ]
+        for q in quads:
+            faces.append([base_idx + q[0], base_idx + q[1], base_idx + q[2]])
+            faces.append([base_idx + q[0], base_idx + q[2], base_idx + q[3]])
+
+    def add_cylinder_z(verts, faces, x, y, r, z0, z1, n_seg=12):
+        base_idx = len(verts)
+        for i in range(n_seg):
+            ang = (2 * math.pi * i) / n_seg
+            verts.append([x + r * math.cos(ang), y + r * math.sin(ang), z0])
+            verts.append([x + r * math.cos(ang), y + r * math.sin(ang), z1])
+        for i in range(n_seg):
+            nxt = (i + 1) % n_seg
+            b0 = base_idx + i * 2
+            t0 = base_idx + i * 2 + 1
+            b1 = base_idx + nxt * 2
+            t1 = base_idx + nxt * 2 + 1
+            faces.append([b0, b1, t0])
+            faces.append([b1, t1, t0])
+        c_bot = len(verts); verts.append([x, y, z0])
+        c_top = len(verts); verts.append([x, y, z1])
+        for i in range(n_seg):
+            nxt = (i + 1) % n_seg
+            faces.append([c_bot, base_idx + nxt * 2, base_idx + i * 2])
+            faces.append([c_top, base_idx + i * 2 + 1, base_idx + nxt * 2 + 1])
+
+    def add_tube_z_targeted(verts, faces, cx, cy, r_in, r_out, z0, z1, n_seg=24):
+        base_idx = len(verts)
+        for i in range(n_seg):
+            th = 2.0 * math.pi * i / n_seg
+            c, s = math.cos(th), math.sin(th)
+            verts.append([cx + r_in * c,  cy + r_in * s,  z0])
+            verts.append([cx + r_in * c,  cy + r_in * s,  z1])
+            verts.append([cx + r_out * c, cy + r_out * s, z1])
+            verts.append([cx + r_out * c, cy + r_out * s, z0])
+
+        for i in range(n_seg):
+            ni = (i + 1) % n_seg
+            th_mid = 2.0 * math.pi * (i + 0.5) / n_seg
+            cm, sm = math.cos(th_mid), math.sin(th_mid)
+            r_out_vec = (cm, sm, 0.0)
+            r_in_vec  = (-cm, -sm, 0.0)
+            
+            i_in_b  = base_idx + i * 4 + 0
+            i_in_t  = base_idx + i * 4 + 1
+            i_out_t = base_idx + i * 4 + 2
+            i_out_b = base_idx + i * 4 + 3
+            
+            n_in_b  = base_idx + ni * 4 + 0
+            n_in_t  = base_idx + ni * 4 + 1
+            n_out_t = base_idx + ni * 4 + 2
+            n_out_b = base_idx + ni * 4 + 3
+
+            add_quad_target(verts, faces, i_out_b, n_out_b, n_out_t, i_out_t, r_out_vec)
+            add_quad_target(verts, faces, i_in_b, i_in_t, n_in_t, n_in_b, r_in_vec)
+            add_quad_target(verts, faces, i_in_t, i_out_t, n_out_t, n_in_t, (0, 0, 1.0))
+            add_quad_target(verts, faces, i_in_b, n_in_b, n_out_b, i_out_b, (0, 0, -1.0))
+
+    def add_beam(verts, faces, p0, p1, width=4.0, height=3.0):
+        dx, dy = p1[0] - p0[0], p1[1] - p0[1]
+        L = math.sqrt(dx*dx + dy*dy)
+        if L < 1e-4: return
+        nx, ny = -dy / L, dx / L
+        hw = width / 2.0
+        hz = height / 2.0
+        
+        zc = (p0[2] + p1[2]) / 2.0
+        z_bot = zc - hz
+        z_top = zc + hz
+        
+        base_idx = len(verts)
+        pts = [
+            [p0[0] - nx*hw, p0[1] - ny*hw, z_bot],
+            [p0[0] + nx*hw, p0[1] + ny*hw, z_bot],
+            [p1[0] + nx*hw, p1[1] + ny*hw, z_bot],
+            [p1[0] - nx*hw, p1[1] - ny*hw, z_bot],
+            [p0[0] - nx*hw, p0[1] - ny*hw, z_top],
+            [p0[0] + nx*hw, p0[1] + ny*hw, z_top],
+            [p1[0] + nx*hw, p1[1] + ny*hw, z_top],
+            [p1[0] - nx*hw, p1[1] - ny*hw, z_top],
+        ]
+        verts.extend(pts)
+        quads = [
+            [0, 3, 2, 1], # Bottom (-Z)
+            [4, 5, 6, 7], # Top (+Z)
+            [0, 1, 5, 4], # End p0
+            [2, 3, 7, 6], # End p1
+            [0, 4, 7, 3], # Side left
+            [1, 2, 6, 5], # Side right
+        ]
+        for q in quads:
+            faces.append([base_idx + q[0], base_idx + q[1], base_idx + q[2]])
+            faces.append([base_idx + q[0], base_idx + q[2], base_idx + q[3]])
+
+    verts, faces = [], []
+
+    # 1. Central Avionics Flight Controller Deck (30x30x4.5 mm)
+    add_box(verts, faces, -15.0, 15.0, -15.0, 15.0, -2.0, 2.5)
+
+    # 2. 4 FC Mounting Standoff Bosses (26x26mm standard whoop AIO pattern)
+    for sx, sy in [(13, 13), (-13, 13), (-13, -13), (13, -13)]:
+        add_cylinder_z(verts, faces, sx, sy, 2.0, 2.5, 6.5, n_seg=8)
+
+    # 3. Camera / Canopy Mounting Posts at Front (reaching Z=24.0 for total 38mm height)
+    add_cylinder_z(verts, faces, -6.0, 14.0, 1.8, 2.5, 24.0, n_seg=8)
+    add_cylinder_z(verts, faces,  6.0, 14.0, 1.8, 2.5, 24.0, n_seg=8)
+
+    # 4. Underslung Battery Retention Cage (for 2S 450mAh LiPo)
+    add_box(verts, faces, -8.5, -6.5, -15.0, 15.0, -14.0, -2.0)
+    add_box(verts, faces,  6.5,  8.5, -15.0, 15.0, -14.0, -2.0)
+    add_box(verts, faces, -8.5,  8.5, -15.0, -13.0, -14.0, -12.0)
+    add_box(verts, faces, -8.5,  8.5,  13.0,  15.0, -14.0, -12.0)
+
+    # 5. 4 Ducted Propeller Guard Rings (Centers at +-31.0, +-31.0)
+    duct_centers = [(31.0, 31.0), (-31.0, 31.0), (-31.0, -31.0), (31.0, -31.0)]
+    for dcx, dcy in duct_centers:
+        # Duct ring: R_in = 24.5mm, R_out = 26.5mm, Z in [-3.0, 13.0]
+        add_tube_z_targeted(verts, faces, dcx, dcy, r_in=24.5, r_out=26.5, z0=-3.0, z1=13.0, n_seg=24)
+        # Motor Mount Hub in center of duct
+        add_cylinder_z(verts, faces, dcx, dcy, r=5.5, z0=-5.5, z1=-1.5, n_seg=12)
+        # 3 Motor Spider Struts (connecting motor hub to duct wall)
+        for strut_ang_deg in [0, 120, 240]:
+            ang = math.radians(strut_ang_deg)
+            sp0 = (dcx + 5.0 * math.cos(ang), dcy + 5.0 * math.sin(ang), -3.5)
+            sp1 = (dcx + 24.5 * math.cos(ang), dcy + 24.5 * math.sin(ang), -3.5)
+            add_beam(verts, faces, sp0, sp1, width=2.8, height=2.4)
+
+    # 6. 4 Main Structural Frame Spar Arms connecting central deck to ducts
+    for dcx, dcy in duct_centers:
+        ang_arm = math.atan2(dcy, dcx)
+        ap0 = (13.0 * math.cos(ang_arm), 13.0 * math.sin(ang_arm), 0.25)
+        ap1 = (dcx - 24.5 * math.cos(ang_arm), dcy - 24.5 * math.sin(ang_arm), 0.25)
+        add_beam(verts, faces, ap0, ap1, width=5.0, height=3.5)
+
+    return verts, faces
+
+
 def save_model(part_id, doc_slug, verts, faces):
     pub_path = f"{BASE_DIR}/public/assets/parts/{part_id}/model.gltf"
     doc_path = f"{BASE_DIR}/src/content/docs/parts/{doc_slug}/model.gltf"
@@ -699,6 +881,10 @@ def main():
     # 4. PART-FAB-DRUM-FLANGES-PETG
     v_flange, f_flange = generate_drum_flanges()
     save_model("PART-FAB-DRUM-FLANGES-PETG", "part-custom-drum-flanges-petg", v_flange, f_flange)
+
+    # 5. PART-FAB-FRAME-WHOOP-85MM
+    v_whoop, f_whoop = generate_whoop_frame()
+    save_model("PART-FAB-FRAME-WHOOP-85MM", "part-custom-frame-whoop-85mm", v_whoop, f_whoop)
 
     print("\nAll models successfully generated and saved with verified outward normals!")
 

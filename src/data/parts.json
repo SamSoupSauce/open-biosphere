@@ -7,7 +7,7 @@
       "length_mm": 51.0,
       "width_mm": 28.0,
       "thickness_mm": 8.5,
-      "tolerance_mm": "±0.2",
+      "tolerance_mm": "\u00b10.2",
       "weight_grams": 14.5
     },
     "fabrication": {
@@ -71,7 +71,7 @@
       "length_mm": 21.0,
       "width_mm": 18.0,
       "thickness_mm": 4.5,
-      "tolerance_mm": "±0.2",
+      "tolerance_mm": "\u00b10.2",
       "weight_grams": 4.2
     },
     "fabrication": {
@@ -135,7 +135,7 @@
       "length_mm": 115.0,
       "width_mm": 65.0,
       "thickness_mm": 40.0,
-      "tolerance_mm": "±0.5",
+      "tolerance_mm": "\u00b10.5",
       "weight_grams": 135.0
     },
     "fabrication": {
@@ -215,7 +215,7 @@
       "length_mm": 38.0,
       "width_mm": 12.0,
       "thickness_mm": 4.0,
-      "tolerance_mm": "±0.2",
+      "tolerance_mm": "\u00b10.2",
       "weight_grams": 3.5
     },
     "fabrication": {
@@ -264,7 +264,7 @@
       "length_mm": 18.0,
       "width_mm": 12.0,
       "thickness_mm": 3.2,
-      "tolerance_mm": "±0.1",
+      "tolerance_mm": "\u00b10.1",
       "weight_grams": 1.8
     },
     "fabrication": {
@@ -290,14 +290,14 @@
     "used_by": []
   },
   {
-    "name": "NEMA 23 High-Torque Bipolar Stepper Motor (2.8 N·m, 2.8A)",
+    "name": "NEMA 23 High-Torque Bipolar Stepper Motor (2.8 N\u00b7m, 2.8A)",
     "category": "electrical",
     "summary": "Heavy-duty bipolar 2-phase stepper motor engineered for high-tension gantry traversal, heavy-duty auger compression, and high-load mechanical axes.",
     "dimensions": {
       "length_mm": 76.0,
       "width_mm": 57.0,
       "thickness_mm": 57.0,
-      "tolerance_mm": "±0.3",
+      "tolerance_mm": "\u00b10.3",
       "weight_grams": 1050.0
     },
     "fabrication": {
@@ -329,14 +329,14 @@
     ]
   },
   {
-    "name": "NEMA 17 Planetary Geared Stepper Motor (5.18:1 Ratio, 1.8 N·m)",
+    "name": "NEMA 17 Planetary Geared Stepper Motor (5.18:1 Ratio, 1.8 N\u00b7m)",
     "category": "electrical",
     "summary": "Compact geared stepper delivering high holding torque and low backlash for continuous drum rotation and high-precision fluid metering.",
     "dimensions": {
       "length_mm": 68.0,
       "width_mm": 42.0,
       "thickness_mm": 42.0,
-      "tolerance_mm": "±0.2",
+      "tolerance_mm": "\u00b10.2",
       "weight_grams": 480.0
     },
     "fabrication": {
@@ -375,7 +375,7 @@
       "length_mm": 44.0,
       "width_mm": 35.0,
       "thickness_mm": 35.0,
-      "tolerance_mm": "±0.2",
+      "tolerance_mm": "\u00b10.2",
       "weight_grams": 210.0
     },
     "fabrication": {
@@ -414,7 +414,7 @@
       "length_mm": 96.0,
       "width_mm": 71.0,
       "thickness_mm": 37.0,
-      "tolerance_mm": "±0.5",
+      "tolerance_mm": "\u00b10.5",
       "weight_grams": 130.0
     },
     "fabrication": {
@@ -453,7 +453,7 @@
       "length_mm": 20.0,
       "width_mm": 15.0,
       "thickness_mm": 12.0,
-      "tolerance_mm": "±0.2",
+      "tolerance_mm": "\u00b10.2",
       "weight_grams": 8.0
     },
     "fabrication": {
@@ -507,7 +507,7 @@
       "length_mm": 159.0,
       "width_mm": 97.0,
       "thickness_mm": 30.0,
-      "tolerance_mm": "±0.5",
+      "tolerance_mm": "\u00b10.5",
       "weight_grams": 480.0
     },
     "fabrication": {
@@ -540,7 +540,7 @@
       "length_mm": 215.0,
       "width_mm": 115.0,
       "thickness_mm": 30.0,
-      "tolerance_mm": "±0.5",
+      "tolerance_mm": "\u00b10.5",
       "weight_grams": 760.0
     },
     "fabrication": {
@@ -579,7 +579,7 @@
       "length_mm": 110.0,
       "width_mm": 50.0,
       "thickness_mm": 32.0,
-      "tolerance_mm": "±0.5",
+      "tolerance_mm": "\u00b10.5",
       "weight_grams": 250.0
     },
     "fabrication": {
@@ -618,7 +618,7 @@
       "length_mm": 125.0,
       "width_mm": 55.0,
       "thickness_mm": 35.0,
-      "tolerance_mm": "±0.5",
+      "tolerance_mm": "\u00b10.5",
       "weight_grams": 310.0
     },
     "fabrication": {
@@ -657,7 +657,7 @@
       "length_mm": 99.0,
       "width_mm": 82.0,
       "thickness_mm": 30.0,
-      "tolerance_mm": "±0.5",
+      "tolerance_mm": "\u00b10.5",
       "weight_grams": 230.0
     },
     "fabrication": {
@@ -696,7 +696,7 @@
       "length_mm": 25.0,
       "width_mm": 24.0,
       "thickness_mm": 9.0,
-      "tolerance_mm": "±0.2",
+      "tolerance_mm": "\u00b10.2",
       "weight_grams": 8.5
     },
     "fabrication": {
@@ -735,7 +735,7 @@
       "length_mm": 29.0,
       "width_mm": 29.0,
       "thickness_mm": 11.0,
-      "tolerance_mm": "±0.2",
+      "tolerance_mm": "\u00b10.2",
       "weight_grams": 10.2
     },
     "fabrication": {
@@ -774,7 +774,7 @@
       "length_mm": 60.0,
       "width_mm": 24.0,
       "thickness_mm": 12.0,
-      "tolerance_mm": "±0.3",
+      "tolerance_mm": "\u00b10.3",
       "weight_grams": 18.0
     },
     "fabrication": {
@@ -813,7 +813,7 @@
       "length_mm": 35.0,
       "width_mm": 12.0,
       "thickness_mm": 12.0,
-      "tolerance_mm": "±0.2",
+      "tolerance_mm": "\u00b10.2",
       "weight_grams": 6.8
     },
     "fabrication": {
@@ -847,12 +847,12 @@
   {
     "name": "Sensirion SCD41 Photoacoustic NDIR CO2, Temperature & RH Sensor",
     "category": "electrical",
-    "summary": "Miniature photoacoustic CO2 sensor with 400–5000 ppm measurement range for closed-loop enclosure microclimate regulation.",
+    "summary": "Miniature photoacoustic CO2 sensor with 400\u20135000 ppm measurement range for closed-loop enclosure microclimate regulation.",
     "dimensions": {
       "length_mm": 10.1,
       "width_mm": 10.1,
       "thickness_mm": 6.5,
-      "tolerance_mm": "±0.1",
+      "tolerance_mm": "\u00b10.1",
       "weight_grams": 1.2
     },
     "fabrication": {
@@ -891,7 +891,7 @@
       "length_mm": 18.0,
       "width_mm": 14.0,
       "thickness_mm": 7.5,
-      "tolerance_mm": "±0.2",
+      "tolerance_mm": "\u00b10.2",
       "weight_grams": 3.8
     },
     "fabrication": {
@@ -930,7 +930,7 @@
       "length_mm": 25.0,
       "width_mm": 25.0,
       "thickness_mm": 18.0,
-      "tolerance_mm": "±0.5",
+      "tolerance_mm": "\u00b10.5",
       "weight_grams": 42.0
     },
     "fabrication": {
@@ -963,7 +963,7 @@
       "length_mm": 55.6,
       "width_mm": 59.8,
       "thickness_mm": 41.3,
-      "tolerance_mm": "±0.3",
+      "tolerance_mm": "\u00b10.3",
       "weight_grams": 110.0
     },
     "fabrication": {
@@ -1002,7 +1002,7 @@
       "length_mm": 16.0,
       "width_mm": 15.0,
       "thickness_mm": 3.0,
-      "tolerance_mm": "±0.2",
+      "tolerance_mm": "\u00b10.2",
       "weight_grams": 2.1
     },
     "fabrication": {
@@ -1041,7 +1041,7 @@
       "length_mm": 85.0,
       "width_mm": 85.0,
       "thickness_mm": 12.0,
-      "tolerance_mm": "±0.5",
+      "tolerance_mm": "\u00b10.5",
       "weight_grams": 165.0
     },
     "fabrication": {
@@ -1075,12 +1075,12 @@
   {
     "name": "24V 250W Brushed DC Planetary Gearmotor (18:1 Ratio)",
     "category": "electrical",
-    "summary": "High-torque industrial planetary DC gearmotor (450 RPM output, 12 N·m stall torque) for all-terrain rubber track drive trains.",
+    "summary": "High-torque industrial planetary DC gearmotor (450 RPM output, 12 N\u00b7m stall torque) for all-terrain rubber track drive trains.",
     "dimensions": {
       "length_mm": 145.0,
       "width_mm": 60.0,
       "thickness_mm": 60.0,
-      "tolerance_mm": "±0.5",
+      "tolerance_mm": "\u00b10.5",
       "weight_grams": 1380.0
     },
     "fabrication": {
@@ -1119,7 +1119,7 @@
       "length_mm": 82.0,
       "width_mm": 55.0,
       "thickness_mm": 20.0,
-      "tolerance_mm": "±0.3",
+      "tolerance_mm": "\u00b10.3",
       "weight_grams": 72.0
     },
     "fabrication": {
@@ -1158,7 +1158,7 @@
       "length_mm": 180.0,
       "width_mm": 120.0,
       "thickness_mm": 90.0,
-      "tolerance_mm": "±1.0",
+      "tolerance_mm": "\u00b11.0",
       "weight_grams": 3200.0
     },
     "fabrication": {
@@ -1197,7 +1197,7 @@
       "length_mm": 60.0,
       "width_mm": 15.0,
       "thickness_mm": 12.0,
-      "tolerance_mm": "±0.5",
+      "tolerance_mm": "\u00b10.5",
       "weight_grams": 26.0
     },
     "fabrication": {
@@ -1236,7 +1236,7 @@
       "length_mm": 14.5,
       "width_mm": 14.5,
       "thickness_mm": 14.0,
-      "tolerance_mm": "±0.1",
+      "tolerance_mm": "\u00b10.1",
       "weight_grams": 3.8
     },
     "fabrication": {
@@ -1275,7 +1275,7 @@
       "length_mm": 26.0,
       "width_mm": 26.0,
       "thickness_mm": 5.0,
-      "tolerance_mm": "±0.2",
+      "tolerance_mm": "\u00b10.2",
       "weight_grams": 5.4
     },
     "fabrication": {
@@ -1314,7 +1314,7 @@
       "length_mm": 27.0,
       "width_mm": 27.0,
       "thickness_mm": 1.2,
-      "tolerance_mm": "±0.1",
+      "tolerance_mm": "\u00b10.1",
       "weight_grams": 2.4
     },
     "fabrication": {
@@ -1353,7 +1353,7 @@
       "length_mm": 25.0,
       "width_mm": 19.0,
       "thickness_mm": 4.5,
-      "tolerance_mm": "±0.2",
+      "tolerance_mm": "\u00b10.2",
       "weight_grams": 3.8
     },
     "fabrication": {
@@ -1392,7 +1392,7 @@
       "length_mm": 45.0,
       "width_mm": 26.0,
       "thickness_mm": 20.0,
-      "tolerance_mm": "±0.3",
+      "tolerance_mm": "\u00b10.3",
       "weight_grams": 95.0
     },
     "fabrication": {
@@ -1431,7 +1431,7 @@
       "length_mm": 80.0,
       "width_mm": 25.0,
       "thickness_mm": 6.0,
-      "tolerance_mm": "±0.3",
+      "tolerance_mm": "\u00b10.3",
       "weight_grams": 18.0
     },
     "fabrication": {
@@ -1465,12 +1465,12 @@
   {
     "name": "3-Axis Mini Articulated Arm Kit + Digital Metal-Gear Servos",
     "category": "electrical",
-    "summary": "Machined aluminum articulated mini-arm kit with 3x high-torque 25kg·cm metal gear digital servos for pod docking and coupling.",
+    "summary": "Machined aluminum articulated mini-arm kit with 3x high-torque 25kg\u00b7cm metal gear digital servos for pod docking and coupling.",
     "dimensions": {
       "length_mm": 220.0,
       "width_mm": 70.0,
       "thickness_mm": 70.0,
-      "tolerance_mm": "±0.5",
+      "tolerance_mm": "\u00b10.5",
       "weight_grams": 420.0
     },
     "fabrication": {
@@ -1509,7 +1509,7 @@
       "length_mm": 90.0,
       "width_mm": 75.0,
       "thickness_mm": 30.0,
-      "tolerance_mm": "±0.5",
+      "tolerance_mm": "\u00b10.5",
       "weight_grams": 85.0
     },
     "fabrication": {
@@ -1559,7 +1559,7 @@
       "length_mm": 32.0,
       "width_mm": 12.0,
       "thickness_mm": 12.0,
-      "tolerance_mm": "±0.1",
+      "tolerance_mm": "\u00b10.1",
       "weight_grams": 16.0
     },
     "fabrication": {
@@ -1598,7 +1598,7 @@
       "length_mm": 45.0,
       "width_mm": 9.0,
       "thickness_mm": 6.0,
-      "tolerance_mm": "±0.1",
+      "tolerance_mm": "\u00b10.1",
       "weight_grams": 12.0
     },
     "fabrication": {
@@ -1632,12 +1632,12 @@
   {
     "name": "5V 5A High-Efficiency Step-Down DC-DC Power Module",
     "category": "electrical",
-    "summary": "Synchronous step-down buck converter (input 9–36V, output 5.1V at 5A, 96% efficiency) for powering microcontrollers and edge cameras.",
+    "summary": "Synchronous step-down buck converter (input 9\u201336V, output 5.1V at 5A, 96% efficiency) for powering microcontrollers and edge cameras.",
     "dimensions": {
       "length_mm": 45.0,
       "width_mm": 20.0,
       "thickness_mm": 14.0,
-      "tolerance_mm": "±0.3",
+      "tolerance_mm": "\u00b10.3",
       "weight_grams": 22.0
     },
     "fabrication": {
@@ -1676,7 +1676,7 @@
       "length_mm": 90.0,
       "width_mm": 40.0,
       "thickness_mm": 35.0,
-      "tolerance_mm": "±0.5",
+      "tolerance_mm": "\u00b10.5",
       "weight_grams": 145.0
     },
     "fabrication": {
@@ -1715,7 +1715,7 @@
       "length_mm": 40.0,
       "width_mm": 35.0,
       "thickness_mm": 25.0,
-      "tolerance_mm": "±0.2",
+      "tolerance_mm": "\u00b10.2",
       "weight_grams": 82.0
     },
     "fabrication": {
@@ -1754,7 +1754,7 @@
       "length_mm": 35.0,
       "width_mm": 18.0,
       "thickness_mm": 18.0,
-      "tolerance_mm": "±0.2",
+      "tolerance_mm": "\u00b10.2",
       "weight_grams": 15.0
     },
     "fabrication": {
@@ -1793,7 +1793,7 @@
       "length_mm": 95.0,
       "width_mm": 60.0,
       "thickness_mm": 18.0,
-      "tolerance_mm": "±0.3",
+      "tolerance_mm": "\u00b10.3",
       "weight_grams": 65.0
     },
     "fabrication": {
@@ -1832,7 +1832,7 @@
       "length_mm": 115.0,
       "width_mm": 20.0,
       "thickness_mm": 20.0,
-      "tolerance_mm": "±0.5",
+      "tolerance_mm": "\u00b10.5",
       "weight_grams": 110.0
     },
     "fabrication": {
@@ -1865,7 +1865,7 @@
       "length_mm": 200.0,
       "width_mm": 150.0,
       "thickness_mm": 75.0,
-      "tolerance_mm": "±1.0",
+      "tolerance_mm": "\u00b11.0",
       "weight_grams": 320.0
     },
     "fabrication": {
@@ -1897,14 +1897,14 @@
     ]
   },
   {
-    "name": "316L Stainless Steel Wedge-Wire Screen Panel (150µm Slot, 300x400mm)",
+    "name": "316L Stainless Steel Wedge-Wire Screen Panel (150\u00b5m Slot, 300x400mm)",
     "category": "fluidic",
     "summary": "Continuous slot V-wire dewatering filter panel engineered for non-clogging aquatic biomass separation (Wolffia, Lemna).",
     "dimensions": {
       "length_mm": 400.0,
       "width_mm": 300.0,
       "thickness_mm": 6.5,
-      "tolerance_mm": "±0.5",
+      "tolerance_mm": "\u00b10.5",
       "weight_grams": 820.0
     },
     "fabrication": {
@@ -1937,7 +1937,7 @@
       "length_mm": 175.0,
       "width_mm": 95.0,
       "thickness_mm": 105.0,
-      "tolerance_mm": "±0.5",
+      "tolerance_mm": "\u00b10.5",
       "weight_grams": 1150.0
     },
     "fabrication": {
@@ -1965,12 +1965,12 @@
   {
     "name": "24V DC High-Pressure Diaphragm Booster Pump (120 PSI, 1.2 GPM)",
     "category": "fluidic",
-    "summary": "Self-priming 3-chamber diaphragm pump with built-in thermal switch engineered for ultra-fine aeroponic droplet atomization (30–60µm).",
+    "summary": "Self-priming 3-chamber diaphragm pump with built-in thermal switch engineered for ultra-fine aeroponic droplet atomization (30\u201360\u00b5m).",
     "dimensions": {
       "length_mm": 190.0,
       "width_mm": 100.0,
       "thickness_mm": 105.0,
-      "tolerance_mm": "±0.5",
+      "tolerance_mm": "\u00b10.5",
       "weight_grams": 1850.0
     },
     "fabrication": {
@@ -2009,7 +2009,7 @@
       "length_mm": 160.0,
       "width_mm": 88.0,
       "thickness_mm": 92.0,
-      "tolerance_mm": "±0.5",
+      "tolerance_mm": "\u00b10.5",
       "weight_grams": 1200.0
     },
     "fabrication": {
@@ -2048,7 +2048,7 @@
       "length_mm": 65.0,
       "width_mm": 40.0,
       "thickness_mm": 40.0,
-      "tolerance_mm": "±0.2",
+      "tolerance_mm": "\u00b10.2",
       "weight_grams": 115.0
     },
     "fabrication": {
@@ -2087,7 +2087,7 @@
       "length_mm": 20.0,
       "width_mm": 9.5,
       "thickness_mm": 9.5,
-      "tolerance_mm": "±0.05",
+      "tolerance_mm": "\u00b10.05",
       "weight_grams": 12.0
     },
     "fabrication": {
@@ -2131,7 +2131,7 @@
       "length_mm": 55.0,
       "width_mm": 32.0,
       "thickness_mm": 68.0,
-      "tolerance_mm": "±0.5",
+      "tolerance_mm": "\u00b10.5",
       "weight_grams": 240.0
     },
     "fabrication": {
@@ -2164,7 +2164,7 @@
       "length_mm": 60.0,
       "width_mm": 45.0,
       "thickness_mm": 35.0,
-      "tolerance_mm": "±0.5",
+      "tolerance_mm": "\u00b10.5",
       "weight_grams": 45.0
     },
     "fabrication": {
@@ -2203,7 +2203,7 @@
       "length_mm": 62.0,
       "width_mm": 42.0,
       "thickness_mm": 58.0,
-      "tolerance_mm": "±0.5",
+      "tolerance_mm": "\u00b10.5",
       "weight_grams": 210.0
     },
     "fabrication": {
@@ -2242,7 +2242,7 @@
       "length_mm": 95.0,
       "width_mm": 70.0,
       "thickness_mm": 70.0,
-      "tolerance_mm": "±0.5",
+      "tolerance_mm": "\u00b10.5",
       "weight_grams": 180.0
     },
     "fabrication": {
@@ -2281,7 +2281,7 @@
       "length_mm": 50.0,
       "width_mm": 28.0,
       "thickness_mm": 58.0,
-      "tolerance_mm": "±0.3",
+      "tolerance_mm": "\u00b10.3",
       "weight_grams": 175.0
     },
     "fabrication": {
@@ -2320,7 +2320,7 @@
       "length_mm": 520.0,
       "width_mm": 380.0,
       "thickness_mm": 45.0,
-      "tolerance_mm": "±1.5",
+      "tolerance_mm": "\u00b11.5",
       "weight_grams": 640.0
     },
     "fabrication": {
@@ -2359,7 +2359,7 @@
       "length_mm": 480.0,
       "width_mm": 210.0,
       "thickness_mm": 210.0,
-      "tolerance_mm": "±2.0",
+      "tolerance_mm": "\u00b12.0",
       "weight_grams": 1250.0
     },
     "fabrication": {
@@ -2393,12 +2393,12 @@
   {
     "name": "Rotary Vane Flow Meter with Hall Sensor (1/2\" Barb)",
     "category": "fluidic",
-    "summary": "Precision turbine flow sensor outputting clean TTL pulses proportional to fluid flow rate (1–30 L/min).",
+    "summary": "Precision turbine flow sensor outputting clean TTL pulses proportional to fluid flow rate (1\u201330 L/min).",
     "dimensions": {
       "length_mm": 62.0,
       "width_mm": 36.0,
       "thickness_mm": 36.0,
-      "tolerance_mm": "±0.5",
+      "tolerance_mm": "\u00b10.5",
       "weight_grams": 58.0
     },
     "fabrication": {
@@ -2426,12 +2426,12 @@
   {
     "name": "Fine-Bubble Micro-Pore Ceramic Aeration Tube (200mm)",
     "category": "fluidic",
-    "summary": "High-purity alumina ceramic tube generating uniform 10–50µm micro-bubbles for maximum dissolved oxygen absorption.",
+    "summary": "High-purity alumina ceramic tube generating uniform 10\u201350\u00b5m micro-bubbles for maximum dissolved oxygen absorption.",
     "dimensions": {
       "length_mm": 200.0,
       "width_mm": 25.0,
       "thickness_mm": 25.0,
-      "tolerance_mm": "±0.5",
+      "tolerance_mm": "\u00b10.5",
       "weight_grams": 160.0
     },
     "fabrication": {
@@ -2464,7 +2464,7 @@
       "length_mm": 180.0,
       "width_mm": 50.0,
       "thickness_mm": 35.0,
-      "tolerance_mm": "±0.5",
+      "tolerance_mm": "\u00b10.5",
       "weight_grams": 195.0
     },
     "fabrication": {
@@ -2499,7 +2499,7 @@
       "length_mm": 10000.0,
       "width_mm": 5.0,
       "thickness_mm": 5.0,
-      "tolerance_mm": "±0.2",
+      "tolerance_mm": "\u00b10.2",
       "weight_grams": 220.0
     },
     "fabrication": {
@@ -2532,7 +2532,7 @@
       "length_mm": 800.0,
       "width_mm": 500.0,
       "thickness_mm": 400.0,
-      "tolerance_mm": "±2.0",
+      "tolerance_mm": "\u00b12.0",
       "weight_grams": 4200.0
     },
     "fabrication": {
@@ -2571,7 +2571,7 @@
       "length_mm": 50.0,
       "width_mm": 50.0,
       "thickness_mm": 19.0,
-      "tolerance_mm": "±0.5",
+      "tolerance_mm": "\u00b10.5",
       "weight_grams": 4.5
     },
     "fabrication": {
@@ -2610,7 +2610,7 @@
       "length_mm": 5000.0,
       "width_mm": 15.0,
       "thickness_mm": 8.0,
-      "tolerance_mm": "±0.5",
+      "tolerance_mm": "\u00b10.5",
       "weight_grams": 140.0
     },
     "fabrication": {
@@ -2649,7 +2649,7 @@
       "length_mm": 10.0,
       "width_mm": 10.0,
       "thickness_mm": 7.0,
-      "tolerance_mm": "±0.5",
+      "tolerance_mm": "\u00b10.5",
       "weight_grams": 1800.0
     },
     "fabrication": {
@@ -2682,7 +2682,7 @@
       "length_mm": 51.5,
       "width_mm": 51.5,
       "thickness_mm": 15.0,
-      "tolerance_mm": "±0.3",
+      "tolerance_mm": "\u00b10.3",
       "weight_grams": 32.0
     },
     "fabrication": {
@@ -2721,7 +2721,7 @@
       "length_mm": 6000.0,
       "width_mm": 20.0,
       "thickness_mm": 20.0,
-      "tolerance_mm": "±0.2",
+      "tolerance_mm": "\u00b10.2",
       "weight_grams": 3120.0
     },
     "fabrication": {
@@ -2815,7 +2815,7 @@
       "length_mm": 3000.0,
       "width_mm": 40.0,
       "thickness_mm": 20.0,
-      "tolerance_mm": "±0.3",
+      "tolerance_mm": "\u00b10.3",
       "weight_grams": 2750.0
     },
     "fabrication": {
@@ -2854,7 +2854,7 @@
       "length_mm": 3048.0,
       "width_mm": 40.0,
       "thickness_mm": 40.0,
-      "tolerance_mm": "±0.3",
+      "tolerance_mm": "\u00b10.3",
       "weight_grams": 4450.0
     },
     "fabrication": {
@@ -2893,7 +2893,7 @@
       "length_mm": 20000.0,
       "width_mm": 9.0,
       "thickness_mm": 1.38,
-      "tolerance_mm": "±0.05",
+      "tolerance_mm": "\u00b10.05",
       "weight_grams": 480.0
     },
     "fabrication": {
@@ -2932,7 +2932,7 @@
       "length_mm": 45.0,
       "width_mm": 45.0,
       "thickness_mm": 17.0,
-      "tolerance_mm": "±0.1",
+      "tolerance_mm": "\u00b10.1",
       "weight_grams": 85.0
     },
     "fabrication": {
@@ -2971,7 +2971,7 @@
       "length_mm": 55.0,
       "width_mm": 38.0,
       "thickness_mm": 38.0,
-      "tolerance_mm": "±0.2",
+      "tolerance_mm": "\u00b10.2",
       "weight_grams": 175.0
     },
     "fabrication": {
@@ -3012,7 +3012,7 @@
       "length_mm": 65.0,
       "width_mm": 45.0,
       "thickness_mm": 45.0,
-      "tolerance_mm": "±0.1",
+      "tolerance_mm": "\u00b10.1",
       "weight_grams": 340.0
     },
     "fabrication": {
@@ -3053,7 +3053,7 @@
       "length_mm": 22.0,
       "width_mm": 22.0,
       "thickness_mm": 7.0,
-      "tolerance_mm": "±0.01",
+      "tolerance_mm": "\u00b10.01",
       "weight_grams": 12.0
     },
     "fabrication": {
@@ -3092,7 +3092,7 @@
       "length_mm": 25.0,
       "width_mm": 25.0,
       "thickness_mm": 7.0,
-      "tolerance_mm": "±0.01",
+      "tolerance_mm": "\u00b10.01",
       "weight_grams": 14.0
     },
     "fabrication": {
@@ -3125,7 +3125,7 @@
       "length_mm": 24.4,
       "width_mm": 24.4,
       "thickness_mm": 11.0,
-      "tolerance_mm": "±0.05",
+      "tolerance_mm": "\u00b10.05",
       "weight_grams": 15.0
     },
     "fabrication": {
@@ -3164,7 +3164,7 @@
       "length_mm": 550.0,
       "width_mm": 8.0,
       "thickness_mm": 7.5,
-      "tolerance_mm": "±0.02",
+      "tolerance_mm": "\u00b10.02",
       "weight_grams": 215.0
     },
     "fabrication": {
@@ -3198,12 +3198,12 @@
   {
     "name": "304 Stainless Steel Perforated Sheet (1.5mm Holes, 955x450mm)",
     "category": "mechanical",
-    "summary": "Precision punched 304 stainless sheet with 1.5mm staggered hole pattern (38% open area) and 955mm developed length (wraps full circumference of Ø300mm drum with 12.5mm seam overlap) for sprout seed aeration.",
+    "summary": "Precision punched 304 stainless sheet with 1.5mm staggered hole pattern (38% open area) and 955mm developed length (wraps full circumference of \u00d8300mm drum with 12.5mm seam overlap) for sprout seed aeration.",
     "dimensions": {
       "length_mm": 955.0,
       "width_mm": 450.0,
       "thickness_mm": 0.8,
-      "tolerance_mm": "±0.5",
+      "tolerance_mm": "\u00b10.5",
       "weight_grams": 1850.0
     },
     "fabrication": {
@@ -3242,7 +3242,7 @@
       "length_mm": 520.0,
       "width_mm": 360.0,
       "thickness_mm": 140.0,
-      "tolerance_mm": "±0.5",
+      "tolerance_mm": "\u00b10.5",
       "weight_grams": 4800.0
     },
     "fabrication": {
@@ -3283,7 +3283,7 @@
       "length_mm": 640.0,
       "width_mm": 50.0,
       "thickness_mm": 18.0,
-      "tolerance_mm": "±1.0",
+      "tolerance_mm": "\u00b11.0",
       "weight_grams": 650.0
     },
     "fabrication": {
@@ -3322,7 +3322,7 @@
       "length_mm": 120.0,
       "width_mm": 45.0,
       "thickness_mm": 65.0,
-      "tolerance_mm": "±0.3",
+      "tolerance_mm": "\u00b10.3",
       "weight_grams": 420.0
     },
     "fabrication": {
@@ -3363,7 +3363,7 @@
       "length_mm": 850.0,
       "width_mm": 380.0,
       "thickness_mm": 45.0,
-      "tolerance_mm": "±1.0",
+      "tolerance_mm": "\u00b11.0",
       "weight_grams": 1150.0
     },
     "fabrication": {
@@ -3404,7 +3404,7 @@
       "length_mm": 140.0,
       "width_mm": 65.0,
       "thickness_mm": 55.0,
-      "tolerance_mm": "±0.5",
+      "tolerance_mm": "\u00b10.5",
       "weight_grams": 380.0
     },
     "fabrication": {
@@ -3438,14 +3438,14 @@
     ]
   },
   {
-    "name": "Telescopic 3-Section Carbon-Fiber Pole (1.2–2.4m)",
+    "name": "Telescopic 3-Section Carbon-Fiber Pole (1.2\u20132.4m)",
     "category": "mechanical",
     "summary": "Lightweight high-modulus 3k carbon fiber pole with twist-lock friction collars and standardized 1/4\"-20 botanical tool mount.",
     "dimensions": {
       "length_mm": 2400.0,
       "width_mm": 32.0,
       "thickness_mm": 32.0,
-      "tolerance_mm": "±1.0",
+      "tolerance_mm": "\u00b11.0",
       "weight_grams": 480.0
     },
     "fabrication": {
@@ -3477,14 +3477,14 @@
     ]
   },
   {
-    "name": "Telescopic Fiberglass/Aluminum Extension Pole (1.8–3.6m)",
+    "name": "Telescopic Fiberglass/Aluminum Extension Pole (1.8\u20133.6m)",
     "category": "mechanical",
     "summary": "Dielectric non-conductive telescoping pole with external cam lever locks for manual fruit and branch positioning.",
     "dimensions": {
       "length_mm": 3600.0,
       "width_mm": 38.0,
       "thickness_mm": 38.0,
-      "tolerance_mm": "±1.0",
+      "tolerance_mm": "\u00b11.0",
       "weight_grams": 820.0
     },
     "fabrication": {
@@ -3518,12 +3518,12 @@
   {
     "name": "310 Hz Calibrated Acoustic Tuning Fork + Silicone Dip",
     "category": "mechanical",
-    "summary": "Medical-grade aluminum tuning fork calibrated to 310 Hz (±2 Hz) with food-grade silicone-dipped tines for manual sonic sonication.",
+    "summary": "Medical-grade aluminum tuning fork calibrated to 310 Hz (\u00b12 Hz) with food-grade silicone-dipped tines for manual sonic sonication.",
     "dimensions": {
       "length_mm": 175.0,
       "width_mm": 24.0,
       "thickness_mm": 8.0,
-      "tolerance_mm": "±0.1",
+      "tolerance_mm": "\u00b10.1",
       "weight_grams": 75.0
     },
     "fabrication": {
@@ -3562,7 +3562,7 @@
       "length_mm": 110.0,
       "width_mm": 52.0,
       "thickness_mm": 15.0,
-      "tolerance_mm": "±0.5",
+      "tolerance_mm": "\u00b10.5",
       "weight_grams": 65.0
     },
     "fabrication": {
@@ -3601,7 +3601,7 @@
       "length_mm": 220.0,
       "width_mm": 18.0,
       "thickness_mm": 18.0,
-      "tolerance_mm": "±0.5",
+      "tolerance_mm": "\u00b10.5",
       "weight_grams": 35.0
     },
     "fabrication": {
@@ -3640,7 +3640,7 @@
       "length_mm": 2500.0,
       "width_mm": 5.0,
       "thickness_mm": 5.0,
-      "tolerance_mm": "±1.0",
+      "tolerance_mm": "\u00b11.0",
       "weight_grams": 110.0
     },
     "fabrication": {
@@ -3679,7 +3679,7 @@
       "length_mm": 145.0,
       "width_mm": 85.0,
       "thickness_mm": 25.0,
-      "tolerance_mm": "±0.5",
+      "tolerance_mm": "\u00b10.5",
       "weight_grams": 95.0
     },
     "fabrication": {
@@ -3718,7 +3718,7 @@
       "length_mm": 115.0,
       "width_mm": 40.0,
       "thickness_mm": 12.0,
-      "tolerance_mm": "±0.2",
+      "tolerance_mm": "\u00b10.2",
       "weight_grams": 65.0
     },
     "fabrication": {
@@ -3757,7 +3757,7 @@
       "length_mm": 1500.0,
       "width_mm": 35.0,
       "thickness_mm": 35.0,
-      "tolerance_mm": "±1.0",
+      "tolerance_mm": "\u00b11.0",
       "weight_grams": 320.0
     },
     "fabrication": {
@@ -3798,7 +3798,7 @@
       "length_mm": 160.0,
       "width_mm": 120.0,
       "thickness_mm": 110.0,
-      "tolerance_mm": "±0.5",
+      "tolerance_mm": "\u00b10.5",
       "weight_grams": 850.0
     },
     "fabrication": {
@@ -3831,7 +3831,7 @@
       "length_mm": 165.0,
       "width_mm": 80.0,
       "thickness_mm": 35.0,
-      "tolerance_mm": "±0.3",
+      "tolerance_mm": "\u00b10.3",
       "weight_grams": 220.0
     },
     "fabrication": {
@@ -3881,7 +3881,7 @@
       "length_mm": 100.0,
       "width_mm": 100.0,
       "thickness_mm": 50.0,
-      "tolerance_mm": "±0.1",
+      "tolerance_mm": "\u00b10.1",
       "weight_grams": 480.0
     },
     "fabrication": {
@@ -3920,7 +3920,7 @@
       "length_mm": 1000.0,
       "width_mm": 38.0,
       "thickness_mm": 22.0,
-      "tolerance_mm": "±0.5",
+      "tolerance_mm": "\u00b10.5",
       "weight_grams": 380.0
     },
     "fabrication": {
@@ -3959,7 +3959,7 @@
       "length_mm": 210.0,
       "width_mm": 60.0,
       "thickness_mm": 45.0,
-      "tolerance_mm": "±0.3",
+      "tolerance_mm": "\u00b10.3",
       "weight_grams": 420.0
     },
     "fabrication": {
@@ -3998,12 +3998,12 @@
   {
     "name": "Kinematic Magnetic Toolhead Base (N52 Magnets & Steel Balls)",
     "category": "mechanical",
-    "summary": "Kelvin kinematic coupling base using 3x hardened stainless balls and 3x pairs of N52 magnets for sub-10µm repeatable tool locking.",
+    "summary": "Kelvin kinematic coupling base using 3x hardened stainless balls and 3x pairs of N52 magnets for sub-10\u00b5m repeatable tool locking.",
     "dimensions": {
       "length_mm": 80.0,
       "width_mm": 80.0,
       "thickness_mm": 22.0,
-      "tolerance_mm": "±0.05",
+      "tolerance_mm": "\u00b10.05",
       "weight_grams": 190.0
     },
     "fabrication": {
@@ -4147,7 +4147,7 @@
       "length_mm": 110.0,
       "width_mm": 110.0,
       "thickness_mm": 75.0,
-      "tolerance_mm": "±0.3",
+      "tolerance_mm": "\u00b10.3",
       "weight_grams": 145.0
     },
     "fabrication": {
@@ -4197,7 +4197,7 @@
       "length_mm": 140.0,
       "width_mm": 90.0,
       "thickness_mm": 4.0,
-      "tolerance_mm": "±0.1",
+      "tolerance_mm": "\u00b10.1",
       "weight_grams": 240.0
     },
     "fabrication": {
@@ -4238,7 +4238,7 @@
       "length_mm": 160.0,
       "width_mm": 70.0,
       "thickness_mm": 2.0,
-      "tolerance_mm": "±0.1",
+      "tolerance_mm": "\u00b10.1",
       "weight_grams": 110.0
     },
     "fabrication": {
@@ -4272,14 +4272,14 @@
     ]
   },
   {
-    "name": "3D-Printed PETG Bioreactor Drum End Flanges (Ø300mm) & Axle Hubs",
+    "name": "3D-Printed PETG Bioreactor Drum End Flanges (\u00d8300mm) & Axle Hubs",
     "category": "custom-fab",
-    "summary": "Heavy-duty circular Ø300mm end caps with 8mm D-shaft locking hubs, internal perforated sheet retaining rim, and quick-latch loading port.",
+    "summary": "Heavy-duty circular \u00d8300mm end caps with 8mm D-shaft locking hubs, internal perforated sheet retaining rim, and quick-latch loading port.",
     "dimensions": {
       "length_mm": 300.0,
       "width_mm": 300.0,
       "thickness_mm": 35.0,
-      "tolerance_mm": "±0.3",
+      "tolerance_mm": "\u00b10.3",
       "weight_grams": 420.0
     },
     "fabrication": {
@@ -4329,14 +4329,23 @@
       "length_mm": 115.0,
       "width_mm": 115.0,
       "thickness_mm": 38.0,
-      "tolerance_mm": "±0.3",
+      "tolerance_mm": "\u00b10.3",
       "weight_grams": 22.0
     },
     "fabrication": {
       "is_custom_fab": true,
-      "is_3d_printed": false,
-      "print_spec": null,
-      "fab_type": "Molded Polycarbonate Frame",
+      "is_3d_printed": true,
+      "print_spec": {
+        "material": "Polycarbonate (PC) / PETG",
+        "nozzle_diameter_mm": 0.4,
+        "layer_height_mm": 0.16,
+        "perimeters": 4,
+        "infill_percentage": 100,
+        "infill_pattern": "rectilinear",
+        "print_time_hours": 3.2,
+        "filament_weight_grams": 24.0
+      },
+      "fab_type": "Molded Polycarbonate / 3D Print FDM",
       "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-FRAME-WHOOP-85MM/model.gltf",
       "stl_asset_url": "/open-biosphere/assets/parts/PART-FAB-FRAME-WHOOP-85MM/print.stl",
       "step_asset_url": "/open-biosphere/assets/parts/PART-FAB-FRAME-WHOOP-85MM/cad.step",
@@ -4370,7 +4379,7 @@
       "length_mm": 1800.0,
       "width_mm": 120.0,
       "thickness_mm": 120.0,
-      "tolerance_mm": "±2.0",
+      "tolerance_mm": "\u00b12.0",
       "weight_grams": 160.0
     },
     "fabrication": {
@@ -4420,7 +4429,7 @@
       "length_mm": 85.0,
       "width_mm": 45.0,
       "thickness_mm": 35.0,
-      "tolerance_mm": "±0.1",
+      "tolerance_mm": "\u00b10.1",
       "weight_grams": 62.0
     },
     "fabrication": {
@@ -4470,7 +4479,7 @@
       "length_mm": 95.0,
       "width_mm": 50.0,
       "thickness_mm": 40.0,
-      "tolerance_mm": "±0.1",
+      "tolerance_mm": "\u00b10.1",
       "weight_grams": 115.0
     },
     "fabrication": {
@@ -4520,7 +4529,7 @@
       "length_mm": 55.0,
       "width_mm": 45.0,
       "thickness_mm": 20.0,
-      "tolerance_mm": "±0.1",
+      "tolerance_mm": "\u00b10.1",
       "weight_grams": 48.0
     },
     "fabrication": {
@@ -4570,7 +4579,7 @@
       "length_mm": 60.0,
       "width_mm": 60.0,
       "thickness_mm": 3.0,
-      "tolerance_mm": "±0.05",
+      "tolerance_mm": "\u00b10.05",
       "weight_grams": 28.0
     },
     "fabrication": {
@@ -4611,7 +4620,7 @@
       "length_mm": 800.0,
       "width_mm": 450.0,
       "thickness_mm": 250.0,
-      "tolerance_mm": "±0.5",
+      "tolerance_mm": "\u00b10.5",
       "weight_grams": 4200.0
     },
     "fabrication": {
@@ -4647,7 +4656,7 @@
       "length_mm": 200.0,
       "width_mm": 150.0,
       "thickness_mm": 3.0,
-      "tolerance_mm": "±0.5",
+      "tolerance_mm": "\u00b10.5",
       "weight_grams": 225.0
     },
     "fabrication": {
@@ -4684,7 +4693,7 @@
   },
   {
     "part_id": "PART-OPT-WINDOW-BOROSILICATE-50MM",
-    "name": "High-Transmission Borosilicate Glass Porthole Discs (Ø50mm x 3mm)",
+    "name": "High-Transmission Borosilicate Glass Porthole Discs (\u00d850mm x 3mm)",
     "category": "mechanical",
     "summary": "Ultra-low thermal expansion borosilicate 3.3 optical flat discs (92% PAR transmission) engineered for sealed tower shutter portholes.",
     "dimensions": {
@@ -4692,7 +4701,7 @@
       "width_mm": 50.0,
       "outer_diameter_mm": 50.0,
       "thickness_mm": 3.0,
-      "tolerance_mm": "±0.1",
+      "tolerance_mm": "\u00b10.1",
       "weight_grams": 13.2
     },
     "fabrication": {
@@ -4736,7 +4745,7 @@
       "length_mm": 380.0,
       "width_mm": 45.0,
       "thickness_mm": 3.0,
-      "tolerance_mm": "±0.2",
+      "tolerance_mm": "\u00b10.2",
       "weight_grams": 1650.0
     },
     "fabrication": {
@@ -4775,7 +4784,7 @@
   },
   {
     "part_id": "PART-MECH-TUBE-SHUTTER-ALUM100",
-    "name": "Drawn Aluminum Concentric Shutter Tubing Pair (Outer Ø100mm, Inner Ø95mm)",
+    "name": "Drawn Aluminum Concentric Shutter Tubing Pair (Outer \u00d8100mm, Inner \u00d895mm)",
     "category": "mechanical",
     "summary": "Precision-drawn 6061-T6 seamless aluminum concentric pipe pair with CNC-milled 360-degree helical window ports.",
     "dimensions": {
@@ -4783,7 +4792,7 @@
       "outer_diameter_mm": 100.0,
       "inner_diameter_mm": 95.0,
       "thickness_mm": 2.5,
-      "tolerance_mm": "±0.15",
+      "tolerance_mm": "\u00b10.15",
       "weight_grams": 2400.0
     },
     "fabrication": {
@@ -4820,14 +4829,14 @@
   },
   {
     "part_id": "PART-ELEC-SERVO-MG-WP-180",
-    "name": "180° Metal-Gear Waterproof High-Torque Servo Motor (25kg·cm)",
+    "name": "180\u00b0 Metal-Gear Waterproof High-Torque Servo Motor (25kg\u00b7cm)",
     "category": "electrical",
-    "summary": "IP67 sealed metal-gear rotary actuator with brass/steel gear train and dual ball bearings for 0°–90° rotary helical shutter positioning.",
+    "summary": "IP67 sealed metal-gear rotary actuator with brass/steel gear train and dual ball bearings for 0\u00b0\u201390\u00b0 rotary helical shutter positioning.",
     "dimensions": {
       "length_mm": 40.5,
       "width_mm": 20.0,
       "thickness_mm": 40.0,
-      "tolerance_mm": "±0.2",
+      "tolerance_mm": "\u00b10.2",
       "weight_grams": 68.0
     },
     "fabrication": {
@@ -4864,14 +4873,14 @@
   },
   {
     "part_id": "PART-OPT-CONE-DIFFUSER-PYRAMID",
-    "name": "Inverted Polished Specular Aluminum 45° Pyramid Deflector",
+    "name": "Inverted Polished Specular Aluminum 45\u00b0 Pyramid Deflector",
     "category": "custom-fab",
     "summary": "Four-sided specular reflective aluminum optical pyramid with 45-degree facets and central apex aperture for supplemental hybrid LED puck.",
     "dimensions": {
       "length_mm": 180.0,
       "width_mm": 180.0,
       "thickness_mm": 90.0,
-      "tolerance_mm": "±0.2",
+      "tolerance_mm": "\u00b10.2",
       "weight_grams": 340.0
     },
     "fabrication": {
@@ -4918,7 +4927,7 @@
       "width_mm": 75.0,
       "outer_diameter_mm": 75.0,
       "thickness_mm": 45.0,
-      "tolerance_mm": "±0.5",
+      "tolerance_mm": "\u00b10.5",
       "weight_grams": 280.0
     },
     "fabrication": {
@@ -4961,7 +4970,7 @@
       "length_mm": 120.0,
       "width_mm": 65.0,
       "thickness_mm": 45.0,
-      "tolerance_mm": "±0.1",
+      "tolerance_mm": "\u00b10.1",
       "weight_grams": 185.0
     },
     "fabrication": {
@@ -5005,20 +5014,20 @@
       }
     ],
     "technical_summary": {
-      "purpose": "Rigidly anchors the overhead inverted solar cone collector and specular pyramid deflector array to the 2020 structural extrusion frame. Off-the-shelf L-brackets cannot withstand localized thermal expansion under concentrated 1,200 W/m² photon flux without warping, and lack integrated ±15° elevation micro-adjustment slots necessary for precision optical calibration.",
-      "mating": "Mates with standard 2020 T-slot aluminum extrusions via dual drop-in M5 steel T-nuts (20.0 mm pitch center-to-center, tolerance ±0.08 mm). The upper flange features a 3/8\"-16 UNC continuous steel core anchor stud clamp for primary suspension, and four M4 counterbored clearance holes on a 50.0 mm bolt circle for collector cone coupling.",
-      "instructions": "CNC milled from 6061-T6 billet or 5 mm laser-cut plate with precision 90° air-brake bending. Tap all M5 and M4 mounting holes to ISO metric standards (6H thread tolerance). Deburr all edges with a 0.5 mm 45° chamfer. Apply Mil-A-8625 Type II clear anodizing for corrosion and humidity resistance in continuous 85% RH biosphere environments."
+      "purpose": "Rigidly anchors the overhead inverted solar cone collector and specular pyramid deflector array to the 2020 structural extrusion frame. Off-the-shelf L-brackets cannot withstand localized thermal expansion under concentrated 1,200 W/m\u00b2 photon flux without warping, and lack integrated \u00b115\u00b0 elevation micro-adjustment slots necessary for precision optical calibration.",
+      "mating": "Mates with standard 2020 T-slot aluminum extrusions via dual drop-in M5 steel T-nuts (20.0 mm pitch center-to-center, tolerance \u00b10.08 mm). The upper flange features a 3/8\"-16 UNC continuous steel core anchor stud clamp for primary suspension, and four M4 counterbored clearance holes on a 50.0 mm bolt circle for collector cone coupling.",
+      "instructions": "CNC milled from 6061-T6 billet or 5 mm laser-cut plate with precision 90\u00b0 air-brake bending. Tap all M5 and M4 mounting holes to ISO metric standards (6H thread tolerance). Deburr all edges with a 0.5 mm 45\u00b0 chamfer. Apply Mil-A-8625 Type II clear anodizing for corrosion and humidity resistance in continuous 85% RH biosphere environments."
     }
   },
   {
     "name": "Duckweed Biomass Skimming Weir Flume Flange Adapter",
     "category": "custom-fab",
-    "summary": "Hydrodynamic 15° convergent transition adapter connecting rectangular flume sump bodies to cylindrical wedge-wire dewatering auger press intakes.",
+    "summary": "Hydrodynamic 15\u00b0 convergent transition adapter connecting rectangular flume sump bodies to cylindrical wedge-wire dewatering auger press intakes.",
     "dimensions": {
       "length_mm": 160.0,
       "width_mm": 90.0,
       "thickness_mm": 75.0,
-      "tolerance_mm": "±0.2",
+      "tolerance_mm": "\u00b10.2",
       "weight_grams": 210.0
     },
     "fabrication": {
@@ -5071,8 +5080,8 @@
       }
     ],
     "technical_summary": {
-      "purpose": "Transitions circulating surface duckweed slurries from the rectangular 140 mm × 60 mm weir throat into the 85 mm cylindrical intake of the dewatering press. Commercial PVC pipe reducers introduce blunt 90° stagnation eddies that trigger biomass clogging, biofouling, and cavitation at the auger inlet; this custom geometry provides an optimized 15° laminar velocity ramp.",
-      "mating": "Inlet face features a 140 mm × 60 mm rectangular perimeter flange with 6x M4 stainless through-holes (hole pitch 45 mm horizontal, 50 mm vertical) sealing against a 2 mm food-grade silicone flat gasket. Outlet transitions to an 85 mm inner-diameter slip collar with an internal 3 mm EPDM O-ring groove for clamping to the dewatering cylinder.",
+      "purpose": "Transitions circulating surface duckweed slurries from the rectangular 140 mm \u00d7 60 mm weir throat into the 85 mm cylindrical intake of the dewatering press. Commercial PVC pipe reducers introduce blunt 90\u00b0 stagnation eddies that trigger biomass clogging, biofouling, and cavitation at the auger inlet; this custom geometry provides an optimized 15\u00b0 laminar velocity ramp.",
+      "mating": "Inlet face features a 140 mm \u00d7 60 mm rectangular perimeter flange with 6x M4 stainless through-holes (hole pitch 45 mm horizontal, 50 mm vertical) sealing against a 2 mm food-grade silicone flat gasket. Outlet transitions to an 85 mm inner-diameter slip collar with an internal 3 mm EPDM O-ring groove for clamping to the dewatering cylinder.",
       "instructions": "FDM 3D-printed using certified food-contact compliant PETG. Print settings: 0.6 mm hardened steel nozzle, 0.20 mm layer height, 6 solid wall perimeters, 50% gyroid infill. Post-process with solvent wipe or food-grade polyurethane sealant on all interior wet surfaces to eliminate micro-cavity bacterial entrapment."
     }
   },
@@ -5084,7 +5093,7 @@
       "length_mm": 110.0,
       "width_mm": 48.0,
       "thickness_mm": 36.0,
-      "tolerance_mm": "±0.05",
+      "tolerance_mm": "\u00b10.05",
       "weight_grams": 240.0
     },
     "fabrication": {
@@ -5130,7 +5139,7 @@
     "technical_summary": {
       "purpose": "Consolidates four distinct chemical dosing channels into a single turbulent mixing vortex prior to injection into the main duckweed and aeroponic supply loops. Off-the-shelf industrial manifolds cause channel cross-siphonage during non-actuated cycles and lack the non-metallic or food-passivated surfaces necessary to prevent nutrient oxidation.",
       "mating": "Four independent 1/4\"-18 NPT female inlet ports spaced at 22.0 mm intervals, counter-drilled for 1/4\" compression tube fittings. Single coaxial 1/2\"-14 NPT central delivery discharge port. Two M4 counterbored through-holes on 80.0 mm centers for rigid mounting to 2020 frame struts.",
-      "instructions": "Machined from solid 6061-T6 aluminum block or virgin POM Delrin. Cross-drilled port passages reamed to 6.35 mm diameter with micro-peck cycle to ensure burr-free fluid passages. Precision tap all NPT threads with taper reamer prep. Passivate aluminum blocks with food-safe electroless nickel plating (ENP 25 μm)."
+      "instructions": "Machined from solid 6061-T6 aluminum block or virgin POM Delrin. Cross-drilled port passages reamed to 6.35 mm diameter with micro-peck cycle to ensure burr-free fluid passages. Precision tap all NPT threads with taper reamer prep. Passivate aluminum blocks with food-safe electroless nickel plating (ENP 25 \u03bcm)."
     }
   },
   {
@@ -5141,7 +5150,7 @@
       "length_mm": 85.0,
       "width_mm": 24.0,
       "thickness_mm": 16.0,
-      "tolerance_mm": "±0.05",
+      "tolerance_mm": "\u00b10.05",
       "weight_grams": 38.0
     },
     "fabrication": {
@@ -5193,7 +5202,7 @@
       "length_mm": 320.0,
       "width_mm": 75.0,
       "thickness_mm": 75.0,
-      "tolerance_mm": "±0.1",
+      "tolerance_mm": "\u00b10.1",
       "weight_grams": 1200.0
     },
     "fabrication": {
@@ -5227,12 +5236,12 @@
   {
     "name": "Jacketed 304 SS Pug Mill Barrel & Continuous Auger Screw",
     "category": "custom-fab",
-    "summary": "304 stainless steel heated jacketed pug mill barrel (140°C–160°C) with internal progressive pitch auger screw for continuous high-shear mastic compounding.",
+    "summary": "304 stainless steel heated jacketed pug mill barrel (140\u00b0C\u2013160\u00b0C) with internal progressive pitch auger screw for continuous high-shear mastic compounding.",
     "dimensions": {
       "length_mm": 450.0,
       "width_mm": 90.0,
       "thickness_mm": 90.0,
-      "tolerance_mm": "±0.1",
+      "tolerance_mm": "\u00b10.1",
       "weight_grams": 1200.0
     },
     "fabrication": {
@@ -5271,7 +5280,7 @@
       "length_mm": 220.0,
       "width_mm": 220.0,
       "thickness_mm": 12.0,
-      "tolerance_mm": "±0.1",
+      "tolerance_mm": "\u00b10.1",
       "weight_grams": 1200.0
     },
     "fabrication": {
@@ -5310,7 +5319,7 @@
       "length_mm": 260.0,
       "width_mm": 140.0,
       "thickness_mm": 45.0,
-      "tolerance_mm": "±0.1",
+      "tolerance_mm": "\u00b10.1",
       "weight_grams": 1200.0
     },
     "fabrication": {
@@ -5349,7 +5358,7 @@
       "length_mm": 75.0,
       "width_mm": 50.0,
       "thickness_mm": 20.0,
-      "tolerance_mm": "±0.2",
+      "tolerance_mm": "\u00b10.2",
       "weight_grams": 350.0
     },
     "fabrication": {
@@ -5388,7 +5397,7 @@
       "length_mm": 220.0,
       "width_mm": 150.0,
       "thickness_mm": 25.0,
-      "tolerance_mm": "±0.5",
+      "tolerance_mm": "\u00b10.5",
       "weight_grams": 850.0
     },
     "fabrication": {
