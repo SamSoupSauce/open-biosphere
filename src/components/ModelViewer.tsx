@@ -651,6 +651,20 @@ export default function ModelViewer({
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
+    const updateCanvasSize = () => {
+      const rect = canvas.getBoundingClientRect();
+      const displayW = Math.round(rect.width);
+      const displayH = Math.round(rect.height);
+      if (displayW > 0 && displayH > 0 && (canvas.width !== displayW || canvas.height !== displayH)) {
+        canvas.width = displayW;
+        canvas.height = displayH;
+        return true;
+      }
+      return false;
+    };
+
+    updateCanvasSize();
+
     const render = () => {
       if (!isVisibleRef.current) {
         animId = requestAnimationFrame(render);
@@ -692,6 +706,7 @@ export default function ModelViewer({
       const panY = panCurrentRef.current.y;
       const panZ = panCurrentRef.current.z;
 
+      updateCanvasSize();
       const w = canvas.width;
       const h = canvas.height;
       ctx.clearRect(0, 0, w, h);
@@ -970,10 +985,21 @@ export default function ModelViewer({
       }
     };
 
+    let resizeObserver: ResizeObserver | null = null;
+    if (typeof ResizeObserver !== 'undefined' && containerRef.current) {
+      resizeObserver = new ResizeObserver(() => {
+        if (updateCanvasSize()) {
+          requestAnimationFrame(render);
+        }
+      });
+      resizeObserver.observe(containerRef.current);
+    }
+
     render();
 
     return () => {
       if (animId) cancelAnimationFrame(animId);
+      if (resizeObserver) resizeObserver.disconnect();
     };
   }, [isRotating, wireframe, isDragging, dimensions, mesh, material]);
 
