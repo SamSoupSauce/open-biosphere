@@ -408,40 +408,55 @@ def add_bca_common_chassis(v, f, c):
 
 def add_bca_module_1(v, f, c, motorized=False):
     # Module 1: Thermal Stripper & Coarse Breaker (-X input side)
-    # Breaker lower housing (mounting on chassis rails)
-    add_box(v, f, -150, -95, -46, -12, -30, 30, colors=c, col=C_MOD1_BREAKER)
+    # Breaker lower housing (terminates cleanly at X = -108, exposing 20mm gap to auger at X = -88)
+    add_box(v, f, -150, -108, -46, -12, -30, 30, colors=c, col=C_MOD1_BREAKER)
     # Tapered hopper chute
-    add_box(v, f, -145, -100, -12, 35, -26, 26, colors=c, col=C_MOD1_BREAKER)
-    # Flared hopper rim up to Y = 41
-    add_box(v, f, -148, -97, 35, 41, -29, 29, colors=c, col=C_MOD1_BREAKER)
-    # Open hopper dark throat opening flush on top [41, 42.5]
-    add_box(v, f, -143, -102, 41, 42.5, -24, 24, colors=c, col=C_MOD1_DARK)
+    add_box(v, f, -145, -112, -12, 35, -26, 26, colors=c, col=C_MOD1_BREAKER)
+    # Flared hopper rectangular rim collar with open throat (4 perimeter walls from Y = 35 to Y = 41)
+    add_box(v, f, -148, -141, 35, 41, -29, 29, colors=c, col=C_MOD1_BREAKER) # Left wall
+    add_box(v, f, -116, -109, 35, 41, -29, 29, colors=c, col=C_MOD1_BREAKER) # Right wall
+    add_box(v, f, -141, -116, 35, 41, -29, -21, colors=c, col=C_MOD1_BREAKER) # Front wall
+    add_box(v, f, -141, -116, 35, 41, 21, 29, colors=c, col=C_MOD1_BREAKER)  # Rear wall
+    # Recessed dark interior breaker throat floor inside open collar [35, 36.5]
+    add_box(v, f, -141, -116, 35, 36.5, -21, 21, colors=c, col=C_MOD1_DARK)
     # Shaft journal on rear (+Z side)
-    add_cylinder_x(v, f, -160, -150, -25, 15, 6, n_seg=8, colors=c, col=C_MOD1_BREAKER)
+    add_cylinder_x(v, f, -160, -150, -25, 15, 6, n_seg=8, colors=c, col=C_MOD1_BREAKER, cap_left=True, cap_right=True)
     if not motorized:
         # Shaft journal on front (-Z side) for manual version
-        add_cylinder_x(v, f, -160, -150, -25, -15, 6, n_seg=8, colors=c, col=C_MOD1_BREAKER)
+        add_cylinder_x(v, f, -160, -150, -25, -15, 6, n_seg=8, colors=c, col=C_MOD1_BREAKER, cap_left=True, cap_right=True)
 
 def comp_bca_stage_0():
     v, f, c = [], [], []
     add_bca_common_chassis(v, f, c)
     add_bca_module_1(v, f, c, motorized=False)
-    # Module 2: Continuous manual auger barrel (no internal end caps on butt joints)
-    add_cylinder_x(v, f, -95, 55, -28, 0, 18, n_seg=10, colors=c, col=C_MOD2_AUGER, cap_left=False, cap_right=False)
-    # Manual crank shaft extending out left side (-172 to -150)
-    add_cylinder_x(v, f, -172, -150, -28, 0, 6, n_seg=6, colors=c, col=C_MOD2_AUGER, cap_left=False)
-    add_box(v, f, -178, -172, -28, 12, -4, 4, colors=c, col=C_CHASSIS) # Crank arm
-    add_cylinder_x(v, f, -186, -178, 10, 0, 4, n_seg=6, colors=c, col=C_CHASSIS) # Handle
-    # Gravity bio-pitch funnel on top of barrel
-    add_cylinder_y(v, f, -82, -10, 18, 0, 7, n_seg=8, colors=c, col=C_MOD2_HEATER, cap_bottom=False)
+
+    # Central Drive Shaft & Flanged Torque Coupler exposed in gap [-108, -88]
+    add_cylinder_x(v, f, -108, -101, -28, 0, 7.5, n_seg=8, colors=c, col=C_CHASSIS, cap_left=True, cap_right=True)
+    add_cylinder_x(v, f, -101, -95, -28, 0, 11, n_seg=8, colors=c, col=C_MOTOR, cap_left=True, cap_right=True)
+    add_cylinder_x(v, f, -95, -88, -28, 0, 7.5, n_seg=8, colors=c, col=C_CHASSIS, cap_left=True, cap_right=True)
+
+    # Module 2: Continuous manual auger barrel starting cleanly at X = -88
+    add_cylinder_x(v, f, -88, 55, -28, 0, 18, n_seg=10, colors=c, col=C_MOD2_AUGER, cap_left=True, cap_right=True)
+
+    # Manual crank shaft extending out left side (-180 to -150)
+    add_cylinder_x(v, f, -180, -150, -28, 0, 7, n_seg=8, colors=c, col=C_CHASSIS, cap_left=True, cap_right=True)
+    add_box(v, f, -186, -180, -28, 12, -4, 4, colors=c, col=C_CHASSIS) # Crank arm
+    add_cylinder_x(v, f, -194, -186, 10, 0, 4, n_seg=6, colors=c, col=C_CHASSIS, cap_left=True, cap_right=True) # Handle
+
+    # Bio-Pitch Gravity Funnel with de-occluded open top orifice
+    add_cylinder_y(v, f, -79, -10, 16, 0, 6, n_seg=8, colors=c, col=C_MOD2_HEATER, cap_bottom=True, cap_top=True)
+    add_cylinder_y(v, f, -79, 16, 21, 0, 9, n_seg=8, colors=c, col=C_MOD2_HEATER, cap_bottom=True, cap_top=True)
+    add_cylinder_y(v, f, -79, 21, 22.5, 0, 5, n_seg=8, colors=c, col=C_MOD1_DARK, cap_bottom=True, cap_top=True)
+
     # Module 3: Fixed aperture die plate
     add_box(v, f, 55, 66, -46, -10, -30, 30, colors=c, col=C_MOD3_DIE)
     add_box(v, f, 66, 78, -36, -20, -18, 18, colors=c, col=C_MOD3_DIE)
+
     # Module 4: Manual wire cutoff shear & catch bed (rails end cleanly at carriage X = 96)
-    add_cylinder_x(v, f, 78, 96, -18, -20, 2.5, n_seg=6, colors=c, col=C_MOD4_SHEAR)
-    add_cylinder_x(v, f, 78, 96, -18, 20, 2.5, n_seg=6, colors=c, col=C_MOD4_SHEAR)
+    add_cylinder_x(v, f, 78, 96, -18, -20, 2.5, n_seg=6, colors=c, col=C_MOD4_SHEAR, cap_left=True, cap_right=True)
+    add_cylinder_x(v, f, 78, 96, -18, 20, 2.5, n_seg=6, colors=c, col=C_MOD4_SHEAR, cap_left=True, cap_right=True)
     add_box(v, f, 96, 106, -42, -14, -22, 22, colors=c, col=C_MOD4_SHEAR)
-    add_cylinder_y(v, f, 101, -14, 18, 20, 3.5, n_seg=6, colors=c, col=C_MOD4_SHEAR) # manual pull lever
+    add_cylinder_y(v, f, 101, -14, 18, 20, 3.5, n_seg=6, colors=c, col=C_MOD4_SHEAR, cap_bottom=True, cap_top=True) # manual pull lever
     add_box(v, f, 106, 158, -46, -41, -20, 20, colors=c, col=C_MOD4_SHEAR)
     return build_gltf(v, f, colors=c, name="SYS-BCA-STAGE-0")
 machines_composites['bca-packaging-engine/stage-0'] = comp_bca_stage_0()
@@ -450,36 +465,48 @@ def comp_bca_stage_1():
     v, f, c = [], [], []
     add_bca_common_chassis(v, f, c)
     add_bca_module_1(v, f, c, motorized=True)
-    # Module 2: Segmented barrel with ceramic band heaters (NO INTERNAL CAP OVERLAP)
-    add_cylinder_x(v, f, -95, -70, -28, 0, 18, n_seg=10, colors=c, col=C_MOD2_AUGER, cap_left=False, cap_right=False)
-    add_cylinder_x(v, f, -70, -50, -28, 0, 21, n_seg=10, colors=c, col=C_MOD2_HEATER, cap_left=True, cap_right=True)
-    add_cylinder_x(v, f, -50, -25, -28, 0, 18, n_seg=10, colors=c, col=C_MOD2_AUGER, cap_left=False, cap_right=False)
-    add_cylinder_x(v, f, -25, -5, -28, 0, 21, n_seg=10, colors=c, col=C_MOD2_HEATER, cap_left=True, cap_right=True)
-    add_cylinder_x(v, f, -5, 20, -28, 0, 18, n_seg=10, colors=c, col=C_MOD2_AUGER, cap_left=False, cap_right=False)
-    add_cylinder_x(v, f, 20, 40, -28, 0, 21, n_seg=10, colors=c, col=C_MOD2_HEATER, cap_left=True, cap_right=True)
-    add_cylinder_x(v, f, 40, 55, -28, 0, 19, n_seg=10, colors=c, col=C_MOD2_AUGER, cap_left=False, cap_right=False)
 
-    # Bio-Pitch Injector Port on Section 1
-    add_cylinder_y(v, f, -82, -10, 16, 0, 6, n_seg=8, colors=c, col=C_MOD2_HEATER, cap_bottom=False, cap_top=False)
-    add_cylinder_y(v, f, -82, 16, 21, 0, 9, n_seg=8, colors=c, col=C_MOD2_HEATER, cap_bottom=True, cap_top=True)
+    # Central Drive Shaft & Flanged Torque Coupler exposed in gap [-108, -88]
+    add_cylinder_x(v, f, -108, -101, -28, 0, 7.5, n_seg=8, colors=c, col=C_CHASSIS, cap_left=True, cap_right=True)
+    add_cylinder_x(v, f, -101, -95, -28, 0, 11, n_seg=8, colors=c, col=C_MOTOR, cap_left=True, cap_right=True)
+    add_cylinder_x(v, f, -95, -88, -28, 0, 7.5, n_seg=8, colors=c, col=C_CHASSIS, cap_left=True, cap_right=True)
+
+    # Module 2: Segmented barrel with ceramic band heaters starting at X = -88
+    add_cylinder_x(v, f, -88, -70, -28, 0, 18, n_seg=10, colors=c, col=C_MOD2_AUGER, cap_left=True, cap_right=True)
+    add_cylinder_x(v, f, -70, -50, -28, 0, 21, n_seg=10, colors=c, col=C_MOD2_HEATER, cap_left=True, cap_right=True)
+    add_cylinder_x(v, f, -50, -25, -28, 0, 18, n_seg=10, colors=c, col=C_MOD2_AUGER, cap_left=True, cap_right=True)
+    add_cylinder_x(v, f, -25, -5, -28, 0, 21, n_seg=10, colors=c, col=C_MOD2_HEATER, cap_left=True, cap_right=True)
+    add_cylinder_x(v, f, -5, 20, -28, 0, 18, n_seg=10, colors=c, col=C_MOD2_AUGER, cap_left=True, cap_right=True)
+    add_cylinder_x(v, f, 20, 40, -28, 0, 21, n_seg=10, colors=c, col=C_MOD2_HEATER, cap_left=True, cap_right=True)
+    add_cylinder_x(v, f, 40, 55, -28, 0, 19, n_seg=10, colors=c, col=C_MOD2_AUGER, cap_left=True, cap_right=True)
+
+    # Bio-Pitch Injector Port on Section 1 with de-occluded open top orifice
+    add_cylinder_y(v, f, -79, -10, 16, 0, 6, n_seg=8, colors=c, col=C_MOD2_HEATER, cap_bottom=True, cap_top=True)
+    add_cylinder_y(v, f, -79, 16, 21, 0, 9, n_seg=8, colors=c, col=C_MOD2_HEATER, cap_bottom=True, cap_top=True)
+    add_cylinder_y(v, f, -79, 21, 22.5, 0, 5, n_seg=8, colors=c, col=C_MOD1_DARK, cap_bottom=True, cap_top=True)
+
+    # Rear central drive shaft extending through driven sprocket
+    add_cylinder_x(v, f, -180, -172, -28, 0, 7, n_seg=8, colors=c, col=C_CHASSIS, cap_left=True, cap_right=True)
+    add_cylinder_x(v, f, -172, -164, -28, 0, 12, n_seg=8, colors=c, col=C_MOTOR, cap_left=True, cap_right=True)
+    add_cylinder_x(v, f, -164, -150, -28, 0, 7, n_seg=8, colors=c, col=C_CHASSIS, cap_left=True, cap_right=True)
 
     # Geared 24V DC Drive Motor mounted on left chassis extension plate
-    add_cylinder_x(v, f, -188, -160, -36, -12, 8.5, n_seg=8, colors=c, col=C_MOTOR)
-    add_box(v, f, -160, -150, -40, -18, -17, -7, colors=c, col=C_MOTOR) # Chain guard
+    add_cylinder_x(v, f, -188, -164, -36, -22, 7.5, n_seg=8, colors=c, col=C_MOTOR, cap_left=True, cap_right=True)
+    add_box(v, f, -164, -150, -40, -24, -24, -18, colors=c, col=C_MOTOR) # Chain guard
 
     # Module 3: Die frame
     add_box(v, f, 55, 66, -46, -10, -30, 30, colors=c, col=C_MOD3_DIE)
     add_box(v, f, 66, 78, -36, -20, -18, 18, colors=c, col=C_MOD3_DIE)
 
     # Module 4: Wire shear & catch bed (rails end cleanly at carriage X = 96)
-    add_cylinder_x(v, f, 78, 96, -18, -20, 2.5, n_seg=6, colors=c, col=C_MOD4_SHEAR)
-    add_cylinder_x(v, f, 78, 96, -18, 20, 2.5, n_seg=6, colors=c, col=C_MOD4_SHEAR)
+    add_cylinder_x(v, f, 78, 96, -18, -20, 2.5, n_seg=6, colors=c, col=C_MOD4_SHEAR, cap_left=True, cap_right=True)
+    add_cylinder_x(v, f, 78, 96, -18, 20, 2.5, n_seg=6, colors=c, col=C_MOD4_SHEAR, cap_left=True, cap_right=True)
     add_box(v, f, 96, 106, -42, -14, -22, 22, colors=c, col=C_MOD4_SHEAR)
     add_box(v, f, 106, 158, -46, -41, -20, 20, colors=c, col=C_MOD4_SHEAR)
 
     # Two-Control BLE Safety console on front rail
     add_box(v, f, -15, 30, -45, -26, 34, 44, colors=c, col=C_ELECTRONICS)
-    add_cylinder_y(v, f, 8, -26, -20, 39, 5, n_seg=8, colors=c, col=C_MOD2_HEATER) # E-Stop knob
+    add_cylinder_y(v, f, 8, -26, -20, 39, 5, n_seg=8, colors=c, col=C_MOD2_HEATER, cap_bottom=True, cap_top=True) # E-Stop knob
     return build_gltf(v, f, colors=c, name="SYS-BCA-STAGE-1")
 machines_composites['bca-packaging-engine/stage-1'] = comp_bca_stage_1()
 
@@ -488,22 +515,33 @@ def comp_bca_stage_2():
     add_bca_common_chassis(v, f, c)
     add_bca_module_1(v, f, c, motorized=True)
 
-    # Module 2: Segmented barrel with ceramic band heaters (NO INTERNAL CAP OVERLAP)
-    add_cylinder_x(v, f, -95, -70, -28, 0, 18, n_seg=10, colors=c, col=C_MOD2_AUGER, cap_left=False, cap_right=False)
-    add_cylinder_x(v, f, -70, -50, -28, 0, 21, n_seg=10, colors=c, col=C_MOD2_HEATER, cap_left=True, cap_right=True)
-    add_cylinder_x(v, f, -50, -25, -28, 0, 18, n_seg=10, colors=c, col=C_MOD2_AUGER, cap_left=False, cap_right=False)
-    add_cylinder_x(v, f, -25, -5, -28, 0, 21, n_seg=10, colors=c, col=C_MOD2_HEATER, cap_left=True, cap_right=True)
-    add_cylinder_x(v, f, -5, 20, -28, 0, 18, n_seg=10, colors=c, col=C_MOD2_AUGER, cap_left=False, cap_right=False)
-    add_cylinder_x(v, f, 20, 40, -28, 0, 21, n_seg=10, colors=c, col=C_MOD2_HEATER, cap_left=True, cap_right=True)
-    add_cylinder_x(v, f, 40, 55, -28, 0, 19, n_seg=10, colors=c, col=C_MOD2_AUGER, cap_left=False, cap_right=False)
+    # Central Drive Shaft & Flanged Torque Coupler exposed in gap [-108, -88]
+    add_cylinder_x(v, f, -108, -101, -28, 0, 7.5, n_seg=8, colors=c, col=C_CHASSIS, cap_left=True, cap_right=True)
+    add_cylinder_x(v, f, -101, -95, -28, 0, 11, n_seg=8, colors=c, col=C_MOTOR, cap_left=True, cap_right=True)
+    add_cylinder_x(v, f, -95, -88, -28, 0, 7.5, n_seg=8, colors=c, col=C_CHASSIS, cap_left=True, cap_right=True)
 
-    # Bio-Pitch Injector Port on Section 1
-    add_cylinder_y(v, f, -82, -10, 16, 0, 6, n_seg=8, colors=c, col=C_MOD2_HEATER, cap_bottom=False, cap_top=False)
-    add_cylinder_y(v, f, -82, 16, 21, 0, 9, n_seg=8, colors=c, col=C_MOD2_HEATER, cap_bottom=True, cap_top=True)
+    # Module 2: Segmented barrel with ceramic band heaters starting at X = -88
+    add_cylinder_x(v, f, -88, -70, -28, 0, 18, n_seg=10, colors=c, col=C_MOD2_AUGER, cap_left=True, cap_right=True)
+    add_cylinder_x(v, f, -70, -50, -28, 0, 21, n_seg=10, colors=c, col=C_MOD2_HEATER, cap_left=True, cap_right=True)
+    add_cylinder_x(v, f, -50, -25, -28, 0, 18, n_seg=10, colors=c, col=C_MOD2_AUGER, cap_left=True, cap_right=True)
+    add_cylinder_x(v, f, -25, -5, -28, 0, 21, n_seg=10, colors=c, col=C_MOD2_HEATER, cap_left=True, cap_right=True)
+    add_cylinder_x(v, f, -5, 20, -28, 0, 18, n_seg=10, colors=c, col=C_MOD2_AUGER, cap_left=True, cap_right=True)
+    add_cylinder_x(v, f, 20, 40, -28, 0, 21, n_seg=10, colors=c, col=C_MOD2_HEATER, cap_left=True, cap_right=True)
+    add_cylinder_x(v, f, 40, 55, -28, 0, 19, n_seg=10, colors=c, col=C_MOD2_AUGER, cap_left=True, cap_right=True)
+
+    # Bio-Pitch Injector Port on Section 1 with de-occluded open top orifice
+    add_cylinder_y(v, f, -79, -10, 16, 0, 6, n_seg=8, colors=c, col=C_MOD2_HEATER, cap_bottom=True, cap_top=True)
+    add_cylinder_y(v, f, -79, 16, 21, 0, 9, n_seg=8, colors=c, col=C_MOD2_HEATER, cap_bottom=True, cap_top=True)
+    add_cylinder_y(v, f, -79, 21, 22.5, 0, 5, n_seg=8, colors=c, col=C_MOD1_DARK, cap_bottom=True, cap_top=True)
+
+    # Rear central drive shaft extending through driven sprocket
+    add_cylinder_x(v, f, -180, -172, -28, 0, 7, n_seg=8, colors=c, col=C_CHASSIS, cap_left=True, cap_right=True)
+    add_cylinder_x(v, f, -172, -164, -28, 0, 12, n_seg=8, colors=c, col=C_MOTOR, cap_left=True, cap_right=True)
+    add_cylinder_x(v, f, -164, -150, -28, 0, 7, n_seg=8, colors=c, col=C_CHASSIS, cap_left=True, cap_right=True)
 
     # Geared 24V Drive Motor on left chassis extension plate
-    add_cylinder_x(v, f, -188, -160, -36, -12, 8.5, n_seg=8, colors=c, col=C_MOTOR)
-    add_box(v, f, -160, -150, -40, -18, -17, -7, colors=c, col=C_MOTOR) # Chain guard
+    add_cylinder_x(v, f, -188, -164, -36, -22, 7.5, n_seg=8, colors=c, col=C_MOTOR, cap_left=True, cap_right=True)
+    add_box(v, f, -164, -150, -40, -24, -24, -18, colors=c, col=C_MOTOR) # Chain guard
 
     # Module 3: 4-Way Variable Aperture Stepper Die
     add_box(v, f, 55, 66, -46, -10, -30, 30, colors=c, col=C_MOD3_DIE)
@@ -515,8 +553,8 @@ def comp_bca_stage_2():
     add_box(v, f, 66, 76, -46, -37, -8, 8, colors=c, col=C_MOD3_DIE)   # South Stepper (-Y, mounted below throat)
 
     # Module 4: Robotic Servo Flying Shear & Cure bed with container (rails end cleanly at carriage X = 96)
-    add_cylinder_x(v, f, 78, 96, -18, -20, 2.5, n_seg=6, colors=c, col=C_MOD4_SHEAR)
-    add_cylinder_x(v, f, 78, 96, -18, 20, 2.5, n_seg=6, colors=c, col=C_MOD4_SHEAR)
+    add_cylinder_x(v, f, 78, 96, -18, -20, 2.5, n_seg=6, colors=c, col=C_MOD4_SHEAR, cap_left=True, cap_right=True)
+    add_cylinder_x(v, f, 78, 96, -18, 20, 2.5, n_seg=6, colors=c, col=C_MOD4_SHEAR, cap_left=True, cap_right=True)
     add_box(v, f, 96, 106, -42, -14, -22, 22, colors=c, col=C_MOD4_SHEAR)
     add_box(v, f, 97, 105, -14, 0, -7, 7, colors=c, col=C_MOD4_SHEAR) # Servo
     add_box(v, f, 106, 158, -46, -41, -20, 20, colors=c, col=C_MOD4_SHEAR) # Cure bed
