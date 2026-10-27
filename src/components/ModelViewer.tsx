@@ -1,5 +1,103 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Box, RotateCw, Layers, Download, Maximize2, CheckCircle2, Cpu, ZoomIn, ZoomOut } from 'lucide-react';
+import { Box, RotateCw, Layers, Download, Maximize2, CheckCircle2, Cpu } from 'lucide-react';
+
+export interface CameraStepConfig {
+  panStep: number;      // World units per click (default: 50mm)
+  zoomStep: number;     // Distance delta per click (default: 100mm)
+  rotateStep: number;   // Radians per click (default: Math.PI / 12)
+}
+
+/**
+ * Deterministic Three.js / WebGL camera controller reference implementation (RFC-016 Section 5.1).
+ */
+export class BiosphereCameraController {
+  private camera: any;
+  private target: any;
+  private config: CameraStepConfig;
+
+  constructor(camera: any, target: any, config?: Partial<CameraStepConfig>) {
+    this.camera = camera;
+    this.target = target;
+    this.config = {
+      panStep: 50,
+      zoomStep: 100,
+      rotateStep: Math.PI / 12,
+      ...config,
+    };
+  }
+
+  // --- ZOOM ---
+  public zoomIn(): void {
+    if (this.camera?.position && this.target) {
+      const dir = {
+        x: this.target.x - this.camera.position.x,
+        y: this.target.y - this.camera.position.y,
+        z: this.target.z - this.camera.position.z,
+      };
+      const len = Math.sqrt(dir.x * dir.x + dir.y * dir.y + dir.z * dir.z) || 1;
+      this.camera.position.x += (dir.x / len) * this.config.zoomStep;
+      this.camera.position.y += (dir.y / len) * this.config.zoomStep;
+      this.camera.position.z += (dir.z / len) * this.config.zoomStep;
+    }
+  }
+
+  public zoomOut(): void {
+    if (this.camera?.position && this.target) {
+      const dir = {
+        x: this.target.x - this.camera.position.x,
+        y: this.target.y - this.camera.position.y,
+        z: this.target.z - this.camera.position.z,
+      };
+      const len = Math.sqrt(dir.x * dir.x + dir.y * dir.y + dir.z * dir.z) || 1;
+      this.camera.position.x -= (dir.x / len) * this.config.zoomStep;
+      this.camera.position.y -= (dir.y / len) * this.config.zoomStep;
+      this.camera.position.z -= (dir.z / len) * this.config.zoomStep;
+    }
+  }
+
+  // --- ROTATION (Vertical Row) ---
+  public rotateYaw(direction: 1 | -1): void {
+    const angle = direction * this.config.rotateStep;
+    if (this.camera?.position && this.target) {
+      const dx = this.camera.position.x - this.target.x;
+      const dz = this.camera.position.z - this.target.z;
+      const cosA = Math.cos(angle);
+      const sinA = Math.sin(angle);
+      this.camera.position.x = this.target.x + (dx * cosA - dz * sinA);
+      this.camera.position.z = this.target.z + (dx * sinA + dz * cosA);
+    }
+  }
+
+  public rotatePitch(direction: 1 | -1): void {
+    const angle = direction * this.config.rotateStep;
+    if (this.camera?.position && this.target) {
+      const dist = Math.sqrt(
+        Math.pow(this.camera.position.x - this.target.x, 2) +
+        Math.pow(this.camera.position.z - this.target.z, 2)
+      );
+      this.camera.position.y += Math.sin(angle) * (dist || 100);
+    }
+  }
+
+  // --- TRANSLATION ---
+  public panHorizontal(direction: 1 | -1): void {
+    const delta = direction * this.config.panStep;
+    if (this.camera?.position) this.camera.position.x += delta;
+    if (this.target) this.target.x += delta;
+  }
+
+  public panVertical(direction: 1 | -1): void {
+    const delta = direction * this.config.panStep;
+    if (this.camera?.position) this.camera.position.y += delta;
+    if (this.target) this.target.y += delta;
+  }
+
+  public panDepth(direction: 1 | -1): void {
+    const delta = direction * this.config.panStep;
+    if (this.camera?.position) this.camera.position.z += delta;
+    if (this.target) this.target.z += delta;
+  }
+}
 
 interface Props {
   modelUrl: string;
@@ -50,7 +148,7 @@ function parseGLTFData(jsonData: any, binBuffer: ArrayBuffer, format: 'gltf' | '
     const posBv = jsonData.bufferViews[posAcc.bufferView];
     const idxBv = jsonData.bufferViews[idxAcc.bufferView];
 
-    // Read positions. Standard glTF is in meters -> scale to mm if max coordinate is small (< 10)
+    // Read positions. Standard glTF is in meters -> scale to mm if max coordinate is small (< 15)
     const posOffset = (posBv.byteOffset || 0) + (posAcc.byteOffset || 0);
     const isMeters = posAcc.max && Math.max(...posAcc.max) < 15;
     const unitScale = isMeters ? 1000 : 1;
@@ -118,7 +216,6 @@ function parseGLTF(buffer: ArrayBuffer): ParsedMesh | null {
 
 /**
  * High-performance, zero-dependency client-side glTF 2.0 binary (.glb) chunk parser.
- * Reads JSON chunk (0x4E4F534A) and BIN chunk (0x004E4942) without external runtime dependencies.
  */
 function parseGLB(buffer: ArrayBuffer): ParsedMesh | null {
   try {
@@ -159,8 +256,7 @@ function parseGLB(buffer: ArrayBuffer): ParsedMesh | null {
 }
 
 /**
- * High-performance, zero-dependency client-side legacy CAD binary chunk parser.
- * Directly extracts exact OBJ_TRIMESH vertex lists (0x4110) and face lists (0x4120).
+ * High-performance, zero-dependency client-side legacy CAD binary chunk parser fallback.
  */
 function parseLegacyCAD(buffer: ArrayBuffer): ParsedMesh | null {
   try {
@@ -181,12 +277,10 @@ function parseLegacyCAD(buffer: ArrayBuffer): ParsedMesh | null {
         if (chunkId === 0x4D4D || chunkId === 0x3D3D || chunkId === 0x4100) {
           readChunks(chunkEnd);
         } else if (chunkId === 0x4000) {
-          // Object chunk: skip null-terminated name
           while (offset < chunkEnd && view.getUint8(offset) !== 0) offset++;
           if (offset < chunkEnd && view.getUint8(offset) === 0) offset++;
           readChunks(chunkEnd);
         } else if (chunkId === 0x4110) {
-          // TRI_VERTEXL: list of 3D floating-point vertices
           if (offset + 2 <= chunkEnd) {
             const numVerts = view.getUint16(offset, true);
             offset += 2;
@@ -199,7 +293,6 @@ function parseLegacyCAD(buffer: ArrayBuffer): ParsedMesh | null {
             }
           }
         } else if (chunkId === 0x4120) {
-          // TRI_FACEL1: list of triangular faces with vertex indices
           if (offset + 2 <= chunkEnd) {
             const numFaces = view.getUint16(offset, true);
             offset += 2;
@@ -255,6 +348,11 @@ export default function ModelViewer({
   const maxZoomRef = useRef(7.0);
   const isVisibleRef = useRef(true);
 
+  // 3-Axis Camera Pan Translation Refs (RFC-016 Section 4.3 & 5.1)
+  const panTargetRef = useRef({ x: 0, y: 0, z: 0 });
+  const panCurrentRef = useRef({ x: 0, y: 0, z: 0 });
+  const panStepRef = useRef(15);
+
   // Monitor visibility to pause render loop when offscreen
   useEffect(() => {
     const el = containerRef.current;
@@ -281,7 +379,6 @@ export default function ModelViewer({
       })
       .then((buf) => {
         if (!active) return;
-        // Attempt glTF (embedded JSON) first, then binary GLB, then legacy CAD fallback
         let parsed = parseGLTF(buf);
         if (!parsed) {
           parsed = parseGLB(buf);
@@ -291,7 +388,6 @@ export default function ModelViewer({
         }
 
         if (parsed && parsed.vertices.length > 0) {
-          // Dynamic zoom bounds clamping based on bounding sphere radius (RFC-014 Section 2.3)
           let maxDistSq = 0;
           parsed.vertices.forEach(([vx, vy, vz]) => {
             const d = vx * vx + vy * vy + vz * vz;
@@ -300,6 +396,7 @@ export default function ModelViewer({
           const boundingR = Math.sqrt(maxDistSq) || 50;
           minZoomRef.current = Math.max(0.25, 45 / (boundingR * 1.5));
           maxZoomRef.current = Math.min(9.0, 640 / (boundingR * 0.4));
+          panStepRef.current = Math.max(10, Math.round(boundingR * 0.15));
 
           // Normal orientation audit: auto-detect and correct inverted mesh winding
           const mcx = parsed.vertices.reduce((s, v) => s + v[0], 0) / parsed.vertices.length;
@@ -337,7 +434,7 @@ export default function ModelViewer({
     };
   }, [modelUrl]);
 
-  // Discrete zoom controls (RFC-014 Section 2.3 & 4.2)
+  // --- Discrete Zoom Controls (RFC-016 Section 4.1 & 5.2) ---
   const handleZoomIn = () => {
     const next = Math.min(maxZoomRef.current, zoomTargetRef.current + 0.25);
     zoomTargetRef.current = next;
@@ -350,11 +447,40 @@ export default function ModelViewer({
     setZoomLevel(next);
   };
 
+  // --- Discrete Rotation Controls (RFC-016 Section 4.2 & 5.2) ---
+  const handleRotateYaw = (direction: -1 | 1) => {
+    setIsRotating(false);
+    rotYRef.current = (rotYRef.current + direction * 15 + 360) % 360;
+  };
+
+  const handleRotatePitch = (direction: -1 | 1) => {
+    setIsRotating(false);
+    rotXRef.current = Math.max(-85, Math.min(85, rotXRef.current + direction * 10));
+  };
+
+  // --- Discrete 3-Axis Translation D-Pad Controls (RFC-016 Section 4.3 & 5.2) ---
+  const handlePanHorizontal = (direction: -1 | 1) => {
+    setIsRotating(false);
+    panTargetRef.current.x += direction * panStepRef.current;
+  };
+
+  const handlePanVertical = (direction: -1 | 1) => {
+    setIsRotating(false);
+    panTargetRef.current.y += direction * panStepRef.current;
+  };
+
+  const handlePanDepth = (direction: -1 | 1) => {
+    setIsRotating(false);
+    panTargetRef.current.z += direction * panStepRef.current;
+  };
+
   const handleResetPerspective = () => {
     rotXRef.current = 25;
     rotYRef.current = 45;
     zoomTargetRef.current = 1.0;
     zoomCurrentRef.current = 1.0;
+    panTargetRef.current = { x: 0, y: 0, z: 0 };
+    panCurrentRef.current = { x: 0, y: 0, z: 0 };
     setZoomLevel(1.0);
   };
 
@@ -376,16 +502,36 @@ export default function ModelViewer({
         rotYRef.current = (rotYRef.current + 0.5) % 360;
       }
 
-      // Smooth zoom damping towards target
+      // Smooth zoom damping
       if (Math.abs(zoomTargetRef.current - zoomCurrentRef.current) > 0.002) {
         zoomCurrentRef.current += (zoomTargetRef.current - zoomCurrentRef.current) * 0.15;
       } else {
         zoomCurrentRef.current = zoomTargetRef.current;
       }
 
+      // Smooth pan damping (RFC-016 Section 5)
+      if (Math.abs(panTargetRef.current.x - panCurrentRef.current.x) > 0.05) {
+        panCurrentRef.current.x += (panTargetRef.current.x - panCurrentRef.current.x) * 0.2;
+      } else {
+        panCurrentRef.current.x = panTargetRef.current.x;
+      }
+      if (Math.abs(panTargetRef.current.y - panCurrentRef.current.y) > 0.05) {
+        panCurrentRef.current.y += (panTargetRef.current.y - panCurrentRef.current.y) * 0.2;
+      } else {
+        panCurrentRef.current.y = panTargetRef.current.y;
+      }
+      if (Math.abs(panTargetRef.current.z - panCurrentRef.current.z) > 0.05) {
+        panCurrentRef.current.z += (panTargetRef.current.z - panCurrentRef.current.z) * 0.2;
+      } else {
+        panCurrentRef.current.z = panTargetRef.current.z;
+      }
+
       const currentRotX = rotXRef.current;
       const currentRotY = rotYRef.current;
       const activeZoom = zoomCurrentRef.current;
+      const panX = panCurrentRef.current.x;
+      const panY = panCurrentRef.current.y;
+      const panZ = panCurrentRef.current.z;
 
       const w = canvas.width;
       const h = canvas.height;
@@ -421,7 +567,6 @@ export default function ModelViewer({
       const sinY = Math.sin(radY);
 
       if (mesh && mesh.vertices.length > 0) {
-        // Calculate model bounding box for automatic isometric viewport scaling
         let minX = Infinity, maxX = -Infinity;
         let minY = Infinity, maxY = -Infinity;
         let minZ = Infinity, maxZ = -Infinity;
@@ -443,11 +588,11 @@ export default function ModelViewer({
         const maxSpan = Math.max(spanX, spanY, spanZ, 10);
         const scale = (110 / maxSpan) * activeZoom;
 
-        // Project all vertices
+        // Project all vertices with 3-axis translation offsets
         const projected = mesh.vertices.map(([vx, vy, vz]) => {
-          const rx = (vx - centerOffset[0]) * scale;
-          const ry = (vy - centerOffset[1]) * scale;
-          const rz = (vz - centerOffset[2]) * scale;
+          const rx = (vx - centerOffset[0] + panX) * scale;
+          const ry = (vy - centerOffset[1] + panY) * scale;
+          const rz = (vz - centerOffset[2] + panZ) * scale;
 
           // Rotate Y then X
           const x1 = rx * cosY + rz * sinY;
@@ -510,16 +655,11 @@ export default function ModelViewer({
           const rny2 = uny * cosX - rnz1 * sinX;
           const rnz2 = uny * sinX + rnz1 * cosX;
 
-          // Backface Culling: In solid shaded mode, discard faces pointing away from the camera.
-          // rnz2 <= 0 means the outward normal points away from the viewer. Culling backfaces
-          // prevents interior and rear faces from being drawn over foreground faces in Painter's sort,
-          // completely eliminating inside-out transparency/x-ray artifacts.
+          // Mandatory Backface Culling (RFC-014 / GEMINI.md)
           if (!wireframe && rnz2 <= 0.0) return;
 
-          // Diffuse illumination dot product
           const intensity = Math.max(0.22, (rnx1 * lx + rny2 * ly + rnz2 * lz + 1) / 2);
 
-          // Base theme color based on material
           let r = 56, g = 189, b = 248; // Sky cyan
           if (material.toLowerCase().includes('petg') || material.toLowerCase().includes('pla')) {
             r = 14; g = 165; b = 233;
@@ -546,7 +686,7 @@ export default function ModelViewer({
           });
         });
 
-        // Painter's depth sorting: render farthest to closest
+        // Painter's depth sorting
         renderFaces.sort((a, b) => a.depth - b.depth);
 
         if (!wireframe) {
@@ -564,7 +704,6 @@ export default function ModelViewer({
             ctx.fillStyle = f.color;
             ctx.fill();
 
-            // Subtle dark facet seam to define edges without creating bright translucent grid lines
             ctx.strokeStyle = 'rgba(15, 23, 42, 0.45)';
             ctx.lineWidth = 0.5;
             ctx.stroke();
@@ -586,20 +725,28 @@ export default function ModelViewer({
           });
         }
 
-        // Draw Datum Coordinate Crosshair at base
-        const groundY = cy + (spanY / 2) * scale;
+        // Draw Datum Coordinate Crosshair anchored to base origin (0, minY, 0)
+        const dX = (0 - centerOffset[0] + panX) * scale;
+        const dY = (minY - centerOffset[1] + panY) * scale;
+        const dZ = (0 - centerOffset[2] + panZ) * scale;
+        const dx1 = dX * cosY + dZ * sinY;
+        const dz1 = -dX * sinY + dZ * cosY;
+        const dy2 = dY * cosX - dz1 * sinX;
+        const datumPx = cx + dx1;
+        const datumPy = cy - dy2;
+
         ctx.strokeStyle = '#f59e0b';
         ctx.lineWidth = 1.5;
         ctx.beginPath();
-        ctx.moveTo(cx - 15, groundY);
-        ctx.lineTo(cx + 15, groundY);
-        ctx.moveTo(cx, groundY - 15);
-        ctx.lineTo(cx, groundY + 15);
+        ctx.moveTo(datumPx - 12, datumPy);
+        ctx.lineTo(datumPx + 12, datumPy);
+        ctx.moveTo(datumPx, datumPy - 12);
+        ctx.lineTo(datumPx, datumPy + 12);
         ctx.stroke();
 
         ctx.fillStyle = '#f59e0b';
         ctx.font = '9px monospace';
-        ctx.fillText('ORIGIN DATUM', cx + 18, groundY + 4);
+        ctx.fillText('ORIGIN DATUM', datumPx + 15, datumPy + 4);
       } else {
         // Fallback: Parametric Envelope Bounding Cube
         const maxDim = Math.max(dimensions.x_mm, dimensions.y_mm, dimensions.z_mm) || 100;
@@ -609,14 +756,14 @@ export default function ModelViewer({
         const dz = (dimensions.z_mm / 2) * scale;
 
         const vertices = [
-          [-dx, -dy, -dz],
-          [dx, -dy, -dz],
-          [dx, dy, -dz],
-          [-dx, dy, -dz],
-          [-dx, -dy, dz],
-          [dx, -dy, dz],
-          [dx, dy, dz],
-          [-dx, dy, dz],
+          [-dx + panX * scale, -dy + panY * scale, -dz + panZ * scale],
+          [dx + panX * scale, -dy + panY * scale, -dz + panZ * scale],
+          [dx + panX * scale, dy + panY * scale, -dz + panZ * scale],
+          [-dx + panX * scale, dy + panY * scale, -dz + panZ * scale],
+          [-dx + panX * scale, -dy + panY * scale, dz + panZ * scale],
+          [dx + panX * scale, -dy + panY * scale, dz + panZ * scale],
+          [dx + panX * scale, dy + panY * scale, dz + panZ * scale],
+          [-dx + panX * scale, dy + panY * scale, dz + panZ * scale],
         ];
 
         const projected = vertices.map(([x, y, z]) => {
@@ -652,7 +799,12 @@ export default function ModelViewer({
         });
       }
 
-      if (isRotating || isDragging || Math.abs(zoomTargetRef.current - zoomCurrentRef.current) > 0.002) {
+      const isPanning =
+        Math.abs(panTargetRef.current.x - panCurrentRef.current.x) > 0.05 ||
+        Math.abs(panTargetRef.current.y - panCurrentRef.current.y) > 0.05 ||
+        Math.abs(panTargetRef.current.z - panCurrentRef.current.z) > 0.05;
+
+      if (isRotating || isDragging || isPanning || Math.abs(zoomTargetRef.current - zoomCurrentRef.current) > 0.002) {
         animId = requestAnimationFrame(render);
       }
     };
@@ -681,14 +833,8 @@ export default function ModelViewer({
 
   const handleMouseUp = () => setIsDragging(false);
 
-  // Wheel zoom handler
-  const handleWheel = (e: React.WheelEvent) => {
-    e.preventDefault();
-    const delta = e.deltaY < 0 ? 0.15 : -0.15;
-    const next = Math.max(minZoomRef.current, Math.min(maxZoomRef.current, zoomTargetRef.current + delta));
-    zoomTargetRef.current = next;
-    setZoomLevel(next);
-  };
+  // NOTE: Wheel zoom event listener completely eliminated per RFC-016 Section 3 & 6.
+  // Scrolling on the canvas passes through to document scroll without hijacking camera state.
 
   const isGltf = mesh?.format === 'gltf' || modelUrl.toLowerCase().endsWith('.gltf');
   const isGlb = mesh?.format === 'glb' || modelUrl.toLowerCase().endsWith('.glb');
@@ -727,7 +873,6 @@ export default function ModelViewer({
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseUp}
-        onWheel={handleWheel}
       >
         <canvas
           ref={canvasRef}
@@ -736,75 +881,197 @@ export default function ModelViewer({
           className="w-full h-[320px] block"
         />
 
-        {/* Top-Right Perspective Controls */}
-        <div className="absolute top-3 right-3 flex items-center gap-1.5 bg-slate-900/90 border border-slate-700/80 rounded-lg p-1 shadow-lg backdrop-blur z-10">
-          <button
-            onClick={() => setIsRotating(!isRotating)}
-            title={isRotating ? 'Pause Rotation' : 'Auto Rotate'}
-            className={`p-1.5 rounded transition ${isRotating ? 'bg-sky-500/20 text-sky-400' : 'text-slate-400 hover:text-slate-200'}`}
-          >
-            <RotateCw className="w-4 h-4" />
-          </button>
-          <button
-            onClick={() => setWireframe(!wireframe)}
-            title={wireframe ? 'Shaded View' : 'Wireframe View'}
-            className={`p-1.5 rounded transition ${wireframe ? 'bg-sky-500/20 text-sky-400' : 'text-slate-400 hover:text-slate-200'}`}
-          >
-            <Layers className="w-4 h-4" />
-          </button>
-          <button
-            onClick={handleResetPerspective}
-            title="Reset Perspective"
-            className="p-1.5 rounded text-slate-400 hover:text-slate-200 transition"
-          >
-            <Maximize2 className="w-4 h-4" />
-          </button>
-        </div>
-
-        {/* RFC-014 Dedicated Discrete ZoomHUD Overlay (Bottom-Right) */}
-        <div className="absolute bottom-3 right-3 flex items-center gap-1.5 bg-slate-900/90 border border-slate-700/80 rounded-lg p-1 shadow-lg backdrop-blur z-10">
-          <button
-            id="zoom-out"
-            onClick={handleZoomOut}
-            title="Zoom Out (−)"
-            className="w-7 h-7 flex items-center justify-center rounded bg-slate-800 hover:bg-slate-700 text-slate-200 font-mono text-base font-bold transition select-none active:scale-95"
-          >
-            −
-          </button>
-          <span className="font-mono text-[11px] text-sky-400 font-bold px-1.5 min-w-[38px] text-center select-none">
-            {Math.round(zoomLevel * 100)}%
-          </span>
-          <button
-            id="zoom-in"
-            onClick={handleZoomIn}
-            title="Zoom In (+)"
-            className="w-7 h-7 flex items-center justify-center rounded bg-slate-800 hover:bg-slate-700 text-slate-200 font-mono text-base font-bold transition select-none active:scale-95"
-          >
-            +
-          </button>
-        </div>
-
-        {/* Exact Geometry / Mesh Status HUD (Top-Left) */}
-        <div className="absolute top-3 left-3 flex items-center gap-2 bg-slate-950/85 border border-slate-800 rounded px-2.5 py-1 text-[11px] font-mono backdrop-blur">
-          {mesh ? (
-            <div className="flex items-center gap-1.5 text-emerald-400">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-              <span className="font-semibold">{isGltf ? 'glTF 2.0 Standard:' : isGlb ? 'glTF 2.0 (GLB):' : 'glTF Standard:'}</span>
-              <span className="text-slate-300">{mesh.vertices.length} vertices / {mesh.faces.length} faces</span>
+        {/* Camera Controls HUD Overlay (RFC-016 Section 4 & 5.2) */}
+        <div className="biosphere-hud pointer-events-none absolute inset-0 p-3 flex flex-col justify-between">
+          
+          {/* Top Row: Mesh Status Badge (Left) & Perspective Toggles + Rotation Column (Right) */}
+          <div className="flex justify-between items-start">
+            {/* Exact Geometry / Mesh Status HUD */}
+            <div className="pointer-events-auto flex items-center gap-2 bg-slate-950/85 border border-slate-800 rounded px-2.5 py-1 text-[11px] font-mono backdrop-blur shadow-md">
+              {mesh ? (
+                <div className="flex items-center gap-1.5 text-emerald-400">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                  <span className="font-semibold">{isGltf ? 'glTF 2.0 Standard:' : isGlb ? 'glTF 2.0 (GLB):' : 'glTF Standard:'}</span>
+                  <span className="text-slate-300">{mesh.vertices.length} vertices / {mesh.faces.length} faces</span>
+                </div>
+              ) : (
+                <div className="flex items-center gap-1.5 text-sky-400">
+                  <Cpu className="w-3.5 h-3.5 animate-spin" />
+                  <span>Streaming CAD Geometry...</span>
+                </div>
+              )}
             </div>
-          ) : (
-            <div className="flex items-center gap-1.5 text-sky-400">
-              <Cpu className="w-3.5 h-3.5 animate-spin" />
-              <span>Streaming CAD Geometry...</span>
-            </div>
-          )}
-        </div>
 
-        {/* Bounding Dimensions HUD (Bottom-Left) */}
-        <div className="absolute bottom-3 left-3 flex items-center gap-3 bg-slate-950/80 border border-slate-800/80 rounded px-2.5 py-1 text-[11px] font-mono text-slate-300 backdrop-blur">
-          <span>X: <strong className="text-sky-400">{dimensions.x_mm}</strong>mm</span>
-          <span>Y: <strong className="text-sky-400">{dimensions.y_mm}</strong>mm</span>
-          <span>Z: <strong className="text-sky-400">{dimensions.z_mm}</strong>mm</span>
+            {/* Viewport Perspective Toggles + Vertical Rotation Column */}
+            <div className="pointer-events-auto flex items-start gap-1.5">
+              {/* Toggles */}
+              <div className="flex items-center gap-1 bg-slate-900/90 border border-slate-700/80 rounded-lg p-1 shadow-lg backdrop-blur">
+                <button
+                  onClick={() => setIsRotating(!isRotating)}
+                  title={isRotating ? 'Pause Rotation' : 'Auto Rotate'}
+                  className={`p-1.5 rounded transition ${isRotating ? 'bg-sky-500/20 text-sky-400' : 'text-slate-400 hover:text-slate-200'}`}
+                >
+                  <RotateCw className="w-3.5 h-3.5" />
+                </button>
+                <button
+                  onClick={() => setWireframe(!wireframe)}
+                  title={wireframe ? 'Shaded View' : 'Wireframe View'}
+                  className={`p-1.5 rounded transition ${wireframe ? 'bg-sky-500/20 text-sky-400' : 'text-slate-400 hover:text-slate-200'}`}
+                >
+                  <Layers className="w-3.5 h-3.5" />
+                </button>
+                <button
+                  onClick={handleResetPerspective}
+                  title="Reset Perspective & Pan"
+                  className="p-1.5 rounded text-slate-400 hover:text-slate-200 transition"
+                >
+                  <Maximize2 className="w-3.5 h-3.5" />
+                </button>
+              </div>
+
+              {/* RFC-016 Rotation Column (Docked Vertical Column) */}
+              <div className="hud-group hud-vertical-dock rotation-column flex flex-col gap-1 bg-slate-900/90 border border-slate-700/80 rounded-lg p-1 shadow-lg backdrop-blur">
+                <button
+                  id="btn-rot-left"
+                  onClick={() => handleRotateYaw(-1)}
+                  title="Rotate Counter-Clockwise (Yaw −15°)"
+                  className="hud-btn w-6 h-6 flex items-center justify-center rounded bg-slate-800 hover:bg-slate-700 text-sky-400 hover:text-sky-300 font-mono text-xs font-bold transition select-none active:scale-95"
+                >
+                  ⟲
+                </button>
+                <button
+                  id="btn-rot-right"
+                  onClick={() => handleRotateYaw(1)}
+                  title="Rotate Clockwise (Yaw +15°)"
+                  className="hud-btn w-6 h-6 flex items-center justify-center rounded bg-slate-800 hover:bg-slate-700 text-sky-400 hover:text-sky-300 font-mono text-xs font-bold transition select-none active:scale-95"
+                >
+                  ⟳
+                </button>
+                <button
+                  id="btn-pitch-up"
+                  onClick={() => handleRotatePitch(1)}
+                  title="Pitch Up (Elevation +10°)"
+                  className="hud-btn w-6 h-6 flex items-center justify-center rounded bg-slate-800 hover:bg-slate-700 text-sky-400 hover:text-sky-300 font-mono text-xs font-bold transition select-none active:scale-95"
+                >
+                  ▲
+                </button>
+                <button
+                  id="btn-pitch-down"
+                  onClick={() => handleRotatePitch(-1)}
+                  title="Pitch Down (Elevation −10°)"
+                  className="hud-btn w-6 h-6 flex items-center justify-center rounded bg-slate-800 hover:bg-slate-700 text-sky-400 hover:text-sky-300 font-mono text-xs font-bold transition select-none active:scale-95"
+                >
+                  ▼
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Bottom Row: Translation D-Pads (Left), Bounding Dimensions (Center), Zoom Controls (Right) */}
+          <div className="flex justify-between items-end gap-2">
+            {/* RFC-016 Translation D-Pad (3-Axis Camera Pan) */}
+            <div className="pointer-events-auto hud-group hud-pan flex flex-col gap-1 bg-slate-950/90 border border-slate-800/90 rounded-lg p-1.5 shadow-xl backdrop-blur font-mono text-[10px]">
+              {/* Horizontal Axis */}
+              <div className="axis-control flex items-center justify-between gap-1.5">
+                <span className="axis-label text-slate-400 text-[9px] w-14 truncate">↔ Horizontal</span>
+                <div className="btn-row flex items-center gap-1">
+                  <button
+                    id="btn-pan-left"
+                    onClick={() => handlePanHorizontal(-1)}
+                    title="Pan Left (−X)"
+                    className="hud-btn w-5 h-5 flex items-center justify-center rounded bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-sky-400 text-[10px] font-bold transition select-none active:scale-95"
+                  >
+                    ◄
+                  </button>
+                  <button
+                    id="btn-pan-right"
+                    onClick={() => handlePanHorizontal(1)}
+                    title="Pan Right (+X)"
+                    className="hud-btn w-5 h-5 flex items-center justify-center rounded bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-sky-400 text-[10px] font-bold transition select-none active:scale-95"
+                  >
+                    ►
+                  </button>
+                </div>
+              </div>
+
+              {/* Vertical Axis */}
+              <div className="axis-control flex items-center justify-between gap-1.5">
+                <span className="axis-label text-slate-400 text-[9px] w-14 truncate">↕ Vertical</span>
+                <div className="btn-row flex items-center gap-1">
+                  <button
+                    id="btn-pan-up"
+                    onClick={() => handlePanVertical(1)}
+                    title="Pan Up (+Y)"
+                    className="hud-btn w-5 h-5 flex items-center justify-center rounded bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-sky-400 text-[10px] font-bold transition select-none active:scale-95"
+                  >
+                    ▲
+                  </button>
+                  <button
+                    id="btn-pan-down"
+                    onClick={() => handlePanVertical(-1)}
+                    title="Pan Down (−Y)"
+                    className="hud-btn w-5 h-5 flex items-center justify-center rounded bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-sky-400 text-[10px] font-bold transition select-none active:scale-95"
+                  >
+                    ▼
+                  </button>
+                </div>
+              </div>
+
+              {/* Depth / Axial Axis */}
+              <div className="axis-control flex items-center justify-between gap-1.5">
+                <span className="axis-label text-slate-400 text-[9px] w-14 truncate">⤢ Depth (Z)</span>
+                <div className="btn-row flex items-center gap-1">
+                  <button
+                    id="btn-pan-fwd"
+                    onClick={() => handlePanDepth(1)}
+                    title="Move Forward (+Z)"
+                    className="hud-btn w-5 h-5 flex items-center justify-center rounded bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-sky-400 text-[10px] font-bold transition select-none active:scale-95"
+                  >
+                    ▲
+                  </button>
+                  <button
+                    id="btn-pan-back"
+                    onClick={() => handlePanDepth(-1)}
+                    title="Move Backward (−Z)"
+                    className="hud-btn w-5 h-5 flex items-center justify-center rounded bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-sky-400 text-[10px] font-bold transition select-none active:scale-95"
+                  >
+                    ▼
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Bounding Dimensions HUD (Center) */}
+            <div className="pointer-events-auto hidden md:flex items-center gap-3 bg-slate-950/80 border border-slate-800/80 rounded px-2.5 py-1 text-[11px] font-mono text-slate-300 backdrop-blur shadow-md">
+              <span>X: <strong className="text-sky-400">{dimensions.x_mm}</strong>mm</span>
+              <span>Y: <strong className="text-sky-400">{dimensions.y_mm}</strong>mm</span>
+              <span>Z: <strong className="text-sky-400">{dimensions.z_mm}</strong>mm</span>
+            </div>
+
+            {/* RFC-016 Zoom Controls (Bottom-Right) */}
+            <div className="pointer-events-auto hud-group hud-zoom flex items-center gap-1.5 bg-slate-900/90 border border-slate-700/80 rounded-lg p-1 shadow-lg backdrop-blur">
+              <button
+                id="btn-zoom-out"
+                onClick={handleZoomOut}
+                title="Zoom Out"
+                className="hud-btn px-2 h-7 flex items-center justify-center rounded bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-sky-400 font-mono text-xs font-bold transition select-none active:scale-95"
+              >
+                🔍−
+              </button>
+              <span className="font-mono text-[11px] text-sky-400 font-bold px-1 min-w-[36px] text-center select-none">
+                {Math.round(zoomLevel * 100)}%
+              </span>
+              <button
+                id="btn-zoom-in"
+                onClick={handleZoomIn}
+                title="Zoom In"
+                className="hud-btn px-2 h-7 flex items-center justify-center rounded bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-sky-400 font-mono text-xs font-bold transition select-none active:scale-95"
+              >
+                🔍+
+              </button>
+            </div>
+          </div>
+
         </div>
       </div>
 
@@ -812,7 +1079,7 @@ export default function ModelViewer({
       <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-3 bg-slate-950 border-t border-slate-800 text-xs">
         <div className="flex items-center gap-2 text-slate-400">
           <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-          <span>{isGltf || isGlb ? 'glTF 2.0 CAD Standard' : 'glTF 2.0 CAD Standard'} • Drag to Orbit / Use Zoom HUD</span>
+          <span>{isGltf || isGlb ? 'glTF 2.0 CAD Standard' : 'glTF 2.0 CAD Standard'} • Drag to Orbit / Use Spatial HUD</span>
         </div>
 
         <a

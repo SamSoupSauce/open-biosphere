@@ -1,0 +1,176 @@
+---
+title: "RFC-0016: Comprehensive 3D Model Completeness & Explicit Spatial HUD Controls"
+description: "Mandates 100% real-geometry glTF models for all catalog entries, eliminates mouse wheel zoom hijacking, and implements discrete high-contrast HUD controls for zoom, rotation, and 3-axis translation."
+sidebar:
+  badge:
+    text: "STANDARD"
+    variant: "success"
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+import ModelViewer from '../../../components/ModelViewer';
+
+# RFC-0016: Comprehensive 3D Model Completeness & Explicit Spatial HUD Controls
+
+* **RFC ID:** `RFC-0016` (Builds upon `RFC-0008` & `RFC-0014`)
+* **Author:** Sam
+* **Category:** Visualization Engine & CAD Standards
+* **Ecosystem:** `open-biosphere` Web Viewer
+* **Status:** `Implemented / Canonical Standard`
+
+---
+
+## 1. Executive Summary
+
+This standard formalizes two critical operational requirements for the Open Biosphere visual engine and 3D catalog:
+
+1. **Asset Rigor & Geometry Completeness:** Eliminates all invisible nodes, bounding-box placeholders, and null references. Every Bill of Materials (BOM) entry referenced in `RFC-0008` parts schemas must link to a valid, watertight glTF 2.0 / GLB asset modeled to millimeter scale.
+2. **Deterministic Camera Navigation & Wheel Isolation:** Completely deprecates the canvas-level `wheel` event listener to prevent accidental viewport hijacking and page scroll interruption. Replaces implicit mouse gestures with a discrete, high-contrast on-screen HUD for Zoom, Rotation, and 3-Axis Translation.
+
+---
+
+## 2. Interactive Spatial HUD Demonstration
+
+The interactive viewport below embeds the complete RFC-0016 camera control architecture:
+
+<ModelViewer
+  client:load
+  partId="PART-FAB-ADAPTER-WEIR-OVERFLOW"
+  partName="Duckweed Biomass Skimming Weir Flume Flange Adapter"
+  material="petg"
+  fabricationMethod="3d-printed"
+  dimensions={{ x_mm: 160.0, y_mm: 90.0, z_mm: 75.0 }}
+  estimatedCost={14.00}
+  modelUrl="/open-biosphere/assets/parts/PART-FAB-ADAPTER-WEIR-OVERFLOW/model.gltf"
+/>
+
+* **Wheel Isolation:** Scrolling anywhere inside the canvas allows uninterrupted document scrolling.
+* **Rotation Column (Top-Right):** Discrete step buttons for Yaw (`⟲`, `⟳` at 15° steps) and Pitch (`▲`, `▼` at 10° steps).
+* **Translation D-Pads (Bottom-Left):** 3-axis pan shifts for Horizontal (`◄`, `►`), Vertical (`▲`, `▼`), and Depth / Axial (`▲`, `▼`).
+* **Zoom Controls (Bottom-Right):** Discrete tactile buttons (`🔍−`, `🔍+`) flanking the real-time zoom percentage readout.
+
+---
+
+## 3. Asset Integrity & Geometry Standard
+
+Every physical catalog component across `src/data/parts.json` and all machine build stages must provide a fully resolved 3D model:
+
+<CardGrid>
+  <Card title="Stock Hardware" icon="setting">
+    Fasteners, brackets, stainless steel / brass threaded rods, sanitary tri-clamp fittings, glass panes, rubber seals, and structural tubing feature real-geometry GLTF assets modeled to specification.
+  </Card>
+  <Card title="Electronics & Compute" icon="laptop">
+    ESP32 node modules, sensor breakout boards (CO₂, O₂, humidity, pressure), terminal blocks, stepper motors, driver boards, and Raspberry Pi hat assemblies include low-to-mid poly GLTF representations with true dimension envelopes and port orientations.
+  </Card>
+  <Card title="Millimeter Scaling & Datum" icon="puzzle">
+    All models export normalized to true millimeter scale with the coordinate origin (0, 0, 0) aligned to their primary mating or mounting face.
+  </Card>
+  <Card title="Single-File Base64 glTF 2.0" icon="document">
+    All CAD models utilize inline Base64 data buffers to guarantee atomic, single-fetch loading across all static hosting environments.
+  </Card>
+</CardGrid>
+
+---
+
+## 4. Input Handling: Event Deprecation
+
+The canvas-level event listener for `wheel` is completely removed:
+
+```javascript
+// REMOVED: controls.enableZoom via wheel
+// canvas.removeEventListener('wheel', onWindowScrollZoom);
+```
+
+Scrolling anywhere over the 3D viewport canvas produces zero camera movement and does not prevent normal parent document scrolling. Pointer and drag gestures remain reserved exclusively for direct model orbit inspection, while all primary navigation is handled by discrete HUD buttons.
+
+---
+
+## 5. HUD Navigation Architecture
+
+Camera controls are consolidated into three explicit HUD clusters overlaid on the viewport:
+
+```
++--------------------------------------------------------------------+
+|  [VIEWPORT]                                                        |
+|                                                                    |
+|  [TRANSLATION D-PADS]               [ROOM SELECT]  [ROTATION COL]  |
+|   Horizontal: [◄] [↔] [►]            | Room 01 |    [ ⟲ ]          |
+|   Vertical:   [▲] [↕] [▼]            | Room 02 |    [ ⟳ ]          |
+|   Depth:      [▲] [Z] [▼]            | Room 03 |    [  ▲  ]        |
+|                                                     [  ▼  ]        |
+|                                                                    |
+|  [ZOOM CONTROLS]                                                   |
+|   [ 🔍- ]  [ 🔍+ ]                                                 |
++--------------------------------------------------------------------+
+```
+
+### 5.1. Zoom Module
+
+* **Placement:** Bottom-right viewport docking.
+* **Controls:** Tactile buttons flanking the zoom state:
+  * **Zoom Out (`#btn-zoom-out`):** Decrements zoom target by 0.25x steps.
+  * **Zoom In (`#btn-zoom-in`):** Increments zoom target by 0.25x steps.
+
+### 5.2. Rotation Column
+
+* **Placement:** Unified vertical column docked in the upper-right control cluster.
+* **Controls:**
+  * **Yaw (Azimuth):**
+    * Counter-Clockwise (`#btn-rot-left`): Step rotation around target $+Y$ (15°).
+    * Clockwise (`#btn-rot-right`): Step rotation around target $-Y$ (15°).
+  * **Pitch (Elevation):**
+    * Tilt Up (`#btn-pitch-up`): Step elevation pitch up toward zenith (+10°).
+    * Tilt Down (`#btn-pitch-down`): Step elevation pitch down toward nadir (-10°).
+
+### 5.3. 3-Axis Translation D-Pads
+
+* **Horizontal (X-Axis):**
+  * Left (`#btn-pan-left`): Moves camera/target $-X$.
+  * Right (`#btn-pan-right`): Moves camera/target $+X$.
+* **Vertical (Y-Axis):**
+  * Up (`#btn-pan-up`): Moves camera/target $+Y$.
+  * Down (`#btn-pan-down`): Moves camera/target $-Y$.
+* **Depth / Axial (Z-Axis):**
+  * Forward (`#btn-pan-fwd`): Moves camera forward along view vector $+Z$.
+  * Backward (`#btn-pan-back`): Moves camera backward along view vector $-Z$.
+
+---
+
+## 6. Camera Controller Implementation
+
+The client-side viewport and Three.js scenes utilize the standard `BiosphereCameraController` binding:
+
+```typescript
+export interface CameraStepConfig {
+  panStep: number;      // World units per click (default: 50mm)
+  zoomStep: number;     // Distance delta per click (default: 100mm)
+  rotateStep: number;   // Radians per click (default: Math.PI / 12)
+}
+
+export class BiosphereCameraController {
+  private camera: THREE.PerspectiveCamera;
+  private target: THREE.Vector3;
+  private config: CameraStepConfig;
+
+  constructor(camera: THREE.PerspectiveCamera, target: THREE.Vector3, config?: Partial<CameraStepConfig>) {
+    this.camera = camera;
+    this.target = target;
+    this.config = {
+      panStep: 50,
+      zoomStep: 100,
+      rotateStep: Math.PI / 12,
+      ...config
+    };
+  }
+
+  // Discrete zoom, yaw/pitch rotation, and 3-axis pan implementations
+}
+```
+
+---
+
+## 7. Verification & Compliance Criteria
+
+1. **Wheel Isolation:** Scrolling anywhere inside the 3D viewport canvas produces zero camera movement and does not intercept normal parent document scrolling.
+2. **Deterministic Camera Bounds:** Clicking each directional button increments camera state by fixed, predictable steps without continuous runaway drift.
+3. **No Empty Geometry:** 100% of the 130 canonical parts in `parts.json` and all stage BOM tables link to verified, non-empty glTF 2.0 assets with valid physical bounding boxes.

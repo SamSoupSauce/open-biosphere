@@ -54,6 +54,14 @@ When maintaining or updating `ModelViewer.tsx` or `web/viewer/`:
    * Maintain the runtime centroid dot-sum sanity check in `ModelViewer.tsx`. If an imported or third-party mesh has a negative outward dot sum, dynamically reverse vertex winding on load to guarantee robust rendering.
 4. **Viewport Drag Orbit Invariants:**
    * Vertical mouse-click-drag (`dy = e.clientY - dragPosRef.current.y`) must pitch the perspective up when dragging down (`rotXRef.current + dy * 0.7`) and pitch down when dragging up. Never invert UI pitch relative to natural orbital intuition.
+5. **Deterministic Camera Navigation & Wheel Isolation (RFC-016):**
+   * The canvas-level event listener for `wheel` is completely removed. Scrolling anywhere over the 3D canvas must produce zero camera movement and pass through to normal parent document scrolling.
+   * Camera navigation is controlled via explicit on-screen HUD clusters:
+     - Zoom Controls (`.hud-zoom`): Discrete `[ 🔍− ]` (`#btn-zoom-out`) and `[ 🔍+ ]` (`#btn-zoom-in`) buttons flanking the percentage zoom state.
+     - Translation D-Pad (`.hud-pan`): Discrete 3-axis pan shifts for Horizontal (`#btn-pan-left`, `#btn-pan-right`), Vertical (`#btn-pan-up`, `#btn-pan-down`), and Depth/Axial (`#btn-pan-fwd`, `#btn-pan-back`).
+     - Rotation Column (`.rotation-column`): Discrete step rotation for Yaw (`#btn-rot-left`, `#btn-rot-right`) and Pitch (`#btn-pitch-up`, `#btn-pitch-down`).
+6. **Zero-Empty-Geometry Invariant (RFC-016):**
+   * Every BOM part and catalog component must resolve to a valid, watertight 3D glTF asset (`.gltf` or `.glb`) with non-zero geometry and millimeter scale. Bounding-box-only placeholders and empty nodes are prohibited in production assets.
 
 ---
 

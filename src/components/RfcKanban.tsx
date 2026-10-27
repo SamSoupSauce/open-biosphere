@@ -154,6 +154,16 @@ const RFC_LIST: RFCItem[] = [
     summary: 'glTF 2.0/GLB asset pipeline, hierarchical scene graph assembly with declarative extras.ref sub-model linking, and discrete HUD zoom navigation controls.',
     docSlug: '/rfcs/rfc-0014-interactive-3d-composite-assembly-standard',
   },
+  {
+    id: 'RFC-0016',
+    title: 'Comprehensive 3D Model Completeness & Explicit Spatial HUD Controls',
+    author: 'Sam',
+    targetType: 'Infrastructure',
+    status: 'Implemented',
+    date: '2026-10-26',
+    summary: 'Eliminates canvas wheel zoom hijacking, implements discrete high-contrast HUD for zoom, yaw/pitch rotation, and 3-axis translation, and mandates 100% real glTF geometry across all BOM parts.',
+    docSlug: '/rfcs/rfc-0016-3d-model-completeness-spatial-hud',
+  },
 ];
 
 export default function RfcKanban() {
