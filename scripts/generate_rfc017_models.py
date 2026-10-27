@@ -1367,6 +1367,83 @@ def generate_spoke_keyed_alum16():
     return verts, faces
 
 
+# ============================================================================
+# 11. PART-OPT-CONE-DIFFUSER-PYRAMID
+# ============================================================================
+def generate_pyramid_deflector(wall_t=2.6):
+    """
+    Inverted Polished Specular Aluminum 45° Pyramid Deflector
+    - Outer envelope: 180mm x 180mm base, 90mm height (Y: -45 to +45)
+    - 45° specular reflection facets
+    - Open central apex aperture (24.8mm x 24.8mm) for supplemental 50W hybrid LED puck
+    - Hollow internal cavity with ~2.6mm shell thickness (matches 340g aluminum unit weight)
+    - Open bottom mounting perimeter flange with 2-manifold closed shell
+    """
+    verts = []
+    faces = []
+
+    def add_ring(w, y):
+        start = len(verts)
+        verts.append([-w, y, -w])
+        verts.append([ w, y, -w])
+        verts.append([ w, y,  w])
+        verts.append([-w, y,  w])
+        return start
+
+    def add_band(r0, r1, outward=True):
+        for i in range(4):
+            i_next = (i + 1) % 4
+            v0 = r0 + i
+            v1 = r0 + i_next
+            v2 = r1 + i_next
+            v3 = r1 + i
+            if outward:
+                faces.append((v0, v2, v1))
+                faces.append((v0, v3, v2))
+            else:
+                faces.append((v0, v1, v2))
+                faces.append((v0, v2, v3))
+
+    r_out_bot   = add_ring(90.0, -45.0)
+    r_out_flg   = add_ring(90.0, -35.0)
+    r_out_slp   = add_ring(15.0,  40.0)
+    r_out_top   = add_ring(15.0,  45.0)
+
+    add_band(r_out_bot, r_out_flg, outward=True)
+    add_band(r_out_flg, r_out_slp, outward=True)
+    add_band(r_out_slp, r_out_top, outward=True)
+
+    # Top lip at Y = 45.0 connecting outer collar to inner aperture
+    w_top_in = 15.0 - wall_t
+    r_in_top    = add_ring(w_top_in,  45.0)
+    for i in range(4):
+        i_next = (i + 1) % 4
+        faces.append((r_out_top + i, r_in_top + i, r_in_top + i_next))
+        faces.append((r_out_top + i, r_in_top + i_next, r_out_top + i_next))
+
+    # Inner profile rings
+    y_in_col = 40.0 - (wall_t * 0.4)
+    r_in_col = add_ring(w_top_in, y_in_col)
+
+    w_bot_in = 90.0 - wall_t
+    y_in_slp = -35.0 - (wall_t * 0.4)
+    r_in_slp = add_ring(w_bot_in, y_in_slp)
+
+    r_in_bot = add_ring(w_bot_in, -45.0)
+
+    add_band(r_in_top, r_in_col, outward=True)
+    add_band(r_in_col, r_in_slp, outward=True)
+    add_band(r_in_slp, r_in_bot, outward=True)
+
+    # Bottom lip at Y = -45.0
+    for i in range(4):
+        i_next = (i + 1) % 4
+        faces.append((r_out_bot + i, r_in_bot + i_next, r_in_bot + i))
+        faces.append((r_out_bot + i, r_out_bot + i_next, r_in_bot + i_next))
+
+    return verts, faces
+
+
 def save_model(part_id, doc_slug, verts, faces):
     pub_path = f"{BASE_DIR}/public/assets/parts/{part_id}/model.gltf"
     doc_path = f"{BASE_DIR}/src/content/docs/parts/{doc_slug}/model.gltf"
@@ -1427,6 +1504,10 @@ def main():
     # 10. PART-MECH-SPOKE-KEYED-ALUM16
     v_spoke, f_spoke = generate_spoke_keyed_alum16()
     save_model("PART-MECH-SPOKE-KEYED-ALUM16", "part-custom-spoke-keyed-alum16", v_spoke, f_spoke)
+
+    # 11. PART-OPT-CONE-DIFFUSER-PYRAMID
+    v_pyr, f_pyr = generate_pyramid_deflector()
+    save_model("PART-OPT-CONE-DIFFUSER-PYRAMID", "part-custom-cone-diffuser-pyramid", v_pyr, f_pyr)
 
     print("\nAll models successfully generated and saved with verified outward normals!")
 
