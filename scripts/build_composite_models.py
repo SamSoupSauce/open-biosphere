@@ -409,20 +409,27 @@ def add_open_injector(v, f, c, x_c, y_base, y_flange, y_top, y_throat, z_c, r_ne
             c.append(col)
     c_base = len(v) - b_idx; v.append([x_c, y_base, z_c]); c.append(C_MOD2_HEATER)
     c_floor = len(v) - b_idx; v.append([x_c, y_throat, z_c]); c.append(C_MOD1_DARK)
-    def q(r0, r1, i, nxt):
-        f.append([b_idx + r0 + i, b_idx + r0 + nxt, b_idx + r1 + nxt])
-        f.append([b_idx + r0 + i, b_idx + r1 + nxt, b_idx + r1 + i])
+    def q_wall(r0, r1, i, nxt):
+        f.append([b_idx + r0 + i, b_idx + r1 + i, b_idx + r1 + nxt])
+        f.append([b_idx + r0 + i, b_idx + r1 + nxt, b_idx + r0 + nxt])
     for i in range(n_seg):
         nxt = (i + 1) % n_seg
+        # 1. Base cap (facing -Y)
         f.append([b_idx + c_base, b_idx + i, b_idx + nxt])
-        q(0, n_seg, i, nxt)
-        f.append([b_idx + n_seg + i, b_idx + 2*n_seg + nxt, b_idx + 2*n_seg + i])
-        f.append([b_idx + n_seg + i, b_idx + n_seg + nxt, b_idx + 2*n_seg + nxt])
-        q(2*n_seg, 3*n_seg, i, nxt)
-        f.append([b_idx + 3*n_seg + i, b_idx + 3*n_seg + nxt, b_idx + 4*n_seg + nxt])
-        f.append([b_idx + 3*n_seg + i, b_idx + 4*n_seg + nxt, b_idx + 4*n_seg + i])
-        f.append([b_idx + 4*n_seg + i, b_idx + 5*n_seg + i, b_idx + 5*n_seg + nxt])
-        f.append([b_idx + 4*n_seg + i, b_idx + 5*n_seg + nxt, b_idx + 4*n_seg + nxt])
+        # 2. Outer neck wall (r0 -> r1)
+        q_wall(0, n_seg, i, nxt)
+        # 3. Flange step ledge at y_flange (facing +Y, from r1 (neck) out to r2 (flange))
+        f.append([b_idx + n_seg + i, b_idx + 2*n_seg + i, b_idx + 2*n_seg + nxt])
+        f.append([b_idx + n_seg + i, b_idx + 2*n_seg + nxt, b_idx + n_seg + nxt])
+        # 4. Flange collar wall (r2 -> r3)
+        q_wall(2*n_seg, 3*n_seg, i, nxt)
+        # 5. Top rim at y_top (facing +Y, from r3 (outer) in to r4 (inner))
+        f.append([b_idx + 3*n_seg + i, b_idx + 4*n_seg + i, b_idx + 4*n_seg + nxt])
+        f.append([b_idx + 3*n_seg + i, b_idx + 4*n_seg + nxt, b_idx + 3*n_seg + nxt])
+        # 6. Inner cavity wall (r4 -> r5, facing inward)
+        f.append([b_idx + 4*n_seg + nxt, b_idx + 4*n_seg + i, b_idx + 5*n_seg + i])
+        f.append([b_idx + 4*n_seg + nxt, b_idx + 5*n_seg + i, b_idx + 5*n_seg + nxt])
+        # 7. Floor cap at y_throat (facing +Y)
         f.append([b_idx + c_floor, b_idx + 5*n_seg + nxt, b_idx + 5*n_seg + i])
 
 def add_bca_common_chassis(v, f, c):
@@ -486,12 +493,12 @@ def add_bca_module_1(v, f, c, motorized=False):
     # Breaker lower housing (terminates cleanly at X = -108, exposing 20mm gap to auger at X = -88)
     add_box(v, f, -150, -108, -46, -12, -30, 30, colors=c, col=C_MOD1_BREAKER)
 
-    # Seamless hollow hopper chute with flared rim collar and dark recessed throat floor
+    # Seamless hollow stepped hopper chute with vertical rim collar and dark recessed throat floor
     b_idx = len(v)
     x0, x1 = -145, -112
     z0, z1 = -26, 26
     y_bot = -12
-    y_flare = 35
+    y_step = 35
     rx0, rx1 = -148, -109
     rz0, rz1 = -29, 29
     y_top = 41
@@ -499,19 +506,22 @@ def add_bca_module_1(v, f, c, motorized=False):
     iz0, iz1 = -20, 20
     y_floor = 35
 
-    # 0..3: outer bottom Y = -12
+    # 0..3: outer lower chute bottom Y = -12
     v.extend([[x0, y_bot, z0], [x1, y_bot, z0], [x1, y_bot, z1], [x0, y_bot, z1]])
     c.extend([C_MOD1_BREAKER] * 4)
-    # 4..7: outer flare start Y = 35
-    v.extend([[x0, y_flare, z0], [x1, y_flare, z0], [x1, y_flare, z1], [x0, y_flare, z1]])
+    # 4..7: outer lower chute top Y = 35
+    v.extend([[x0, y_step, z0], [x1, y_step, z0], [x1, y_step, z1], [x0, y_step, z1]])
     c.extend([C_MOD1_BREAKER] * 4)
-    # 8..11: outer rim top Y = 41
+    # 8..11: step ledge outer Y = 35
+    v.extend([[rx0, y_step, rz0], [rx1, y_step, rz0], [rx1, y_step, rz1], [rx0, y_step, rz1]])
+    c.extend([C_MOD1_BREAKER] * 4)
+    # 12..15: rim collar top outer Y = 41
     v.extend([[rx0, y_top, rz0], [rx1, y_top, rz0], [rx1, y_top, rz1], [rx0, y_top, rz1]])
     c.extend([C_MOD1_BREAKER] * 4)
-    # 12..15: inner rim top Y = 41
+    # 16..19: rim top inner Y = 41
     v.extend([[ix0, y_top, iz0], [ix1, y_top, iz0], [ix1, y_top, iz1], [ix0, y_top, iz1]])
     c.extend([C_MOD1_BREAKER] * 4)
-    # 16..19: inner throat floor Y = 35
+    # 20..23: inner throat floor Y = 35
     v.extend([[ix0, y_floor, iz0], [ix1, y_floor, iz0], [ix1, y_floor, iz1], [ix0, y_floor, iz1]])
     c.extend([C_MOD1_DARK] * 4)
 
@@ -520,17 +530,12 @@ def add_bca_module_1(v, f, c, motorized=False):
         f.append([b_idx + i0, b_idx + i2, b_idx + i3])
 
     q(0, 1, 2, 3) # bottom (-Y)
-    q(0, 4, 5, 1); q(1, 5, 6, 2); q(2, 6, 7, 3); q(3, 7, 4, 0) # chute outer walls
-    q(4, 8, 9, 5); q(5, 9, 10, 6); q(6, 10, 11, 7); q(7, 11, 8, 4) # flare outer walls
-    q(8, 12, 13, 9); q(9, 13, 14, 10); q(10, 14, 15, 11); q(11, 15, 12, 8) # top rim (+Y)
-    q(12, 16, 17, 13); q(13, 17, 18, 14); q(14, 18, 19, 15); q(15, 19, 16, 12) # inner cavity walls
-    q(16, 19, 18, 17) # throat floor (+Y)
-
-    # Shaft journal on rear (+Z side)
-    add_cylinder_x(v, f, -160, -150, -25, 15, 6, n_seg=8, colors=c, col=C_MOD1_BREAKER, cap_left=True, cap_right=True)
-    if not motorized:
-        # Shaft journal on front (-Z side) for manual version
-        add_cylinder_x(v, f, -160, -150, -25, -15, 6, n_seg=8, colors=c, col=C_MOD1_BREAKER, cap_left=True, cap_right=True)
+    q(0, 4, 5, 1); q(1, 5, 6, 2); q(2, 6, 7, 3); q(3, 7, 4, 0) # lower chute vertical walls
+    q(4, 8, 9, 5); q(5, 9, 10, 6); q(6, 10, 11, 7); q(7, 11, 8, 4) # step ledge facing -Y
+    q(8, 12, 13, 9); q(9, 13, 14, 10); q(10, 14, 15, 11); q(11, 15, 12, 8) # outer collar vertical walls
+    q(12, 16, 17, 13); q(13, 17, 18, 14); q(14, 18, 19, 15); q(15, 19, 16, 12) # top rim (+Y)
+    q(16, 20, 21, 17); q(17, 21, 22, 18); q(18, 22, 23, 19); q(19, 23, 20, 16) # inner cavity vertical walls
+    q(20, 23, 22, 21) # throat floor (+Y)
 
 def comp_bca_stage_0():
     v, f, c = [], [], []
@@ -556,6 +561,7 @@ def comp_bca_stage_0():
     # Module 3: Fixed aperture die plate
     add_box(v, f, 55, 66, -46, -10, -30, 30, colors=c, col=C_MOD3_DIE)
     add_box(v, f, 66, 78, -36, -20, -18, 18, colors=c, col=C_MOD3_DIE)
+    add_box(v, f, 76, 78, -36, -15, -24, 24, colors=c, col=C_MOD3_DIE) # Die mounting face plate for shear rails
 
     # Module 4: Manual wire cutoff shear & catch bed (rails end cleanly at carriage X = 96)
     add_cylinder_x(v, f, 78, 96, -18, -20, 2.5, n_seg=6, colors=c, col=C_MOD4_SHEAR, cap_left=True, cap_right=True)
@@ -600,6 +606,7 @@ def comp_bca_stage_1():
     # Module 3: Die frame
     add_box(v, f, 55, 66, -46, -10, -30, 30, colors=c, col=C_MOD3_DIE)
     add_box(v, f, 66, 78, -36, -20, -18, 18, colors=c, col=C_MOD3_DIE)
+    add_box(v, f, 76, 78, -36, -15, -24, 24, colors=c, col=C_MOD3_DIE) # Die mounting face plate for shear rails
 
     # Module 4: Wire shear & catch bed (rails end cleanly at carriage X = 96)
     add_cylinder_x(v, f, 78, 96, -18, -20, 2.5, n_seg=6, colors=c, col=C_MOD4_SHEAR, cap_left=True, cap_right=True)
@@ -652,6 +659,7 @@ def comp_bca_stage_2():
     add_box(v, f, 56, 65, -35, -21, 30, 46, colors=c, col=C_MOD3_DIE)  # East Stepper (+Z)
     add_box(v, f, 56, 65, -35, -21, -46, -30, colors=c, col=C_MOD3_DIE)# West Stepper (-Z)
     add_box(v, f, 66, 76, -46, -37, -8, 8, colors=c, col=C_MOD3_DIE)   # South Stepper (-Y, mounted below throat)
+    add_box(v, f, 76, 78, -36, -15, -24, 24, colors=c, col=C_MOD3_DIE) # Die mounting face plate for shear rails
 
     # Module 4: Robotic Servo Flying Shear & Cure bed with container (rails end cleanly at carriage X = 96)
     add_cylinder_x(v, f, 78, 96, -18, -20, 2.5, n_seg=6, colors=c, col=C_MOD4_SHEAR, cap_left=True, cap_right=True)
@@ -659,7 +667,7 @@ def comp_bca_stage_2():
     add_box(v, f, 96, 106, -42, -14, -22, 22, colors=c, col=C_MOD4_SHEAR)
     add_box(v, f, 97, 105, -14, 0, -7, 7, colors=c, col=C_MOD4_SHEAR) # Servo
     add_box(v, f, 106, 150, -46, -41, -20, 20, colors=c, col=C_MOD4_SHEAR) # Cure bed
-    add_box(v, f, 115, 145, -41, -21, -13, 13, colors=c, col=C_CONTAINER)  # Extruded Container
+    add_box(v, f, 115, 145, -40.5, -21, -13, 13, colors=c, col=C_CONTAINER)  # Extruded Container (offset Y=-40.5 to prevent coplanar fighting with cure bed top Y=-41)
 
     # Autonomous ESP32-S3 CNT Node on front rail
     add_box(v, f, -15, 30, -45, -26, 35, 43, colors=c, col=C_ELECTRONICS)
