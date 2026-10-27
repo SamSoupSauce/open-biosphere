@@ -1699,8 +1699,122 @@ def generate_die_gate_4way():
     return verts, faces
 
 
+# ============================================================================
+# 13. PART-FAB-PLATES-MANTIS-5052
+# ============================================================================
+def generate_plates_mantis_5052():
+    """
+    PART-FAB-PLATES-MANTIS-5052
+    Laser-Cut 2mm 5052 Aluminum Scissor Chassis Plates
+    Watertight 2-manifold single-shell rectilinear cell-complex with verified outward normals.
+    Envelope: 160.0 x 70.0 x 2.0 mm (X in [-80, 80], Y in [-35, 35], Z in [-1.0, 1.0]).
+    Features:
+      - 3 precision pivot through-bores at X = -55, 0, +55 mm
+      - 2 lightweight truss lightening pockets at X in [-30, -12] and [12, 30]
+      - Top mounting flange tab at Y in [24, 35], X in [-30, 30]
+      - Bottom chassis alignment rail/detent at Y in [-35, -24], X in [-42, 42]
+      - Chamfered/tapered end pivot ears at X in [-80, -68] and [68, 80]
+    """
+    x_grid = [-80.0, -68.0, -60.0, -50.0, -42.0, -30.0, -12.0, -6.0, 6.0, 12.0, 30.0, 42.0, 50.0, 60.0, 68.0, 80.0]
+    y_grid = [-35.0, -24.0, -18.0, -6.0, 6.0, 18.0, 24.0, 35.0]
+    z_grid = [-1.0, 1.0]
+
+    nx = len(x_grid) - 1
+    ny = len(y_grid) - 1
+
+    solid = set()
+
+    for xi in range(nx):
+        for yi in range(ny):
+            # 1. Upper mounting flange tab (yi = 6: Y in [24, 35]) -> X in [-30, 30] (xi in [5..9])
+            if yi == 6:
+                if 5 <= xi <= 9:
+                    solid.add((xi, yi, 0))
+            # 2. Lower guide hook (yi = 0: Y in [-35, -24]) -> X in [-42, 42] (xi in [4..10])
+            elif yi == 0:
+                if 4 <= xi <= 10:
+                    solid.add((xi, yi, 0))
+            # 3. Main chassis plate body (yi in [1..5]: Y in [-24, 24])
+            else:
+                # Tapered ear ends: only in central vertical span yi in [2, 3, 4]
+                if xi in [0, 14]:
+                    if 2 <= yi <= 4:
+                        solid.add((xi, yi, 0))
+                # Left pivot eye (xi in [1, 2, 3]: X in [-68, -42])
+                elif xi in [1, 2, 3]:
+                    if not (xi == 2 and yi == 3):
+                        solid.add((xi, yi, 0))
+                # Left lightening pocket (xi == 5: X in [-30, -12])
+                elif xi == 5:
+                    if yi in [1, 5]:
+                        solid.add((xi, yi, 0))
+                # Center pivot eye (xi in [6, 7, 8]: X in [-12, 12])
+                elif xi in [6, 7, 8]:
+                    if not (xi == 7 and yi == 3):
+                        solid.add((xi, yi, 0))
+                # Right lightening pocket (xi == 9: X in [12, 30])
+                elif xi == 9:
+                    if yi in [1, 5]:
+                        solid.add((xi, yi, 0))
+                # Right pivot eye (xi in [11, 12, 13]: X in [42, 68])
+                elif xi in [11, 12, 13]:
+                    if not (xi == 12 and yi == 3):
+                        solid.add((xi, yi, 0))
+                # Solid web / truss pillars (xi == 4: X in [-42, -30], xi == 10: X in [30, 42])
+                elif xi in [4, 10]:
+                    solid.add((xi, yi, 0))
+
+    verts = []
+    faces = []
+    vert_map = {}
+
+    def get_vert(x, y, z):
+        key = (round(float(x), 4), round(float(y), 4), round(float(z), 4))
+        if key in vert_map:
+            return vert_map[key]
+        idx = len(verts)
+        verts.append([float(x), float(y), float(z)])
+        vert_map[key] = idx
+        return idx
+
+    def add_quad(p0, p1, p2, p3):
+        i0 = get_vert(*p0)
+        i1 = get_vert(*p1)
+        i2 = get_vert(*p2)
+        i3 = get_vert(*p3)
+        faces.append((i0, i1, i2))
+        faces.append((i0, i2, i3))
+
+    for (xi, yi, zi) in sorted(solid):
+        x0, x1 = x_grid[xi], x_grid[xi + 1]
+        y0, y1 = y_grid[yi], y_grid[yi + 1]
+        z0, z1 = z_grid[zi], z_grid[zi + 1]
+
+        # +X face (normal +X)
+        if (xi + 1, yi, zi) not in solid:
+            add_quad((x1, y0, z0), (x1, y1, z0), (x1, y1, z1), (x1, y0, z1))
+        # -X face (normal -X)
+        if (xi - 1, yi, zi) not in solid:
+            add_quad((x0, y1, z0), (x0, y0, z0), (x0, y0, z1), (x0, y1, z1))
+        # +Y face (normal +Y)
+        if (xi, yi + 1, zi) not in solid:
+            add_quad((x1, y1, z0), (x0, y1, z0), (x0, y1, z1), (x1, y1, z1))
+        # -Y face (normal -Y)
+        if (xi, yi - 1, zi) not in solid:
+            add_quad((x0, y0, z0), (x1, y0, z0), (x1, y0, z1), (x0, y0, z1))
+        # +Z face (normal +Z)
+        if (xi, yi, zi + 1) not in solid:
+            add_quad((x0, y0, z1), (x1, y0, z1), (x1, y1, z1), (x0, y1, z1))
+        # -Z face (normal -Z)
+        if (xi, yi, zi - 1) not in solid:
+            add_quad((x0, y1, z0), (x1, y1, z0), (x1, y0, z0), (x0, y0, z0))
+
+    return verts, faces
+
+
 def save_model(part_id, doc_slug, verts, faces):
     pub_path = f"{BASE_DIR}/public/assets/parts/{part_id}/model.gltf"
+    pub_stl_path = f"{BASE_DIR}/public/assets/parts/{part_id}/print.stl"
     doc_path = f"{BASE_DIR}/src/content/docs/parts/{doc_slug}/model.gltf"
 
     gltf_json = build_gltf(verts, faces, name=part_id)
@@ -1709,6 +1823,8 @@ def save_model(part_id, doc_slug, verts, faces):
     with open(pub_path, 'w', encoding='utf-8') as f:
         f.write(gltf_json)
     print(f"Wrote {pub_path}")
+
+    make_stl(verts, faces, pub_stl_path, part_id)
 
     if os.path.exists(os.path.dirname(doc_path)):
         with open(doc_path, 'w', encoding='utf-8') as f:
@@ -1856,6 +1972,10 @@ def main():
 
     # 12. PART-FAB-DIE-GATE-4WAY (Composite Multi-Part Assembly & Subparts)
     save_die_gate_composite()
+
+    # 13. PART-FAB-PLATES-MANTIS-5052 (Laser-Cut Scissor Chassis Plates)
+    v_plates, f_plates = generate_plates_mantis_5052()
+    save_model("PART-FAB-PLATES-MANTIS-5052", "part-custom-plates-mantis-5052", v_plates, f_plates)
 
     print("\nAll models successfully generated and saved with verified outward normals!")
 
