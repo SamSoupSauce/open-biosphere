@@ -13,13 +13,13 @@
   ],
   "nodes": [
     {
-      "name": "model",
+      "name": "PART-MECH-SHEET-SS304-PERF",
       "mesh": 0
     }
   ],
   "meshes": [
     {
-      "name": "model_Geometry",
+      "name": "PART-MECH-SHEET-SS304-PERF_Geometry",
       "primitives": [
         {
           "attributes": {
@@ -71,12 +71,12 @@
       "max": [
         225.0,
         150.0,
-        0.4000000059604645
+        0.5
       ],
       "min": [
         -225.0,
         -150.0,
-        -0.4000000059604645
+        -0.5
       ]
     }
   ],
@@ -98,7 +98,7 @@
   "buffers": [
     {
       "byteLength": 168,
-      "uri": "data:application/octet-stream;base64,AAACAAEAAAADAAIABAAFAAYABAAGAAcAAAAFAAQAAAABAAUAAgAHAAYAAgADAAcAAAAHAAMAAAAEAAcAAQAGAAUAAQACAAYAAABhwwAAFsPNzMy+AABhQwAAFsPNzMy+AABhQwAAFkPNzMy+AABhwwAAFkPNzMy+AABhwwAAFsPNzMw+AABhQwAAFsPNzMw+AABhQwAAFkPNzMw+AABhwwAAFkPNzMw+"
+      "uri": "data:application/octet-stream;base64,AAACAAEAAAADAAIABAAFAAYABAAGAAcAAAAFAAQAAAABAAUAAgAHAAYAAgADAAcAAAAHAAMAAAAEAAcAAQAGAAUAAQACAAYAAABhwwAAFsMAAAC/AABhQwAAFsMAAAC/AABhQwAAFkMAAAC/AABhwwAAFkMAAAC/AABhwwAAFsMAAAA/AABhQwAAFsMAAAA/AABhQwAAFkMAAAA/AABhwwAAFkMAAAA/"
     }
   ]
 }

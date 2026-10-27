@@ -16,6 +16,14 @@ When authoring or modifying procedural geometry generators (`scripts/*.py`):
    * Endcap disks must wind clockwise on bottom caps and counter-clockwise on top caps.
 3. **Automated Verification:**
    * Before committing new models, run `python3 scripts/reconcile_all_cad_orientations.py` to assert that 100% of faces are verified outward-pointing.
+4. **Watertight 2-Manifold Invariant (RFC-017):**
+   * Every closed solid geometry must be a strict 2-manifold where every undirected edge connects to exactly two triangular faces. Zero open boundaries or non-manifold edges.
+5. **Zero-Thickness Proscription & Volumetric Wall Offsets (RFC-017):**
+   * Single-walled zero-thickness surfaces ($t = 0\text{ mm}$) are strictly invalid for physical fabrication and 3D printing. All shells, ducts, and hollow funnels must enforce a volumetric wall offset of at least $2.5\text{ mm}$ (nominal $3.5\text{ mm}$) to form closed, watertight solid bodies.
+6. **CSG Coplanar Guardrails (RFC-017):**
+   * When performing constructive solid geometry boolean difference/subtraction passes, tool solids must extend at least $+0.1\text{ mm}$ beyond target boundary faces to prevent zero-thickness degenerate coplanar slivers and unindexed self-intersection dropouts.
+7. **Automated Headless Model Verification (`npm run test:models`) (RFC-017):**
+   * Before committing 3D assets, run `npm run test:models` (`python3 scripts/test_models.py`) to verify bounding volume ($dx, dy, dz \ge 1.0\text{ mm}$), manifold edge consistency, outward normal orientation, and custom manifold fluid passage features.
 
 ---
 

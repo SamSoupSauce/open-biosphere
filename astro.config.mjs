@@ -215,6 +215,7 @@ export default defineConfig({
             { label: 'RFC-0013: Closed-Loop Bio-Pitch Packaging Engine', slug: 'rfcs/rfc-0013-bca-packaging-engine' },
             { label: 'RFC-0014: Standardized glTF Pipeline & Viewer Navigation', slug: 'rfcs/rfc-0014-interactive-3d-composite-assembly-standard' },
             { label: 'RFC-0016: 3D Completeness & Spatial HUD Controls', slug: 'rfcs/rfc-0016-3d-model-completeness-spatial-hud' },
+            { label: 'RFC-0017: Procedural Mesh Integrity & Normal Rectification', slug: 'rfcs/rfc-0017-procedural-mesh-integrity-normal-rectification' },
           ],
         },
       ],

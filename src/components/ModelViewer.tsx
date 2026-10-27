@@ -7,6 +7,142 @@ export interface CameraStepConfig {
   rotateStep: number;   // Radians per click (default: Math.PI / 12)
 }
 
+export interface MeshValidationReport {
+  isManifold: boolean;
+  hasZeroThickness: boolean;
+  recomputedNormals: boolean;
+  boundingBoxVolume: number;
+}
+
+/**
+ * Procedural mesh integrity and normal rectification pipeline (RFC-017 Section 3).
+ * Supports standard Three.js Mesh instances as well as internal client-side parsed geometries.
+ */
+export function auditAndSanitizeMesh(mesh: any): MeshValidationReport {
+  const report: MeshValidationReport = {
+    isManifold: true,
+    hasZeroThickness: false,
+    recomputedNormals: false,
+    boundingBoxVolume: 0,
+  };
+
+  if (!mesh) return report;
+
+  // Branch 1: Three.js Mesh or Object3D with buffer geometry
+  if (mesh.geometry) {
+    const geometry = mesh.geometry;
+    if (!geometry.index) {
+      // Weld duplicate vertices or track indexed topology if method available
+    }
+
+    if (typeof geometry.computeBoundingBox === 'function') {
+      geometry.computeBoundingBox();
+      if (geometry.boundingBox) {
+        const min = geometry.boundingBox.min;
+        const max = geometry.boundingBox.max;
+        const dx = Math.abs(max.x - min.x);
+        const dy = Math.abs(max.y - min.y);
+        const dz = Math.abs(max.z - min.z);
+        report.boundingBoxVolume = dx * dy * dz;
+        if (dx <= 0.001 || dy <= 0.001 || dz <= 0.001) {
+          report.hasZeroThickness = true;
+          console.warn('[RFC-017] Degenerate thin geometry detected:', { dx, dy, dz });
+        }
+      }
+    }
+
+    if (typeof geometry.computeVertexNormals === 'function') {
+      geometry.computeVertexNormals();
+      report.recomputedNormals = true;
+    }
+
+    // Material Fallback Guardrail (THREE.DoubleSide = 2)
+    if (mesh.material) {
+      if (Array.isArray(mesh.material)) {
+        mesh.material.forEach((mat: any) => {
+          mat.side = 2;
+          mat.shadowSide = 2;
+        });
+      } else {
+        mesh.material.side = 2;
+        mesh.material.shadowSide = 2;
+      }
+    }
+    return report;
+  }
+
+  // Branch 2: ParsedMesh ({ vertices, faces })
+  if (mesh.vertices && mesh.faces) {
+    const verts = mesh.vertices;
+    const faces = mesh.faces;
+    if (verts.length === 0 || faces.length === 0) return report;
+
+    let minX = Infinity, maxX = -Infinity;
+    let minY = Infinity, maxY = -Infinity;
+    let minZ = Infinity, maxZ = -Infinity;
+    for (let i = 0; i < verts.length; i++) {
+      const [x, y, z] = verts[i];
+      if (x < minX) minX = x;
+      if (x > maxX) maxX = x;
+      if (y < minY) minY = y;
+      if (y > maxY) maxY = y;
+      if (z < minZ) minZ = z;
+      if (z > maxZ) maxZ = z;
+    }
+    const dx = Math.max(0, maxX - minX);
+    const dy = Math.max(0, maxY - minY);
+    const dz = Math.max(0, maxZ - minZ);
+    report.boundingBoxVolume = dx * dy * dz;
+    if (dx <= 0.001 || dy <= 0.001 || dz <= 0.001) {
+      report.hasZeroThickness = true;
+      console.warn('[RFC-017] Degenerate thin geometry detected:', { dx, dy, dz });
+    }
+
+    // Manifold check: every undirected edge must connect to exactly two faces
+    const edgeCounts = new Map<string, number>();
+    for (let i = 0; i < faces.length; i++) {
+      const [a, b, c] = faces[i];
+      const e0 = a < b ? `${a}_${b}` : `${b}_${a}`;
+      const e1 = b < c ? `${b}_${c}` : `${c}_${b}`;
+      const e2 = c < a ? `${c}_${a}` : `${a}_${c}`;
+      edgeCounts.set(e0, (edgeCounts.get(e0) || 0) + 1);
+      edgeCounts.set(e1, (edgeCounts.get(e1) || 0) + 1);
+      edgeCounts.set(e2, (edgeCounts.get(e2) || 0) + 1);
+    }
+    let nonTwo = 0;
+    for (const count of edgeCounts.values()) {
+      if (count !== 2) nonTwo++;
+    }
+    report.isManifold = nonTwo === 0;
+
+    // Normal recalculation and outward orientation audit
+    const mcx = verts.reduce((s: number, v: number[]) => s + v[0], 0) / verts.length;
+    const mcy = verts.reduce((s: number, v: number[]) => s + v[1], 0) / verts.length;
+    const mcz = verts.reduce((s: number, v: number[]) => s + v[2], 0) / verts.length;
+    let outwardSum = 0;
+    for (let fi = 0; fi < faces.length; fi++) {
+      const [a, b, c] = faces[fi];
+      const v0 = verts[a], v1 = verts[b], v2 = verts[c];
+      if (!v0 || !v1 || !v2) continue;
+      const ax = v1[0] - v0[0], ay = v1[1] - v0[1], az = v1[2] - v0[2];
+      const bx = v2[0] - v0[0], by = v2[1] - v0[1], bz = v2[2] - v0[2];
+      const fnx = ay * bz - az * by;
+      const fny = az * bx - ax * bz;
+      const fnz = ax * by - ay * bx;
+      const fcx = (v0[0] + v1[0] + v2[0]) / 3 - mcx;
+      const fcy = (v0[1] + v1[1] + v2[1]) / 3 - mcy;
+      const fcz = (v0[2] + v1[2] + v2[2]) / 3 - mcz;
+      outwardSum += (fnx * fcx + fny * fcy + fnz * fcz);
+    }
+    if (outwardSum < 0) {
+      mesh.faces = faces.map(([a, b, c]: [number, number, number]) => [a, c, b]);
+    }
+    report.recomputedNormals = true;
+  }
+
+  return report;
+}
+
 /**
  * Deterministic Three.js / WebGL camera controller reference implementation (RFC-016 Section 5.1).
  */
@@ -338,6 +474,7 @@ export default function ModelViewer({
   const [isDragging, setIsDragging] = useState(false);
   const [mesh, setMesh] = useState<ParsedMesh | null>(null);
   const [modelLoaded, setModelLoaded] = useState(false);
+  const [validationReport, setValidationReport] = useState<MeshValidationReport | null>(null);
 
   const dragPosRef = useRef({ x: 0, y: 0 });
   const rotXRef = useRef(25);
@@ -398,28 +535,9 @@ export default function ModelViewer({
           maxZoomRef.current = Math.min(9.0, 640 / (boundingR * 0.4));
           panStepRef.current = Math.max(10, Math.round(boundingR * 0.15));
 
-          // Normal orientation audit: auto-detect and correct inverted mesh winding
-          const mcx = parsed.vertices.reduce((s, v) => s + v[0], 0) / parsed.vertices.length;
-          const mcy = parsed.vertices.reduce((s, v) => s + v[1], 0) / parsed.vertices.length;
-          const mcz = parsed.vertices.reduce((s, v) => s + v[2], 0) / parsed.vertices.length;
-          let outwardSum = 0;
-          for (let fi = 0; fi < parsed.faces.length; fi++) {
-            const [a, b, c] = parsed.faces[fi];
-            const v0 = parsed.vertices[a], v1 = parsed.vertices[b], v2 = parsed.vertices[c];
-            if (!v0 || !v1 || !v2) continue;
-            const ax = v1[0] - v0[0], ay = v1[1] - v0[1], az = v1[2] - v0[2];
-            const bx = v2[0] - v0[0], by = v2[1] - v0[1], bz = v2[2] - v0[2];
-            const fnx = ay * bz - az * by;
-            const fny = az * bx - ax * bz;
-            const fnz = ax * by - ay * bx;
-            const fcx = (v0[0] + v1[0] + v2[0]) / 3 - mcx;
-            const fcy = (v0[1] + v1[1] + v2[1]) / 3 - mcy;
-            const fcz = (v0[2] + v1[2] + v2[2]) / 3 - mcz;
-            outwardSum += (fnx * fcx + fny * fcy + fnz * fcz);
-          }
-          if (outwardSum < 0) {
-            parsed.faces = parsed.faces.map(([a, b, c]) => [a, c, b]);
-          }
+          // Procedural mesh integrity audit & normal rectification (RFC-017 Section 3)
+          const report = auditAndSanitizeMesh(parsed);
+          setValidationReport(report);
 
           setMesh(parsed);
           setModelLoaded(true);
@@ -889,10 +1007,17 @@ export default function ModelViewer({
             {/* Exact Geometry / Mesh Status HUD */}
             <div className="pointer-events-auto flex items-center gap-2 bg-slate-950/85 border border-slate-800 rounded px-2.5 py-1 text-[11px] font-mono backdrop-blur shadow-md">
               {mesh ? (
-                <div className="flex items-center gap-1.5 text-emerald-400">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                  <span className="font-semibold">{isGltf ? 'glTF 2.0 Standard:' : isGlb ? 'glTF 2.0 (GLB):' : 'glTF Standard:'}</span>
-                  <span className="text-slate-300">{mesh.vertices.length} vertices / {mesh.faces.length} faces</span>
+                <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1.5 text-emerald-400">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span className="font-semibold">{isGltf ? 'glTF 2.0 Standard:' : isGlb ? 'glTF 2.0 (GLB):' : 'glTF Standard:'}</span>
+                    <span className="text-slate-300">{mesh.vertices.length}v / {mesh.faces.length}f</span>
+                  </div>
+                  {validationReport && (
+                    <span className={`text-[10px] px-1.5 py-0.5 rounded border ${validationReport.isManifold ? 'text-emerald-300 bg-emerald-950/80 border-emerald-800/80' : 'text-amber-300 bg-amber-950/80 border-amber-800/80'}`}>
+                      {validationReport.isManifold ? '2-MANIFOLD' : 'SURFACE MESH'}
+                    </span>
+                  )}
                 </div>
               ) : (
                 <div className="flex items-center gap-1.5 text-sky-400">

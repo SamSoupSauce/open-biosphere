@@ -164,6 +164,16 @@ const RFC_LIST: RFCItem[] = [
     summary: 'Eliminates canvas wheel zoom hijacking, implements discrete high-contrast HUD for zoom, yaw/pitch rotation, and 3-axis translation, and mandates 100% real glTF geometry across all BOM parts.',
     docSlug: '/rfcs/rfc-0016-3d-model-completeness-spatial-hud',
   },
+  {
+    id: 'RFC-0017',
+    title: 'Procedural Mesh Integrity, Normal Rectification & CSG Verification Pipeline',
+    author: 'Sam',
+    targetType: 'Infrastructure',
+    status: 'Implemented',
+    date: '2026-10-26',
+    summary: 'Establishes procedural CAD mesh integrity, outward normal rectification, watertight 2-manifold verification, wall thickness offset (t >= 2.5mm), and automated headless CI model testing.',
+    docSlug: '/rfcs/rfc-0017-procedural-mesh-integrity-normal-rectification',
+  },
 ];
 
 export default function RfcKanban() {

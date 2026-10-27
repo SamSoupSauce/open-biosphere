@@ -1,0 +1,130 @@
+---
+title: "RFC-0017: Procedural Mesh Integrity, Normal Rectification & CSG Verification Pipeline"
+description: "Establishes topological integrity invariants, outward normal rectification, watertight 2-manifold verification, and automated CI linting for procedural CAD models."
+sidebar:
+  badge:
+    text: "STANDARD"
+    variant: "success"
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+import ModelViewer from '../../../components/ModelViewer';
+
+# RFC-0017: Procedural Mesh Integrity, Normal Rectification & CSG Verification Pipeline
+
+* **RFC ID:** `RFC-0017` (Builds upon `RFC-0014` & `RFC-0016`)
+* **Author:** Sam
+* **Category:** CAD Pipeline & Procedural Geometry
+* **Ecosystem:** `open-biosphere` 3D Asset Standard
+* **Status:** `Implemented / Canonical Standard`
+
+---
+
+## 1. Executive Summary
+
+This specification establishes strict topological invariants, constructive solid geometry (CSG) verification guardrails, and an automated headless verification pipeline for procedural CAD models across the Open Biosphere catalog.
+
+Following a comprehensive audit of procedural assets, critical geometric corruptions were identified and eliminated:
+1. **Missing Features & Boolean Dropouts:** Fluidic manifolds previously generated without ports or bores due to non-manifold CSG subtractions are now fully modeled with explicit push-to-connect barb bosses, countersunk bores, and interior fluid cavities.
+2. **Degenerate Normals & Mangled Polygons:** Inverted and mixed winding orders across linkages have been replaced by unified skeletal extrusions with strict counter-clockwise (CCW) exterior indices.
+3. **Zero-Thickness Surfaces:** Single-walled open surfaces (such as conical funnels) are strictly prohibited for 3D print assets; all geometry must enforce a wall offset of at least 2.5 mm to create closed 2-manifold solids.
+4. **Automated Headless CI Linting:** All catalog models must pass `npm run test:models` verifying bounding volume, 2-manifold edge consistency, and normal orientation.
+
+---
+
+## 2. Interactive Demonstrations of Remediated Geometry
+
+### 2.1. 4-Way Fluidic Manifold Junction Block
+Features explicit push-to-connect barb bosses, cylindrical recesses, and an axial countersunk outflow bore:
+
+<ModelViewer
+  client:load
+  partId="PART-FAB-JUNCTION-MANIFOLD-4WAY"
+  partName="4-Way Dial-A-Dose Fluidic Manifold Junction Block"
+  material="aluminum"
+  fabricationMethod="cnc-machined-aluminum-delrin"
+  dimensions={{ x_mm: 110.0, y_mm: 48.0, z_mm: 46.0 }}
+  estimatedCost={22.0}
+  modelUrl="/open-biosphere/assets/parts/PART-FAB-JUNCTION-MANIFOLD-4WAY/model.gltf"
+/>
+
+### 2.2. Dual-Yoke Articulated Servo Bellcrank Linkage
+Features dual-clevis ends with pin pivot bores, connected via a rigid I-beam structural web with strict CCW polygon winding:
+
+<ModelViewer
+  client:load
+  partId="PART-FAB-LINKAGE-SERVO-DUAL-YOKE"
+  partName="Dual-Yoke Articulated Servo Bellcrank Linkage"
+  material="petg"
+  fabricationMethod="cnc-machined-aluminum-cf-petg"
+  dimensions={{ x_mm: 85.0, y_mm: 24.0, z_mm: 16.0 }}
+  estimatedCost={9.5}
+  modelUrl="/open-biosphere/assets/parts/PART-FAB-LINKAGE-SERVO-DUAL-YOKE/model.gltf"
+/>
+
+### 2.3. Conical Perch Funnel Docking Nest
+Features a solidified 3.5 mm thick wall envelope, concentric brass wiper steps, and a cylindrical mounting sleeve:
+
+<ModelViewer
+  client:load
+  partId="PART-FAB-PERCH-CONICAL-DOCK"
+  partName="3D-Printed Conical Perch Funnel with Concentric Brass Wiper Contacts"
+  material="petg"
+  fabricationMethod="3d-print-brass-contacts"
+  dimensions={{ x_mm: 110.0, y_mm: 110.0, z_mm: 75.0 }}
+  estimatedCost={18.0}
+  modelUrl="/open-biosphere/assets/parts/PART-FAB-PERCH-CONICAL-DOCK/model.gltf"
+/>
+
+---
+
+## 3. Geometric Requirements & Remediations
+
+<CardGrid>
+  <Card title="Manifold Junction Block" icon="puzzle">
+    Explicit fluid routing topology: 3 top input ports with barb ridges and cylindrical recesses, plus 1 main axial outflow port with countersunk counterbore and inner bore cavity.
+  </Card>
+  <Card title="Dual-Yoke Linkage" icon="random">
+    Re-derived from a unified skeletal extrusion. Structural I-beam web with top and bottom flanges connecting two clevis yoke ends. Strict CCW exterior winding prevents shading artifacts.
+  </Card>
+  <Card title="Solidified Conical Dock" icon="shield">
+    Solidified with a wall thickness exceeding 2.5 mm (nominal 3.5 mm) connecting an outer conical shell and inner alignment funnel with concentric contact shelves to a rigid base collar.
+  </Card>
+  <Card title="Automated Ingestion Pipeline" icon="laptop">
+    WebGL loader executes runtime validation via `auditAndSanitizeMesh`, checking bounding volume, 2-manifold edge consistency, and normal orientation before mounting.
+  </Card>
+</CardGrid>
+
+---
+
+## 4. Pipeline Ingestion & Runtime Mesh Rectification
+
+The WebGL viewer (`src/components/ModelViewer.tsx`) implements the standardized `auditAndSanitizeMesh` runtime utility:
+
+```typescript
+export interface MeshValidationReport {
+  isManifold: boolean;
+  hasZeroThickness: boolean;
+  recomputedNormals: boolean;
+  boundingBoxVolume: number;
+}
+
+export function auditAndSanitizeMesh(mesh: any): MeshValidationReport {
+  // 1. Enforce indexed geometry and spatial vertex welding
+  // 2. Volume & bounding box sanity check (dx, dy, dz > 0.001 mm)
+  // 3. 2-manifold edge count check (each edge connects to exactly 2 faces)
+  // 4. Force explicit normal recalculation and outward winding
+  // 5. Material fallback guardrail (DoubleSide rendering tolerance)
+}
+```
+
+---
+
+## 5. Automated CI Linting Standard (`npm run test:models`)
+
+Every 3D CAD asset committed to `public/assets/parts/` must satisfy the headless validation suite executed in CI:
+
+1. **Volume Test:** Calculated bounding envelope in all 3 axes must be &gt;= 1.0 mm (eliminates 2D planes passed off as 3D stock).
+2. **Manifold Check:** Every edge must connect to exactly two faces on closed fabricated solids, with zero open boundaries or non-manifold edges.
+3. **Face Normal Alignment:** Centroid dot product must confirm outward-pointing face normals across convex hulls.
+4. **Visual Pass:** Critical functional geometry (ports, bores, flanges, ribs) must be visually verifiable under standard directional lighting.
