@@ -1,0 +1,93 @@
+---
+title: "RFC-0019: Hardware Hierarchy Simplification & Stage De-duplication"
+description: "Eliminates artificial staged progression taxonomy across mobile drones and dedicated peripherals, establishing direct single-stage architectures."
+sidebar:
+  badge:
+    text: "STANDARD"
+    variant: "success"
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+# RFC-0019: Hardware Hierarchy Simplification & Stage De-duplication
+
+* **RFC ID:** `RFC-0019` (Supersedes/Builds on `RFC-0007`, `RFC-0015`, `RFC-0016`)
+* **Author:** Sam
+* **Category:** Hardware Architecture & Routing Topology
+* **Ecosystem:** `open-biosphere` Machine Registry
+* **Status:** `Implemented / Canonical Standard`
+
+---
+
+## 1. Executive Summary & Problem Statement
+
+The staged progression taxonomy (Stage 0: Zero-Power Baseline → Stage 1: BLE Electromechanical → Stage 2: Agentic Autonomous AI) was previously applied uniformly across all hardware classes indiscriminately. This introduced artificial intermediate tiers to devices that have no logical manual or multi-stage existence:
+
+* **Autonomous Mobile Units:** Mobile field units (such as tree-climbing crawlers, ground AGVs, and quadcopters) cannot operate as zero-power manual pole snips or stepped BLE toys; they are active autonomous drones that require full AI compute, stereo vision, and closed-loop motor drivers from inception.
+* **Dedicated Stationary Equipment:** Equipment with unified microcontrollers (climate dosing blocks, aeroponic root chambers, overhead tool gantries) operate under single-phase functional architectures (BLE Node Tool Mode or Dedicated BLE Peripheral) rather than stepped three-tier retrofits.
+
+RFC-0019 eliminates ghost stages, simplifies the navigation routing tree, and pins each machine category to its true operational archetype.
+
+---
+
+## 2. Machine Categorization & Stage Elimination Matrix
+
+| System Identifier | Previous Topology | Target RFC-0019 Topology | Functional Mode |
+| :--- | :--- | :--- | :--- |
+| **Mantis Branch-Crawler Robot** | Stages 0, 1, 2 | **Flat / Direct Page (Single-Stage)** | Autonomous Drone (AI Only) |
+| **Ground Track AGV Pod Carrier** | Stages 0, 1, 2 | **Flat / Direct Page (Single-Stage)** | Autonomous Drone (AI Only) |
+| **Aerial Spotter & Pollinator Drone** | Stages 0, 1, 2 | **Flat / Direct Page (Single-Stage)** | Autonomous Drone (AI Only) |
+| **2-Axis Overhead Gantry Array** | Multi-Stage | **Single Stage** | BLE Node Tool Mode |
+| **Microclimate & Automated Dosing Array** | Multi-Stage | **Single Stage** | BLE Peripheral Device |
+| **TPS Aeroponic Root-Zone Chamber** | Multi-Stage | **Single Stage** | BLE Peripheral Device |
+
+*(Note: Multi-stage mechanical systems with genuine zero-power physical utilities—such as the Fluidic Skimmer Loop, Revolving Sprout Bioreactor, and BCA Packaging Engine—retain their three-stage upgrade pathways).*
+
+---
+
+## 3. Consolidated Route Schema
+
+Redundant nested stage subdirectories are deprecated and consolidated into canonical root manifests:
+
+```text
+hardware/
+├── mantis-branch-crawler/
+│   └── index.mdx               <-- Full Agentic AI Autonomous Spec & Unified BOM
+├── ground-track-agv/
+│   └── index.mdx               <-- Full Agentic AI AGV Spec & Unified BOM
+├── aerial-pollination-drone/
+│   └── index.mdx               <-- Flight Deck & AI Inspection Spec
+├── overhead-gantry-system/
+│   └── index.mdx               <-- Stage 1: BLE-Controlled Node Tool Mode
+├── microclimate-dosing-array/
+│   └── index.mdx               <-- Stage 1: Dedicated BLE Dosing Peripheral
+└── tps-root-chamber/
+    └── index.mdx               <-- Stage 1: Dedicated BLE Root-Zone System
+```
+
+---
+
+## 4. Architectural Specifications by Unit Class
+
+<CardGrid>
+  <Card title="Autonomous Drones (AI Only)" icon="rocket">
+    Directly integrated vision processing, edge neural inference runtime, and local obstacle negotiation. The page directly presents the complete operational assembly, integrated motor drivers, high-density power cell, compute module, camera array, and full runtime specification.
+  </Card>
+  <Card title="Overhead Gantry (BLE Tool Node)" icon="puzzle">
+    Pure BLE tool-carrier node. Accepts Cartesian coordinate vectors and tool-head actuation commands via BLE GATT characteristics broadcast by the edge controller. Retains a single concise stage entry detailing structural aluminum extrusions, lead screw/belt drives, stepper drivers, and ESP32 BLE receiver node.
+  </Card>
+  <Card title="Enclosure Peripherals (BLE)" icon="seti:graphql">
+    Dedicated BLE peripheral endpoints reporting environmental telemetry (VPD, pH, EC, root mist intervals) and executing local gating routines triggered via standard central controller polling.
+  </Card>
+  <Card title="Link Continuity & 301 Redirects" icon="forward">
+    Direct legacy links to `hardware/*/stage-0/`, `stage-1/`, or `stage-2/` cleanly 301-redirect to their respective top-level canonical hardware documentation index.
+  </Card>
+</CardGrid>
+
+---
+
+## 5. Verification & Acceptance Criteria
+
+1. **Sidebar Navigation Integrity:** The Starlight/Astro sidebar collapses Mantis, AGV, Drone, Gantry, Dosing, and Root Chamber down to direct links without expand/collapse stage sub-menus.
+2. **Gantry & Peripheral Uniformity:** Overhead Gantry, Microclimate, and Aeroponics render as single-stage entries pinned strictly to their BLE operational mode.
+3. **Link Continuity:** Direct legacy links to `hardware/*/stage-1/` or `hardware/*/stage-0/` cleanly 301-redirect to their respective top-level canonical hardware documentation index.

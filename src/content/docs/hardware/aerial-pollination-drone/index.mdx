@@ -1,30 +1,29 @@
 ---
-title: "Aerial Spotter & Pollination Drone — Subsystem Overview"
-description: "Micro-whoop quadcopter for non-contact flower buzz-pollination and AprilTag crop canopy mapping."
+title: "Aerial Spotter & Pollinator Drone — Autonomous Flight Platform"
+description: "Ducted 85mm whoop drone with optical flow positioning, RunCam Split HD camera, piezo pollination sonic buzzer, and conical perch docking nest."
 ---
 
 import { Card, CardGrid, LinkButton } from '@astrojs/starlight/components';
+import ModelViewer from '../../../components/ModelViewer';
 
-## 1. Standalone Homesteading & Off-Grid Utility
+## 1. Standalone Homesteading & Aerial Utility
 
-In enclosed greenhouses, high tunnels, or indoor grow tents, natural insect pollinators (bees) often fail to thrive or escape, requiring tedious manual flower vibrating with electric toothbrushes or paintbrushes. This drone delivers **automated, non-contact buzz pollination and canopy diagnostics**:
+In high-density vertical biospheres and espaliered canopy orchards, flying pollinators like bees can struggle with enclosed airflow dynamics or risk pathogen cross-contamination. The Aerial Spotter & Pollinator Drone provides **precise acoustic sonic pollination, multi-angle bloom inspection, and autonomous perching**:
 
 <CardGrid>
-  <Card title="Acoustic & Prop-Wash Buzz Pollination" icon="wind">
-    Calibrated propeller downwash (1.5 to 2.5 m/s) and motor acoustics induce resonant flower vibration (200–400 Hz), releasing pollen on solanaceous crops (peppers, tomatoes) with zero physical flower contact.
+  <Card title="85mm Ducted Whoop Chassis" icon="rocket">
+    Lightweight carbon-nylon ducted airframe prevents foliage entanglements and safely operates inches from delicate blossoms and trellises.
   </Card>
-  <Card title="GPS-Denied Optical Indoor Navigation" icon="compass">
-    Down-facing optical flow sensors and AprilTag visual fiducial markers enable centimeter-precise indoor hover without requiring GPS or external motion-capture rigs.
+  <Card title="Acoustic Sonic Pollination" icon="sun">
+    Piezoelectric 310 Hz resonant buzzer vibrates target solanaceous flowers (tomatoes, peppers, goldenberries) releasing pollen without blossom damage.
   </Card>
-  <Card title="Multispectral Canopy Inspection" icon="eye">
-    High-resolution downward RGB/NIR sensor maps vegetative indices (NDVI) and pinpoints localized nutrient deficiencies or pest outbreaks days before visible to human eyes.
+  <Card title="Optical Flow & Laser ToF" icon="eye">
+    PMW3901 downward optical flow camera and VL53L1X laser rangefinder provide sub-centimeter indoor hovering without GPS satellites.
   </Card>
-  <Card title="Automated Contact-Charging Perch" icon="zap">
-    Landing legs feature spring-loaded copper contacts that seat into a conical landing pad, recharging the drone autonomously between 8-minute flight sorties.
+  <Card title="Conical Perch Recharging" icon="battery">
+    Autonomous inverted conical docking shoe with concentric brass wiper rings allows hands-free recharging between canopy sorties.
   </Card>
 </CardGrid>
-
----
 
 ---
 
@@ -32,75 +31,67 @@ In enclosed greenhouses, high tunnels, or indoor grow tents, natural insect poll
 
 | Parameter | Specification |
 | :--- | :--- |
-| **Airframe Class** | 85mm to 120mm ducted micro-quadcopter (Whoop-style enclosed prop guards) |
-| **Weight** | 68 g (with 2S LiPo battery and optical flow sensor) |
-| **Downwash Velocity** | 1.8 to 2.4 m/s at 150 mm distance (calibrated for solanaceous flower anthesis) |
-| **Flight Time** | 8.5 minutes per sortie (recharge cycle: 14 minutes on docking pad) |
-| **Vision & Sensors** | Dual-mode RGB/NIR micro-camera + PMW3901 optical flow + VL53L1X ToF lidar |
-| **Flight Controller**| Betaflight / ArduPilot / Crazyflie open-source STM32 architecture |
-| **Fiducial Tracking**| AprilTags (36h11 family) along enclosure extrusions for global localization |
-| **Power Supply**| 0W (Manual Wand) / 2S 450mAh LiPo Pack (Add-On 1) / Automated Dock Perch (Add-On 2) |
+| **Operational Designation** | Fully Autonomous Aerial Inspection & Pollination Drone (AI Native) |
+| **Airframe Dimensions** | 115 mm (L) × 115 mm (W) × 42 mm (H); 85 mm motor-to-motor diagonal |
+| **Propulsion** | 4x 1103 10,000KV brushless outrunners with 2-inch ducted 4-blade propellers |
+| **Flight Controller** | STM32F4 AIO with integrated 4-in-1 12A ESC and Betaflight/ROS2 bridge |
+| **Hover Precision** | ±5 mm vertical, ±8 mm horizontal via PMW3901 optical flow + VL53L1X laser ToF |
+| **Acoustic Transducer**| 27mm 310 Hz piezoelectric ultrasonic buzzer (tuned for solanaceous sonic dehiscence) |
+| **Camera & Video** | RunCam Split HD / Micro RGB-NIR Camera with 5.8GHz / Wi-Fi RTSP telemetry |
+| **Docking Interface** | `PART-FAB-PERCH-CONICAL-DOCK` conical nest with concentric brass wiper contacts |
+| **Power System** | 2S 450mAh 75C LiPo battery pack (8–10 minute flight sorties, 4-minute perch recharge) |
+| **Compute Architecture** | Controller-Node-Tool (CNT): ESP32-S3 Flight Node + ESP32-C3 Sensor Tools |
+| **All-Up Weight** | 68 grams (including battery, camera, and acoustic payload) |
 
 ---
 
----
+## 3. Interactive 3D Composite Assembly Model
 
-## 6. Staged Upgrade Progression & Cost Summary
+<ModelViewer
+  client:load
+  partId="ASM-AERIAL_POLLINATION_DRONE"
+  partName="Aerial Spotter & Pollination Drone (Full Autonomous Assembly)"
+  material="multi-material"
+  fabricationMethod="composite-assembly"
+  dimensions={{ x_mm: 115.0, y_mm: 115.0, z_mm: 42.0 }}
+  estimatedCost={324.00}
+  modelUrl="/open-biosphere/assets/machines/aerial-pollination-drone/stage-2.gltf"
+/>
 
-### Build Tier Comparison
-
-| Build Stage | Operational Capability | Direct Stage Cost | Cumulative Investment |
-| :--- | :--- | :--- | :--- |
-| **Base: Instructions** | 100% mechanical manual wand with acoustic resonant flower vibrator & mirror | $52.00 | **$52.00** |
-| **Add-On 1: Semi-Auto** | Flutter BLE Virtual Panel piloted ducted whoop flight with two-control interlocks | +$173.00 | **$225.00** |
-| **Add-On 2: Agentic AI** | Controller-Node-Tool (CNT) automation, indoor AprilTag SLAM, optical flow hover, & auto-perch | +$99.00 | **$324.00** |
-
-### Step-by-Step Zero-Waste Conversion Roadmap
-
-#### Path 1: Base Machine → Add-On 1 (Piloted Micro-Whoop Drone)
-1. Assemble the 85 mm ducted whoop airframe, brushless motors, and STM32F4 flight controller.
-2. Wire the BLE peripheral bridge, Two-Control power harness, and piezo acoustic transducer.
-3. The Base carbon wand and 1/4"-20 cradle remain fully functional as a handheld backup mount if flying indoors is restricted by temporary netting.
-
-#### Path 2: Add-On 1 → Add-On 2 (Autonomous Edge CNT Drone)
-1. Mount the Drone Flight Node (ESP32-S3 + OLED + Button) and modular ESP32-C3 Tools on the carbon airframe.
-2. Connect `DEV_OPT_FLOW` tool to the bottom optical flow and laser ToF sensors.
-3. Wire the RunCam micro-camera with Wi-Fi video streaming to the Central Controller.
-4. Mount the conical landing perch with charging contacts, provision the Drone Node with Central Controller ID via mobile app BLE, and verify 250ms auto-land watchdog.
+* **Direct 3D Assembly Download:** [Download stage-2.gltf (glTF 2.0 Standard)](/open-biosphere/assets/machines/aerial-pollination-drone/stage-2.gltf)
 
 ---
 
+## 4. Unified Bill of Materials (BOM)
+
+| Item | Part ID & Registry Link | Component & Specification | Sourcing / Supplier | Fab Type | Qty | Unit Cost | Total Cost |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **M-01** | [`PART-FAB-FRAME-WHOOP-85MM`](/open-biosphere/parts/part-custom-frame-whoop-85mm/) | 85mm Ducted Polycarbonate Whoop Airframe + Ducts | BetaFPV / Open-Biosphere Fab | Molded Polycarbonate Frame | 1 | $14.00 | $14.00 |
+| **E-01** | [`PART-ELEC-MTR-BLDC-1103`](/open-biosphere/parts/electrical/part-elec-mtr-bldc-1103/) | 1103 10,000KV Brushless Outrunner Motors + Props | BetaFPV | Stock Motor | 4 | $9.50 | $38.00 |
+| **E-02** | [`PART-ELEC-FC-STM32F4-AIO`](/open-biosphere/parts/electrical/part-elec-fc-stm32f4-aio/) | STM32F4 AIO Flight Controller + 4-in-1 12A ESC | Betaflight / Happymodel | Stock Electronics | 1 | $42.00 | $42.00 |
+| **E-03** | [`PART-ELEC-TWO-CTRL-PACK`](/open-biosphere/parts/part-custom-part-elec-two-ctrl-pack/) | BLE Virtual Interface & Two-Control Perch Module | Open-Biosphere Fab | 3D Print / Assembly | 1 | $45.00 | $45.00 |
+| **E-04** | [`PART-ELEC-BAT-LIPO-2S450`](/open-biosphere/parts/electrical/part-elec-bat-lipo-2s450/) | 2S 450mAh 75C High-Discharge LiPo Batteries (4x pack) | Tattu / Gens Ace | Stock Battery | 1 | $22.00 | $22.00 |
+| **E-05** | [`PART-ELEC-PZO-BUZZ-27MM`](/open-biosphere/parts/electrical/part-elec-pzo-buzz-27mm/) | 27mm Piezo Acoustic Vibration Transducer + FET | Mouser | Stock Component | 1 | $12.00 | $12.00 |
+| **C-01** | [`PART-ELEC-ESP32-S3-NODE`](/open-biosphere/parts/electrical/part-elec-esp32-s3-node/) | Drone Flight Node: ESP32-S3 (8MB PSRAM) + OLED | Espressif / Mouser | Stock Electronics | 1 | $16.00 | $16.00 |
+| **C-02** | [`PART-ELEC-SNS-PMW3901-FLOW`](/open-biosphere/parts/electrical/part-elec-sns-pmw3901-flow/) | PMW3901 Optical Flow + VL53L1X Laser ToF Breakout | Pimoroni | Stock Sensor | 1 | $21.00 | $21.00 |
+| **C-03** | [`PART-ELEC-CAM-RUNCAM-HD`](/open-biosphere/parts/electrical/part-elec-cam-runcam-hd/) | RunCam Split HD / Micro RGB-NIR Camera Module | RunCam / GetFPV | Stock Sensor | 1 | $32.00 | $32.00 |
+| **C-04** | [`PART-FAB-PERCH-CONICAL-DOCK`](/open-biosphere/parts/part-custom-perch-conical-dock/) | 3D-Printed Conical Perch + Concentric Brass Contacts | Open-Biosphere Fab | 3D Print + Brass Contacts | 1 | $16.00 | $16.00 |
+| **C-05** | [`PART-ELEC-ESP32-C3-TOOL`](/open-biosphere/parts/electrical/part-elec-esp32-c3-tool/) | 2x ESP32-C3 Modular Tools with 0.42" OLED & Watchdogs | Seeed Studio | Stock Electronics | 2 | $7.00 | $14.00 |
+| **Total** | **Complete Autonomous Pollination Drone** | **Full AI-Native Build (RFC-019)** | | | | | **$324.00** |
+
 ---
 
-## 7. Master Biosphere Assembly Interlock
+## 5. Autonomous Flight Runbook & Vision Interlock
 
-When integrated into the centralized Open Biosphere facility (~20 × 10 ft footprint):
-
-1. **Airspace Ceiling Routing**: Operates in the canopy airspace ($Z = 0$ to $1,372$ mm) between the water surface and lighting hoods.
-2. **AprilTag Extrusion Grid**: Navigates autonomously by referencing high-contrast AprilTags mounted along the upper 2040 perimeter extrusions at 1,000 mm intervals.
-3. **Automated Perch**: Returns to the landing perch mounted on the northern Mid-Tier coping deck for contact recharging between scheduled pollination runs.
-4. **Cross-Agent Task Coordination**: Receives flower coordinate target maps generated by the 2-Axis Gantry survey, dispatching targeted buzz-pollination sorties only to beds with active blooms.
+### 5.1 Indoor Optical Flow Navigation
+1. **Satellite-Free Localization:** Operates inside shielded bio-envelopes using the downward-facing PMW3901 optical flow sensor to integrate velocity vectors across floor canopy textures.
+2. **Precision Bloom Proximity:** The forward VL53L1X time-of-flight sensor locks distance at 35 mm from target flowers, commanding the piezoelectric buzzer for a 1.5-second 310 Hz acoustic burst.
+3. **Automated Perch Recovery:** When battery voltage reaches 7.0V (3.5V/cell), the flight controller enters homing mode, centering above the overhead gantry perch funnel and settling into the conical docking shoe.
 
 ---
 
-## 8. Select Your Build Stage
+## 6. Master Biosphere Assembly Interlock
 
-Explore the step-by-step fabrication, wiring, and commissioning guides for each operational tier:
-
-<CardGrid>
-  <Card title="Stage 0: Pure Mechanical Baseline" icon="hammer">
-    **100% Zero-Power Manual Operation.** Built using common hardware, manual linkages, hand cranks, and gravity flows. Zero electrical power required.
-    <br/><br/>
-    <LinkButton href="/open-biosphere/hardware/aerial-pollination-drone/stage-0/">Enter Stage 0 Assembly Guide →</LinkButton>
-  </Card>
-  <Card title="Stage 1: BLE Electromechanical Pack" icon="setting">
-    **Motorized Drive & BLE Virtual Panel.** Upgrades to continuous DC motorization with Strict Two-Control hardware interlocks and Flutter BLE touch controls.
-    <br/><br/>
-    <LinkButton href="/open-biosphere/hardware/aerial-pollination-drone/stage-1/">Enter Stage 1 Retrofit Guide →</LinkButton>
-  </Card>
-  <Card title="Stage 2: Agentic Autonomous AI Pack" icon="cpu">
-    **Controller-Node-Tool (CNT) Mesh.** Full multi-agent automation over isolated Wi-Fi AP (<code>POTFRM-4096</code>), 250ms deadman watchdogs, and local GGUF vision.
-    <br/><br/>
-    <LinkButton href="/open-biosphere/hardware/aerial-pollination-drone/stage-2/">Enter Stage 2 Autonomous Guide →</LinkButton>
-  </Card>
-</CardGrid>
+1. **Upper Canopy Airspace:** Surveys high trellises and espaliers ($Z = 1200$ to $2400\text{ mm}$), inspecting foliage health and flower blooms.
+2. **Overhead Gantry Perching:** Docks into `PART-FAB-PERCH-CONICAL-DOCK` mounted on the central gantry cross-beam for continuous trickle recharging.
+3. **Multi-Agent Coordination:** Relays canopy bloom heatmaps to the Central Controller to trigger Ground Track AGV and Mantis harvesting runs.

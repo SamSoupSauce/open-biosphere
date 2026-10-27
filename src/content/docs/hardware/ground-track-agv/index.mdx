@@ -1,30 +1,29 @@
 ---
-title: "Ground Track AGV Pod Carrier — Subsystem Overview"
-description: "Low-profile autonomous guided vehicle for tote logistics, battery swapping, and bin exchange."
+title: "Ground Track AGV Pod Carrier — Autonomous Logistics Rover"
+description: "Narrow-aisle autonomous guided vehicle with rubber track locomotion, 2D LiDAR navigation, magnetic tape tracking, 3-axis articulated tote arm, and 120W wireless inductive charging."
 ---
 
 import { Card, CardGrid, LinkButton } from '@astrojs/starlight/components';
+import ModelViewer from '../../../components/ModelViewer';
 
-## 1. Standalone Homesteading & Off-Grid Utility
+## 1. Standalone Homesteading & Robotic Logistics
 
-In greenhouses, hoop houses, and high tunnels, narrow aisles make traditional tractors and human carts cumbersome. This machine handles **heavy repetitive material shuttling, seedling tray transport, and low-canopy selective harvesting**:
+In automated vertical biospheres, greenhouses, and high tunnels, narrow aisles make traditional tractors and human carts cumbersome. The Ground Track AGV handles **heavy repetitive material shuttling, seedling tray transport, and low-canopy selective harvesting**:
 
 <CardGrid>
   <Card title="Narrow-Aisle Rover" icon="truck">
-    Ultra-compact chassis (350 mm width) turns in place on rubber tracks, easily navigating tight greenhouse aisles and rough earthen paths.
+    Ultra-compact chassis (350 mm width) turns in place on rubber tracks, easily navigating tight greenhouse aisles and perimeter rails.
   </Card>
   <Card title="25 kg Cargo Capacity" icon="box">
     Pneumatic quick-docking latch carries seed drums, produce totes, compost tubs, or water reservoirs without manual lifting.
   </Card>
-  <Card title="Simple Tape or LiDAR Guidance" icon="compass">
-    Follows low-cost adhesive magnetic floor tape for bulletproof reliability, or pairs with 2D LiDAR for flexible SLAM navigation.
+  <Card title="LiDAR & Magnetic Guidance" icon="compass">
+    Combines 5-channel magnetic track following along lower perimeter rails with 360° 2D LiDAR for autonomous obstacle avoidance.
   </Card>
-  <Card title="Selective Robotic Harvester" icon="scissors">
-    Optional 3-axis articulated harvesting arm with soft silicone gripper and rotary shear picks low bush beans and peppers with stereo-depth precision.
+  <Card title="120W Inductive Charging" icon="battery">
+    Docks into magnetic floor plates for automated zero-contact wireless battery recharging without human intervention.
   </Card>
 </CardGrid>
-
----
 
 ---
 
@@ -32,76 +31,79 @@ In greenhouses, hoop houses, and high tunnels, narrow aisles make traditional tr
 
 | Parameter | Specification |
 | :--- | :--- |
+| **Operational Designation** | Fully Autonomous Guided Logistics Vehicle (AI Native) |
 | **Chassis Dimensions** | 500 mm (L) × 350 mm (W) × 280 mm (H) |
 | **Locomotion** | Dual continuous rubber tracks with suspension bogies (45 mm ground clearance) |
+| **Drive Motors** | Dual 24V 250W planetary gearmotors (18:1 ratio) with smart dual-channel 15A drivers |
 | **Payload Capacity** | 25 kg continuous payload on cargo bed |
 | **Max Speed** | 0.8 m/s (programmable working speed: 0.2 to 0.4 m/s) |
-| **Docking Interface** | Mechanical foot cam latch / 12V solenoid / Pneumatic quick-connect |
-| **Harvest Arm** | Optional 3-axis articulated arm with soft silicone 2-finger clamp & rotary blade |
-| **Battery System** | 24V 15Ah LiFePO4 pack (6+ hours runtime) with inductive floor charging pads |
-| **Onboard Controller**| 0W (Manual) / Dual 15A DC Driver Pendant (Add-On 1) / ESP32-S3 + ROS2 (Add-On 2) |
+| **Navigation & Sensors** | 360° 2D LiDAR Scanner (RPLiDAR C1) + 5-channel magnetic track induction array |
+| **Transfer Arm** | 3-axis articulated mini arm with soft silicone clamp and rotary harvest shear |
+| **Power System** | 24V 15Ah LiFePO4 battery pack (6+ hours runtime) + 120W wireless inductive receiver |
+| **Compute Architecture** | Controller-Node-Tool (CNT): ESP32-S3 AGV Node + modular ESP32-C3 Tool controllers |
+| **Safety Interlocks** | 250ms hardware deadman watchdogs on track drives; physical master DC disconnect |
 
 ---
 
----
+## 3. Interactive 3D Composite Assembly Model
 
-## 6. Staged Upgrade Progression & Cost Summary
+<ModelViewer
+  client:load
+  partId="ASM-GROUND_TRACK_AGV"
+  partName="Ground Track AGV Pod Carrier (Full Autonomous Assembly)"
+  material="multi-material"
+  fabricationMethod="composite-assembly"
+  dimensions={{ x_mm: 500.0, y_mm: 350.0, z_mm: 280.0 }}
+  estimatedCost={497.00}
+  modelUrl="/open-biosphere/assets/machines/ground-track-agv/stage-2.gltf"
+/>
 
-### Build Tier Comparison
-
-| Build Stage | Operational Capability | Direct Stage Cost | Cumulative Investment |
-| :--- | :--- | :--- | :--- |
-| **Base: Instructions** | 100% mechanical manual push cart with neutral gearbox lever and foot-pedal clamp | $119.00 | **$119.00** |
-| **Add-On 1: Semi-Auto** | Motorized planetary track drive with BLE Virtual Panel & 2 physical controls | +$213.00 | **$332.00** |
-| **Add-On 2: Agentic AI** | Controller-Node-Tool (CNT) automation, 2D LiDAR, magnetic line following, & inductive charge | +$165.00 | **$497.00** |
-
-### Step-by-Step Zero-Waste Conversion Roadmap
-
-#### Path 1: Base Machine → Add-On 1 (Motorized Tug Upgrade)
-1. Bolt the two 24V 250W gearmotor brackets inside the welded chassis.
-2. Connect the #25 drive chains to the dog clutch input hubs (the manual freewheel dog clutch levers remain fully functional).
-3. Drop the 24V LiFePO4 battery pack into the central tray, wire the motor driver, and connect Two-Control box with BLE Virtual Panel. The manual push tiller can either fold flat or be detached via its quick-release pins.
-
-#### Path 2: Add-On 1 → Add-On 2 (Autonomous Robotics CNT Platform)
-1. Mount the AGV Node (ESP32-S3 + OLED + Button) and modular ESP32-C3 Tools in the electronics deck.
-2. Wire the `DEV_TRACK_DRV` tool to the motor drivers in parallel with the BLE Virtual Panel controller.
-3. Install the 5-channel magnetic sensor bar and 2D LiDAR scanner linked to `DEV_NAV_SNS`.
-4. Bolt the 3-axis articulated transfer arm and wire to `DEV_ARM_ACT`.
-5. Install the 120W inductive charging receiver coil on the chassis underside, provision the AGV Node with Central Controller ID via mobile app BLE, and confirm 250ms watchdogs are active.
+* **Direct 3D Assembly Download:** [Download stage-2.gltf (glTF 2.0 Standard)](/open-biosphere/assets/machines/ground-track-agv/stage-2.gltf)
 
 ---
 
+## 4. Unified Bill of Materials (BOM)
+
+| Item | Part ID & Registry Link | Component & Specification | Sourcing / Supplier | Fab Type | Qty | Unit Cost | Total Cost |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **M-01** | [`PART-MECH-CHASSIS-STEEL-2MM`](/open-biosphere/parts/part-custom-part-mech-chassis-steel-2mm/) | Welded 2mm Steel Tracked Chassis Box & Bulkheads | SendCutSend / Local Fab | Laser Steel / Welded | 1 | $35.00 | $35.00 |
+| **M-02** | [`PART-MECH-TREAD-RUBBER-50MM`](/open-biosphere/parts/mechanical/part-mech-tread-rubber-50mm/) | Continuous Rubber Track Treads (50mm W × 38-link) | RobotShop | Stock Molded Rubber | 2 | $10.00 | $20.00 |
+| **M-03** | [`PART-MECH-SUSP-BOGIE-ARM`](/open-biosphere/parts/part-custom-part-mech-susp-bogie-arm/) | Bogie Suspension Arms + Die Springs + Polyurethane Wheels | Open-Biosphere Fab | Machined Alum + Springs | 8 | $3.50 | $28.00 |
+| **M-04** | [`PART-MECH-CLUTCH-DOG-STEEL`](/open-biosphere/parts/part-custom-part-mech-clutch-dog-steel/) | Sliding Steel Dog Clutch Neutral Hubs & Levers | Open-Biosphere Fab | CNC Steel | 2 | $7.00 | $14.00 |
+| **M-05** | [`PART-MECH-HANDLE-TILLER-22MM`](/open-biosphere/parts/part-custom-part-mech-handle-tiller-22mm/) | Fold-Out 22mm Tubular Steel Tiller Handle + Grips | Open-Biosphere Fab | Tubular Steel | 1 | $12.00 | $12.00 |
+| **M-06** | [`PART-MECH-CLAMP-FOOT-CAM`](/open-biosphere/parts/part-custom-part-mech-clamp-foot-cam/) | Mechanical Foot-Pedal Spring Cam Clamp Assembly | McMaster-Carr | Laser Steel / Linkage | 1 | $10.00 | $10.00 |
+| **E-01** | [`PART-ELEC-MTR-DC-250W-GEAR`](/open-biosphere/parts/electrical/part-elec-mtr-dc-250w-gear/) | 24V 250W Brushed DC Planetary Gearmotors (18:1 ratio) | AmpFlow | Stock Motor | 2 | $24.00 | $48.00 |
+| **E-02** | [`PART-ELEC-DVR-DC-15A-DUAL`](/open-biosphere/parts/electrical/part-elec-dvr-dc-15a-dual/) | Dual-Channel 15A Smart DC Motor Driver Board | Cytron | Stock Electronics | 1 | $38.00 | $38.00 |
+| **E-03** | [`PART-ELEC-TWO-CTRL-PACK`](/open-biosphere/parts/part-custom-part-elec-two-ctrl-pack/) | Strict Two-Control Enclosure (Master DC Cut + SD Reset) | Open-Biosphere Fab | 3D Print / Assembly | 1 | $24.00 | $24.00 |
+| **E-04** | [`PART-MECH-ALUM-2020-6M`](/open-biosphere/parts/mechanical/part-mech-alum-2020-6m/) | 2020 Aluminum Electronics Deck & Mounting Hardware | OpenBuilds | Stock Extrusion | 1 | $15.00 | $15.00 |
+| **E-05** | [`PART-ELEC-BAT-LIFEPO4-24V15A`](/open-biosphere/parts/electrical/part-elec-bat-lifepo4-24v15a/) | 24V 15Ah LiFePO4 Battery Pack with Built-In BMS | Bioenno Power | Stock Battery | 1 | $70.00 | $70.00 |
+| **E-06** | [`PART-ELEC-SOL-LATCH-25N`](/open-biosphere/parts/electrical/part-elec-sol-latch-25n/) | 12V High-Force 25N Push-Pull Latch Solenoid | SparkFun | Stock Actuator | 1 | $18.00 | $18.00 |
+| **C-01** | [`PART-ELEC-ESP32-S3-NODE`](/open-biosphere/parts/electrical/part-elec-esp32-s3-node/) | AGV Machine Node: ESP32-S3 (8MB PSRAM) + 0.96" OLED | Espressif / Mouser | Stock Electronics | 1 | $16.00 | $16.00 |
+| **C-02** | [`PART-ELEC-SNS-MAG-TRACK-5CH`](/open-biosphere/parts/electrical/part-elec-sns-mag-track-5ch/) | 5-Channel Magnetic Track Induction Sensor + ESP32-C3 Tool | RobotShop | Stock Sensor | 1 | $20.00 | $20.00 |
+| **C-03** | [`PART-ELEC-LIDAR-C1-2D`](/open-biosphere/parts/electrical/part-elec-lidar-c1-2d/) | 360° 2D LiDAR Scanner (RPLiDAR C1 / LD06) | Slamtec | Stock Sensor | 1 | $68.00 | $68.00 |
+| **C-04** | [`PART-ELEC-ARM-3AXIS-KIT`](/open-biosphere/parts/electrical/part-elec-arm-3axis-kit/) | 3-Axis Mini Articulated Arm Kit + Servos + ESP32-C3 Tool | Waveshare | Stock Robotics | 1 | $36.00 | $36.00 |
+| **C-05** | [`PART-ELEC-WLESS-CHG-120W`](/open-biosphere/parts/electrical/part-elec-wless-chg-120w/) | 120W Magnetic Inductive Wireless Charging Receiver Module | DigiKey | Stock Electronics | 1 | $25.00 | $25.00 |
+| **Total** | **Complete Autonomous AGV Pod Carrier** | **Full AI-Native Build (RFC-019)** | | | | | **$497.00** |
+
 ---
 
-## 7. Master Biosphere Assembly Interlock
+## 5. Autonomous Navigation & Runbook
 
-When integrated into the centralized Open Biosphere facility (~20 × 10 ft footprint):
+### 5.1 Multi-Modal Tracking
+1. **Perimeter Line Following:** The 5-channel magnetic sensor bar (`DEV_NAV_SNS`) reads magnetic flux from adhesive magnetic floor tape installed along the facility corridor.
+2. **LiDAR SLAM & Collision Avoidance:** The 360° LiDAR continuously maps the aisle, slowing travel if obstacles or personnel are detected within 1.2 m, and halting completely at 0.4 m.
+3. **Deadman Safety Interlocks:** Dual motor drivers enforce 250 ms heartbeat watchdogs from the ESP32-S3 AGV Node.
 
-1. **Perimeter Lane Routing**: Follows the continuous magnetic guide strip embedded along the Perimeter Lower Tier ($Z = 150$ to $365$ mm above water level).
-2. **Bioreactor Drum Exchange**: Automatically docks into the Revolving Sprout Bioreactor bays, unlatching ripe 4-day canisters and replacing them with freshly seeded drums.
-3. **Automated Recharging**: Docks into magnetic inductive floor charge plates located at the South-West datum origin $(0,0,0)$.
-4. **Fleet Coordination**: Communicates with the overhead gantry and aerial drone via CAN bus / MQTT, synchronizing produce tote handoffs without path collisions.
+### 5.2 Step-by-Step Commissioning
+1. **Chassis & Track Drive:** Mount the suspension bogies and continuous rubber tracks. Verify free rotation of bogie arms under spring tension.
+2. **Powertrain & Drivers:** Install the dual 24V gearmotors and wire to the 15A smart motor driver board. Verify dog clutch freewheel disengagement.
+3. **Avionics & Sensors:** Mount the ESP32-S3 AGV Node, 2D LiDAR scanner on the top mast, and the 5-channel magnetic sensor bar under the front bumper.
+4. **Wireless Charging:** Fasten the 120W receiver coil to the chassis belly plate and align with floor transmitter pads at $(X=0, Y=0)$.
 
 ---
 
-## 8. Select Your Build Stage
+## 6. Master Biosphere Assembly Interlock
 
-Explore the step-by-step fabrication, wiring, and commissioning guides for each operational tier:
-
-<CardGrid>
-  <Card title="Stage 0: Pure Mechanical Baseline" icon="hammer">
-    **100% Zero-Power Manual Operation.** Built using common hardware, manual linkages, hand cranks, and gravity flows. Zero electrical power required.
-    <br/><br/>
-    <LinkButton href="/open-biosphere/hardware/ground-track-agv/stage-0/">Enter Stage 0 Assembly Guide →</LinkButton>
-  </Card>
-  <Card title="Stage 1: BLE Electromechanical Pack" icon="setting">
-    **Motorized Drive & BLE Virtual Panel.** Upgrades to continuous DC motorization with Strict Two-Control hardware interlocks and Flutter BLE touch controls.
-    <br/><br/>
-    <LinkButton href="/open-biosphere/hardware/ground-track-agv/stage-1/">Enter Stage 1 Retrofit Guide →</LinkButton>
-  </Card>
-  <Card title="Stage 2: Agentic Autonomous AI Pack" icon="cpu">
-    **Controller-Node-Tool (CNT) Mesh.** Full multi-agent automation over isolated Wi-Fi AP (<code>POTFRM-4096</code>), 250ms deadman watchdogs, and local GGUF vision.
-    <br/><br/>
-    <LinkButton href="/open-biosphere/hardware/ground-track-agv/stage-2/">Enter Stage 2 Autonomous Guide →</LinkButton>
-  </Card>
-</CardGrid>
+1. **Perimeter Lower Tier Logistics:** Follows the magnetic guide track running along the lower perimeter lane ($Z = 150$ to $365\text{ mm}$ above water level).
+2. **Bioreactor Drum Transfer:** Docks with the Revolving Sprout Bioreactor to exchange ripe seed canisters.
+3. **Automated Recharging:** Automatically returns to South-West datum origin $(0, 0, 0)$ for non-contact inductive charging between logistics missions.

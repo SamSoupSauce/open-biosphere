@@ -1,13 +1,14 @@
 ---
-title: "TPS Aeroponic Root-Zone Chamber — Subsystem Overview"
-description: "True Potato Seed (TPS) aeroponic misting chamber with non-destructive harvesting."
+title: "TPS Aeroponic Root-Zone Chamber — BLE Environmental Unit"
+description: "True Potato Seed (TPS) aeroponic misting chamber with non-destructive harvesting, 120 PSI atomizing pump, and BLE GATT telemetry."
 ---
 
 import { Card, CardGrid, LinkButton } from '@astrojs/starlight/components';
+import ModelViewer from '../../../components/ModelViewer';
 
 ## 1. Standalone Homesteading & Off-Grid Utility
 
-Traditional seed potatoes require disease-prone clonal tubers that degrade over generations and demand large soil footprints. This machine enables homesteaders to germinate **True Potato Seed (TPS)**—tiny botanical seeds weighing 1/1000th of a tuber—and produce clean, pathogen-free mini-tubers continuously in a compact footprint:
+Traditional seed potatoes require disease-prone clonal tubers that degrade over generations and demand large soil footprints. This machine enables homesteaders to germinate **True Potato Seed (TPS)**—tiny botanical seeds weighing 1/1000th of a tuber—and produce clean, pathogen-free mini-tubers continuously in a compact footprint as a **dedicated BLE environmental peripheral**:
 
 <CardGrid>
   <Card title="Botanical Seed Propagation" icon="seed">
@@ -20,11 +21,9 @@ Traditional seed potatoes require disease-prone clonal tubers that degrade over 
     Dual-labyrinth EPDM light seals keep root zones below 0.05 lux, completely preventing green solanine toxins from accumulating in growing tubers.
   </Card>
   <Card title="Closed Misting Conservation" icon="droplet">
-    Ultrasonic atomizers suspend nutrient mist directly on bare roots, saving 95% of water compared to traditional in-ground potato hills.
+    High-pressure 120 PSI brass atomizers suspend nutrient mist directly on bare roots, saving 95% of water compared to traditional in-ground potato hills.
   </Card>
 </CardGrid>
-
----
 
 ---
 
@@ -32,17 +31,16 @@ Traditional seed potatoes require disease-prone clonal tubers that degrade over 
 
 | Parameter | Specification |
 | :--- | :--- |
+| **Operational Mode** | Dedicated BLE Environmental Peripheral (RFC-019) |
 | **Chassis Dimensions** | 1,200 mm (L) × 800 mm (W) × 650 mm (H) |
 | **Planting Density** | 12 to 18 TPS root collars per square meter (24 plants per chamber) |
-| **Misting Cycle** | 5 seconds pulse every 3 minutes (closed-loop timer) or manual pump |
+| **Misting Cycle** | 5 seconds pulse every 3 minutes (closed-loop BLE timer or automated trigger) |
 | **Droplet Size** | 30 to 50 µm high-pressure atomization |
-| **Operating Pressure** | 80 to 120 PSI high-pressure line or manual hand-pump garden wand |
+| **Operating Pressure** | 80 to 120 PSI high-pressure line (24V booster pump) with manual hand-pump fallback |
 | **Light Ingress** | Less than 0.05 lux (tested via dual EPDM foam labyrinth seals) |
 | **Harvest Yield** | 40 to 60 mini-tubers (15–35g each) per plant over a 120-day cycle |
-| **Power Consumption** | 0W (Manual) / 45W avg (Add-On 1) / 58W peak (Add-On 2) |
-| **Controller Architecture**| Manual Hand-Pump / Spring-Wound Dial Timer / ESP32-C3 Transpiration Node |
-
----
+| **Power Consumption** | 45W active misting pulse / 1.5W idle monitoring |
+| **Controller Architecture** | ESP32 BLE Peripheral Node + Strict Two-Control Physical Standard |
 
 ---
 
@@ -55,63 +53,50 @@ In accordance with [RFC-0009: Universal Helical Shutter Solar Roof Standard](/op
 
 ---
 
-## 6. Staged Upgrade Progression & Cost Summary
+## 4. Interactive 3D Composite Assembly Model
 
-### Build Tier Comparison
+<ModelViewer
+  client:load
+  partId="ASM-TPS_ROOT_CHAMBER"
+  partName="TPS Aeroponic Root-Zone Chamber (BLE Misting Assembly)"
+  material="multi-material"
+  fabricationMethod="composite-assembly"
+  dimensions={{ x_mm: 380.0, y_mm: 220.0, z_mm: 160.0 }}
+  estimatedCost={219.00}
+  modelUrl="/open-biosphere/assets/machines/tps-root-chamber/stage-1.gltf"
+/>
 
-| Build Stage | Operational Capability | Direct Stage Cost | Cumulative Investment |
-| :--- | :--- | :--- | :--- |
-| **Base: Instructions** | 100% mechanical tote with hand-pump pressure sprayer and baffled access hatch | $105.00 | **$105.00** |
-| **Add-On 1: Semi-Auto** | High-pressure 120 PSI misting pump with Flutter BLE Virtual Panel & Two-Control Standard | +$114.00 | **$219.00** |
-| **Add-On 2: Agentic AI** | Controller-Node-Tool (CNT) automation, transpiration-driven misting, & 250ms watchdogs | +$71.00 | **$290.00** |
-
-### Step-by-Step Zero-Waste Conversion Roadmap
-
-#### Path 1: Base Machine → Add-On 1 (Motorized Misting Chamber)
-1. Mount the 24V 120 PSI booster pump to the rear wall of the HDPE tub.
-2. Install the 1/4" nylon tubing and six brass anti-drip nozzles inside the tub at $Z = 300$ mm height.
-3. Mount the Two-Control junction box on the front rail, pair the Flutter Companion App BLE Virtual Panel, and plug in the 24V desktop power supply. The manual garden wand pass-through grommets remain permanently accessible.
-
-#### Path 2: Add-On 1 → Add-On 2 (Autonomous Edge CNT Production Cell)
-1. Mount the Root Chamber Node (ESP32-S3 + OLED + Button) and modular ESP32-C3 Tools inside the IP65 enclosure.
-2. Connect `DEV_PUMP_RELAY` to the booster pump and 24V fast-bleed solenoid in parallel with the manual dial timer.
-3. Mount the MLX90614 infrared root sensor in the tub lid and wire to `DEV_ROOT_TELE`.
-4. Install dual optical liquid level sensors in the suction line manifold.
-5. Provision the Root Chamber Node with Central Controller ID via mobile app BLE, and verify 250ms hardware watchdog trips immediately upon signal loss.
+* **Direct 3D Assembly Download:** [Download stage-1.gltf (glTF 2.0 Standard)](/open-biosphere/assets/machines/tps-root-chamber/stage-1.gltf)
 
 ---
 
+## 5. Unified Bill of Materials (BOM)
+
+| Item | Part ID & Registry Link | Component & Specification | Sourcing / Supplier | Fab Type | Qty | Unit Cost | Total Cost |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **T-01** | [`PART-FLUID-TOTE-HDPE-160L`](/open-biosphere/parts/fluidic/part-fluid-tote-hdpe-160l/) | Food-Grade Heavy-Duty Opaque Black HDPE Tote (160L) | Uline / Farm Supply | Stock Reservoir | 1 | $38.00 | $38.00 |
+| **T-02** | [`PART-FLUID-COLLAR-NEOPRENE-2IN`](/open-biosphere/parts/fluidic/part-fluid-collar-neoprene-2in/) | Pre-Slit 2-Inch Neoprene Cloning Collars (24x pack) | Hydroponics Supply | Stock Foam Discs | 1 | $18.00 | $18.00 |
+| **T-03** | [`PART-FLUID-SEAL-EPDM-WEATHER`](/open-biosphere/parts/fluidic/part-fluid-seal-epdm-weather/) | High-Density EPDM Foam Weatherstripping + Silicone Flaps | McMaster-Carr | Stock Gasket | 1 | $16.00 | $16.00 |
+| **T-04** | [`PART-FLUID-VALVE-BALL-1IN`](/open-biosphere/parts/fluidic/part-fluid-valve-ball-1in/) | 1-Inch PVC Threaded Bulkhead + Full-Port Ball Valve | SupplyHouse | Stock Plumbing | 1 | $14.00 | $14.00 |
+| **E-01** | [`PART-FLUID-PUMP-BOOST-120P`](/open-biosphere/parts/fluidic/part-fluid-pump-boost-120p/) | 24V DC High-Pressure Booster Pump (120 PSI, 1.2 GPM) | Aquatec / RO Supply | Stock Pump | 1 | $48.00 | $48.00 |
+| **E-02** | [`PART-FLUID-NOZZLE-BRASS-03`](/open-biosphere/parts/fluidic/part-fluid-nozzle-brass-03/) | Brass Anti-Drip Misting Nozzles (0.3mm orifice, 6x pack) | MistCooling | Precision Nozzle | 1 | $22.00 | $22.00 |
+| **E-03** | [`PART-ELEC-TWO-CTRL-PACK`](/open-biosphere/parts/part-custom-part-elec-two-ctrl-pack/) | Two-Control Physical Enclosure Pack (Master DC Switch + SD Button) | Open-Biosphere Fab | 3D Print / Assembly | 1 | $16.00 | $16.00 |
+| **E-04** | [`PART-ELEC-OLED-091-I2C`](/open-biosphere/parts/electrical/part-elec-oled-091-i2c/) | 0.91" I2C Status OLED Display & BLE Peripheral Carrier | Adafruit | Stock Electronics | 1 | $10.00 | $10.00 |
+| **E-05** | [`PART-ELEC-PSU-24V-72W`](/open-biosphere/parts/electrical/part-elec-psu-24v-72w/) | 24V 3A (72W) DC Desktop Industrial Power Supply | Mouser / MeanWell | Stock Power Supply | 1 | $18.00 | $18.00 |
+| **M-01** | [`PART-FLUID-SPRAYER-HAND-2G`](/open-biosphere/parts/fluidic/part-fluid-sprayer-hand-2g/) | 2-Gallon Hand-Pump Pressure Garden Sprayer (Emergency Fallback) | Home Depot | Stock Appliance | 1 | $19.00 | $19.00 |
+| **Total** | **Operational BLE TPS Root Chamber** | **Single Stage Specification (RFC-019)** | | | | | **$219.00** |
+
 ---
 
-## 7. Master Biosphere Assembly Interlock
+## 6. BLE Peripheral Operation & Runbook
 
-When integrated into the centralized Open Biosphere facility (~20 × 10 ft footprint):
+### 6.1 BLE Service & Telemetry GATT Map
+* **Service UUID:** `0000FFE0-0000-1000-8000-00805F9B34FC`
+* **Telemetry Characteristic (`0xFFE1`, Notify):** `[Root_Zone_Temp_C: float32, Relative_Humidity_Pct: float32, Reservoir_Level_mm: uint16, Pressure_PSI: uint16]`
+* **Misting Command Characteristic (`0xFFE2`, Write):** `[Pulse_Duration_Sec: uint8, Interval_Minutes: uint16, Force_Cycle: uint8]`
 
-1. **Sub-Surface Basin Suspension**: The chamber docks into the southern bay of the Central Basin, suspended over the nutrient reservoir at $Z = 0$ to $650$ mm.
-2. **Overhead Gantry Toolhead**: The 2-Axis Overhead Gantry descends through the top silicone docking collar with a soft-silicone suction toolhead, harvesting mature mini-tubers non-destructively.
-3. **Plumbing Integration**: Drains directly into the primary MBBR biofiltration sump, creating a continuous gravity return circuit with zero standing water.
-4. **Biosphere Synchronized Dosing**: Communicates via CAN bus with the Microclimate & Automated Dosing Array, automatically requesting calcium and potassium nutrient replenishments during peak tuber bulking phases.
-
----
-
-## 8. Select Your Build Stage
-
-Explore the step-by-step fabrication, wiring, and commissioning guides for each operational tier:
-
-<CardGrid>
-  <Card title="Stage 0: Pure Mechanical Baseline" icon="hammer">
-    **100% Zero-Power Manual Operation.** Built using common hardware, manual linkages, hand cranks, and gravity flows. Zero electrical power required.
-    <br/><br/>
-    <LinkButton href="/open-biosphere/hardware/tps-root-chamber/stage-0/">Enter Stage 0 Assembly Guide →</LinkButton>
-  </Card>
-  <Card title="Stage 1: BLE Electromechanical Pack" icon="setting">
-    **Motorized Drive & BLE Virtual Panel.** Upgrades to continuous DC motorization with Strict Two-Control hardware interlocks and Flutter BLE touch controls.
-    <br/><br/>
-    <LinkButton href="/open-biosphere/hardware/tps-root-chamber/stage-1/">Enter Stage 1 Retrofit Guide →</LinkButton>
-  </Card>
-  <Card title="Stage 2: Agentic Autonomous AI Pack" icon="cpu">
-    **Controller-Node-Tool (CNT) Mesh.** Full multi-agent automation over isolated Wi-Fi AP (<code>POTFRM-4096</code>), 250ms deadman watchdogs, and local GGUF vision.
-    <br/><br/>
-    <LinkButton href="/open-biosphere/hardware/tps-root-chamber/stage-2/">Enter Stage 2 Autonomous Guide →</LinkButton>
-  </Card>
-</CardGrid>
+### 6.2 Commissioning & Operating Steps
+1. **Chamber Sealing:** Fit pre-slit neoprene collars into the 24 lid ports. Verify that the lid perimeter EPDM gasket compresses evenly when latched, achieving total darkness (less than 0.05 lux).
+2. **Manifold Pressurization:** Route the 1/4" nylon pressure lines from the 24V booster pump to the 6 brass misting nozzles mounted at Z = 300 mm. Test at 120 PSI to ensure complete 30-50 µm atomization with zero dripping.
+3. **Manual Fallback Connection:** Keep the hand-pump pressure sprayer connected to the parallel bypass ball valve for zero-power emergency operation during grid failure.
+4. **BLE Pairing & Calibration:** Pair via BLE GATT using the Open Biosphere companion app. Configure misting interval (default: 5-second pulse every 3 minutes) and monitor root zone temperature.

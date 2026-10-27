@@ -184,6 +184,16 @@ const RFC_LIST: RFCItem[] = [
     summary: 'Establishes composite CAD assembly architecture with per-subpart color coding, standalone watertight 2-manifold printable subpart models, bed-grounded batch platers, and universal outward normal reconciliation.',
     docSlug: '/rfcs/rfc-0018-multi-part-composite-cad-assemblies',
   },
+  {
+    id: 'RFC-0019',
+    title: 'Hardware Hierarchy Simplification & Stage De-duplication',
+    author: 'Documentation Systems & Hardware Working Group',
+    targetType: 'Hardware',
+    status: 'Implemented',
+    date: '2026-10-26',
+    summary: 'Eliminates redundant and artificial stage subpages across autonomous drones, gantry tool nodes, and environmental peripherals in favor of single-stage direct pages with unified BOMs and 301 redirects.',
+    docSlug: '/rfcs/rfc-0019-hardware-hierarchy-simplification',
+  },
 ];
 
 export default function RfcKanban() {

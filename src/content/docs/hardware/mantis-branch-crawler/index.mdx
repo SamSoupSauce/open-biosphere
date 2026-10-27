@@ -1,11 +1,12 @@
 ---
-title: "Mantis Branch-Crawler Robot — Subsystem Overview"
-description: "Lightweight pole-mounted and robotic crawler for trellised berry and legume harvesting."
+title: "Mantis Branch-Crawler Robot — Autonomous Trellis Harvester"
+description: "Agentic autonomous tree and trellis branch crawler with dual-opposed silicone pinch drive, stereo RGB-NIR vision, micro-rotary shear, and vacuum harvesting pod."
 ---
 
 import { Card, CardGrid, LinkButton } from '@astrojs/starlight/components';
+import ModelViewer from '../../../components/ModelViewer';
 
-## 1. Standalone Homesteading & Off-Grid Utility
+## 1. Standalone Homesteading & Robotic Utility
 
 Delicate soft fruits such as mulberries, blackberries, and goldenberries bruise easily when picked with conventional robotic grippers or shaken mechanically. The Mantis crawler solves this with **soft-silicone pinch locomotion and cushioned vacuum-assisted harvesting**:
 
@@ -19,12 +20,10 @@ Delicate soft fruits such as mulberries, blackberries, and goldenberries bruise 
   <Card title="Stereo Multispectral Ripeness" icon="eye">
     Dual RGB-NIR cameras run on-device YOLO edge segmentation, distinguishing ripe, sugar-rich berries from unripe green fruit under variable lighting.
   </Card>
-  <Card title="Off-Grid Battery or Tethered" icon="battery">
-    Runs on standard 18V/20V tool batteries (Makita, DeWalt) for portable field use, or plugs into a 24V bus rail for continuous greenhouse operation.
+  <Card title="Autonomous Compute & Interlocks" icon="laptop">
+    Directly integrated ESP32-S3 Mantis Node + modular ESP32-C3 Tools operating with 250ms hardware watchdogs and zero cloud dependence.
   </Card>
 </CardGrid>
-
----
 
 ---
 
@@ -32,78 +31,79 @@ Delicate soft fruits such as mulberries, blackberries, and goldenberries bruise 
 
 | Parameter | Specification |
 | :--- | :--- |
+| **Operational Designation** | Fully Autonomous Cyber-Physical Harvesting Robot (AI Native) |
 | **Locomotion** | Dual-opposed silicone roller pinch drive (Shore 40A durometer) |
-| **Limb Clamping Force** | 28 N mechanical scissor preload (Stage 0) / Dual-bogie 4-point contact (26 N total normal force, ≤6.5 N per contact patch &lt; 8.5 N phloem crushing threshold) with active electronic limit |
+| **Limb Clamping Force** | Dual-bogie 4-point contact (26 N total normal force, ≤6.5 N per contact patch < 8.5 N phloem crushing threshold) with active electronic limit |
 | **End-Effector** | High-precision micro-rotary shear + pneumatic vacuum catch pod |
 | **Harvest Cycle Time** | 4.2 seconds per fruit |
-| **Compute Architecture** | ESP32-S3 Mantis Node + ESP32-C3 Modular Tools (Vision offloaded to Central Controller) |
-| **Vision Modality** | Dual-stereo RGB + 850nm NIR structured light illuminator |
+| **Compute Architecture** | Controller-Node-Tool (CNT): ESP32-S3 Mantis Node + 3x ESP32-C3 Modular Tools |
+| **Perception Modality** | Dual-stereo RGB + 850nm NIR structured light illuminator (RTSP streaming to local Vision AI) |
+| **Safety Interlocks** | 250ms hardware deadman watchdogs on all tool drivers; master DC disconnect switch |
 | **Traversable Angle** | Up to 65° incline along tensioned trellis wire or woody espalier arms |
 | **Weight** | 1.85 kg (chassis + battery + end-effector) |
-| **Power Supply** | 0W (Manual) / 18V Tool Battery (Add-On 1) / 24V Tethered Bus (Add-On 2) |
+| **Power Supply** | 24V continuous slip-ring bus / 18-20V DC industrial power pack |
 
 ---
 
----
+## 3. Interactive 3D Composite Assembly Model
 
-## 6. Staged Upgrade Progression & Cost Summary
+<ModelViewer
+  client:load
+  partId="ASM-MANTIS_BRANCH_CRAWLER"
+  partName="Mantis Branch-Crawler Robot (Full Autonomous Assembly)"
+  material="multi-material"
+  fabricationMethod="composite-assembly"
+  dimensions={{ x_mm: 400.0, y_mm: 250.0, z_mm: 180.0 }}
+  estimatedCost={405.00}
+  modelUrl="/open-biosphere/assets/machines/mantis-branch-crawler/stage-2.gltf"
+/>
 
-### Build Tier Comparison
-
-| Build Stage | Operational Capability | Direct Stage Cost | Cumulative Investment |
-| :--- | :--- | :--- | :--- |
-| **Base: Instructions** | 100% mechanical pole-mounted pruner and squeeze clamp with gravity collection | $93.00 | **$93.00** |
-| **Add-On 1: Semi-Auto** | Motorized pinch climb, vacuum fruit funnel with BLE Virtual Panel & 2 physical controls | +$135.00 | **$228.00** |
-| **Add-On 2: Agentic AI** | Controller-Node-Tool (CNT) automation, 8.5N grip limiting, & 250ms watchdogs | +$177.00 | **$405.00** |
-
-### Step-by-Step Zero-Waste Conversion Roadmap
-
-#### Path 1: Base Machine → Add-On 1 (Electromechanical RC Upgrade)
-1. Remove the manual telescopic pole from the base clamp.
-2. Swing the aluminum motor swing-plates into position and bolt the NEMA 14 pancake steppers onto the chassis plates.
-3. Replace the manual bypass snip blade with the 12V coreless rotary micro-shear tool and 5015 vacuum blower funnel.
-4. Mount the battery shoe and Two-Control enclosure onto the spine, connect the 18V tool battery, and operate via Flutter BLE Virtual Panel. The silicone rollers and scissor frame remain 100% identical.
-
-#### Path 2: Add-On 1 → Add-On 2 (Autonomous Edge CNT Upgrade)
-1. Transition the ESP32 carrier into the Mantis Node configuration.
-2. Mount the Mantis Node (ESP32-S3 + OLED + Button) and modular ESP32-C3 Tools on the chassis spine.
-3. Mount the lightweight dual stereo camera bar on the forward snout for video streaming to the Central Controller.
-4. Wire the HX711 load cell into the `DEV_CLAMP_ACT` tool, and connect the `DEV_SHEAR_VAC` and `DEV_ROLLER_DRV` tools.
-5. Provision the Mantis Node with the Central Controller ID via mobile app BLE, and confirm 250ms hardware watchdogs are active across all tools.
+* **Direct 3D Assembly Download:** [Download stage-2.gltf (glTF 2.0 Standard)](/open-biosphere/assets/machines/mantis-branch-crawler/stage-2.gltf)
 
 ---
 
+## 4. Unified Bill of Materials (BOM)
+
+| Item | Part ID & Registry Link | Component & Specification | Sourcing / Supplier | Fab Type | Qty | Unit Cost | Total Cost |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **M-01** | [`PART-FAB-PLATES-MANTIS-5052`](/open-biosphere/parts/part-custom-plates-mantis-5052/) | Waterjet 5052 Aluminum Scissor Linkage Plates (3.0mm) | Open-Biosphere Fab | Custom CNC Plate | 2 | $14.50 | $29.00 |
+| **M-02** | [`PART-FAB-ROLLER-SILICONE-40A`](/open-biosphere/parts/part-custom-roller-silicone-40a/) | Molded Shore 40A Silicone Concave Pinch Rollers | Open-Biosphere Fab | Custom Molded | 2 | $8.00 | $16.00 |
+| **M-03** | [`PART-FAB-CHUTE-RIPSTOP-PETG`](/open-biosphere/parts/part-custom-chute-ripstop-petg/) | 3D-Printed PETG Funnel Collar with Ripstop Nylon Chute | Open-Biosphere Fab | 3D Print / Textile | 1 | $12.00 | $12.00 |
+| **M-04** | [`PART-MECH-ALUM-2020-6M`](/open-biosphere/parts/mechanical/part-mech-alum-2020-6m/) | 2020 Aluminum Structural Extrusion Backbone & Harness | OpenBuilds / Misumi | Stock Extrusion | 2 | $18.00 | $36.00 |
+| **E-01** | [`PART-ELEC-NEMA14-PANCAKE`](/open-biosphere/parts/electrical/part-elec-nema14-pancake/) | NEMA 14 Pancake Stepper Motors (17mm body, 0.8A) | StepperOnline | Stock Motor | 2 | $14.00 | $28.00 |
+| **E-02** | [`PART-ELEC-MTR-CORELESS-12V`](/open-biosphere/parts/electrical/part-elec-mtr-coreless-12v/) | 12V High-Torque Coreless Micro-Motor for Shear Blade | Pololu | Stock Motor | 1 | $16.00 | $16.00 |
+| **E-03** | [`PART-FLUID-BLOWER-5015-24V`](/open-biosphere/parts/fluidic/part-fluid-blower-5015-24v/) | 5015 Radial Centrifugal Vacuum Blower Fan (24V DC) | Delta / Sunon | Stock Blower | 1 | $9.00 | $9.00 |
+| **E-04** | [`PART-ELEC-BAT-ADAPT-18V`](/open-biosphere/parts/electrical/part-elec-bat-adapt-18v/) | 18V Industrial Tool Battery Receiver Shoe with Dual 14AWG Terminals | Open-Biosphere Fab | 3D Print / Terminal | 1 | $14.00 | $14.00 |
+| **E-05** | [`PART-ELEC-TWO-CTRL-PACK`](/open-biosphere/parts/part-custom-part-elec-two-ctrl-pack/) | Two-Control Physical Interface Pack (Master DC Switch + Recessed SD Button) | Open-Biosphere Fab | 3D Print / Assembly | 1 | $24.00 | $24.00 |
+| **C-01** | [`PART-ELEC-ESP32-S3-NODE`](/open-biosphere/parts/electrical/part-elec-esp32-s3-node/) | Mantis Machine Node: ESP32-S3 (8MB PSRAM) + 0.96" OLED | Espressif / Mouser | Stock Electronics | 1 | $26.00 | $26.00 |
+| **C-02** | [`PART-ELEC-CAM-STEREO-NIR`](/open-biosphere/parts/electrical/part-elec-cam-stereo-nir/) | Dual Micro RGB-NIR Stereo Cameras with Wi-Fi RTSP Transmitter | Arducam | Stock Sensor | 1 | $32.00 | $32.00 |
+| **C-03** | [`PART-ELEC-ESP32-C3-TOOL`](/open-biosphere/parts/electrical/part-elec-esp32-c3-tool/) | 3x ESP32-C3 Modular Tools with 0.42" OLEDs & 250ms Watchdogs | Seeed Studio | Stock Electronics | 3 | $7.00 | $21.00 |
+| **C-04** | [`PART-ELEC-SNS-LOADCELL-20N`](/open-biosphere/parts/electrical/part-elec-sns-loadcell-20n/) | 20 N Miniature Bending Beam Load Cell + HX711 24-bit ADC | SparkFun | Stock Sensor | 1 | $14.00 | $14.00 |
+| **C-05** | [`PART-ELEC-VR-5V5A-STEPDOWN`](/open-biosphere/parts/electrical/part-elec-vr-5v5a-stepdown/) | 5V 5A High-Efficiency Step-Down DC-DC Power Module | Pololu | Stock Electronics | 1 | $14.00 | $14.00 |
+| **C-06** | [`PART-FAB-DOCK-POGO-GANTRY`](/open-biosphere/parts/part-custom-dock-pogo-gantry/) | Overhead Gantry Spring-Loaded Pogo-Pin Docking Shoe & Latch | Open-Biosphere Fab | 3D Print + Pogo Contacts | 1 | $18.00 | $18.00 |
+| **C-07** | [`PART-ELEC-TMC2209-DVR`](/open-biosphere/parts/electrical/part-elec-tmc2209-dvr/) | Dual TMC2209 Ultra-Quiet Stepper Drivers | BigTreeTech | Stock Electronics | 1 | $16.00 | $16.00 |
+| **Total** | **Complete Autonomous Mantis Harvester Robot** | **Full AI-Native Build (RFC-019)** | | | | | **$405.00** |
+
 ---
 
-## 7. Master Biosphere Assembly Interlock
+## 5. Control Architecture & Commissioning Runbook
 
-When integrated into the centralized Open Biosphere facility (~20 × 10 ft footprint):
+### 5.1 Controller-Node-Tool (CNT) Standard
+Mantis operates on an air-gapped farm AP network (`192.168.42.0/24`):
+1. **Perception Offload:** The dual RGB-NIR cameras stream compressed RTSP H.264 video to the Central Biosphere Controller for real-time neural instance segmentation (`llama-cpp-python` GGUF vision model).
+2. **Kinematic Coordination:** The ESP32-S3 Mantis Node receives target coordinates and dispatches tool commands over local high-speed serial/BLE downlinks to the 3 ESP32-C3 tool microcontrollers.
+3. **Deadman Watchdogs:** Each ESP32-C3 tool enforces a 250 ms hardware timeout. If heartbeats from the node cease, motor outputs immediately float into high-impedance safe mode, and clamping levers default to mechanical slip thresholds.
 
-1. **Perimeter Wall Indexing**: Navigates the rigid 1/8" stainless guideframe wires running along the North-East vertical boundary wall ($Z = 760$ to $1,220$ mm), servicing espaliered bush mulberries and goldenberries.
-2. **Tethered DC Bus**: Draws continuous 24V power from an overhead slip-ring cable running along the gantry rail, eliminating battery swap downtime.
-3. **Pneumatic Transfer**: Deposits harvested berries directly into the Ground Track AGV transit bins stationed on the Perimeter Lower Tier.
-4. **Biosphere Central Telemetry**: Broadcasts real-time crop ripeness maps, yield counts, and branch stress metrics over CAN bus to the central facility dashboard.
+### 5.2 Step-by-Step Commissioning
+1. **Frame & Pinch Bogie Assembly:** Bolt the aluminum scissor plates to the 2020 spine and assemble the dual Shore 40A silicone rollers on steel shoulder bolts.
+2. **Rotary Shear & Vacuum Pod:** Mount the coreless shear motor and 5015 vacuum blower onto the forward bracket; verify vacuum pull at the ripstop nylon catch funnel.
+3. **Avionics & Power Rigging:** Mount the 5V 5A synchronous buck converter and wire the ESP32-S3 node controller. Connect the HX711 load cell to calibrate clamping force to 6.5 N per contact patch.
+4. **Tool Provisioning:** Flash firmware on the 3 ESP32-C3 tools (`DEV_ROLLER_DRV`, `DEV_CLAMP_ACT`, `DEV_SHEAR_VAC`) and confirm 250ms watchdog trip verification.
 
 ---
 
-## 8. Select Your Build Stage
+## 6. Master Biosphere Assembly Interlock
 
-Explore the step-by-step fabrication, wiring, and commissioning guides for each operational tier:
-
-<CardGrid>
-  <Card title="Stage 0: Pure Mechanical Baseline" icon="hammer">
-    **100% Zero-Power Manual Operation.** Built using common hardware, manual linkages, hand cranks, and gravity flows. Zero electrical power required.
-    <br/><br/>
-    <LinkButton href="/open-biosphere/hardware/mantis-branch-crawler/stage-0/">Enter Stage 0 Assembly Guide →</LinkButton>
-  </Card>
-  <Card title="Stage 1: BLE Electromechanical Pack" icon="setting">
-    **Motorized Drive & BLE Virtual Panel.** Upgrades to continuous DC motorization with Strict Two-Control hardware interlocks and Flutter BLE touch controls.
-    <br/><br/>
-    <LinkButton href="/open-biosphere/hardware/mantis-branch-crawler/stage-1/">Enter Stage 1 Retrofit Guide →</LinkButton>
-  </Card>
-  <Card title="Stage 2: Agentic Autonomous AI Pack" icon="cpu">
-    **Controller-Node-Tool (CNT) Mesh.** Full multi-agent automation over isolated Wi-Fi AP (<code>POTFRM-4096</code>), 250ms deadman watchdogs, and local GGUF vision.
-    <br/><br/>
-    <LinkButton href="/open-biosphere/hardware/mantis-branch-crawler/stage-2/">Enter Stage 2 Autonomous Guide →</LinkButton>
-  </Card>
-</CardGrid>
+1. **Perimeter Wire Indexing:** Navigates rigid 1/8-inch stainless guideframe wires running along the North-East vertical boundary wall ($Z = 760$ to $1220\text{ mm}$), harvesting espaliered bush mulberries and goldenberries.
+2. **Tethered Bus & Docking:** Connects to the overhead slip-ring bus or docks via `PART-FAB-DOCK-POGO-GANTRY` for uninterrupted continuous power.
+3. **Produce Transfer:** Deposits harvested berries directly into the Ground Track AGV transit bins stationed on the Perimeter Lower Tier.

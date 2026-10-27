@@ -1,106 +1,89 @@
 ---
-title: "Microclimate & Automated Dosing Array — Subsystem Overview"
-description: "6-channel precision peristaltic nutrient and pH dosing manifold with isolated telemetry."
+title: "Microclimate & Automated Dosing Array — BLE Peripheral Unit"
+description: "Wall-mounted multi-channel environmental regulation and nutrient dosing station with 6 peristaltic pumps, CO2 injection solenoid, and BLE telemetry."
 ---
 
 import { Card, CardGrid, LinkButton } from '@astrojs/starlight/components';
+import ModelViewer from '../../../components/ModelViewer';
 
-## 1. Standalone Homesteading & Off-Grid Utility
+## 1. Standalone Homesteading & Environmental Dosing Utility
 
-Maintaining optimal pH, electrical conductivity (EC), and atmospheric conditions by hand requires daily manual testing and chemical adjusting. This machine provides **autonomous 24/7 PID feedback regulation**:
+Precision nutrient balance, pH control, and CO₂ saturation are essential for continuous high-yield agriculture in closed ecological systems. The Microclimate & Automated Dosing Array operates as a **dedicated BLE environmental peripheral**:
 
 <CardGrid>
-  <Card title="6-Channel Nutrient & pH Doser" icon="flask">
-    Industrial peristaltic pumps meter Nitrates, Phosphates, Potassium, Micronutrients, pH Up, and pH Down with $\pm 0.1$ mL precision.
+  <Card title="6-Channel Peristaltic Dosing" icon="droplet">
+    Dedicated positive-displacement peristaltic pumps deliver micro-doses of macronutrients (N, P, K), micronutrients, pH Up, and pH Down with zero cross-contamination.
   </Card>
-  <Card title="Closed-Loop Atmospheric PID" icon="activity">
-    Monitors air temperature, relative humidity (RH), and CO₂ levels in real time, triggering ultrasonic mist, exhaust dampers, or solenoids.
+  <Card title="Gaseous CO₂ Regulation" icon="wind">
+    Normally-closed 12V industrial brass solenoid valve coordinates microclimate carbon fertilization pulses during peak photosynthetic hours.
   </Card>
-  <Card title="Open Hardware (ESP32 / Pi CM4)" icon="cpu">
-    Runs open-source automation firmware (ESPHome, Mycodo, or Home Assistant) with local web dashboards and offline local datalogging.
+  <Card title="BLE Peripheral Mode" icon="laptop">
+    Acts as an autonomous peripheral node, exposing standard BLE GATT telemetry characteristics (pH, EC, water temperature, CO₂ ppm) and accepting timed dosing commands.
   </Card>
-  <Card title="Isolated Industrial Telemetry" icon="shield">
-    Galvanically isolated I2C and RS-485 Modbus circuits prevent electrical ground-loop noise from skewing sensitive pH and EC probe readings.
+  <Card title="Strict Two-Control Panel" icon="setting">
+    Equipped with a physical Master DC switch and recessed factory reset button for reliable operation in humid plant environments.
   </Card>
 </CardGrid>
-
----
 
 ---
 
 ## 2. Technical Specifications
 
-| Parameter | Subsystem | Operating Target & Tolerance |
-| :--- | :--- | :--- |
-| **Nutrient Dosing** | 6-channel industrial 12V peristaltic pumps or gravity burettes | Resolution: $\pm 0.1$ mL per dose |
-| **Water Chemistry** | Dual-junction lab-grade pH probe & platinum EC electrode | pH: 6.0 to 6.8 | EC: 1.2 to 2.4 mS/cm |
-| **Atmospheric CO₂** | High-pressure CO₂ regulator with electronic solenoid mass flow meter | 800 to 1,200 ppm |
-| **Relative Humidity (RH)** | Ultrasonic mist humidification + dual refrigeration dehumidifiers | 65% to 75% RH |
-| **Air Temperature** | Inverter heat pump with duct distribution manifold | 21°C to 27°C day / 16°C to 19°C night |
-| **Dynamic Spectrum LED** | 8-channel controllable LED bars (Deep Red 660nm, Far Red 730nm, Royal Blue 450nm) | 150 to 600 µmol/m²/s PAR |
-| **Power Consumption** | 0W (Manual) / 25W avg (Add-On 1) / 38W peak (Add-On 2) |
-| **Controller Architecture** | Gravity Burettes / 6-Button Potentiometer Panel / ESP32-S3 + Modbus RTU |
+| Parameter | Specification |
+| :--- | :--- |
+| **Operational Mode** | Dedicated BLE Environmental Peripheral (RFC-019) |
+| **Form Factor** | 600 mm (W) × 450 mm (H) × 180 mm (D) wall-mount backplane |
+| **Liquid Dosing Channels** | 6x 12V DC brushed peristaltic pumps (flow rate: 100 mL/min per channel) |
+| **CO₂ Gas Control** | 12V DC normally-closed brass solenoid with 1/4" push-to-connect barb fittings |
+| **Driver Board** | 8-channel ULN2803A Darlington sink driver array with flyback suppression diodes |
+| **Status Display** | 0.91" I2C monochrome OLED (displays active channel, flow rate, and BLE status) |
+| **Power Supply** | MeanWell 12V 5A (60W) enclosed industrial power supply |
+| **Control Interface** | Two-Control Physical Interface + BLE GATT telemetry and pulse gating |
 
 ---
 
----
+## 3. Interactive 3D Composite Assembly Model
 
-## 6. Staged Upgrade Progression & Cost Summary
+<ModelViewer
+  client:load
+  partId="ASM-MICROCLIMATE_DOSING_ARRAY"
+  partName="Microclimate & Automated Dosing Array (BLE Dosing Assembly)"
+  material="multi-material"
+  fabricationMethod="composite-assembly"
+  dimensions={{ x_mm: 600.0, y_mm: 450.0, z_mm: 180.0 }}
+  estimatedCost={252.00}
+  modelUrl="/open-biosphere/assets/machines/microclimate-dosing-array/stage-1.gltf"
+/>
 
-### Build Tier Comparison
-
-| Build Stage | Operational Capability | Direct Stage Cost | Cumulative Investment |
-| :--- | :--- | :--- | :--- |
-| **Base: Instructions** | 100% mechanical gravity burettes, manual 3-way L-port valves, and colorimetric drops | $122.00 | **$122.00** |
-| **Add-On 1: Semi-Auto** | Motorized 6-channel peristaltic pumping with Flutter BLE Virtual Panel & Two-Control Standard | +$130.00 | **$252.00** |
-| **Add-On 2: Agentic AI** | Controller-Node-Tool (CNT) automation, 1 Hz closed-loop PID, NDIR CO₂, & 250ms watchdogs | +$184.00 | **$436.00** |
-
-### Step-by-Step Zero-Waste Conversion Roadmap
-
-#### Path 1: Base Machine → Add-On 1 (Motorized Dosing Panel)
-1. Bolt the six 12V peristaltic pumps into the pre-drilled central holes on the acrylic backplane.
-2. Plumb the pump discharge lines into Port 3 of the 3-way L-port bypass valves (the manual burettes remain fully usable).
-3. Install the 12V MeanWell power supply, Two-Control enclosure, and link the Flutter Companion App BLE Virtual Panel.
-
-#### Path 2: Add-On 1 → Add-On 2 (Autonomous Closed-Loop CNT Brain)
-1. Mount the Doser Node (ESP32-S3 + OLED + Button) and modular ESP32-C3 Tools inside the IP65 enclosure.
-2. Connect `DEV_WATER_SNS` to the galvanically isolated pH and EC probe BNC headers.
-3. Connect `DEV_PUMP_BANK1` and `DEV_PUMP_BANK2` to the MOSFET driver board in parallel with the manual push buttons.
-4. Mount the Sensirion SCD41 CO₂ sensor and wire the CO₂ gas solenoid to `DEV_GAS_CTL`.
-5. Provision the Doser Node with Central Controller ID via mobile app BLE, and confirm 250ms watchdogs prevent uncommanded chemical release.
+* **Direct 3D Assembly Download:** [Download stage-1.gltf (glTF 2.0 Standard)](/open-biosphere/assets/machines/microclimate-dosing-array/stage-1.gltf)
 
 ---
 
+## 4. Unified Bill of Materials (BOM)
+
+| Item | Part ID & Registry Link | Component & Specification | Sourcing / Supplier | Fab Type | Qty | Unit Cost | Total Cost |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **K-01** | [`PART-MECH-ALUM-2020-6M`](/open-biosphere/parts/mechanical/part-mech-alum-2020-6m/) | 8mm HDPE Mounting Backplane & 2020 Extrusion Frame | OpenBuilds / Local Fab | Stock Extrusion | 1 | $22.00 | $22.00 |
+| **K-02** | [`PART-FLUID-VALVE-3WAY-L`](/open-biosphere/parts/fluidic/part-fluid-valve-3way-l/) | 3-Way Manual L-Port PVC Ball Valves (1/4" NPT) | Cole-Parmer | Stock Valve | 6 | $4.66 | $28.00 |
+| **E-01** | [`PART-FLUID-PUMP-PERI-12V`](/open-biosphere/parts/fluidic/part-fluid-pump-peri-12v/) | 12V DC Brushed Peristaltic Dosing Pumps (100 mL/min) | Kamoer | Stock Pump | 6 | $8.00 | $48.00 |
+| **E-02** | [`PART-ELEC-TWO-CTRL-PACK`](/open-biosphere/parts/part-custom-part-elec-two-ctrl-pack/) | Two-Control Physical Enclosure Pack (Master DC Switch + SD Button) | Open-Biosphere Fab | 3D Print / Assembly | 1 | $18.00 | $18.00 |
+| **E-03** | [`PART-ELEC-OLED-091-I2C`](/open-biosphere/parts/electrical/part-elec-oled-091-i2c/) | 0.91" I2C Status OLED Display & BLE Peripheral Carrier | Adafruit | Stock Electronics | 1 | $10.00 | $10.00 |
+| **E-04** | [`PART-MECH-ALUM-2020-6M`](/open-biosphere/parts/mechanical/part-mech-alum-2020-6m/) | ULN2803A 8-Channel Darlington Driver Board + Timers | OpenBuilds | Stock Electronics | 1 | $12.00 | $12.00 |
+| **E-05** | [`PART-ELEC-PSU-12V-60W`](/open-biosphere/parts/electrical/part-elec-psu-12v-60w/) | 12V 5A (60W) MeanWell Enclosed Industrial Power Supply | DigiKey | Stock Power Supply | 1 | $24.00 | $24.00 |
+| **E-06** | [`PART-MECH-ALUM-2020-6M`](/open-biosphere/parts/mechanical/part-mech-alum-2020-6m/) | 12V DC Normally-Closed Brass CO₂ Solenoid with Push-Pin | OpenBuilds | Stock Hardware | 1 | $18.00 | $18.00 |
+| **Total** | **Operational BLE Microclimate Dosing Station** | **Single Stage Specification (RFC-019)** | | | | | **$252.00** |
+
 ---
 
-## 7. Master Biosphere Assembly Interlock
+## 5. BLE Peripheral Operation & Runbook
 
-When integrated into the centralized Open Biosphere facility (~20 × 10 ft footprint):
+### 5.1 BLE Service & Gating GATT Map
+* **Service UUID:** `0000FFE0-0000-1000-8000-00805F9B34FB`
+* **Telemetry Data (`0xFFE1`, Notify):** `[pH_val: float32, EC_us_cm: uint16, Water_temp_c: float32, CO2_ppm: uint16]`
+* **Dosing Pulse Command (`0xFFE2`, Write):** `[Channel: uint8 (0-5), Volume_mL: uint16, Duration_ms: uint32]`
+* **CO₂ Pulse Gate (`0xFFE3`, Write):** `[Duration_sec: uint16]`
 
-1. **Perimeter Wall Mounting**: Mounts in an IP65 splash-proof enclosure directly beside the South-West datum origin $(0,0,0)$.
-2. **Manifold Injection**: Dosing lines inject concentrated stock solutions directly into the fluidic return line after the biofiltration loop, ensuring complete turbulent mixing before water re-enters the Central Basin and NFT gutters.
-3. **Master CAN / MQTT Bus**: Publishes environmental telemetry and pump actuation logs to the centralized Open Biosphere logging server, coordinating lighting spectrum adjustments with water nutrient replenishment.
-
----
-
-## 8. Select Your Build Stage
-
-Explore the step-by-step fabrication, wiring, and commissioning guides for each operational tier:
-
-<CardGrid>
-  <Card title="Stage 0: Pure Mechanical Baseline" icon="hammer">
-    **100% Zero-Power Manual Operation.** Built using common hardware, manual linkages, hand cranks, and gravity flows. Zero electrical power required.
-    <br/><br/>
-    <LinkButton href="/open-biosphere/hardware/microclimate-dosing-array/stage-0/">Enter Stage 0 Assembly Guide →</LinkButton>
-  </Card>
-  <Card title="Stage 1: BLE Electromechanical Pack" icon="setting">
-    **Motorized Drive & BLE Virtual Panel.** Upgrades to continuous DC motorization with Strict Two-Control hardware interlocks and Flutter BLE touch controls.
-    <br/><br/>
-    <LinkButton href="/open-biosphere/hardware/microclimate-dosing-array/stage-1/">Enter Stage 1 Retrofit Guide →</LinkButton>
-  </Card>
-  <Card title="Stage 2: Agentic Autonomous AI Pack" icon="cpu">
-    **Controller-Node-Tool (CNT) Mesh.** Full multi-agent automation over isolated Wi-Fi AP (<code>POTFRM-4096</code>), 250ms deadman watchdogs, and local GGUF vision.
-    <br/><br/>
-    <LinkButton href="/open-biosphere/hardware/microclimate-dosing-array/stage-2/">Enter Stage 2 Autonomous Guide →</LinkButton>
-  </Card>
-</CardGrid>
+### 5.2 Commissioning Steps
+1. **Backplane Plumbing:** Connect food-grade 4mm ID silicone tubing from nutrient concentrate carboys through the peristaltic rollers to the Central Basin delivery manifold.
+2. **CO₂ Line Purge:** Connect 100% beverage-grade CO₂ tank through a two-stage regulator (set to 15 PSI) to the brass solenoid. Verify leak-free seal using soapy water.
+3. **BLE Integration:** Pair the central automation controller or Flutter mobile app. Verify each peristaltic channel dispenses calibrated volumes within ±2% tolerance.
