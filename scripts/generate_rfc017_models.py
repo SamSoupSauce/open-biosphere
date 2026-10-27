@@ -845,6 +845,93 @@ def generate_whoop_frame():
     return verts, faces
 
 
+def generate_chute_funnel():
+    """
+    Generates a 3D-printable PETG collector funnel with ripstop nylon gravity drop chute clamp interface.
+    Envelope:
+      - Top collector mouth OD = 120 mm, ID = 114 mm (3.0 mm wall)
+      - Collector slope: conical transition from z = 70 down to z = -40
+      - Lower throat: OD = 60 mm (r = 30 mm), ID = 54 mm (r = 27 mm) from z = -40 to z = -70
+      - Clamp retention bead on lower throat: r = 32.5 mm from z = -56 to z = -52
+      - 2 chassis mounting tabs at X = +/- 65 mm, Z = 66..70 mm, Y = +/- 10 mm
+    Strict 2-manifold revolution mesh with 10-point cross section profile (N=48) plus 2 solid mounting tabs.
+    """
+    verts = []
+    faces = []
+
+    # Axisymmetric revolution profile for funnel body
+    # 10 profile points in counter-clockwise order around the material cross-section
+    # (r, z):
+    # 0: (57.0, 70.0)  - Inner top rim
+    # 1: (27.0, -40.0) - Inner throat entry
+    # 2: (27.0, -70.0) - Inner bottom rim
+    # 3: (30.0, -70.0) - Outer bottom rim
+    # 4: (30.0, -60.0) - Outer lower throat
+    # 5: (32.5, -56.0) - Retention bead lower ramp
+    # 6: (32.5, -52.0) - Retention bead upper ramp
+    # 7: (30.0, -48.0) - Outer throat upper
+    # 8: (30.0, -40.0) - Outer throat junction
+    # 9: (60.0, 70.0)  - Outer top rim
+    # Segment 9 -> 0 caps the top rim at z = 70.0.
+
+    profile = [
+        (57.0, 70.0),
+        (27.0, -40.0),
+        (27.0, -70.0),
+        (30.0, -70.0),
+        (30.0, -60.0),
+        (32.5, -56.0),
+        (32.5, -52.0),
+        (30.0, -48.0),
+        (30.0, -40.0),
+        (60.0, 70.0)
+    ]
+    M = len(profile)
+    N = 48
+
+    for i in range(N):
+        theta = 2.0 * math.pi * i / N
+        cos_t = math.cos(theta)
+        sin_t = math.sin(theta)
+        for r, z in profile:
+            verts.append((r * cos_t, r * sin_t, z))
+
+    # Connect rings with outward-facing normals
+    for i in range(N):
+        next_i = (i + 1) % N
+        for p in range(M):
+            next_p = (p + 1) % M
+            v00 = i * M + p
+            v01 = i * M + next_p
+            v10 = next_i * M + p
+            v11 = next_i * M + next_p
+            faces.append((v00, v10, v11))
+            faces.append((v00, v11, v01))
+
+    # Add 2 Mounting Tabs at top flange (+X and -X)
+    def add_box(v_list, f_list, x0, x1, y0, y1, z0, z1):
+        idx = len(v_list)
+        v_list.extend([
+            (x0, y0, z0), (x1, y0, z0), (x1, y1, z0), (x0, y1, z0), # bottom 0,1,2,3
+            (x0, y0, z1), (x1, y0, z1), (x1, y1, z1), (x0, y1, z1)  # top 4,5,6,7
+        ])
+        f_list.extend([
+            (idx+0, idx+2, idx+1), (idx+0, idx+3, idx+2), # -Z
+            (idx+4, idx+5, idx+6), (idx+4, idx+6, idx+7), # +Z
+            (idx+0, idx+1, idx+5), (idx+0, idx+5, idx+4), # -Y
+            (idx+3, idx+7, idx+6), (idx+3, idx+6, idx+2), # +Y
+            (idx+0, idx+4, idx+7), (idx+0, idx+7, idx+3), # -X
+            (idx+1, idx+2, idx+6), (idx+1, idx+6, idx+5), # +X
+        ])
+
+    # Right tab: X in [56.0, 75.0], Y in [-10.0, 10.0], Z in [66.0, 70.0]
+    add_box(verts, faces, 56.0, 75.0, -10.0, 10.0, 66.0, 70.0)
+    # Left tab: X in [-75.0, -56.0], Y in [-10.0, 10.0], Z in [66.0, 70.0]
+    add_box(verts, faces, -75.0, -56.0, -10.0, 10.0, 66.0, 70.0)
+
+    return verts, faces
+
+
 def save_model(part_id, doc_slug, verts, faces):
     pub_path = f"{BASE_DIR}/public/assets/parts/{part_id}/model.gltf"
     doc_path = f"{BASE_DIR}/src/content/docs/parts/{doc_slug}/model.gltf"
@@ -885,6 +972,10 @@ def main():
     # 5. PART-FAB-FRAME-WHOOP-85MM
     v_whoop, f_whoop = generate_whoop_frame()
     save_model("PART-FAB-FRAME-WHOOP-85MM", "part-custom-frame-whoop-85mm", v_whoop, f_whoop)
+
+    # 6. PART-FAB-CHUTE-RIPSTOP-PETG
+    v_chute, f_chute = generate_chute_funnel()
+    save_model("PART-FAB-CHUTE-RIPSTOP-PETG", "part-custom-chute-ripstop-petg", v_chute, f_chute)
 
     print("\nAll models successfully generated and saved with verified outward normals!")
 

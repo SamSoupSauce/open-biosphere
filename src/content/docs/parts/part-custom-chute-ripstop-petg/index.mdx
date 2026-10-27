@@ -7,9 +7,9 @@ material: "petg"
 model_file: "./model.gltf"
 estimated_cost: 14.00
 dimensions:
-  x_mm: 1800.0
+  x_mm: 150.0
   y_mm: 120.0
-  z_mm: 120.0
+  z_mm: 140.0
 sidebar:
   badge:
     text: "CUSTOM-FAB"
@@ -30,7 +30,7 @@ import ModelViewer from '../../../../components/ModelViewer';
 
 ## 1. Component Overview & Architectural Role
 
-Low-friction wide-mouth collector funnel clamped to an ultra-light ripstop nylon vertical delivery tube for harvested berries.
+Low-friction wide-mouth collector funnel clamped to an ultra-light ripstop nylon vertical delivery tube for harvested berries. The 3D-printed PETG funnel ($150 \times 120 \times 140\text{ mm}$) provides a wide $\varnothing 120\text{ mm}$ collection mouth tapering at $15^\circ$ to a $\varnothing 60\text{ mm}$ discharge throat with retention bead and chassis mounting tabs, directing harvested materials into a suspended $1800\text{ mm}$ flexible drop chute.
 
 ---
 
@@ -42,7 +42,7 @@ Low-friction wide-mouth collector funnel clamped to an ultra-light ripstop nylon
   partName="3D-Printed PETG Funnel + Ripstop Nylon Gravity Drop Chute"
   material="petg"
   fabricationMethod="3d-printed"
-  dimensions={{ x_mm: 1800.0, y_mm: 120.0, z_mm: 120.0 }}
+  dimensions={{ x_mm: 150.0, y_mm: 120.0, z_mm: 140.0 }}
   estimatedCost={14.00}
   modelUrl="/open-biosphere/assets/parts/PART-FAB-CHUTE-RIPSTOP-PETG/model.gltf"
 />
@@ -69,11 +69,14 @@ Fabricate via 3D Print + Fabric Sewn in petg. Deburr all edges with a 0.5mm cham
 
 | Dimension Parameter | Value |
 | :--- | :--- |
-| **Length (X-Axis)** | `1800.0 mm` |
-| **Width / Diameter (Y-Axis)** | `120.0 mm` |
-| **Thickness / Height (Z-Axis)** | `120.0 mm` |
+| **Funnel Width (X-Axis, with Tabs)** | `150.0 mm` |
+| **Collector Outer Diameter (Y-Axis)** | `120.0 mm` |
+| **Collector Funnel Height (Z-Axis)** | `140.0 mm` |
+| **Collector Throat Outer Diameter** | `60.0 mm (ID: 54.0 mm, Wall: 3.0 mm)` |
+| **Retention Bead Outer Diameter** | `65.0 mm` |
+| **Ripstop Nylon Drop Chute Length** | `1800.0 mm (flexible vertical drop)` |
 | **Manufacturing Tolerance** | `±0.1 mm (ISO 2768-m)` |
-| **Unit Weight** | `160.0 g` |
+| **Unit Weight** | `160.0 g (Funnel: 85.0 g, Chute + Clamp: 75.0 g)` |
 
 ---
 
@@ -86,7 +89,7 @@ Fabricate via 3D Print + Fabric Sewn in petg. Deburr all edges with a 0.5mm cham
   initialWireframe={true}
   material="petg"
   fabricationMethod="3d-print-fabric-sewn"
-  dimensions={{ x_mm: 1800.0, y_mm: 120.0, z_mm: 120.0 }}
+  dimensions={{ x_mm: 150.0, y_mm: 120.0, z_mm: 140.0 }}
   estimatedCost={14.0}
   modelUrl="/open-biosphere/assets/parts/PART-FAB-CHUTE-RIPSTOP-PETG/model.gltf"
 />

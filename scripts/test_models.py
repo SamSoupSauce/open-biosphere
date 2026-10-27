@@ -117,7 +117,8 @@ def audit_model(part_id, gltf_path):
         'PART-FAB-ADAPTER-WEIR-OVERFLOW',
         'PART-FLUID-MANIFOLD-4CH-GRAD',
         'PART-FAB-DRUM-FLANGES-PETG',
-        'PART-FAB-FRAME-WHOOP-85MM'
+        'PART-FAB-FRAME-WHOOP-85MM',
+        'PART-FAB-CHUTE-RIPSTOP-PETG'
     ]
     if part_id in strict_targets:
         if non_two > 0:
