@@ -146,17 +146,21 @@ Every fabricated part marked with `classification: "composite"` must supply both
 
 1. **Standalone 2-Manifold Topology:** Each subpart file (`subpart-XX-name.stl`) must be a fully closed shell where every edge belongs to exactly two triangular faces (`non_two = 0`).
 2. **True Positive Solid Volume:** Signed volume integration must confirm strictly positive enclosed volume:
-   $$\text{Volume} = \frac{1}{6} \sum_{i=1}^{F} \mathbf{v}_{0} \cdot (\mathbf{v}_{1} \times \mathbf{v}_{2}) > 0$$
-3. **Bed Grounding Invariant ($Z \ge 0.0\text{ mm}$):** All standalone STL subparts and batch plater models (`print.stl`) must translate coordinates such that the minimum vertical coordinate satisfies $\min(z) = 0.0\text{ mm}$. Slicers can directly generate G-code without manual Z-plane drops or raft compensations.
+   ```
+   Volume = (1/6) * Σ [ v0 · (v1 × v2) ] > 0
+   ```
+3. **Bed Grounding Invariant (`Z >= 0.0 mm`):** All standalone STL subparts and batch plater models (`print.stl`) must translate coordinates such that the minimum vertical coordinate satisfies `min(Z) = 0.0 mm`. Slicers can directly generate G-code without manual Z-plane drops or raft compensations.
 4. **Metadata Registry Binding:** `src/data/parts.json` must declare `"is_composite": true`, `"classification": "composite"`, and catalog all subparts with their respective filenames, colors, quantities, and download endpoints.
 
 ---
 
 ## 6. Global CAD Normal Audit & Reconciliation Suite
 
-RFC-0018 incorporates the repository-wide normal reconciliation suite (`scripts/reconcile_all_cad_orientations.py`). The script evaluates the dot product between face unit normals $\mathbf{n}$ and vectors from the mesh centroid $\mathbf{c}$ to face centers $\mathbf{f}_c$:
+RFC-0018 incorporates the repository-wide normal reconciliation suite (`scripts/reconcile_all_cad_orientations.py`). The script evaluates the dot product between face unit normals `n` and vectors from the mesh centroid `c` to face centers `fc`:
 
-$$\mathbf{n} \cdot (\mathbf{f}_c - \mathbf{c}) \ge 0$$
+```
+n · (fc - c) >= 0
+```
 
 For multi-component assemblies or convex hulls, individual closed sub-solids are evaluated against component-level signed volume metrics.
 
