@@ -1,0 +1,104 @@
+{
+  "asset": {
+    "version": "2.0",
+    "generator": "OpenBiosphere-ParametricCAD-RFC017"
+  },
+  "scene": 0,
+  "scenes": [
+    {
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "name": "DIE-GATE-SUBPART-03-PLATE-V",
+      "mesh": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "DIE-GATE-SUBPART-03-PLATE-V_Geometry",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 1
+          },
+          "indices": 0,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "materials": [
+    {
+      "name": "PBR_Standard",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.7,
+          0.75,
+          0.8,
+          1.0
+        ],
+        "metallicFactor": 0.7,
+        "roughnessFactor": 0.35
+      },
+      "doubleSided": true
+    }
+  ],
+  "accessors": [
+    {
+      "bufferView": 0,
+      "byteOffset": 0,
+      "componentType": 5123,
+      "count": 72,
+      "type": "SCALAR",
+      "max": [
+        15
+      ],
+      "min": [
+        0
+      ]
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 0,
+      "componentType": 5126,
+      "count": 16,
+      "type": "VEC3",
+      "max": [
+        70.0,
+        45.0,
+        4.0
+      ],
+      "min": [
+        -70.0,
+        -45.0,
+        0.0
+      ]
+    }
+  ],
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteOffset": 0,
+      "byteLength": 144,
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 144,
+      "byteLength": 192,
+      "byteStride": 12,
+      "target": 34962
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 336,
+      "uri": "data:application/octet-stream;base64,AAACAAEAAAADAAIABAAFAAYABAAGAAcAAAABAAUAAAAFAAQAAwAGAAIAAwAHAAYAAAAEAAcAAAAHAAMAAQACAAYAAQAGAAUACAAKAAkACAALAAoADAANAA4ADAAOAA8ACAAJAA0ACAANAAwACwAOAAoACwAPAA4ACAAMAA8ACAAPAAsACQAKAA4ACQAOAA0AAACMwgAANMIAAAAAAADwwQAANMIAAAAAAADwwQAANEIAAAAAAACMwgAANEIAAAAAAACMwgAANMIAAIBAAADwwQAANMIAAIBAAADwwQAANEIAAIBAAACMwgAANEIAAIBAAADwQQAANMIAAAAAAACMQgAANMIAAAAAAACMQgAANEIAAAAAAADwQQAANEIAAAAAAADwQQAANMIAAIBAAACMQgAANMIAAIBAAACMQgAANEIAAIBAAADwQQAANEIAAIBA"
+    }
+  ]
+}

@@ -5285,12 +5285,58 @@
     },
     "fabrication": {
       "is_custom_fab": true,
-      "is_3d_printed": false,
-      "print_spec": null,
-      "fab_type": "machined",
+      "is_3d_printed": true,
+      "is_composite": true,
+      "classification": "composite",
+      "print_spec": {
+        "material": "PETG-CF / PA-CF / Tool Steel",
+        "nozzle_diameter_mm": 0.4,
+        "layer_height_mm": 0.2,
+        "perimeters": 4,
+        "infill_percentage": 50,
+        "infill_pattern": "gyroid",
+        "print_time_hours": 8.5,
+        "filament_weight_grams": 420.0
+      },
+      "fab_type": "3D Print / CNC Machining Composite Assembly",
       "model_asset_url": "/open-biosphere/assets/parts/PART-FAB-DIE-GATE-4WAY/model.gltf",
+      "stl_asset_url": "/open-biosphere/assets/parts/PART-FAB-DIE-GATE-4WAY/print.stl",
       "drawing_asset_url": "/open-biosphere/assets/parts/PART-FAB-DIE-GATE-4WAY/model.gltf",
-      "photo_url": "/open-biosphere/assets/parts/PART-FAB-DIE-GATE-4WAY/photo.webp"
+      "photo_url": "/open-biosphere/assets/parts/PART-FAB-DIE-GATE-4WAY/photo.webp",
+      "subparts": [
+        {
+          "name": "Outer Guide Frame Housing",
+          "part_number": "subpart-01-frame",
+          "color": "#8c96a5",
+          "quantity": 1,
+          "gltf_url": "/open-biosphere/assets/parts/PART-FAB-DIE-GATE-4WAY/subpart-01-frame.gltf",
+          "stl_url": "/open-biosphere/assets/parts/PART-FAB-DIE-GATE-4WAY/subpart-01-frame.stl"
+        },
+        {
+          "name": "Horizontal Sliding Die Plates",
+          "part_number": "subpart-02-plate-h",
+          "color": "#0ea5e9",
+          "quantity": 2,
+          "gltf_url": "/open-biosphere/assets/parts/PART-FAB-DIE-GATE-4WAY/subpart-02-plate-h.gltf",
+          "stl_url": "/open-biosphere/assets/parts/PART-FAB-DIE-GATE-4WAY/subpart-02-plate-h.stl"
+        },
+        {
+          "name": "Vertical Sliding Die Plates",
+          "part_number": "subpart-03-plate-v",
+          "color": "#f59e0b",
+          "quantity": 2,
+          "gltf_url": "/open-biosphere/assets/parts/PART-FAB-DIE-GATE-4WAY/subpart-03-plate-v.gltf",
+          "stl_url": "/open-biosphere/assets/parts/PART-FAB-DIE-GATE-4WAY/subpart-03-plate-v.stl"
+        },
+        {
+          "name": "Hexagonal Stepper Lead Screw Drive Pinions",
+          "part_number": "subpart-04-stepper-pinion",
+          "color": "#ef4444",
+          "quantity": 4,
+          "gltf_url": "/open-biosphere/assets/parts/PART-FAB-DIE-GATE-4WAY/subpart-04-stepper-pinion.gltf",
+          "stl_url": "/open-biosphere/assets/parts/PART-FAB-DIE-GATE-4WAY/subpart-04-stepper-pinion.stl"
+        }
+      ]
     },
     "procurement": [
       {

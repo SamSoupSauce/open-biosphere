@@ -249,11 +249,14 @@ interface Props {
   estimatedCost?: number;
   focusStep?: number;
   initialWireframe?: boolean;
+  isComposite?: boolean;
 }
 
 interface ParsedMesh {
   vertices: [number, number, number][]; // [x, y, z] in mm
   faces: [number, number, number][];   // indices into vertices
+  faceColors?: [number, number, number][]; // [r, g, b] 0..255 per face
+  vertexColors?: [number, number, number][]; // [r, g, b] 0..255 per vertex
   format?: 'gltf' | 'glb';
   subAssemblies?: {
     name: string;
@@ -310,8 +313,45 @@ function parseGLTFData(jsonData: any, binBuffer: ArrayBuffer, format: 'gltf' | '
       faces.push([i0, i1, i2]);
     }
 
+    // Read COLOR_0 attribute if present (RFC-017 multi-part composite color)
+    const vertexColors: [number, number, number][] = [];
+    const faceColors: [number, number, number][] = [];
+    if (prim.attributes && prim.attributes.COLOR_0 !== undefined) {
+      const colAcc = jsonData.accessors[prim.attributes.COLOR_0];
+      const colBv = jsonData.bufferViews[colAcc.bufferView];
+      const colOffset = (colBv.byteOffset || 0) + (colAcc.byteOffset || 0);
+      const isVec4 = colAcc.type === 'VEC4';
+      const isFloat = colAcc.componentType === 5126;
+      const stride = isFloat ? (isVec4 ? 16 : 12) : (isVec4 ? 4 : 3);
+      for (let i = 0; i < colAcc.count; i++) {
+        const cOffset = colOffset + i * stride;
+        let r = 0, g = 0, b = 0;
+        if (isFloat) {
+          r = Math.min(255, Math.max(0, Math.round(binView.getFloat32(cOffset, true) * 255)));
+          g = Math.min(255, Math.max(0, Math.round(binView.getFloat32(cOffset + 4, true) * 255)));
+          b = Math.min(255, Math.max(0, Math.round(binView.getFloat32(cOffset + 8, true) * 255)));
+        } else {
+          r = binView.getUint8(cOffset);
+          g = binView.getUint8(cOffset + 1);
+          b = binView.getUint8(cOffset + 2);
+        }
+        vertexColors.push([r, g, b]);
+      }
+      for (const [i0] of faces) {
+        if (vertexColors[i0]) {
+          faceColors.push(vertexColors[i0]);
+        }
+      }
+    }
+
     if (vertices.length > 0 && faces.length > 0) {
-      return { vertices, faces, format };
+      return {
+        vertices,
+        faces,
+        faceColors: faceColors.length > 0 ? faceColors : undefined,
+        vertexColors: vertexColors.length > 0 ? vertexColors : undefined,
+        format,
+      };
     }
   } catch (err) {
     console.warn(`Could not extract mesh from ${format}:`, err);
@@ -465,6 +505,7 @@ export default function ModelViewer({
   estimatedCost = 0.0,
   focusStep = 0,
   initialWireframe = false,
+  isComposite = false,
 }: Props) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -741,7 +782,7 @@ export default function ModelViewer({
 
         const renderFaces: RenderFace[] = [];
 
-        mesh.faces.forEach(([i0, i1, i2]) => {
+        mesh.faces.forEach(([i0, i1, i2], faceIndex) => {
           if (!projected[i0] || !projected[i1] || !projected[i2]) return;
           const p0 = projected[i0];
           const p1 = projected[i1];
@@ -779,7 +820,9 @@ export default function ModelViewer({
           const intensity = Math.max(0.22, (rnx1 * lx + rny2 * ly + rnz2 * lz + 1) / 2);
 
           let r = 56, g = 189, b = 248; // Sky cyan
-          if (material.toLowerCase().includes('petg') || material.toLowerCase().includes('pla')) {
+          if (mesh.faceColors && mesh.faceColors[faceIndex]) {
+            [r, g, b] = mesh.faceColors[faceIndex];
+          } else if (material.toLowerCase().includes('petg') || material.toLowerCase().includes('pla')) {
             r = 14; g = 165; b = 233;
           } else if (material.toLowerCase().includes('silicone') || material.toLowerCase().includes('rubber')) {
             r = 249; g = 115; b = 22; // Amber/Orange
@@ -970,6 +1013,11 @@ export default function ModelViewer({
 
         {/* Badges */}
         <div className="flex items-center gap-2 text-xs">
+          {(isComposite || (material && material.toLowerCase().includes('composite'))) && (
+            <span className="px-2 py-0.5 rounded bg-purple-950/80 border border-purple-700/60 text-purple-300 font-mono font-bold uppercase text-[10px] tracking-wide">
+              COMPOSITE
+            </span>
+          )}
           <span className="px-2 py-0.5 rounded bg-sky-950/60 border border-sky-800/40 text-sky-300 font-mono uppercase text-[10px]">
             {fabricationMethod}
           </span>

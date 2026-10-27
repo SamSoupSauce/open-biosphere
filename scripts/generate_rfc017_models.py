@@ -114,6 +114,159 @@ def build_gltf(verts, faces, name="Mesh"):
     return json.dumps(gltf, indent=2)
 
 
+def build_colored_gltf(verts, faces, colors, name="Mesh"):
+    min_x = float(min(v[0] for v in verts))
+    max_x = float(max(v[0] for v in verts))
+    min_y = float(min(v[1] for v in verts))
+    max_y = float(max(v[1] for v in verts))
+    min_z = float(min(v[2] for v in verts))
+    max_z = float(max(v[2] for v in verts))
+
+    flat_indices = []
+    for f in faces:
+        flat_indices.extend([int(f[0]), int(f[1]), int(f[2])])
+    index_bytes = struct.pack('<' + 'H' * len(flat_indices), *flat_indices)
+    index_pad = (4 - (len(index_bytes) % 4)) % 4
+    index_bytes_padded = index_bytes + (b'\x00' * index_pad)
+
+    flat_verts = []
+    for v in verts:
+        flat_verts.extend([float(v[0]), float(v[1]), float(v[2])])
+    vertex_bytes = struct.pack('<' + 'f' * len(flat_verts), *flat_verts)
+    vertex_pad = (4 - (len(vertex_bytes) % 4)) % 4
+    vertex_bytes_padded = vertex_bytes + (b'\x00' * vertex_pad)
+
+    flat_colors = []
+    for c in colors:
+        flat_colors.extend([float(c[0]), float(c[1]), float(c[2])])
+    color_bytes = struct.pack('<' + 'f' * len(flat_colors), *flat_colors)
+    color_pad = (4 - (len(color_bytes) % 4)) % 4
+    color_bytes_padded = color_bytes + (b'\x00' * color_pad)
+
+    bin_data = index_bytes_padded + vertex_bytes_padded + color_bytes_padded
+    b64_data = base64.b64encode(bin_data).decode('ascii')
+    uri = f"data:application/octet-stream;base64,{b64_data}"
+
+    gltf = {
+        "asset": {
+            "version": "2.0",
+            "generator": "OpenBiosphere-ParametricCAD-RFC017-Composite"
+        },
+        "scene": 0,
+        "scenes": [{"nodes": [0]}],
+        "nodes": [{"name": name, "mesh": 0}],
+        "meshes": [{
+            "name": f"{name}_Geometry",
+            "primitives": [{
+                "attributes": {
+                    "POSITION": 1,
+                    "COLOR_0": 2
+                },
+                "indices": 0,
+                "material": 0,
+                "mode": 4
+            }]
+        }],
+        "materials": [{
+            "name": "PBR_Standard",
+            "pbrMetallicRoughness": {
+                "baseColorFactor": [1.0, 1.0, 1.0, 1.0],
+                "metallicFactor": 0.3,
+                "roughnessFactor": 0.5
+            },
+            "doubleSided": True
+        }],
+        "accessors": [
+            {
+                "bufferView": 0,
+                "byteOffset": 0,
+                "componentType": 5123,
+                "count": len(flat_indices),
+                "type": "SCALAR",
+                "max": [int(max(flat_indices))],
+                "min": [int(min(flat_indices))]
+            },
+            {
+                "bufferView": 1,
+                "byteOffset": 0,
+                "componentType": 5126,
+                "count": len(verts),
+                "type": "VEC3",
+                "max": [max_x, max_y, max_z],
+                "min": [min_x, min_y, min_z]
+            },
+            {
+                "bufferView": 2,
+                "byteOffset": 0,
+                "componentType": 5126,
+                "count": len(colors),
+                "type": "VEC3",
+                "max": [1.0, 1.0, 1.0],
+                "min": [0.0, 0.0, 0.0]
+            }
+        ],
+        "bufferViews": [
+            {
+                "buffer": 0,
+                "byteOffset": 0,
+                "byteLength": len(index_bytes),
+                "target": 34963
+            },
+            {
+                "buffer": 0,
+                "byteOffset": len(index_bytes_padded),
+                "byteLength": len(vertex_bytes),
+                "byteStride": 12,
+                "target": 34962
+            },
+            {
+                "buffer": 0,
+                "byteOffset": len(index_bytes_padded) + len(vertex_bytes_padded),
+                "byteLength": len(color_bytes),
+                "byteStride": 12,
+                "target": 34962
+            }
+        ],
+        "buffers": [
+            {
+                "byteLength": len(bin_data),
+                "uri": uri
+            }
+        ]
+    }
+    return json.dumps(gltf, indent=2)
+
+
+def make_stl(verts, faces, filepath, solid_name="solid"):
+    """
+    Exports a watertight 2-manifold triangular mesh to binary STL format.
+    Strictly adheres to IEEE 754 little-endian binary STL specification.
+    """
+    header = f"OpenBiosphere-ParametricCAD-{solid_name}".encode('ascii')[:80].ljust(80, b'\x00')
+    num_faces = len(faces)
+    os.makedirs(os.path.dirname(filepath), exist_ok=True)
+    with open(filepath, 'wb') as f:
+        f.write(header)
+        f.write(struct.pack('<I', num_faces))
+        for i0, i1, i2 in faces:
+            v0 = verts[i0]
+            v1 = verts[i1]
+            v2 = verts[i2]
+            ax, ay, az = v1[0] - v0[0], v1[1] - v0[1], v1[2] - v0[2]
+            bx, by, bz = v2[0] - v0[0], v2[1] - v0[1], v2[2] - v0[2]
+            nx = ay * bz - az * by
+            ny = az * bx - ax * bz
+            nz = ax * by - ay * bx
+            mag = math.sqrt(nx * nx + ny * ny + nz * nz) or 1.0
+            nx, ny, nz = nx / mag, ny / mag, nz / mag
+            f.write(struct.pack('<3f', nx, ny, nz))
+            f.write(struct.pack('<3f', float(v0[0]), float(v0[1]), float(v0[2])))
+            f.write(struct.pack('<3f', float(v1[0]), float(v1[1]), float(v1[2])))
+            f.write(struct.pack('<3f', float(v2[0]), float(v2[1]), float(v2[2])))
+            f.write(b'\x00\x00')
+    print(f"Wrote {filepath} ({num_faces} faces, binary STL)")
+
+
 # ============================================================================
 # 1. PART-FAB-JUNCTION-MANIFOLD-4WAY
 # ============================================================================
@@ -1516,14 +1669,14 @@ def generate_die_gate_4way():
             i_next = (i + 1) % 6
             v0 = start + i * 2
             v1 = start + i_next * 2
-            faces.append((c_bot, v0, v1))
+            faces.append((c_bot, v1, v0))
 
         # Top cap (z1) normal +Z
         for i in range(6):
             i_next = (i + 1) % 6
             v0 = start + i * 2 + 1
             v1 = start + i_next * 2 + 1
-            faces.append((c_top, v1, v0))
+            faces.append((c_top, v0, v1))
 
     # 4 Outer frame blocks (220mm x 220mm total envelope, thickness 12mm: Z in [-6, 6])
     add_box(-110.0,  110.0, -110.0,  -70.0, -6.0, 6.0)  # Bottom rail
@@ -1561,6 +1714,96 @@ def save_model(part_id, doc_slug, verts, faces):
         with open(doc_path, 'w', encoding='utf-8') as f:
             f.write(gltf_json)
         print(f"Wrote {doc_path}")
+
+
+def save_die_gate_composite():
+    """
+    Exports PART-FAB-DIE-GATE-4WAY as a multi-part composite assembly:
+    - Multi-color glTF (COLOR_0 attributes for frame, plate-h, plate-v, pinions)
+    - Full assembly binary STL
+    - Standalone 3D-printable 2-manifold models for each sub-part (.stl and .gltf)
+    - Full-batch 3D printing plater model (print.stl) with all components on Z=0
+    """
+    v, f = generate_die_gate_4way()
+
+    # 1. Generate COLOR_0 vertex colors for assembly
+    colors = []
+    for i in range(len(v)):
+        if i < 32:
+            colors.append([0.55, 0.59, 0.65])  # Sub-part 1: Slate Gray Frame
+        elif i < 48:
+            colors.append([0.05, 0.65, 0.91])  # Sub-part 2: Electric Blue Horizontal Plates
+        elif i < 64:
+            colors.append([0.96, 0.62, 0.04])  # Sub-part 3: Golden Amber Vertical Plates
+        else:
+            colors.append([0.94, 0.27, 0.27])  # Sub-part 4: Coral Orange Stepper Pinions
+
+    gltf_assembly = build_colored_gltf(v, f, colors, name="PART-FAB-DIE-GATE-4WAY")
+
+    # 2. Extract sub-parts
+    # Sub-part 1: Frame
+    v_frame = v[0:32]
+    f_frame = [list(face) for face in f[0:48]]
+    gltf_frame = build_gltf(v_frame, f_frame, name="DIE-GATE-SUBPART-01-FRAME")
+
+    # Sub-part 2: Horizontal sliding plates (pair)
+    v_plate_h = v[32:48]
+    f_plate_h = [[idx - 32 for idx in face] for face in f[48:72]]
+    gltf_plate_h = build_gltf(v_plate_h, f_plate_h, name="DIE-GATE-SUBPART-02-PLATE-H")
+
+    # Sub-part 3: Vertical sliding plates (pair)
+    v_plate_v = v[48:64]
+    f_plate_v = [[idx - 48 for idx in face] for face in f[72:96]]
+    gltf_plate_v = build_gltf(v_plate_v, f_plate_v, name="DIE-GATE-SUBPART-03-PLATE-V")
+
+    # Sub-part 4: Stepper drive pinion (single 3D-printable unit centered at origin, Z in [0, 8])
+    v_pinion = [[p[0], p[1] + 90.0, p[2] - 6.0] for p in v[64:78]]
+    f_pinion = [[idx - 64 for idx in face] for face in f[96:120]]
+    gltf_pinion = build_gltf(v_pinion, f_pinion, name="DIE-GATE-SUBPART-04-STEPPER-PINION")
+
+    # 3. Batch Plater arrangement for 3D printing (all components flat at Z >= 0)
+    v_plater = []
+    v_plater.extend([[p[0], p[1], p[2] + 6.0] for p in v[0:32]])    # Frame Z in [0, 12]
+    v_plater.extend([[p[0], p[1], p[2] + 4.0] for p in v[32:48]])   # Plate H Z in [0, 4]
+    v_plater.extend([list(p) for p in v[48:64]])                     # Plate V Z in [0, 4]
+    v_plater.extend([[p[0], p[1], p[2] - 6.0] for p in v[64:120]])  # Pinions Z in [0, 8]
+    f_plater = [list(face) for face in f]
+
+    targets = [
+        f"{BASE_DIR}/public/assets/parts/PART-FAB-DIE-GATE-4WAY",
+        f"{BASE_DIR}/src/content/docs/parts/part-custom-die-gate-4way"
+    ]
+
+    for d in targets:
+        os.makedirs(d, exist_ok=True)
+        # Main assembly
+        with open(os.path.join(d, "model.gltf"), "w", encoding="utf-8") as out:
+            out.write(gltf_assembly)
+        make_stl(v, f, os.path.join(d, "model.stl"), "DIE-GATE-4WAY-ASSEMBLY")
+
+        # Sub-part 1: Frame
+        with open(os.path.join(d, "subpart-01-frame.gltf"), "w", encoding="utf-8") as out:
+            out.write(gltf_frame)
+        make_stl(v_frame, f_frame, os.path.join(d, "subpart-01-frame.stl"), "SUBPART-01-FRAME")
+
+        # Sub-part 2: Plate H
+        with open(os.path.join(d, "subpart-02-plate-h.gltf"), "w", encoding="utf-8") as out:
+            out.write(gltf_plate_h)
+        make_stl(v_plate_h, f_plate_h, os.path.join(d, "subpart-02-plate-h.stl"), "SUBPART-02-PLATE-H")
+
+        # Sub-part 3: Plate V
+        with open(os.path.join(d, "subpart-03-plate-v.gltf"), "w", encoding="utf-8") as out:
+            out.write(gltf_plate_v)
+        make_stl(v_plate_v, f_plate_v, os.path.join(d, "subpart-03-plate-v.stl"), "SUBPART-03-PLATE-V")
+
+        # Sub-part 4: Pinions
+        with open(os.path.join(d, "subpart-04-stepper-pinion.gltf"), "w", encoding="utf-8") as out:
+            out.write(gltf_pinion)
+        make_stl(v_pinion, f_pinion, os.path.join(d, "subpart-04-stepper-pinion.stl"), "SUBPART-04-PINION")
+
+        # Batch 3D printing plater model
+        make_stl(v_plater, f_plater, os.path.join(d, "print.stl"), "DIE-GATE-4WAY-PRINT-PLATER")
+        print(f"Generated complete composite model suite in {d}")
 
 
 def main():
@@ -1611,9 +1854,8 @@ def main():
     v_pyr, f_pyr = generate_pyramid_deflector()
     save_model("PART-OPT-CONE-DIFFUSER-PYRAMID", "part-custom-cone-diffuser-pyramid", v_pyr, f_pyr)
 
-    # 12. PART-FAB-DIE-GATE-4WAY
-    v_die, f_die = generate_die_gate_4way()
-    save_model("PART-FAB-DIE-GATE-4WAY", "part-custom-die-gate-4way", v_die, f_die)
+    # 12. PART-FAB-DIE-GATE-4WAY (Composite Multi-Part Assembly & Subparts)
+    save_die_gate_composite()
 
     print("\nAll models successfully generated and saved with verified outward normals!")
 

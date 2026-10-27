@@ -1,7 +1,7 @@
 ---
 id: "part-custom-die-gate-4way"
 title: "4-Way Stepper-Actuated Variable Aperture Die Plates"
-classification: "custom-fabricated"
+classification: "composite"
 fabrication_method: "machined"
 material: "tool-steel"
 model_file: "./model.gltf"
@@ -12,8 +12,8 @@ dimensions:
   z_mm: 12.0
 sidebar:
   badge:
-    text: "CUSTOM-FAB"
-    variant: "note"
+    text: "COMPOSITE"
+    variant: "caution"
 ---
 
 import ModelViewer from '../../../../components/ModelViewer';
@@ -21,9 +21,9 @@ import ModelViewer from '../../../../components/ModelViewer';
 # 4-Way Stepper-Actuated Variable Aperture Die Plates
 
 **Canonical Part ID:** `PART-FAB-DIE-GATE-4WAY`  
-**Classification:** `custom-fabricated`  
-**Fabrication Method:** `machined`  
-**Primary Material:** `tool-steel`  
+**Classification:** `composite`  
+**Fabrication Method:** `machined / 3d-printed composite assembly`  
+**Primary Material:** `tool-steel & high-temp engineering polymer (PETG / PA-CF)`  
 **Estimated Unit Cost:** `$45.00 USD`
 
 ---
@@ -47,9 +47,12 @@ Ground tool steel die gate assembly comprising four overlapping precision slidin
   dimensions={{ x_mm: 220.0, y_mm: 220.0, z_mm: 12.0 }}
   estimatedCost={45.0}
   modelUrl="/open-biosphere/assets/parts/PART-FAB-DIE-GATE-4WAY/model.gltf"
+  isComposite={true}
 />
 
-* **Direct Canonical Download:** [Download model.gltf (glTF 2.0 Standard)](/open-biosphere/assets/parts/PART-FAB-DIE-GATE-4WAY/model.gltf)
+* **Direct Canonical glTF:** [Download model.gltf (glTF 2.0 Multi-Color Assembly)](/open-biosphere/assets/parts/PART-FAB-DIE-GATE-4WAY/model.gltf)
+* **Direct Assembly STL:** [Download model.stl (Binary STL)](/open-biosphere/assets/parts/PART-FAB-DIE-GATE-4WAY/model.stl)
+* **Batch 3D Print Plater:** [Download print.stl (All Components Flat on Bed)](/open-biosphere/assets/parts/PART-FAB-DIE-GATE-4WAY/print.stl)
 * **Local Workspace Asset:** `./model.gltf`
 
 ---
@@ -71,6 +74,31 @@ Essential processing component for the [Bio-Pitch & Ceramic Packaging Engine (BC
   dimensions={{ x_mm: 220.0, y_mm: 220.0, z_mm: 12.0 }}
   estimatedCost={45.0}
   modelUrl="/open-biosphere/assets/parts/PART-FAB-DIE-GATE-4WAY/model.gltf"
+  isComposite={true}
 />
 
 * **Direct 3D CAD Download:** [Download model.gltf (glTF 2.0 Standard)](/open-biosphere/assets/parts/PART-FAB-DIE-GATE-4WAY/model.gltf)
+
+---
+
+## 4. Sub-Part Specifications & 3D Printable Models
+
+`PART-FAB-DIE-GATE-4WAY` is an articulated composite assembly composed of 4 distinct functional sub-parts. Each sub-part is color-coded in the primary 3D viewport, features 100% verified outward normal orientation, and provides dedicated watertight 2-manifold CAD models (.stl and .gltf) for local fabrication and slicing:
+
+| Sub-Part ID | Component Name | Qty | Viewport Color | Bounding Envelope (mm) | Recommended Material | 3D Printable Model Downloads |
+| :--- | :--- | :---: | :---: | :---: | :--- | :--- |
+| `subpart-01-frame` | **Outer Guide Frame Housing** | 1 | Slate Gray (`#8c96a5`) | 220.0 × 220.0 × 12.0 | O1 Tool Steel / PETG-CF | [Download STL](/open-biosphere/assets/parts/PART-FAB-DIE-GATE-4WAY/subpart-01-frame.stl) • [Download glTF](/open-biosphere/assets/parts/PART-FAB-DIE-GATE-4WAY/subpart-01-frame.gltf) |
+| `subpart-02-plate-h` | **Horizontal Sliding Die Plates** | 2 | Electric Blue (`#0ea5e9`) | 90.0 × 40.0 × 4.0 | Ground Tool Steel / PA12-CF | [Download STL](/open-biosphere/assets/parts/PART-FAB-DIE-GATE-4WAY/subpart-02-plate-h.stl) • [Download glTF](/open-biosphere/assets/parts/PART-FAB-DIE-GATE-4WAY/subpart-02-plate-h.gltf) |
+| `subpart-03-plate-v` | **Vertical Sliding Die Plates** | 2 | Golden Amber (`#f59e0b`) | 40.0 × 90.0 × 4.0 | Ground Tool Steel / PA12-CF | [Download STL](/open-biosphere/assets/parts/PART-FAB-DIE-GATE-4WAY/subpart-03-plate-v.stl) • [Download glTF](/open-biosphere/assets/parts/PART-FAB-DIE-GATE-4WAY/subpart-03-plate-v.gltf) |
+| `subpart-04-stepper-pinion` | **Hexagonal Stepper Drive Pinion** | 4 | Coral Orange (`#ef4444`) | 10.4 × 12.0 × 8.0 | Brass / Sintered Steel / PETG | [Download STL](/open-biosphere/assets/parts/PART-FAB-DIE-GATE-4WAY/subpart-04-stepper-pinion.stl) • [Download glTF](/open-biosphere/assets/parts/PART-FAB-DIE-GATE-4WAY/subpart-04-stepper-pinion.gltf) |
+| **Batch Plater** | **Complete Print Build Plate** | 1 | Multi-Part | 220.0 × 220.0 × 12.0 | PETG / PA12-CF (FDM / SLS) | [Download print.stl](/open-biosphere/assets/parts/PART-FAB-DIE-GATE-4WAY/print.stl) |
+
+### 4.1 Fabrication & Slicing Notes
+1. **FDM Rapid Prototyping:**
+   - Layer height: `0.20 mm` (First layer: `0.24 mm`).
+   - Walls/Perimeters: 4 perimeters minimum for structural rigidity under extruder compression.
+   - Infill: 50% gyroid infill for isotropic resistance to shear during aperture adjustment.
+   - Bed leveling: Load `print.stl` for a pre-arranged plater batch fitting standard 220x220mm print beds (e.g. Ender-3, Prusa MK3/MK4) with all sub-parts grounded at $Z = 0\text{ mm}$.
+2. **CNC Tool-Steel Milling (Production):**
+   - Frame rails milled from O1 gauge plate; sliding surfaces Blanchard ground to $0.4\ \mu\text{m}\ Ra$.
+   - Lead screw drive pinions turned and broached with 12mm hex interface for standard NEMA 17 stepper hollow-shaft coupling.

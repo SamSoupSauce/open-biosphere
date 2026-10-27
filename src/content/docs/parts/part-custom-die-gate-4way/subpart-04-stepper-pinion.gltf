@@ -1,0 +1,104 @@
+{
+  "asset": {
+    "version": "2.0",
+    "generator": "OpenBiosphere-ParametricCAD-RFC017"
+  },
+  "scene": 0,
+  "scenes": [
+    {
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "name": "DIE-GATE-SUBPART-04-STEPPER-PINION",
+      "mesh": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "DIE-GATE-SUBPART-04-STEPPER-PINION_Geometry",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 1
+          },
+          "indices": 0,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "materials": [
+    {
+      "name": "PBR_Standard",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.7,
+          0.75,
+          0.8,
+          1.0
+        ],
+        "metallicFactor": 0.7,
+        "roughnessFactor": 0.35
+      },
+      "doubleSided": true
+    }
+  ],
+  "accessors": [
+    {
+      "bufferView": 0,
+      "byteOffset": 0,
+      "componentType": 5123,
+      "count": 72,
+      "type": "SCALAR",
+      "max": [
+        13
+      ],
+      "min": [
+        0
+      ]
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 0,
+      "componentType": 5126,
+      "count": 14,
+      "type": "VEC3",
+      "max": [
+        5.196152422706633,
+        6.0,
+        8.0
+      ],
+      "min": [
+        -5.196152422706633,
+        -6.0,
+        0.0
+      ]
+    }
+  ],
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteOffset": 0,
+      "byteLength": 144,
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 144,
+      "byteLength": 168,
+      "byteStride": 12,
+      "target": 34962
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 312,
+      "uri": "data:application/octet-stream;base64,AAACAAMAAAADAAEAAgAEAAUAAgAFAAMABAAGAAcABAAHAAUABgAIAAkABgAJAAcACAAKAAsACAALAAkACgAAAAEACgABAAsADAACAAAADAAEAAIADAAGAAQADAAIAAYADAAKAAgADAAAAAoADQABAAMADQADAAUADQAFAAcADQAHAAkADQAJAAsADQALAAEA4UamQAAAQEAAAAAA4UamQAAAQEAAAABBysnTJQAAwEAAAAAAysnTJQAAwEAAAABB4UamwAAAQEAAAAAA4UamwAAAQEAAAABB4UamwAAAQMAAAAAA4UamwAAAQMAAAABBWNeepgAAwMAAAAAAWNeepgAAwMAAAABB4UamQAAAQMAAAAAA4UamQAAAQMAAAABBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABB"
+    }
+  ]
+}
