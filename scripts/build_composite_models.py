@@ -393,32 +393,139 @@ C_MOTOR        = [0.25, 0.28, 0.35] # Obsidian / Steel Gray Geared DC Drive Moto
 C_ELECTRONICS  = [0.20, 0.55, 0.85] # Cyan / Blue Autonomous CNT Controller & BLE Box
 C_CONTAINER    = [0.78, 0.52, 0.32] # Terracotta BCA Biodegradable Agricultural Container
 
+def add_open_injector(v, f, c, x_c, y_base, y_flange, y_top, y_throat, z_c, r_neck, r_flange, r_throat, n_seg=8):
+    b_idx = len(v)
+    for r, y, col in [
+        (r_neck, y_base, C_MOD2_HEATER),
+        (r_neck, y_flange, C_MOD2_HEATER),
+        (r_flange, y_flange, C_MOD2_HEATER),
+        (r_flange, y_top, C_MOD2_HEATER),
+        (r_throat, y_top, C_MOD2_HEATER),
+        (r_throat, y_throat, C_MOD1_DARK)
+    ]:
+        for i in range(n_seg):
+            ang = 2 * math.pi * i / n_seg
+            v.append([x_c + r * math.cos(ang), y, z_c + r * math.sin(ang)])
+            c.append(col)
+    c_base = len(v) - b_idx; v.append([x_c, y_base, z_c]); c.append(C_MOD2_HEATER)
+    c_floor = len(v) - b_idx; v.append([x_c, y_throat, z_c]); c.append(C_MOD1_DARK)
+    def q(r0, r1, i, nxt):
+        f.append([b_idx + r0 + i, b_idx + r0 + nxt, b_idx + r1 + nxt])
+        f.append([b_idx + r0 + i, b_idx + r1 + nxt, b_idx + r1 + i])
+    for i in range(n_seg):
+        nxt = (i + 1) % n_seg
+        f.append([b_idx + c_base, b_idx + i, b_idx + nxt])
+        q(0, n_seg, i, nxt)
+        f.append([b_idx + n_seg + i, b_idx + 2*n_seg + nxt, b_idx + 2*n_seg + i])
+        f.append([b_idx + n_seg + i, b_idx + n_seg + nxt, b_idx + 2*n_seg + nxt])
+        q(2*n_seg, 3*n_seg, i, nxt)
+        f.append([b_idx + 3*n_seg + i, b_idx + 3*n_seg + nxt, b_idx + 4*n_seg + nxt])
+        f.append([b_idx + 3*n_seg + i, b_idx + 4*n_seg + nxt, b_idx + 4*n_seg + i])
+        f.append([b_idx + 4*n_seg + i, b_idx + 5*n_seg + i, b_idx + 5*n_seg + nxt])
+        f.append([b_idx + 4*n_seg + i, b_idx + 5*n_seg + nxt, b_idx + 4*n_seg + nxt])
+        f.append([b_idx + c_floor, b_idx + 5*n_seg + nxt, b_idx + 5*n_seg + i])
+
 def add_bca_common_chassis(v, f, c):
-    # Longitudinal angle rails and cross tie plates (Y in [-54, -46])
-    add_box(v, f, -165, 165, -54, -46, -42, -32, colors=c, col=C_CHASSIS) # Front rail
-    add_box(v, f, -165, 165, -54, -46, 32, 42, colors=c, col=C_CHASSIS)   # Rear rail
-    add_box(v, f, -165, -150, -54, -46, -32, 32, colors=c, col=C_CHASSIS) # Left tie plate
-    add_box(v, f, 150, 165, -54, -46, -32, 32, colors=c, col=C_CHASSIS)   # Right tie plate
-    # Center tie plate positioned at [0, 15] under bare barrel segment 2 to avoid Heater 2 [-25, -5]
-    add_box(v, f, 0, 15, -54, -46, -32, 32, colors=c, col=C_CHASSIS)      # Center tie plate
-    # 4 Corner leveling feet / pads (Z in [-37, 37], X in [-158, 158], Y in [-60, -54])
+    # Single seamless welded perimeter box frame (Y in [-54, -46])
+    # Outer bounds: X in [-165, 165], Z in [-42, 42]
+    # Inner opening: X in [-152, 152], Z in [-34, 34]
+    ox0, ox1 = -165, 165
+    oz0, oz1 = -42, 42
+    ix0, ix1 = -152, 152
+    iz0, iz1 = -34, 34
+    y0, y1 = -54, -46
+    b_idx = len(v)
+    # 0..3: outer bottom
+    v.extend([[ox0, y0, oz0], [ox1, y0, oz0], [ox1, y0, oz1], [ox0, y0, oz1]])
+    # 4..7: outer top
+    v.extend([[ox0, y1, oz0], [ox1, y1, oz0], [ox1, y1, oz1], [ox0, y1, oz1]])
+    # 8..11: inner bottom
+    v.extend([[ix0, y0, iz0], [ix1, y0, iz0], [ix1, y0, iz1], [ix0, y0, iz1]])
+    # 12..15: inner top
+    v.extend([[ix0, y1, iz0], [ix1, y1, iz0], [ix1, y1, iz1], [ix0, y1, iz1]])
+    c.extend([C_CHASSIS] * 16)
+
+    def q(i0, i1, i2, i3):
+        f.append([b_idx + i0, b_idx + i1, b_idx + i2])
+        f.append([b_idx + i0, b_idx + i2, b_idx + i3])
+
+    # Outer vertical walls
+    q(0, 4, 5, 1) # front (-Z)
+    q(1, 5, 6, 2) # right (+X)
+    q(2, 6, 7, 3) # rear (+Z)
+    q(3, 7, 4, 0) # left (-X)
+
+    # Top rim face (+Y)
+    q(4, 12, 13, 5) # front rim
+    q(5, 13, 14, 6) # right rim
+    q(6, 14, 15, 7) # rear rim
+    q(7, 15, 12, 4) # left rim
+
+    # Bottom rim face (-Y)
+    q(0, 1, 9, 8)   # front rim
+    q(1, 2, 10, 9)  # right rim
+    q(2, 3, 11, 10) # rear rim
+    q(3, 0, 8, 11)  # left rim
+
+    # Inner vertical walls
+    q(8, 9, 13, 12)   # inner front (+Z)
+    q(9, 10, 14, 13)  # inner right (-X)
+    q(10, 11, 15, 14) # inner rear (-Z)
+    q(11, 8, 12, 15)  # inner left (+X)
+
+    # Recessed center cross tie bar (2mm below frame top, 2mm above frame bottom)
+    add_box(v, f, 0, 12, -52, -48, -34, 34, colors=c, col=C_CHASSIS)
+
+    # 4 Corner leveling feet (R = 3.5mm centered under 8mm rail width, completely non-protruding)
     for fx in [-158, 158]:
-        for fz in [-37, 37]:
-            add_cylinder_y(v, f, fx, -60, -54, fz, 6, n_seg=6, colors=c, col=C_CHASSIS)
+        for fz in [-38, 38]:
+            add_cylinder_y(v, f, fx, -60, -54, fz, 3.5, n_seg=6, colors=c, col=C_CHASSIS, cap_bottom=True, cap_top=True)
 
 def add_bca_module_1(v, f, c, motorized=False):
     # Module 1: Thermal Stripper & Coarse Breaker (-X input side)
     # Breaker lower housing (terminates cleanly at X = -108, exposing 20mm gap to auger at X = -88)
     add_box(v, f, -150, -108, -46, -12, -30, 30, colors=c, col=C_MOD1_BREAKER)
-    # Tapered hopper chute
-    add_box(v, f, -145, -112, -12, 35, -26, 26, colors=c, col=C_MOD1_BREAKER)
-    # Flared hopper rectangular rim collar with open throat (4 perimeter walls from Y = 35 to Y = 41)
-    add_box(v, f, -148, -141, 35, 41, -29, 29, colors=c, col=C_MOD1_BREAKER) # Left wall
-    add_box(v, f, -116, -109, 35, 41, -29, 29, colors=c, col=C_MOD1_BREAKER) # Right wall
-    add_box(v, f, -141, -116, 35, 41, -29, -21, colors=c, col=C_MOD1_BREAKER) # Front wall
-    add_box(v, f, -141, -116, 35, 41, 21, 29, colors=c, col=C_MOD1_BREAKER)  # Rear wall
-    # Recessed dark interior breaker throat floor inside open collar [35, 36.5]
-    add_box(v, f, -141, -116, 35, 36.5, -21, 21, colors=c, col=C_MOD1_DARK)
+
+    # Seamless hollow hopper chute with flared rim collar and dark recessed throat floor
+    b_idx = len(v)
+    x0, x1 = -145, -112
+    z0, z1 = -26, 26
+    y_bot = -12
+    y_flare = 35
+    rx0, rx1 = -148, -109
+    rz0, rz1 = -29, 29
+    y_top = 41
+    ix0, ix1 = -139, -118
+    iz0, iz1 = -20, 20
+    y_floor = 35
+
+    # 0..3: outer bottom Y = -12
+    v.extend([[x0, y_bot, z0], [x1, y_bot, z0], [x1, y_bot, z1], [x0, y_bot, z1]])
+    c.extend([C_MOD1_BREAKER] * 4)
+    # 4..7: outer flare start Y = 35
+    v.extend([[x0, y_flare, z0], [x1, y_flare, z0], [x1, y_flare, z1], [x0, y_flare, z1]])
+    c.extend([C_MOD1_BREAKER] * 4)
+    # 8..11: outer rim top Y = 41
+    v.extend([[rx0, y_top, rz0], [rx1, y_top, rz0], [rx1, y_top, rz1], [rx0, y_top, rz1]])
+    c.extend([C_MOD1_BREAKER] * 4)
+    # 12..15: inner rim top Y = 41
+    v.extend([[ix0, y_top, iz0], [ix1, y_top, iz0], [ix1, y_top, iz1], [ix0, y_top, iz1]])
+    c.extend([C_MOD1_BREAKER] * 4)
+    # 16..19: inner throat floor Y = 35
+    v.extend([[ix0, y_floor, iz0], [ix1, y_floor, iz0], [ix1, y_floor, iz1], [ix0, y_floor, iz1]])
+    c.extend([C_MOD1_DARK] * 4)
+
+    def q(i0, i1, i2, i3):
+        f.append([b_idx + i0, b_idx + i1, b_idx + i2])
+        f.append([b_idx + i0, b_idx + i2, b_idx + i3])
+
+    q(0, 1, 2, 3) # bottom (-Y)
+    q(0, 4, 5, 1); q(1, 5, 6, 2); q(2, 6, 7, 3); q(3, 7, 4, 0) # chute outer walls
+    q(4, 8, 9, 5); q(5, 9, 10, 6); q(6, 10, 11, 7); q(7, 11, 8, 4) # flare outer walls
+    q(8, 12, 13, 9); q(9, 13, 14, 10); q(10, 14, 15, 11); q(11, 15, 12, 8) # top rim (+Y)
+    q(12, 16, 17, 13); q(13, 17, 18, 14); q(14, 18, 19, 15); q(15, 19, 16, 12) # inner cavity walls
+    q(16, 19, 18, 17) # throat floor (+Y)
+
     # Shaft journal on rear (+Z side)
     add_cylinder_x(v, f, -160, -150, -25, 15, 6, n_seg=8, colors=c, col=C_MOD1_BREAKER, cap_left=True, cap_right=True)
     if not motorized:
@@ -443,10 +550,8 @@ def comp_bca_stage_0():
     add_box(v, f, -186, -180, -28, 12, -4, 4, colors=c, col=C_CHASSIS) # Crank arm
     add_cylinder_x(v, f, -194, -186, 10, 0, 4, n_seg=6, colors=c, col=C_CHASSIS, cap_left=True, cap_right=True) # Handle
 
-    # Bio-Pitch Gravity Funnel with de-occluded open top orifice
-    add_cylinder_y(v, f, -79, -10, 16, 0, 6, n_seg=8, colors=c, col=C_MOD2_HEATER, cap_bottom=True, cap_top=True)
-    add_cylinder_y(v, f, -79, 16, 21, 0, 9, n_seg=8, colors=c, col=C_MOD2_HEATER, cap_bottom=True, cap_top=True)
-    add_cylinder_y(v, f, -79, 21, 22.5, 0, 5, n_seg=8, colors=c, col=C_MOD1_DARK, cap_bottom=True, cap_top=True)
+    # Bio-Pitch Gravity Funnel with seamless flanged opening and dark recessed floor
+    add_open_injector(v, f, c, -79, -10, 16, 21, 17, 0, 6.0, 9.0, 5.0)
 
     # Module 3: Fixed aperture die plate
     add_box(v, f, 55, 66, -46, -10, -30, 30, colors=c, col=C_MOD3_DIE)
@@ -457,7 +562,7 @@ def comp_bca_stage_0():
     add_cylinder_x(v, f, 78, 96, -18, 20, 2.5, n_seg=6, colors=c, col=C_MOD4_SHEAR, cap_left=True, cap_right=True)
     add_box(v, f, 96, 106, -42, -14, -22, 22, colors=c, col=C_MOD4_SHEAR)
     add_cylinder_y(v, f, 101, -14, 18, 20, 3.5, n_seg=6, colors=c, col=C_MOD4_SHEAR, cap_bottom=True, cap_top=True) # manual pull lever
-    add_box(v, f, 106, 158, -46, -41, -20, 20, colors=c, col=C_MOD4_SHEAR)
+    add_box(v, f, 106, 150, -46, -41, -20, 20, colors=c, col=C_MOD4_SHEAR)
     return build_gltf(v, f, colors=c, name="SYS-BCA-STAGE-0")
 machines_composites['bca-packaging-engine/stage-0'] = comp_bca_stage_0()
 
@@ -480,10 +585,8 @@ def comp_bca_stage_1():
     add_cylinder_x(v, f, 20, 40, -28, 0, 21, n_seg=10, colors=c, col=C_MOD2_HEATER, cap_left=True, cap_right=True)
     add_cylinder_x(v, f, 40, 55, -28, 0, 19, n_seg=10, colors=c, col=C_MOD2_AUGER, cap_left=True, cap_right=True)
 
-    # Bio-Pitch Injector Port on Section 1 with de-occluded open top orifice
-    add_cylinder_y(v, f, -79, -10, 16, 0, 6, n_seg=8, colors=c, col=C_MOD2_HEATER, cap_bottom=True, cap_top=True)
-    add_cylinder_y(v, f, -79, 16, 21, 0, 9, n_seg=8, colors=c, col=C_MOD2_HEATER, cap_bottom=True, cap_top=True)
-    add_cylinder_y(v, f, -79, 21, 22.5, 0, 5, n_seg=8, colors=c, col=C_MOD1_DARK, cap_bottom=True, cap_top=True)
+    # Bio-Pitch Injector Port on Section 1 with seamless flanged opening and dark recessed floor
+    add_open_injector(v, f, c, -79, -10, 16, 21, 17, 0, 6.0, 9.0, 5.0)
 
     # Rear central drive shaft extending through driven sprocket
     add_cylinder_x(v, f, -180, -172, -28, 0, 7, n_seg=8, colors=c, col=C_CHASSIS, cap_left=True, cap_right=True)
@@ -502,10 +605,10 @@ def comp_bca_stage_1():
     add_cylinder_x(v, f, 78, 96, -18, -20, 2.5, n_seg=6, colors=c, col=C_MOD4_SHEAR, cap_left=True, cap_right=True)
     add_cylinder_x(v, f, 78, 96, -18, 20, 2.5, n_seg=6, colors=c, col=C_MOD4_SHEAR, cap_left=True, cap_right=True)
     add_box(v, f, 96, 106, -42, -14, -22, 22, colors=c, col=C_MOD4_SHEAR)
-    add_box(v, f, 106, 158, -46, -41, -20, 20, colors=c, col=C_MOD4_SHEAR)
+    add_box(v, f, 106, 150, -46, -41, -20, 20, colors=c, col=C_MOD4_SHEAR)
 
     # Two-Control BLE Safety console on front rail
-    add_box(v, f, -15, 30, -45, -26, 34, 44, colors=c, col=C_ELECTRONICS)
+    add_box(v, f, -15, 30, -45, -26, 35, 43, colors=c, col=C_ELECTRONICS)
     add_cylinder_y(v, f, 8, -26, -20, 39, 5, n_seg=8, colors=c, col=C_MOD2_HEATER, cap_bottom=True, cap_top=True) # E-Stop knob
     return build_gltf(v, f, colors=c, name="SYS-BCA-STAGE-1")
 machines_composites['bca-packaging-engine/stage-1'] = comp_bca_stage_1()
@@ -529,10 +632,8 @@ def comp_bca_stage_2():
     add_cylinder_x(v, f, 20, 40, -28, 0, 21, n_seg=10, colors=c, col=C_MOD2_HEATER, cap_left=True, cap_right=True)
     add_cylinder_x(v, f, 40, 55, -28, 0, 19, n_seg=10, colors=c, col=C_MOD2_AUGER, cap_left=True, cap_right=True)
 
-    # Bio-Pitch Injector Port on Section 1 with de-occluded open top orifice
-    add_cylinder_y(v, f, -79, -10, 16, 0, 6, n_seg=8, colors=c, col=C_MOD2_HEATER, cap_bottom=True, cap_top=True)
-    add_cylinder_y(v, f, -79, 16, 21, 0, 9, n_seg=8, colors=c, col=C_MOD2_HEATER, cap_bottom=True, cap_top=True)
-    add_cylinder_y(v, f, -79, 21, 22.5, 0, 5, n_seg=8, colors=c, col=C_MOD1_DARK, cap_bottom=True, cap_top=True)
+    # Bio-Pitch Injector Port on Section 1 with seamless flanged opening and dark recessed floor
+    add_open_injector(v, f, c, -79, -10, 16, 21, 17, 0, 6.0, 9.0, 5.0)
 
     # Rear central drive shaft extending through driven sprocket
     add_cylinder_x(v, f, -180, -172, -28, 0, 7, n_seg=8, colors=c, col=C_CHASSIS, cap_left=True, cap_right=True)
@@ -557,11 +658,11 @@ def comp_bca_stage_2():
     add_cylinder_x(v, f, 78, 96, -18, 20, 2.5, n_seg=6, colors=c, col=C_MOD4_SHEAR, cap_left=True, cap_right=True)
     add_box(v, f, 96, 106, -42, -14, -22, 22, colors=c, col=C_MOD4_SHEAR)
     add_box(v, f, 97, 105, -14, 0, -7, 7, colors=c, col=C_MOD4_SHEAR) # Servo
-    add_box(v, f, 106, 158, -46, -41, -20, 20, colors=c, col=C_MOD4_SHEAR) # Cure bed
+    add_box(v, f, 106, 150, -46, -41, -20, 20, colors=c, col=C_MOD4_SHEAR) # Cure bed
     add_box(v, f, 115, 145, -41, -21, -13, 13, colors=c, col=C_CONTAINER)  # Extruded Container
 
     # Autonomous ESP32-S3 CNT Node on front rail
-    add_box(v, f, -15, 30, -45, -26, 34, 44, colors=c, col=C_ELECTRONICS)
+    add_box(v, f, -15, 30, -45, -26, 35, 43, colors=c, col=C_ELECTRONICS)
 
     return build_gltf(v, f, colors=c, name="SYS-BCA-STAGE-2")
 machines_composites['bca-packaging-engine/stage-2'] = comp_bca_stage_2()
