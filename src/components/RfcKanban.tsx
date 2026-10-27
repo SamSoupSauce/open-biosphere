@@ -174,6 +174,16 @@ const RFC_LIST: RFCItem[] = [
     summary: 'Establishes procedural CAD mesh integrity, outward normal rectification, watertight 2-manifold verification, wall thickness offset (t >= 2.5mm), and automated headless CI model testing.',
     docSlug: '/rfcs/rfc-0017-procedural-mesh-integrity-normal-rectification',
   },
+  {
+    id: 'RFC-0018',
+    title: 'Multi-Part Composite Assemblies, 3D-Printable Subparts & Universal Normal Orientation',
+    author: 'Sam',
+    targetType: 'Infrastructure',
+    status: 'Implemented',
+    date: '2026-10-26',
+    summary: 'Establishes composite CAD assembly architecture with per-subpart color coding, standalone watertight 2-manifold printable subpart models, bed-grounded batch platers, and universal outward normal reconciliation.',
+    docSlug: '/rfcs/rfc-0018-multi-part-composite-cad-assemblies',
+  },
 ];
 
 export default function RfcKanban() {
