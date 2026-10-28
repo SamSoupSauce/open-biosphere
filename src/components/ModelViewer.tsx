@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Box, RotateCw, Layers, Download, Maximize2, CheckCircle2, Cpu } from 'lucide-react';
+import { Box, RotateCw, Layers, Download, Maximize2, CheckCircle2, Cpu, Palette } from 'lucide-react';
 
 export interface CameraStepConfig {
   panStep: number;      // World units per click (default: 50mm)
@@ -258,6 +258,9 @@ interface ParsedMesh {
   faceColors?: [number, number, number][]; // [r, g, b] 0..255 per face
   vertexColors?: [number, number, number][]; // [r, g, b] 0..255 per vertex
   format?: 'gltf' | 'glb';
+  solidCount?: number;
+  contrastColors?: [number, number, number][];
+  nativeColors?: [number, number, number][];
   subAssemblies?: {
     name: string;
     partId?: string;
@@ -265,6 +268,181 @@ interface ParsedMesh {
     startIndex: number;
     vertexCount: number;
   }[];
+}
+
+export const VIVID_CONTRAST_PALETTE: [number, number, number][] = [
+  [14, 165, 233],  // Electric Cyan (#0ea5e9)
+  [245, 158, 11],  // Amber Gold (#f59e0b)
+  [16, 185, 129],  // Emerald Green (#10b981)
+  [239, 68, 68],   // Crimson Coral (#ef4444)
+  [168, 85, 247],  // Vivid Violet (#a855f7)
+  [249, 115, 22],  // Safety Orange (#f97316)
+  [236, 72, 153],  // Hot Pink / Magenta (#ec4899)
+  [6, 182, 212],   // Bright Turquoise (#06b6d4)
+  [132, 204, 22],  // Electric Lime (#84cc16)
+  [99, 102, 241],  // Royal Indigo (#6366f1)
+  [234, 179, 8],   // Sunbeam Yellow (#eab308)
+  [244, 63, 94],   // Bright Rose (#f43f5e)
+  [59, 130, 246],  // Cobalt Blue (#3b82f6)
+  [217, 70, 239],  // Electric Fuchsia (#d946ef)
+  [20, 184, 166],  // Teal (#14b8a6)
+  [251, 146, 60],  // Light Orange (#fb923c)
+];
+
+/**
+ * Automatically segments any 3D CAD mesh into connected solid bodies and geometric
+ * feature partitions, assigning vividly contrasting high-saturation colors.
+ */
+export function autoAssignVividColors(mesh: ParsedMesh): void {
+  if (!mesh || !mesh.faces || mesh.faces.length === 0 || !mesh.vertices || mesh.vertices.length === 0) {
+    return;
+  }
+
+  const numFaces = mesh.faces.length;
+  const numVerts = mesh.vertices.length;
+
+  // 1. Identify connected components (disjoint solid bodies) via Union-Find
+  const parent = new Int32Array(numFaces);
+  for (let i = 0; i < numFaces; i++) parent[i] = i;
+
+  function find(i: number): number {
+    let root = i;
+    while (parent[root] !== root) root = parent[root];
+    let curr = i;
+    while (curr !== root) {
+      const next = parent[curr];
+      parent[curr] = root;
+      curr = next;
+    }
+    return root;
+  }
+
+  function union(i: number, j: number) {
+    const ri = find(i);
+    const rj = find(j);
+    if (ri !== rj) parent[ri] = rj;
+  }
+
+  const vertToFaces: number[][] = Array.from({ length: numVerts }, () => []);
+  for (let fIdx = 0; fIdx < numFaces; fIdx++) {
+    const [i0, i1, i2] = mesh.faces[fIdx];
+    if (i0 < numVerts) vertToFaces[i0].push(fIdx);
+    if (i1 < numVerts) vertToFaces[i1].push(fIdx);
+    if (i2 < numVerts) vertToFaces[i2].push(fIdx);
+  }
+
+  for (let v = 0; v < numVerts; v++) {
+    const flist = vertToFaces[v];
+    if (flist.length > 1) {
+      const first = flist[0];
+      for (let k = 1; k < flist.length; k++) {
+        union(first, flist[k]);
+      }
+    }
+  }
+
+  const componentMap = new Map<number, number[]>();
+  for (let fIdx = 0; fIdx < numFaces; fIdx++) {
+    const root = find(fIdx);
+    let list = componentMap.get(root);
+    if (!list) {
+      list = [];
+      componentMap.set(root, list);
+    }
+    list.push(fIdx);
+  }
+
+  mesh.solidCount = componentMap.size;
+
+  // Preserve native colors if pre-baked in glTF
+  if (mesh.faceColors && mesh.faceColors.length === numFaces) {
+    mesh.nativeColors = [...mesh.faceColors];
+    const uniqueSample = new Set<string>();
+    for (let i = 0; i < Math.min(200, numFaces); i++) {
+      uniqueSample.add(mesh.faceColors[i].join(','));
+    }
+    // If it already carries multi-color composite attributes, record contrastColors
+    if (uniqueSample.size >= 3) {
+      mesh.contrastColors = [...mesh.faceColors];
+      return;
+    }
+  }
+
+  const contrastColors: [number, number, number][] = new Array(numFaces);
+
+  if (componentMap.size > 1) {
+    // Multi-solid assembly or composite mechanism:
+    // Sort components by centroid position along primary spatial dimension (X, then Y, then Z)
+    // so sequential/adjacent mechanisms are assigned maximally distinct palette hues.
+    const components = Array.from(componentMap.values()).map((faceList) => {
+      let cx = 0, cy = 0, cz = 0, totalVerts = 0;
+      for (const fIdx of faceList) {
+        const [i0, i1, i2] = mesh.faces[fIdx];
+        const v0 = mesh.vertices[i0], v1 = mesh.vertices[i1], v2 = mesh.vertices[i2];
+        if (v0 && v1 && v2) {
+          cx += v0[0] + v1[0] + v2[0];
+          cy += v0[1] + v1[1] + v2[1];
+          cz += v0[2] + v1[2] + v2[2];
+          totalVerts += 3;
+        }
+      }
+      return {
+        faces: faceList,
+        center: [totalVerts ? cx / totalVerts : 0, totalVerts ? cy / totalVerts : 0, totalVerts ? cz / totalVerts : 0]
+      };
+    });
+
+    components.sort((a, b) => a.center[0] - b.center[0] || a.center[1] - b.center[1] || a.center[2] - b.center[2]);
+
+    components.forEach((comp, compIdx) => {
+      const col = VIVID_CONTRAST_PALETTE[compIdx % VIVID_CONTRAST_PALETTE.length];
+      for (const fIdx of comp.faces) {
+        contrastColors[fIdx] = col;
+      }
+    });
+  } else {
+    // Single continuous solid body:
+    // Partition faces into vividly contrasting geometric feature zones by normal orientation:
+    // Upward functional faces (+Y), downward mounting faces (-Y), lateral flanges (+/-X), and front/back walls (+/-Z).
+    const topColor = VIVID_CONTRAST_PALETTE[1];      // Amber Gold
+    const bottomColor = VIVID_CONTRAST_PALETTE[9];   // Royal Indigo
+    const sideXColor = VIVID_CONTRAST_PALETTE[0];    // Electric Cyan
+    const sideZColor = VIVID_CONTRAST_PALETTE[4];    // Vivid Violet
+    const chamferColor = VIVID_CONTRAST_PALETTE[2];  // Emerald Green
+
+    for (let fIdx = 0; fIdx < numFaces; fIdx++) {
+      const [i0, i1, i2] = mesh.faces[fIdx];
+      const v0 = mesh.vertices[i0], v1 = mesh.vertices[i1], v2 = mesh.vertices[i2];
+      if (!v0 || !v1 || !v2) {
+        contrastColors[fIdx] = sideXColor;
+        continue;
+      }
+      const ax = v1[0] - v0[0], ay = v1[1] - v0[1], az = v1[2] - v0[2];
+      const bx = v2[0] - v0[0], by = v2[1] - v0[1], bz = v2[2] - v0[2];
+      const nx = ay * bz - az * by;
+      const ny = az * bx - ax * bz;
+      const nz = ax * by - ay * bx;
+      const len = Math.sqrt(nx * nx + ny * ny + nz * nz) || 1;
+      const uny = ny / len;
+      const unx = nx / len;
+      const unz = nz / len;
+
+      if (uny > 0.65) {
+        contrastColors[fIdx] = topColor; // Top surfaces, ports & bosses
+      } else if (uny < -0.65) {
+        contrastColors[fIdx] = bottomColor; // Base & underside
+      } else if (Math.abs(uny) < 0.35 && Math.abs(unx) > 0.70) {
+        contrastColors[fIdx] = sideXColor; // Left / Right flanks
+      } else if (Math.abs(uny) < 0.35 && Math.abs(unz) > 0.70) {
+        contrastColors[fIdx] = sideZColor; // Front / Back faces
+      } else {
+        contrastColors[fIdx] = chamferColor; // Angled chamfers, fillets & bevels
+      }
+    }
+  }
+
+  mesh.contrastColors = contrastColors;
+  mesh.faceColors = contrastColors;
 }
 
 /**
@@ -516,6 +694,7 @@ export default function ModelViewer({
   const [mesh, setMesh] = useState<ParsedMesh | null>(null);
   const [modelLoaded, setModelLoaded] = useState(false);
   const [validationReport, setValidationReport] = useState<MeshValidationReport | null>(null);
+  const [colorMode, setColorMode] = useState<'vivid' | 'material'>('vivid');
 
   const dragPosRef = useRef({ x: 0, y: 0 });
   const rotXRef = useRef(25);
@@ -579,6 +758,9 @@ export default function ModelViewer({
           // Procedural mesh integrity audit & normal rectification (RFC-017 Section 3)
           const report = auditAndSanitizeMesh(parsed);
           setValidationReport(report);
+
+          // Auto-assign vividly contrasting colors to any model, machine, or composite loaded
+          autoAssignVividColors(parsed);
 
           setMesh(parsed);
           setModelLoaded(true);
@@ -835,8 +1017,12 @@ export default function ModelViewer({
           const intensity = Math.max(0.22, (rnx1 * lx + rny2 * ly + rnz2 * lz + 1) / 2);
 
           let r = 56, g = 189, b = 248; // Sky cyan
-          if (mesh.faceColors && mesh.faceColors[faceIndex]) {
-            [r, g, b] = mesh.faceColors[faceIndex];
+          const activeColors = colorMode === 'vivid'
+            ? (mesh.contrastColors || mesh.faceColors)
+            : (mesh.nativeColors || mesh.faceColors);
+
+          if (activeColors && activeColors[faceIndex]) {
+            [r, g, b] = activeColors[faceIndex];
           } else if (material.toLowerCase().includes('petg') || material.toLowerCase().includes('pla')) {
             r = 14; g = 165; b = 233;
           } else if (material.toLowerCase().includes('silicone') || material.toLowerCase().includes('rubber')) {
@@ -1001,7 +1187,7 @@ export default function ModelViewer({
       if (animId) cancelAnimationFrame(animId);
       if (resizeObserver) resizeObserver.disconnect();
     };
-  }, [isRotating, wireframe, isDragging, dimensions, mesh, material]);
+  }, [isRotating, wireframe, isDragging, dimensions, mesh, material, colorMode]);
 
   // Orbit drag interaction handlers
   const handleMouseDown = (e: React.MouseEvent) => {
@@ -1092,6 +1278,14 @@ export default function ModelViewer({
                       {validationReport.isManifold ? '2-MANIFOLD' : 'SURFACE MESH'}
                     </span>
                   )}
+                  {mesh.solidCount && mesh.solidCount > 1 ? (
+                    <span className="text-[10px] px-1.5 py-0.5 rounded border text-amber-300 bg-amber-950/80 border-amber-800/80 font-bold">
+                      {mesh.solidCount} BODIES
+                    </span>
+                  ) : null}
+                  <span className={`text-[10px] px-1.5 py-0.5 rounded border font-bold ${colorMode === 'vivid' ? 'text-sky-300 bg-sky-950/80 border-sky-800/80' : 'text-slate-400 bg-slate-950/80 border-slate-800/80'}`}>
+                    {colorMode === 'vivid' ? 'VIVID' : 'MAT'}
+                  </span>
                 </div>
               ) : (
                 <div className="flex items-center gap-1.5 text-sky-400">
@@ -1118,6 +1312,13 @@ export default function ModelViewer({
                   className={`p-1.5 rounded transition ${wireframe ? 'bg-sky-500/20 text-sky-400' : 'text-slate-400 hover:text-slate-200'}`}
                 >
                   <Layers className="w-3.5 h-3.5" />
+                </button>
+                <button
+                  onClick={() => setColorMode((prev) => (prev === 'vivid' ? 'material' : 'vivid'))}
+                  title={colorMode === 'vivid' ? 'Vivid Contrast Colors (Click for Native Material)' : 'Material Colors (Click for Vivid Contrast)'}
+                  className={`p-1.5 rounded transition ${colorMode === 'vivid' ? 'bg-sky-500/20 text-sky-400 font-bold' : 'text-slate-400 hover:text-slate-200'}`}
+                >
+                  <Palette className="w-3.5 h-3.5" />
                 </button>
                 <button
                   onClick={handleResetPerspective}
