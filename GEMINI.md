@@ -24,6 +24,11 @@ When authoring or modifying procedural geometry generators (`scripts/*.py`):
    * When performing constructive solid geometry boolean difference/subtraction passes, tool solids must extend at least $+0.1\text{ mm}$ beyond target boundary faces to prevent zero-thickness degenerate coplanar slivers and unindexed self-intersection dropouts.
 7. **Automated Headless Model Verification (`npm run test:models`) (RFC-017):**
    * Before committing 3D assets, run `npm run test:models` (`python3 scripts/test_models.py`) to verify bounding volume ($dx, dy, dz \ge 1.0\text{ mm}$), manifold edge consistency, outward normal orientation, and custom manifold fluid passage features.
+8. **Prism & Cylinder Endcap Winding Invariant (RFC-018):**
+   * When closing cylindrical, polygonal, or hexagonal shafts and pinions:
+     - Bottom endcap disks ($Z_0$, normal $-Z$): Must wind `(c_bot, v_next, v_curr)` where vertices advance counter-clockwise in angle.
+     - Top endcap disks ($Z_1$, normal $+Z$): Must wind `(c_top, v_curr, v_next)` where vertices advance counter-clockwise in angle.
+     - Never reverse this order, or caps will point inward and fail normal orientation audits.
 
 ---
 
@@ -84,3 +89,69 @@ When authoring or editing hardware manuals and RFC specifications (`src/content/
    * Numeric or object props must use single curly braces: `estimatedCost={480.00}`, not double braces `{{480.00}}`.
 3. **Import Depth Invariant:**
    * Components imported from sub-directories (e.g., `src/content/docs/hardware/<machine>/stage-0.mdx`) must use the exact 4-level relative path: `../../../../components/ModelViewer`.
+4. **Zero Raw LaTeX Math Syntax in MDX Prose (RFC-018):**
+   * Astro Starlight MDX does not bundle a LaTeX remark-math / KaTeX plugin in prose. Any unescaped `$...$` or `$$...$$` will be parsed by Acorn as JavaScript JSX template expressions.
+   * **Do not use** `$...$` or `$$...$$` in `.mdx` prose, tables, or documentation (e.g. do not write `$Z = 0\text{ mm}$` or `$$\text{Volume} = ...$$`).
+   * Format all formulas, dimensions, and physical tolerances using plain Unicode text or inline/fenced code blocks (e.g., write `Z = 0.0 mm`, `0.4 µm Ra`, or `Volume = (1/6) * Σ [ v0 · (v1 × v2) ] > 0`).
+
+---
+
+## 5. Multi-Part Composite Assemblies & 3D Printable Subparts (RFC-018)
+
+When authoring or updating kinetic, articulated, or multi-component mechanisms:
+1. **Composite Classification & Badging:**
+   * Any part consisting of distinct structural, kinetic, or multi-material subparts must be declared with `classification: "composite"` in frontmatter and `src/data/parts.json`.
+   * Pass `isComposite={true}` to `<ModelViewer />` to display the high-contrast `COMPOSITE` badge in the viewer HUD.
+2. **Per-Subpart Color Coding via glTF `COLOR_0`:**
+   * Encode subpart visual identity directly into glTF binary buffers using the standard `COLOR_0` accessor (`componentType: 5126`, `VEC3` IEEE 754 floats).
+   * Follow the canonical functional palette:
+     - Structural Rails & Frames: Slate Gray (`#8c96a5`)
+     - Primary Sliding Members: Electric Blue (`#0ea5e9`)
+     - Secondary Sliding Members: Golden Amber (`#f59e0b`)
+     - Rotary Actuators & Drive Pinions: Coral Orange (`#ef4444`)
+     - Optical & Translucent Elements: Royal Violet (`#a855f7`)
+3. **Standalone 2-Manifold Subpart Models:**
+   * Every composite assembly must export individual, watertight 2-manifold models (`subpart-XX-name.stl` and `subpart-XX-name.gltf`) for every subpart.
+   * Every subpart must satisfy `non_two = 0` (zero non-manifold edges) and signed solid volume $V > 0$.
+4. **Slicing Bed Grounding Invariant:**
+   * All standalone STL subparts and batch plater models (`print.stl`) must be translated such that their lowest vertex satisfies $\min(z) = 0.0\text{ mm}$. Floating geometries or subterranean coordinates ($\min(z) < 0$) are strictly prohibited in slicing assets.
+5. **Batch Build Plater (`print.stl`):**
+   * In addition to standalone files, provide a pre-arranged `print.stl` batch plater with all subparts laid flat on the build surface, fitting within a standard $220 \times 220\text{ mm}$ build envelope.
+
+---
+
+## 6. Comprehensive CAD Assembly Audit & Pre-Push Iteration Protocol
+
+When generating, modifying, or refactoring 3D CAD assemblies (`scripts/build_composite_models.py`, `scripts/*.py`):
+
+1. **Watertight 2-Manifold & Edge Orientation Invariant:**
+   * Every closed solid must be a strict 2-manifold with zero boundary edges (`boundary == 0`) and zero non-two edges (`non_two == 0`).
+   * **Oriented Edge Cancellation:** Every directed edge `(u, v)` in face $F_A$ must have an exact counter-directed edge `(v, u)` in adjacent face $F_B$ (`unoriented == 0`). If an edge is traversed in the same direction twice, winding order is corrupted and must be reversed.
+
+2. **Camera-Space Glance Angle & Anti-Flicker Geometry:**
+   * Avoid outward flared overhangs whose surface normals align within $\pm 10^\circ$ of the standard orbital camera pitch ($\approx 25^\circ$), which causes backface culling (`rnz2 <= 0.0`) to drop triangles intermittently during rotation.
+   * Implement stepped collar geometries with strictly cardinal/axis-aligned vertical walls ($N_Y = 0.0$) and horizontal step ledges ($N_Y = \pm 1.0$) to guarantee rock-solid visibility at all camera angles.
+
+3. **Kinematic Visibility & De-Occlusion:**
+   * Drive shafts, torque couplers, lead screws, and belts must never be encased inside continuous blind housings.
+   * Maintain intentional mechanical gap clearances ($\ge 15\text{--}20\text{ mm}$) exposing drive couplings and bearings.
+   * Audit all assemblies for orphaned stubs or obsolete shaft journals from superseded revisions.
+
+4. **Mechanical Abutment & Structural Continuity:**
+   * Linear guide rails, brackets, and levers must never float in free space. Verify that rail start/end coordinates terminate squarely against solid geometry.
+   * When mating components have mismatched cross-sections, author an intermediate mounting face plate or flange pad to solidly anchor the parts.
+
+5. **Coplanar Face Standoff (Anti-Z-Fighting):**
+   * Distinct components with contrasting materials or colors must not share identical coordinate planes.
+   * Enforce a minimum standoff offset of $\ge 0.5\text{ mm}$ between non-fused contact surfaces (e.g. catch bins on cure beds) to prevent z-fighting and texture flicker.
+
+6. **Client-Side Canvas Viewport Aspect Ratio Invariant:**
+   * `<canvas>` raster buffer resolution (`canvas.width`, `canvas.height`) must dynamically track CSS display dimensions (`rect.width`, `rect.height`) via `ResizeObserver`.
+   * Hardcoded buffer dimensions with percentage CSS classes are prohibited to prevent non-uniform aspect-ratio stretching in responsive or split-screen viewports.
+
+7. **Mandatory Pre-Push Headless Iteration Gate:**
+   * Never push 3D model modifications to GitHub Pages without running and passing the complete headless verification suite:
+     1. `python3 scripts/test_models.py` (Asserts volume, manifold, oriented edges, and outward normals across all parts and machine assemblies).
+     2. `python3 scripts/reconcile_all_cad_orientations.py` (Asserts 202/202 outward-oriented glTF models).
+     3. `python3 biosphere-ops/scripts/lint_hardware_docs.py` (Asserts 0 doc, table pricing, or ModelViewer link errors).
+   * Iterate and resolve all detected flaws locally before executing `git commit` and `git push`.

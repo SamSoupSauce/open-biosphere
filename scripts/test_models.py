@@ -19,6 +19,7 @@ import base64
 
 BASE_DIR = '/mnt/c/Users/samue/Projects/open-biosphere'
 PARTS_DIR = os.path.join(BASE_DIR, 'public', 'assets', 'parts')
+MACHINES_DIR = os.path.join(BASE_DIR, 'public', 'assets', 'machines')
 
 def parse_gltf(json_data):
     prim = json_data['meshes'][0]['primitives'][0]
@@ -54,7 +55,7 @@ def parse_gltf(json_data):
     return verts, faces
 
 
-def audit_model(part_id, gltf_path):
+def audit_model(part_id, gltf_path, is_assembly=False):
     with open(gltf_path, 'r', encoding='utf-8') as f:
         data = json.load(f)
 
@@ -99,17 +100,20 @@ def audit_model(part_id, gltf_path):
     if inward > outward:
         return False, f"Inverted mesh normals: {inward} inward vs {outward} outward"
 
-    # 3. Manifold check for closed fabricated parts
+    # 3. Manifold check for closed fabricated parts & composite assemblies
     edge_counts = {}
+    oriented_edges = {}
     for f in faces:
         for i in range(3):
             u, v = f[i], f[(i + 1) % 3]
             e = (min(u, v), max(u, v))
             edge_counts[e] = edge_counts.get(e, 0) + 1
+            oriented_edges[(u, v)] = oriented_edges.get((u, v), 0) + 1
 
     non_two = sum(1 for c in edge_counts.values() if c != 2)
+    unoriented = sum(1 for (u, v) in oriented_edges if (v, u) not in oriented_edges)
 
-    # For targeted fabricated solids, require strict 2-manifold
+    # For targeted fabricated solids and all composite machine assemblies, require strict 2-manifold
     strict_targets = [
         'PART-FAB-JUNCTION-MANIFOLD-4WAY',
         'PART-FAB-LINKAGE-SERVO-DUAL-YOKE',
@@ -126,9 +130,11 @@ def audit_model(part_id, gltf_path):
         'PART-OPT-CONE-DIFFUSER-PYRAMID',
         'PART-FAB-DIE-GATE-4WAY'
     ]
-    if part_id in strict_targets:
+    if is_assembly or part_id in strict_targets:
         if non_two > 0:
-            return False, f"Non-manifold edges on strict fabricated solid: {non_two} non-2 edges"
+            return False, f"Non-manifold edges on fabricated solid/assembly: {non_two} non-2 edges"
+        if unoriented > 0:
+            return False, f"Corrupted edge orientation on fabricated solid/assembly: {unoriented} uncancelled directed edges"
 
     # 4. Feature validation for custom manifolds
     if 'MANIFOLD' in part_id:
@@ -138,39 +144,71 @@ def audit_model(part_id, gltf_path):
         if max(xs) - min(xs) < 100.0:
             return False, f"Invalid manifold length: dx={dx:.1f}mm"
 
-    return True, f"Passed (V={vol:.1f}mm³, {len(verts)}v, {len(faces)}f, non_two_edges={non_two})"
+    return True, f"Passed (V={vol:.1f}mm³, {len(verts)}v, {len(faces)}f, non_two_edges={non_two}, unoriented={unoriented})"
 
 
 def main():
     print("=" * 78)
-    print("OPEN BIOSPHERE HEADLESS MODEL VALIDATION SUITE (RFC-017)")
+    print("OPEN BIOSPHERE HEADLESS MODEL VALIDATION SUITE (RFC-017 / RFC-019)")
     print("=" * 78)
 
     part_dirs = sorted([d for d in os.listdir(PARTS_DIR) if os.path.isdir(os.path.join(PARTS_DIR, d))])
-    total = len(part_dirs)
-    passed = 0
-    failed = 0
+    total_parts = len(part_dirs)
+    passed_parts = 0
+    failed_parts = 0
     errors = []
 
-    print(f"Auditing {total} canonical parts in public/assets/parts/...\n")
+    print(f"Phase 1: Auditing {total_parts} canonical parts in public/assets/parts/...\n")
 
     for p in part_dirs:
         gltf_file = os.path.join(PARTS_DIR, p, 'model.gltf')
         if not os.path.exists(gltf_file):
-            failed += 1
+            failed_parts += 1
             errors.append(f"{p}: Missing model.gltf")
             continue
 
-        ok, msg = audit_model(p, gltf_file)
+        ok, msg = audit_model(p, gltf_file, is_assembly=False)
         if ok:
-            passed += 1
+            passed_parts += 1
         else:
-            failed += 1
+            failed_parts += 1
             errors.append(f"{p}: {msg}")
 
-    print(f"Test Summary across {total} Models:")
-    print(f"  ✓ PASSED: {passed} / {total} ({(passed/total)*100:.1f}%)")
-    print(f"  ✗ FAILED: {failed} / {total}")
+    print(f"Parts Summary: {passed_parts} / {total_parts} passed")
+
+    # Phase 2: Auditing Composite Machine Assemblies
+    machine_files = []
+    if os.path.exists(MACHINES_DIR):
+        for root, _, files in os.walk(MACHINES_DIR):
+            for file in files:
+                if file.endswith('.gltf'):
+                    machine_files.append(os.path.join(root, file))
+    machine_files = sorted(machine_files)
+    total_machines = len(machine_files)
+    passed_machines = 0
+    failed_machines = 0
+
+    print(f"\nPhase 2: Auditing {total_machines} composite machine assemblies in public/assets/machines/...\n")
+    for mf in machine_files:
+        rel_name = os.path.relpath(mf, MACHINES_DIR)
+        ok, msg = audit_model(rel_name, mf, is_assembly=True)
+        if ok:
+            passed_machines += 1
+        else:
+            failed_machines += 1
+            errors.append(f"[ASSEMBLY] {rel_name}: {msg}")
+
+    print(f"Machine Assemblies Summary: {passed_machines} / {total_machines} passed")
+
+    total_all = total_parts + total_machines
+    passed_all = passed_parts + passed_machines
+    failed_all = failed_parts + failed_machines
+
+    print("\n" + "=" * 78)
+    print(f"Overall Test Summary across {total_all} 3D CAD Models:")
+    print(f"  ✓ PASSED: {passed_all} / {total_all} ({(passed_all/total_all)*100:.1f}%)")
+    print(f"  ✗ FAILED: {failed_all} / {total_all}")
+    print("=" * 78)
 
     if errors:
         print("\nFailures:")
@@ -178,7 +216,7 @@ def main():
             print(f"  [FAIL] {err}")
         sys.exit(1)
 
-    print("\n✓ ALL 3D CAD MODELS PASSED HEADLESS INTEGRITY SUITE (RFC-017)")
+    print("\n✓ ALL 3D CAD MODELS AND COMPOSITE ASSEMBLIES PASSED HEADLESS INTEGRITY SUITE")
     sys.exit(0)
 
 
