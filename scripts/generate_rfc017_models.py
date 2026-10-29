@@ -931,29 +931,22 @@ def generate_whoop_frame():
         z_bot = zc - hz
         z_top = zc + hz
         
-        base_idx = len(verts)
-        pts = [
-            [p0[0] - nx*hw, p0[1] - ny*hw, z_bot],
-            [p0[0] + nx*hw, p0[1] + ny*hw, z_bot],
-            [p1[0] + nx*hw, p1[1] + ny*hw, z_bot],
-            [p1[0] - nx*hw, p1[1] - ny*hw, z_bot],
-            [p0[0] - nx*hw, p0[1] - ny*hw, z_top],
-            [p0[0] + nx*hw, p0[1] + ny*hw, z_top],
-            [p1[0] + nx*hw, p1[1] + ny*hw, z_top],
-            [p1[0] - nx*hw, p1[1] - ny*hw, z_top],
-        ]
-        verts.extend(pts)
-        quads = [
-            [0, 3, 2, 1], # Bottom (-Z)
-            [4, 5, 6, 7], # Top (+Z)
-            [0, 1, 5, 4], # End p0
-            [2, 3, 7, 6], # End p1
-            [0, 4, 7, 3], # Side left
-            [1, 2, 6, 5], # Side right
-        ]
-        for q in quads:
-            faces.append([base_idx + q[0], base_idx + q[1], base_idx + q[2]])
-            faces.append([base_idx + q[0], base_idx + q[2], base_idx + q[3]])
+        b = len(verts)
+        verts.append([p0[0] - nx*hw, p0[1] - ny*hw, z_bot])
+        verts.append([p0[0] + nx*hw, p0[1] + ny*hw, z_bot])
+        verts.append([p1[0] + nx*hw, p1[1] + ny*hw, z_bot])
+        verts.append([p1[0] - nx*hw, p1[1] - ny*hw, z_bot])
+        verts.append([p0[0] - nx*hw, p0[1] - ny*hw, z_top])
+        verts.append([p0[0] + nx*hw, p0[1] + ny*hw, z_top])
+        verts.append([p1[0] + nx*hw, p1[1] + ny*hw, z_top])
+        verts.append([p1[0] - nx*hw, p1[1] - ny*hw, z_top])
+
+        add_quad_target(verts, faces, b+0, b+3, b+2, b+1, (0, 0, -1.0))
+        add_quad_target(verts, faces, b+4, b+5, b+6, b+7, (0, 0, 1.0))
+        add_quad_target(verts, faces, b+0, b+1, b+5, b+4, (-dx/L, -dy/L, 0))
+        add_quad_target(verts, faces, b+2, b+3, b+7, b+6, (dx/L, dy/L, 0))
+        add_quad_target(verts, faces, b+0, b+4, b+7, b+3, (-nx, -ny, 0))
+        add_quad_target(verts, faces, b+1, b+2, b+6, b+5, (nx, ny, 0))
 
     verts, faces = [], []
 
@@ -974,8 +967,8 @@ def generate_whoop_frame():
     add_box(verts, faces, -8.5,  8.5, -15.0, -13.0, -14.0, -12.0)
     add_box(verts, faces, -8.5,  8.5,  13.0,  15.0, -14.0, -12.0)
 
-    # 5. 4 Ducted Propeller Guard Rings (Centers at +-31.0, +-31.0)
-    duct_centers = [(31.0, 31.0), (-31.0, 31.0), (-31.0, -31.0), (31.0, -31.0)]
+    # 5. 4 Ducted Propeller Guard Rings (Centers at +-35.0, +-35.0)
+    duct_centers = [(35.0, 35.0), (-35.0, 35.0), (-35.0, -35.0), (35.0, -35.0)]
     for dcx, dcy in duct_centers:
         # Duct ring: R_in = 24.5mm, R_out = 26.5mm, Z in [-3.0, 13.0]
         add_tube_z_targeted(verts, faces, dcx, dcy, r_in=24.5, r_out=26.5, z0=-3.0, z1=13.0, n_seg=24)
@@ -1265,14 +1258,14 @@ def generate_target_apriltag_harness():
             t0 = base_idx + i * 2 + 1
             b1 = base_idx + nxt * 2
             t1 = base_idx + nxt * 2 + 1
-            f_list.append((b0, t0, b1))
-            f_list.append((b1, t0, t1))
+            f_list.append((b0, b1, t0))
+            f_list.append((b1, t1, t0))
         c_bot = len(v_list); v_list.append((x0, y, z))
         c_top = len(v_list); v_list.append((x1, y, z))
         for i in range(n_seg):
             nxt = (i + 1) % n_seg
-            f_list.append((c_bot, base_idx + i * 2, base_idx + nxt * 2))
-            f_list.append((c_top, base_idx + nxt * 2 + 1, base_idx + i * 2 + 1))
+            f_list.append((c_bot, base_idx + nxt * 2, base_idx + i * 2))
+            f_list.append((c_top, base_idx + i * 2 + 1, base_idx + nxt * 2 + 1))
 
     # 1. Main Aluminum Baseplate (60 x 60 x 2.0 mm, Z = -1.5 to +0.5)
     add_box(verts, faces, -30.0, 30.0, -30.0, 30.0, -1.5, 0.5)
@@ -1280,16 +1273,16 @@ def generate_target_apriltag_harness():
     # 2. 4 Corner M3/M4 Mounting Bosses / Pads (X=+-24, Y=+-24)
     for mx in [-24.0, 24.0]:
         for my in [-24.0, 24.0]:
-            add_cylinder_z(verts, faces, mx, my, r=3.8, z0=0.5, z1=1.1, n_seg=12)
+            add_cylinder_z(verts, faces, mx, my, r=3.8, z0=0.5, z1=1.6, n_seg=12)
 
     # 3. AprilTag Optical Frame (Raised border: 38 x 38 mm outer, border_w=3.0 mm)
     tag_cx, tag_cy = 0.0, 3.0
     tag_size = 38.0
     border_w = 3.0
-    add_box(verts, faces, tag_cx - tag_size/2, tag_cx + tag_size/2, tag_cy + tag_size/2 - border_w, tag_cy + tag_size/2, 0.5, 1.1)
-    add_box(verts, faces, tag_cx - tag_size/2, tag_cx + tag_size/2, tag_cy - tag_size/2, tag_cy - tag_size/2 + border_w, 0.5, 1.1)
-    add_box(verts, faces, tag_cx - tag_size/2, tag_cx - tag_size/2 + border_w, tag_cy - tag_size/2, tag_cy + tag_size/2, 0.5, 1.1)
-    add_box(verts, faces, tag_cx + tag_size/2 - border_w, tag_cx + tag_size/2, tag_cy - tag_size/2, tag_cy + tag_size/2, 0.5, 1.1)
+    add_box(verts, faces, tag_cx - tag_size/2, tag_cx + tag_size/2, tag_cy + tag_size/2 - border_w, tag_cy + tag_size/2, 0.5, 1.6)
+    add_box(verts, faces, tag_cx - tag_size/2, tag_cx + tag_size/2, tag_cy - tag_size/2, tag_cy - tag_size/2 + border_w, 0.5, 1.6)
+    add_box(verts, faces, tag_cx - tag_size/2, tag_cx - tag_size/2 + border_w, tag_cy - tag_size/2, tag_cy + tag_size/2, 0.5, 1.6)
+    add_box(verts, faces, tag_cx + tag_size/2 - border_w, tag_cx + tag_size/2, tag_cy - tag_size/2, tag_cy + tag_size/2, 0.5, 1.6)
 
     # 4. AprilTag 36h11 Interior Data Pattern (6x6 data grid)
     tag_matrix = [
@@ -1311,15 +1304,15 @@ def generate_target_apriltag_harness():
                 cx1 = cx0 + cell_size
                 cy1 = grid_y0 + (5 - row + 1) * cell_size
                 cy0 = cy1 - cell_size
-                add_box(verts, faces, cx0 + 0.2, cx1 - 0.2, cy0 + 0.2, cy1 - 0.2, 0.5, 1.1)
+                add_box(verts, faces, cx0 + 0.2, cx1 - 0.2, cy0 + 0.2, cy1 - 0.2, 0.5, 1.6)
 
     # 5. Wire Harness Retention Bracket & Silicone Wiring Lead
     add_box(verts, faces, -12.0, 12.0, -28.0, -22.0, 0.5, 1.8)
-    add_box(verts, faces, -10.0, 10.0, -26.5, -23.5, 1.8, 2.4)
+    add_box(verts, faces, -10.0, 10.0, -26.5, -23.5, 1.8, 3.0)
 
-    wire_colors_y = [-26.0, -25.2, -24.4, -23.6]
+    wire_colors_y = [-26.5, -25.0, -23.5, -22.0]
     for wy in wire_colors_y:
-        add_cylinder_x(verts, faces, y=wy, z=1.4, r=0.45, x0=-22.0, x1=22.0, n_seg=8)
+        add_cylinder_x(verts, faces, y=wy, z=1.5, r=0.6, x0=-22.0, x1=22.0, n_seg=8)
 
     add_box(verts, faces, 18.0, 26.0, -27.5, -22.5, 0.5, 2.2)
 
@@ -1373,14 +1366,14 @@ def generate_flume_hdpe_acrylic():
             t0 = base_idx + i * 2 + 1
             b1 = base_idx + nxt * 2
             t1 = base_idx + nxt * 2 + 1
-            f_list.append((b0, t0, b1))
-            f_list.append((b1, t0, t1))
+            f_list.append((b0, b1, t0))
+            f_list.append((b1, t1, t0))
         c_bot = len(v_list); v_list.append((x0, y, z))
         c_top = len(v_list); v_list.append((x1, y, z))
         for i in range(n_seg):
             nxt = (i + 1) % n_seg
-            f_list.append((c_bot, base_idx + i * 2, base_idx + nxt * 2))
-            f_list.append((c_top, base_idx + nxt * 2 + 1, base_idx + i * 2 + 1))
+            f_list.append((c_bot, base_idx + nxt * 2, base_idx + i * 2))
+            f_list.append((c_top, base_idx + i * 2 + 1, base_idx + nxt * 2 + 1))
 
     def add_wedge_x(v_list, f_list, x0, x1, y0, y1, z_bot, z0, z1):
         idx = len(v_list)

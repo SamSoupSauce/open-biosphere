@@ -188,6 +188,36 @@ def add_cylinder_z(verts, faces, x, y, r, z0, z1, n_seg=8, colors=None, col=None
             nxt = (i + 1) % n_seg
             faces.append([c_top, base_idx + i * 2 + 1, base_idx + nxt * 2 + 1])
 
+def add_tube_z(verts, faces, x, y, r_out, r_in, z0, z1, n_seg=8, colors=None, col=None):
+    base_idx = len(verts)
+    for i in range(n_seg):
+        ang = (2 * math.pi * i) / n_seg
+        c, s = math.cos(ang), math.sin(ang)
+        verts.append([x + r_out * c, y + r_out * s, z0])
+        verts.append([x + r_out * c, y + r_out * s, z1])
+        verts.append([x + r_in * c,  y + r_in * s,  z1])
+        verts.append([x + r_in * c,  y + r_in * s,  z0])
+        if colors is not None and col is not None:
+            for _ in range(4): colors.append(col)
+    for i in range(n_seg):
+        nxt = (i + 1) % n_seg
+        ob0 = base_idx + i * 4 + 0
+        ot0 = base_idx + i * 4 + 1
+        it0 = base_idx + i * 4 + 2
+        ib0 = base_idx + i * 4 + 3
+        ob1 = base_idx + nxt * 4 + 0
+        ot1 = base_idx + nxt * 4 + 1
+        it1 = base_idx + nxt * 4 + 2
+        ib1 = base_idx + nxt * 4 + 3
+        faces.append([ob0, ob1, ot0])
+        faces.append([ob1, ot1, ot0])
+        faces.append([ib0, it0, ib1])
+        faces.append([ib1, it0, it1])
+        faces.append([ot0, ot1, it0])
+        faces.append([ot1, it1, it0])
+        faces.append([ob0, ib0, ob1])
+        faces.append([ob1, ib0, ib1])
+
 def add_cylinder_x(verts, faces, x0, x1, y, z, r, n_seg=8, colors=None, col=None, cap_left=True, cap_right=True):
     base_idx = len(verts)
     for i in range(n_seg):
@@ -395,8 +425,8 @@ def comp_drone_stage_1():
     v, f = [], []
     # 4 Ducted Propeller Guards (85mm class whoop)
     for cx, cy in [(-35, -35), (35, -35), (-35, 35), (35, 35)]:
-        add_cylinder_z(v, f, cx, cy, 22, -8, 8, n_seg=10) # Duct outer
-        add_cylinder_z(v, f, cx, cy, 7, -6, 6, n_seg=6)   # Motor 1103 hub
+        add_tube_z(v, f, cx, cy, 22, 19.5, -8, 8, n_seg=10) # Duct outer annular ring
+        add_cylinder_z(v, f, cx, cy, 7, -6, 6, n_seg=6)     # Motor 1103 hub in center
         # Propeller blades
         add_box(v, f, cx - 18, cx + 18, cy - 2, cy + 2, 0, 2)
     # Carbon X-Frame cross struts
@@ -417,8 +447,8 @@ def comp_drone_stage_2():
     v, f = [], []
     # Drone Assembly hovering at Z = 30
     for cx, cy in [(-35, -35), (35, -35), (-35, 35), (35, 35)]:
-        add_cylinder_z(v, f, cx, cy, 22, 22, 38, n_seg=10)
-        add_cylinder_z(v, f, cx, cy, 7, 24, 36, n_seg=6)
+        add_tube_z(v, f, cx, cy, 22, 19.5, 22, 38, n_seg=10) # Duct annular ring
+        add_cylinder_z(v, f, cx, cy, 7, 24, 36, n_seg=6)     # Motor in center
     add_box(v, f, -40, 40, -3, 3, 28, 32)
     add_box(v, f, -3, 3, -40, 40, 28, 32)
     add_box(v, f, -16, 16, -16, 16, 32, 38) # FC + ESP32-S3 Node
@@ -788,8 +818,8 @@ def comp_agv_stage_0():
         add_cylinder_y(v, f, 130, y_track - 16, y_track + 16, -20, 20, n_seg=8)
         add_cylinder_y(v, f, -45, y_track - 16, y_track + 16, -22, 14, n_seg=8)
         add_cylinder_y(v, f, 45, y_track - 16, y_track + 16, -22, 14, n_seg=8)
-        # Bogie suspension arms
-        add_box(v, f, -70, 70, y_track - 8, y_track + 8, -15, -5)
+        # Bogie suspension arms (mounting bogies up to chassis bed)
+        add_box(v, f, -70, 70, y_track - 8, y_track + 8, -5, 8)
     # Tiller handle on front (folded up)
     add_cylinder_y(v, f, -140, -25, 25, 15, 6, n_seg=6) # pivot
     add_box(v, f, -150, -135, -12, 12, 15, 120)        # handle shaft
@@ -953,12 +983,12 @@ def comp_dosing_stage_2():
     for i, x in enumerate([-45, -15, 15, 45]):
         add_box(v, f, x - 12, x + 12, -35, 5, -15, 15)
         add_cylinder_y(v, f, x, 5, 45, 0, 14, n_seg=8)
-    # IP65 Environmental Enclosure on top tier
-    add_box(v, f, -50, 50, -35, 35, 35, 110)
+    # IP65 Environmental Enclosure on top tier (raised above tier plate)
+    add_box(v, f, -50, 50, -35, 35, 58, 110)
     # NDIR SCD41 CO2 & Climate Sensor Snout
-    add_cylinder_z(v, f, 0, -42, 10, 50, 75, n_seg=8)
-    # 8-Channel High Current MOSFET Bank inside enclosure
-    add_box(v, f, -40, 40, -25, 25, 40, 55)
+    add_cylinder_z(v, f, 0, -42, 10, 65, 85, n_seg=8)
+    # 8-Channel High Current MOSFET Bank on tier deck
+    add_box(v, f, -40, 40, -25, 25, 35, 55)
     return build_gltf(v, f)
 machines_composites['microclimate-dosing-array/stage-2'] = comp_dosing_stage_2()
 
@@ -979,7 +1009,7 @@ def comp_gantry_stage_0():
             add_cylinder_x(v, f, wx - 6, wx + 6, y_pos, 15, 12, n_seg=8)
     # Central Z-Axis Toolhead Carriage & Magnetic Kinematic Dock
     add_box(v, f, -30, 30, -25, 25, 40, 100)
-    add_cylinder_z(v, f, 0, 0, 18, 25, 40, n_seg=8) # Mag dock collar
+    add_cylinder_z(v, f, 0, 0, 18, 5, 20, n_seg=8) # Mag dock collar below beam
     return build_gltf(v, f)
 machines_composites['overhead-gantry-system/stage-0'] = comp_gantry_stage_0()
 
@@ -1016,7 +1046,7 @@ def comp_gantry_stage_2():
     add_cylinder_y(v, f, 0, 40, 48, 62, 8, n_seg=8) # camera lens
     # Kinematic Toolhead attached to Magnetic Dock: Purslane Reciprocating Lateral Shear
     add_box(v, f, -25, 25, -20, 20, -15, 25)
-    add_cylinder_x(v, f, -20, 20, 0, 10, 8, n_seg=8) # Motor
+    add_cylinder_x(v, f, -20, 20, 28, 5, 8, n_seg=8) # Reciprocating drive motor in front of shear body
     # Scissor cutting teeth projecting down
     add_box(v, f, -18, 18, -15, 15, -35, -15)
     for tx in [-14, -7, 0, 7, 14]:
@@ -1115,9 +1145,13 @@ machines_composites['tps-root-chamber/stage-0'] = comp_tps_stage_0()
 
 def comp_tps_stage_1():
     v, f = [], []
-    # Root Tub & Neoprene Collars
-    add_box(v, f, -140, 140, -90, 90, -90, 0)
-    add_box(v, f, -150, 150, -100, 100, 0, 22)
+    # Root Tub (Hollow open mist chamber: bottom plate + 4 perimeter walls)
+    add_box(v, f, -140, 140, -90, 90, -90, -80)   # Floor plate
+    add_box(v, f, -140, -130, -90, 90, -80, 0)    # Left wall
+    add_box(v, f, 130, 140, -90, 90, -80, 0)     # Right wall
+    add_box(v, f, -130, 130, -90, -80, -80, 0)   # Front wall
+    add_box(v, f, -130, 130, 80, 90, -80, 0)     # Back wall
+    add_box(v, f, -150, 150, -100, 100, 0, 22)   # Rim lip & lid frame
     for cx in [-90, 0, 90]:
         for cy in [-45, 45]:
             add_cylinder_z(v, f, cx, cy, 18, 20, 35, n_seg=8)
