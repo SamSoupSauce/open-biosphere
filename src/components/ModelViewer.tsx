@@ -975,6 +975,13 @@ export default function ModelViewer({
           depth: number;
           normalZ: number;
           color: string;
+          minX: number;
+          maxX: number;
+          minY: number;
+          maxY: number;
+          p0: { px: number; py: number; pz: number };
+          p1: { px: number; py: number; pz: number };
+          p2: { px: number; py: number; pz: number };
         }
 
         const renderFaces: RenderFace[] = [];
@@ -1039,17 +1046,86 @@ export default function ModelViewer({
           const fillColor = `rgb(${fr}, ${fg}, ${fb})`;
 
           const avgZ = (p0.pz + p1.pz + p2.pz) / 3;
+          const minX = Math.min(p0.px, p1.px, p2.px);
+          const maxX = Math.max(p0.px, p1.px, p2.px);
+          const minY = Math.min(p0.py, p1.py, p2.py);
+          const maxY = Math.max(p0.py, p1.py, p2.py);
 
           renderFaces.push({
             indices: [i0, i1, i2],
             depth: avgZ,
             normalZ: rnz2,
             color: fillColor,
+            minX, maxX, minY, maxY,
+            p0, p1, p2,
           });
         });
 
-        // Painter's depth sorting
+        // Initial centroid depth sort (back to front)
         renderFaces.sort((a, b) => a.depth - b.depth);
+
+        // Overlap-aware Newell depth refinement pass (RFC-017 / RFC-019)
+        // Resolves screen-space overlaps so background faces never paint over foreground mechanisms
+        const numRF = renderFaces.length;
+        if (!wireframe && numRF > 1) {
+          const triContainsPoint = (px: number, py: number, p0: any, p1: any, p2: any) => {
+            const s1 = (p0.px - p2.px) * (py - p2.py) - (p0.py - p2.py) * (px - p2.px);
+            const s2 = (p1.px - p0.px) * (py - p0.py) - (p1.py - p0.py) * (px - p0.px);
+            const s3 = (p2.px - p1.px) * (py - p1.py) - (p2.py - p1.py) * (px - p1.px);
+            return !(((s1 < 0) || (s2 < 0) || (s3 < 0)) && ((s1 > 0) || (s2 > 0) || (s3 > 0)));
+          };
+
+          const zAtXY = (px: number, py: number, f: RenderFace) => {
+            const p0 = f.p0, p1 = f.p1, p2 = f.p2;
+            const det = (p1.py - p2.py) * (p0.px - p2.px) + (p2.px - p1.px) * (p0.py - p2.py);
+            if (Math.abs(det) < 1e-5) return null;
+            const w0 = ((p1.py - p2.py) * (px - p2.px) + (p2.px - p1.px) * (py - p2.py)) / det;
+            const w1 = ((p2.py - p0.py) * (px - p2.px) + (p0.px - p2.px) * (py - p2.py)) / det;
+            return w0 * p0.pz + w1 * p1.pz + (1.0 - w0 - w1) * p2.pz;
+          };
+
+          for (let iter = 0; iter < 5; iter++) {
+            let swapped = false;
+            for (let i = 0; i < numRF; i++) {
+              const fA = renderFaces[i];
+              const maxCheck = Math.min(i + 45, numRF);
+              for (let j = i + 1; j < maxCheck; j++) {
+                const fB = renderFaces[j];
+                if (fA.maxX < fB.minX || fA.minX > fB.maxX || fA.maxY < fB.minY || fA.minY > fB.maxY) {
+                  continue;
+                }
+                let isFaInFront = false;
+                for (const vA of [fA.p0, fA.p1, fA.p2]) {
+                  if (triContainsPoint(vA.px, vA.py, fB.p0, fB.p1, fB.p2)) {
+                    const zB = zAtXY(vA.px, vA.py, fB);
+                    if (zB !== null && vA.pz > zB + 0.1) {
+                      isFaInFront = true;
+                      break;
+                    }
+                  }
+                }
+                if (!isFaInFront) {
+                  for (const vB of [fB.p0, fB.p1, fB.p2]) {
+                    if (triContainsPoint(vB.px, vB.py, fA.p0, fA.p1, fA.p2)) {
+                      const zA = zAtXY(vB.px, vB.py, fA);
+                      if (zA !== null && zA > vB.pz + 0.1) {
+                        isFaInFront = true;
+                        break;
+                      }
+                    }
+                  }
+                }
+                if (isFaInFront) {
+                  renderFaces[i] = fB;
+                  renderFaces[j] = fA;
+                  swapped = true;
+                  break;
+                }
+              }
+            }
+            if (!swapped) break;
+          }
+        }
 
         if (!wireframe) {
           renderFaces.forEach((f) => {
@@ -1094,10 +1170,33 @@ export default function ModelViewer({
         const dx1 = dX * cosY + dZ * sinY;
         const dz1 = -dX * sinY + dZ * cosY;
         const dy2 = dY * cosX - dz1 * sinX;
+        const dz2 = dY * sinX + dz1 * cosX;
         const datumPx = cx + dx1;
         const datumPy = cy - dy2;
 
-        ctx.strokeStyle = '#f59e0b';
+        // Check if origin datum is occluded by foreground faces
+        let datumOccluded = false;
+        if (!wireframe && renderFaces.length > 0) {
+          for (let i = 0; i < renderFaces.length; i++) {
+            const f = renderFaces[i];
+            if (datumPx >= f.minX && datumPx <= f.maxX && datumPy >= f.minY && datumPy <= f.maxY) {
+              if (f.depth > dz2 + 1.0) {
+                datumOccluded = true;
+                break;
+              }
+            }
+          }
+        }
+
+        ctx.save();
+        if (datumOccluded) {
+          ctx.strokeStyle = 'rgba(245, 158, 11, 0.25)';
+          ctx.fillStyle = 'rgba(245, 158, 11, 0.35)';
+          ctx.setLineDash([2, 3]);
+        } else {
+          ctx.strokeStyle = '#f59e0b';
+          ctx.fillStyle = '#f59e0b';
+        }
         ctx.lineWidth = 1.5;
         ctx.beginPath();
         ctx.moveTo(datumPx - 12, datumPy);
@@ -1106,9 +1205,9 @@ export default function ModelViewer({
         ctx.lineTo(datumPx, datumPy + 12);
         ctx.stroke();
 
-        ctx.fillStyle = '#f59e0b';
         ctx.font = '9px monospace';
         ctx.fillText('ORIGIN DATUM', datumPx + 15, datumPy + 4);
+        ctx.restore();
       } else {
         // Fallback: Parametric Envelope Bounding Cube
         const maxDim = Math.max(dimensions.x_mm, dimensions.y_mm, dimensions.z_mm) || 100;

@@ -218,6 +218,60 @@ def add_cylinder_x(verts, faces, x0, x1, y, z, r, n_seg=8, colors=None, col=None
             nxt = (i + 1) % n_seg
             faces.append([c_right, base_idx + i * 2 + 1, base_idx + nxt * 2 + 1])
 
+def add_stepped_cylinder_x(verts, faces, sections, y, z, n_seg=10, colors=None, cap_left=True, cap_right=True):
+    '''
+    Procedural continuous stepped cylinder along X.
+    sections is a list of tuples: (x0, x1, r, col).
+    Adjacent sections abut (sections[k][1] == sections[k+1][0]).
+    Between adjacent sections, generates clean annular flange step faces with zero internal
+    coplanar caps or duplicate interior center vertices.
+    '''
+    if not sections: return
+    ring_indices = []
+    for k, (x0, x1, r, col) in enumerate(sections):
+        base_left = len(verts)
+        for i in range(n_seg):
+            ang = (2 * math.pi * i) / n_seg
+            verts.append([x0, y + r * math.cos(ang), z + r * math.sin(ang)])
+            if colors is not None and col is not None: colors.append(col)
+        base_right = len(verts)
+        for i in range(n_seg):
+            ang = (2 * math.pi * i) / n_seg
+            verts.append([x1, y + r * math.cos(ang), z + r * math.sin(ang)])
+            if colors is not None and col is not None: colors.append(col)
+        ring_indices.append((base_left, base_right))
+
+        for i in range(n_seg):
+            nxt = (i + 1) % n_seg
+            b0 = base_left + i; t0 = base_right + i
+            b1 = base_left + nxt; t1 = base_right + nxt
+            faces.append([b0, b1, t0])
+            faces.append([b1, t1, t0])
+
+    for k in range(len(sections) - 1):
+        b_right_k = ring_indices[k][1]
+        b_left_nxt = ring_indices[k+1][0]
+        for i in range(n_seg):
+            nxt = (i + 1) % n_seg
+            faces.append([b_right_k + i, b_right_k + nxt, b_left_nxt + nxt])
+            faces.append([b_right_k + i, b_left_nxt + nxt, b_left_nxt + i])
+
+    if cap_left:
+        c_left = len(verts); verts.append([sections[0][0], y, z])
+        if colors is not None and sections[0][3] is not None: colors.append(sections[0][3])
+        b_first = ring_indices[0][0]
+        for i in range(n_seg):
+            nxt = (i + 1) % n_seg
+            faces.append([c_left, b_first + nxt, b_first + i])
+
+    if cap_right:
+        c_right = len(verts); verts.append([sections[-1][1], y, z])
+        if colors is not None and sections[-1][3] is not None: colors.append(sections[-1][3])
+        b_last = ring_indices[-1][1]
+        for i in range(n_seg):
+            nxt = (i + 1) % n_seg
+            faces.append([c_right, b_last + i, b_last + nxt])
+
 def add_cylinder_y(verts, faces, x, y0, y1, z, r, n_seg=8, colors=None, col=None, cap_bottom=True, cap_top=True):
     base_idx = len(verts)
     for i in range(n_seg):
@@ -433,57 +487,25 @@ def add_open_injector(v, f, c, x_c, y_base, y_flange, y_top, y_throat, z_c, r_ne
         f.append([b_idx + c_floor, b_idx + 5*n_seg + nxt, b_idx + 5*n_seg + i])
 
 def add_bca_common_chassis(v, f, c):
-    # Single seamless welded perimeter box frame (Y in [-54, -46])
-    # Outer bounds: X in [-165, 165], Z in [-42, 42]
-    # Inner opening: X in [-152, 152], Z in [-34, 34]
-    ox0, ox1 = -165, 165
-    oz0, oz1 = -42, 42
-    ix0, ix1 = -152, 152
-    iz0, iz1 = -34, 34
-    y0, y1 = -54, -46
-    b_idx = len(v)
-    # 0..3: outer bottom
-    v.extend([[ox0, y0, oz0], [ox1, y0, oz0], [ox1, y0, oz1], [ox0, y0, oz1]])
-    # 4..7: outer top
-    v.extend([[ox0, y1, oz0], [ox1, y1, oz0], [ox1, y1, oz1], [ox0, y1, oz1]])
-    # 8..11: inner bottom
-    v.extend([[ix0, y0, iz0], [ix1, y0, iz0], [ix1, y0, iz1], [ix0, y0, iz1]])
-    # 12..15: inner top
-    v.extend([[ix0, y1, iz0], [ix1, y1, iz0], [ix1, y1, iz1], [ix0, y1, iz1]])
-    c.extend([C_CHASSIS] * 16)
+    # Modular welded perimeter frame (Y in [-54, -46])
+    # Subdivided into localized modules along X to prevent depth-sorting inversions
+    # 1. Left and Right solid end cross-members
+    add_box(v, f, -165, -152, -54, -46, -42, 42, colors=c, col=C_CHASSIS)
+    add_box(v, f,  152,  165, -54, -46, -42, 42, colors=c, col=C_CHASSIS)
 
-    def q(i0, i1, i2, i3):
-        f.append([b_idx + i0, b_idx + i1, b_idx + i2])
-        f.append([b_idx + i0, b_idx + i2, b_idx + i3])
+    # 2. Front and Rear longitudinal rails split into modular segments along X
+    rail_cuts = [-152, -88, -25, 40, 96, 152]
+    for i in range(len(rail_cuts) - 1):
+        rx0, rx1 = rail_cuts[i], rail_cuts[i+1]
+        # Front rail (-Z side)
+        add_box(v, f, rx0, rx1, -54, -46, -42, -34, colors=c, col=C_CHASSIS)
+        # Rear rail (+Z side)
+        add_box(v, f, rx0, rx1, -54, -46, 34, 42, colors=c, col=C_CHASSIS)
 
-    # Outer vertical walls
-    q(0, 4, 5, 1) # front (-Z)
-    q(1, 5, 6, 2) # right (+X)
-    q(2, 6, 7, 3) # rear (+Z)
-    q(3, 7, 4, 0) # left (-X)
-
-    # Top rim face (+Y)
-    q(4, 12, 13, 5) # front rim
-    q(5, 13, 14, 6) # right rim
-    q(6, 14, 15, 7) # rear rim
-    q(7, 15, 12, 4) # left rim
-
-    # Bottom rim face (-Y)
-    q(0, 1, 9, 8)   # front rim
-    q(1, 2, 10, 9)  # right rim
-    q(2, 3, 11, 10) # rear rim
-    q(3, 0, 8, 11)  # left rim
-
-    # Inner vertical walls
-    q(8, 9, 13, 12)   # inner front (+Z)
-    q(9, 10, 14, 13)  # inner right (-X)
-    q(10, 11, 15, 14) # inner rear (-Z)
-    q(11, 8, 12, 15)  # inner left (+X)
-
-    # Recessed center cross tie bar (2mm below frame top, 2mm above frame bottom)
+    # 3. Recessed center cross tie bar (2mm below frame top, 2mm above frame bottom)
     add_box(v, f, 0, 12, -52, -48, -34, 34, colors=c, col=C_CHASSIS)
 
-    # 4 Corner leveling feet (R = 3.5mm centered under 8mm rail width, completely non-protruding)
+    # 4. 4 Corner leveling feet (R = 3.5mm centered under 8mm rail width, completely non-protruding)
     for fx in [-158, 158]:
         for fz in [-38, 38]:
             add_cylinder_y(v, f, fx, -60, -54, fz, 3.5, n_seg=6, colors=c, col=C_CHASSIS, cap_bottom=True, cap_top=True)
@@ -542,10 +564,13 @@ def comp_bca_stage_0():
     add_bca_common_chassis(v, f, c)
     add_bca_module_1(v, f, c, motorized=False)
 
-    # Central Drive Shaft & Flanged Torque Coupler exposed in gap [-108, -88]
-    add_cylinder_x(v, f, -108, -101, -28, 0, 7.5, n_seg=8, colors=c, col=C_CHASSIS, cap_left=True, cap_right=True)
-    add_cylinder_x(v, f, -101, -95, -28, 0, 11, n_seg=8, colors=c, col=C_MOTOR, cap_left=True, cap_right=True)
-    add_cylinder_x(v, f, -95, -88, -28, 0, 7.5, n_seg=8, colors=c, col=C_CHASSIS, cap_left=True, cap_right=True)
+    # Central Drive Shaft & Flanged Torque Coupler exposed in gap [-108, -88] (no internal caps)
+    coupler_secs = [
+        (-108, -101, 7.5, C_CHASSIS),
+        (-101, -95, 11.0, C_MOTOR),
+        (-95, -88, 7.5, C_CHASSIS),
+    ]
+    add_stepped_cylinder_x(v, f, coupler_secs, -28, 0, n_seg=8, colors=c)
 
     # Module 2: Continuous manual auger barrel starting cleanly at X = -88
     add_cylinder_x(v, f, -88, 55, -28, 0, 18, n_seg=10, colors=c, col=C_MOD2_AUGER, cap_left=True, cap_right=True)
@@ -577,27 +602,36 @@ def comp_bca_stage_1():
     add_bca_common_chassis(v, f, c)
     add_bca_module_1(v, f, c, motorized=True)
 
-    # Central Drive Shaft & Flanged Torque Coupler exposed in gap [-108, -88]
-    add_cylinder_x(v, f, -108, -101, -28, 0, 7.5, n_seg=8, colors=c, col=C_CHASSIS, cap_left=True, cap_right=True)
-    add_cylinder_x(v, f, -101, -95, -28, 0, 11, n_seg=8, colors=c, col=C_MOTOR, cap_left=True, cap_right=True)
-    add_cylinder_x(v, f, -95, -88, -28, 0, 7.5, n_seg=8, colors=c, col=C_CHASSIS, cap_left=True, cap_right=True)
+    # Central Drive Shaft & Flanged Torque Coupler exposed in gap [-108, -88] (no internal caps)
+    coupler_secs = [
+        (-108, -101, 7.5, C_CHASSIS),
+        (-101, -95, 11.0, C_MOTOR),
+        (-95, -88, 7.5, C_CHASSIS),
+    ]
+    add_stepped_cylinder_x(v, f, coupler_secs, -28, 0, n_seg=8, colors=c)
 
-    # Module 2: Segmented barrel with ceramic band heaters starting at X = -88
-    add_cylinder_x(v, f, -88, -70, -28, 0, 18, n_seg=10, colors=c, col=C_MOD2_AUGER, cap_left=True, cap_right=True)
-    add_cylinder_x(v, f, -70, -50, -28, 0, 21, n_seg=10, colors=c, col=C_MOD2_HEATER, cap_left=True, cap_right=True)
-    add_cylinder_x(v, f, -50, -25, -28, 0, 18, n_seg=10, colors=c, col=C_MOD2_AUGER, cap_left=True, cap_right=True)
-    add_cylinder_x(v, f, -25, -5, -28, 0, 21, n_seg=10, colors=c, col=C_MOD2_HEATER, cap_left=True, cap_right=True)
-    add_cylinder_x(v, f, -5, 20, -28, 0, 18, n_seg=10, colors=c, col=C_MOD2_AUGER, cap_left=True, cap_right=True)
-    add_cylinder_x(v, f, 20, 40, -28, 0, 21, n_seg=10, colors=c, col=C_MOD2_HEATER, cap_left=True, cap_right=True)
-    add_cylinder_x(v, f, 40, 55, -28, 0, 19, n_seg=10, colors=c, col=C_MOD2_AUGER, cap_left=True, cap_right=True)
+    # Module 2: Stepped pug auger barrel with ceramic band heaters starting at X = -88 (no internal caps)
+    barrel_secs = [
+        (-88, -70, 18, C_MOD2_AUGER),
+        (-70, -50, 21, C_MOD2_HEATER),
+        (-50, -25, 18, C_MOD2_AUGER),
+        (-25, -5,  21, C_MOD2_HEATER),
+        (-5,  20,  18, C_MOD2_AUGER),
+        (20,  40,  21, C_MOD2_HEATER),
+        (40,  55,  19, C_MOD2_AUGER),
+    ]
+    add_stepped_cylinder_x(v, f, barrel_secs, -28, 0, n_seg=10, colors=c)
 
     # Bio-Pitch Injector Port on Section 1 with seamless flanged opening and dark recessed floor
     add_open_injector(v, f, c, -79, -10, 16, 21, 17, 0, 6.0, 9.0, 5.0)
 
-    # Rear central drive shaft extending through driven sprocket
-    add_cylinder_x(v, f, -180, -172, -28, 0, 7, n_seg=8, colors=c, col=C_CHASSIS, cap_left=True, cap_right=True)
-    add_cylinder_x(v, f, -172, -164, -28, 0, 12, n_seg=8, colors=c, col=C_MOTOR, cap_left=True, cap_right=True)
-    add_cylinder_x(v, f, -164, -150, -28, 0, 7, n_seg=8, colors=c, col=C_CHASSIS, cap_left=True, cap_right=True)
+    # Rear central drive shaft extending through driven sprocket (no internal caps)
+    rear_shaft_secs = [
+        (-180, -172, 7, C_CHASSIS),
+        (-172, -164, 12, C_MOTOR),
+        (-164, -150, 7, C_CHASSIS),
+    ]
+    add_stepped_cylinder_x(v, f, rear_shaft_secs, -28, 0, n_seg=8, colors=c)
 
     # Geared 24V DC Drive Motor mounted on left chassis extension plate
     add_cylinder_x(v, f, -188, -164, -36, -22, 7.5, n_seg=8, colors=c, col=C_MOTOR, cap_left=True, cap_right=True)
@@ -625,27 +659,36 @@ def comp_bca_stage_2():
     add_bca_common_chassis(v, f, c)
     add_bca_module_1(v, f, c, motorized=True)
 
-    # Central Drive Shaft & Flanged Torque Coupler exposed in gap [-108, -88]
-    add_cylinder_x(v, f, -108, -101, -28, 0, 7.5, n_seg=8, colors=c, col=C_CHASSIS, cap_left=True, cap_right=True)
-    add_cylinder_x(v, f, -101, -95, -28, 0, 11, n_seg=8, colors=c, col=C_MOTOR, cap_left=True, cap_right=True)
-    add_cylinder_x(v, f, -95, -88, -28, 0, 7.5, n_seg=8, colors=c, col=C_CHASSIS, cap_left=True, cap_right=True)
+    # Central Drive Shaft & Flanged Torque Coupler exposed in gap [-108, -88] (no internal caps)
+    coupler_secs = [
+        (-108, -101, 7.5, C_CHASSIS),
+        (-101, -95, 11.0, C_MOTOR),
+        (-95, -88, 7.5, C_CHASSIS),
+    ]
+    add_stepped_cylinder_x(v, f, coupler_secs, -28, 0, n_seg=8, colors=c)
 
-    # Module 2: Segmented barrel with ceramic band heaters starting at X = -88
-    add_cylinder_x(v, f, -88, -70, -28, 0, 18, n_seg=10, colors=c, col=C_MOD2_AUGER, cap_left=True, cap_right=True)
-    add_cylinder_x(v, f, -70, -50, -28, 0, 21, n_seg=10, colors=c, col=C_MOD2_HEATER, cap_left=True, cap_right=True)
-    add_cylinder_x(v, f, -50, -25, -28, 0, 18, n_seg=10, colors=c, col=C_MOD2_AUGER, cap_left=True, cap_right=True)
-    add_cylinder_x(v, f, -25, -5, -28, 0, 21, n_seg=10, colors=c, col=C_MOD2_HEATER, cap_left=True, cap_right=True)
-    add_cylinder_x(v, f, -5, 20, -28, 0, 18, n_seg=10, colors=c, col=C_MOD2_AUGER, cap_left=True, cap_right=True)
-    add_cylinder_x(v, f, 20, 40, -28, 0, 21, n_seg=10, colors=c, col=C_MOD2_HEATER, cap_left=True, cap_right=True)
-    add_cylinder_x(v, f, 40, 55, -28, 0, 19, n_seg=10, colors=c, col=C_MOD2_AUGER, cap_left=True, cap_right=True)
+    # Module 2: Stepped pug auger barrel with ceramic band heaters starting at X = -88 (no internal caps)
+    barrel_secs = [
+        (-88, -70, 18, C_MOD2_AUGER),
+        (-70, -50, 21, C_MOD2_HEATER),
+        (-50, -25, 18, C_MOD2_AUGER),
+        (-25, -5,  21, C_MOD2_HEATER),
+        (-5,  20,  18, C_MOD2_AUGER),
+        (20,  40,  21, C_MOD2_HEATER),
+        (40,  55,  19, C_MOD2_AUGER),
+    ]
+    add_stepped_cylinder_x(v, f, barrel_secs, -28, 0, n_seg=10, colors=c)
 
     # Bio-Pitch Injector Port on Section 1 with seamless flanged opening and dark recessed floor
     add_open_injector(v, f, c, -79, -10, 16, 21, 17, 0, 6.0, 9.0, 5.0)
 
-    # Rear central drive shaft extending through driven sprocket
-    add_cylinder_x(v, f, -180, -172, -28, 0, 7, n_seg=8, colors=c, col=C_CHASSIS, cap_left=True, cap_right=True)
-    add_cylinder_x(v, f, -172, -164, -28, 0, 12, n_seg=8, colors=c, col=C_MOTOR, cap_left=True, cap_right=True)
-    add_cylinder_x(v, f, -164, -150, -28, 0, 7, n_seg=8, colors=c, col=C_CHASSIS, cap_left=True, cap_right=True)
+    # Rear central drive shaft extending through driven sprocket (no internal caps)
+    rear_shaft_secs = [
+        (-180, -172, 7, C_CHASSIS),
+        (-172, -164, 12, C_MOTOR),
+        (-164, -150, 7, C_CHASSIS),
+    ]
+    add_stepped_cylinder_x(v, f, rear_shaft_secs, -28, 0, n_seg=8, colors=c)
 
     # Geared 24V Drive Motor on left chassis extension plate
     add_cylinder_x(v, f, -188, -164, -36, -22, 7.5, n_seg=8, colors=c, col=C_MOTOR, cap_left=True, cap_right=True)
