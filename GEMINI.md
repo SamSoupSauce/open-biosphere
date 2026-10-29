@@ -7,24 +7,43 @@ This document establishes critical invariants for physical CAD synthesis, intera
 ## 1. Parametric 3D CAD Geometry & Normal Orientation
 
 When authoring or modifying procedural geometry generators (`scripts/*.py`):
-1. **Strict Outward Winding Invariant:**
+
+1. **The Three Mandatory CAD Geometry Invariants:**
+   Every 3D model, machine assembly, and catalog part must satisfy the three fundamental CAD invariants:
+   - **Invariant 1: Object Isolation (No Enclosed Objects):**
+     * No object (connected solid component) may be enclosed, nested, or submerged inside any other object.
+     * When concentric features (such as shafts, journals, or bearing collars) are modeled, they must be partitioned into contiguous non-overlapping longitudinal segments along their axis or joined via annular flanges. Never generate a smaller solid inside a larger solid without clearance bores.
+   - **Invariant 2: Whole, Solid, and 3D Printable:**
+     * Every object must be a watertight 2-manifold with zero boundary edges (`boundary == 0`, no open holes or missing caps) and zero non-manifold edges (`non_two == 0`, no internal divider walls).
+     * **Oriented Edge Cancellation:** Every directed edge `(u, v)` in face $F_A$ must have an exact counter-directed edge `(v, u)` in adjacent face $F_B$ (`unoriented == 0`).
+     * **Topological Genus & Euler Characteristic:** The Euler characteristic $\chi = |V| - |E| + |F| = 2 - 2g \le 2$ must be a valid even integer.
+     * **Strictly Positive Enclosed Volume:** $V_{\text{signed}} = \frac{1}{6} \sum \mathbf{v}_0 \cdot (\mathbf{v}_1 \times \mathbf{v}_2) > 0\text{ mm}^3$. Zero-volume flat planes and negative-volume inside-out meshes are strictly prohibited.
+     * **Physical Print Envelope:** Bounding dimensions must satisfy $dx, dy, dz \ge 1.0\text{ mm}$. Single-walled zero-thickness surfaces ($t = 0\text{ mm}$) are invalid for physical fabrication.
+   - **Invariant 3: Dual Inner and Outer Normal Calculation:**
+     * Each object must have its dual inner and outer normals explicitly computed and verified:
+       - Outer unit face normal: $\mathbf{n}_{\text{outer}} = \frac{(\mathbf{v}_1 - \mathbf{v}_0) \times (\mathbf{v}_2 - \mathbf{v}_0)}{\|(\mathbf{v}_1 - \mathbf{v}_0) \times (\mathbf{v}_2 - \mathbf{v}_0)\|}$ (points outward into ambient space).
+       - Inner unit face normal: $\mathbf{n}_{\text{inner}} = -\mathbf{n}_{\text{outer}}$ (points inward into solid material).
+       - Area-weighted vertex normals $\mathbf{N}_{\text{outer}}$ and $\mathbf{N}_{\text{inner}} = -\mathbf{N}_{\text{outer}}$.
+     * All normal vectors must satisfy unit normalization $\|\mathbf{n}\| = 1.0 \pm 10^{-4}$ and exact antiparallel duality $\mathbf{n}_{\text{outer}} \cdot \mathbf{n}_{\text{inner}} = -1.0 \pm 10^{-4}$.
+
+2. **Strict Outward Winding Invariant:**
    * Every triangular face `[v0, v1, v2]` must be wound counter-clockwise relative to the exterior of the solid, such that the cross-product normal strictly points outward:
      $$\mathbf{n} = (\mathbf{v}_1 - \mathbf{v}_0) \times (\mathbf{v}_2 - \mathbf{v}_0)$$
      $$\mathbf{n} \cdot (\mathbf{F}_{\text{center}} - \mathbf{M}_{\text{centroid}}) > 0$$
-2. **Cylinder & Revolution Primitives:**
+3. **Cylinder & Revolution Primitives:**
    * Side-wall quads must use outward winding `[b0, b1, t0]` and `[b1, t1, t0]` (where `b` is base ring, `t` is top ring, progressing counter-clockwise in angle). Never use `[v0, v1, v3]`.
    * Endcap disks must wind clockwise on bottom caps and counter-clockwise on top caps.
-3. **Automated Verification:**
+4. **Automated Verification:**
    * Before committing new models, run `python3 scripts/reconcile_all_cad_orientations.py` to assert that 100% of faces are verified outward-pointing.
-4. **Watertight 2-Manifold Invariant (RFC-017):**
+5. **Watertight 2-Manifold Invariant (RFC-017):**
    * Every closed solid geometry must be a strict 2-manifold where every undirected edge connects to exactly two triangular faces. Zero open boundaries or non-manifold edges.
-5. **Zero-Thickness Proscription & Volumetric Wall Offsets (RFC-017):**
+6. **Zero-Thickness Proscription & Volumetric Wall Offsets (RFC-017):**
    * Single-walled zero-thickness surfaces ($t = 0\text{ mm}$) are strictly invalid for physical fabrication and 3D printing. All shells, ducts, and hollow funnels must enforce a volumetric wall offset of at least $2.5\text{ mm}$ (nominal $3.5\text{ mm}$) to form closed, watertight solid bodies.
-6. **CSG Coplanar Guardrails (RFC-017):**
+7. **CSG Coplanar Guardrails (RFC-017):**
    * When performing constructive solid geometry boolean difference/subtraction passes, tool solids must extend at least $+0.1\text{ mm}$ beyond target boundary faces to prevent zero-thickness degenerate coplanar slivers and unindexed self-intersection dropouts.
-7. **Automated Headless Model Verification (`npm run test:models`) (RFC-017):**
+8. **Automated Headless Model Verification (`npm run test:models`) (RFC-017):**
    * Before committing 3D assets, run `npm run test:models` (`python3 scripts/test_models.py`) to verify bounding volume ($dx, dy, dz \ge 1.0\text{ mm}$), manifold edge consistency, outward normal orientation, and custom manifold fluid passage features.
-8. **Prism & Cylinder Endcap Winding Invariant (RFC-018):**
+9. **Prism & Cylinder Endcap Winding Invariant (RFC-018):**
    * When closing cylindrical, polygonal, or hexagonal shafts and pinions:
      - Bottom endcap disks ($Z_0$, normal $-Z$): Must wind `(c_bot, v_next, v_curr)` where vertices advance counter-clockwise in angle.
      - Top endcap disks ($Z_1$, normal $+Z$): Must wind `(c_top, v_curr, v_next)` where vertices advance counter-clockwise in angle.
@@ -151,7 +170,10 @@ When generating, modifying, or refactoring 3D CAD assemblies (`scripts/build_com
 
 7. **Mandatory Pre-Push Headless Iteration Gate:**
    * Never push 3D model modifications to GitHub Pages without running and passing the complete headless verification suite:
-     1. `python3 scripts/test_models.py` (Asserts volume, manifold, oriented edges, and outward normals across all parts and machine assemblies).
-     2. `python3 scripts/reconcile_all_cad_orientations.py` (Asserts 202/202 outward-oriented glTF models).
-     3. `python3 biosphere-ops/scripts/lint_hardware_docs.py` (Asserts 0 doc, table pricing, or ModelViewer link errors).
+     1. `npm run test:models` (`python3 scripts/test_models.py`): Enforces the Three Mandatory CAD Geometry Invariants:
+        - Rule 1: No objects may be inside of other objects (AABB and 3D ray-casting point-in-polyhedron containment).
+        - Rule 2: Each object must be whole, solid, and possible to 3D print (watertight 2-manifold with 0 boundary and 0 non-two edges, $(u,v) \leftrightarrow (v,u)$ directed edge cancellation, $\chi \le 2$, $V_{\text{signed}} > 0\text{ mm}^3$, $dx, dy, dz \ge 1.0\text{ mm}$, zero degenerate faces).
+        - Rule 3: Each object must have dual inner and outer normals calculated and verified ($\|\mathbf{n}\| = 1.0$, $\mathbf{n}_{\text{outer}} \cdot \mathbf{n}_{\text{inner}} = -1.0$).
+     2. `python3 scripts/reconcile_all_cad_orientations.py`: Audits and reconciles normal orientations, dual inner/outer normals, and winding orders across all glTF models.
+     3. `python3 biosphere-ops/scripts/lint_hardware_docs.py`: Asserts 0 doc, table pricing, or ModelViewer link errors.
    * Iterate and resolve all detected flaws locally before executing `git commit` and `git push`.
