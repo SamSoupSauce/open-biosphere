@@ -519,6 +519,22 @@ def main():
             errors.append(f"Part '{p}': {msg}")
             print(f"  ✗ {p:<42} {msg}")
 
+        # Subparts check (e.g. PART-FAB-DIE-GATE-4WAY subparts)
+        p_dir = os.path.join(PARTS_DIR, p)
+        for f in sorted(os.listdir(p_dir)):
+            if f.startswith('subpart') and f.endswith('.gltf'):
+                sub_id = f"{p}/{f[:-5]}"
+                sub_file = os.path.join(p_dir, f)
+                total_parts += 1
+                ok_s, msg_s = audit_model(sub_id, sub_file, is_assembly=False)
+                if ok_s:
+                    passed_parts += 1
+                    print(f"  ✓ {sub_id:<42} {msg_s}")
+                else:
+                    failed_parts += 1
+                    errors.append(f"Subpart '{sub_id}': {msg_s}")
+                    print(f"  ✗ {sub_id:<42} {msg_s}")
+
     print(f"\nPhase 1 Summary: {passed_parts} / {total_parts} parts passed")
 
     # Phase 2: Auditing Composite Machine Assemblies
