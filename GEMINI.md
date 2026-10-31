@@ -41,8 +41,9 @@ When authoring or modifying procedural geometry generators (`scripts/*.py`):
    * Single-walled zero-thickness surfaces ($t = 0\text{ mm}$) are strictly invalid for physical fabrication and 3D printing. All shells, ducts, and hollow funnels must enforce a volumetric wall offset of at least $2.5\text{ mm}$ (nominal $3.5\text{ mm}$) to form closed, watertight solid bodies.
 7. **CSG Coplanar Guardrails (RFC-017):**
    * When performing constructive solid geometry boolean difference/subtraction passes, tool solids must extend at least $+0.1\text{ mm}$ beyond target boundary faces to prevent zero-thickness degenerate coplanar slivers and unindexed self-intersection dropouts.
-8. **Automated Headless Model Verification (`npm run test:models`) (RFC-017):**
-   * Before committing 3D assets, run `npm run test:models` (`python3 scripts/test_models.py`) to verify bounding volume ($dx, dy, dz \ge 1.0\text{ mm}$), manifold edge consistency, outward normal orientation, and custom manifold fluid passage features.
+8. **Automated Headless Model & Visual Verification (`npm run test:models` / `npm run test:visual`) (RFC-017 / RFC-020):**
+   * Before committing 3D assets, run `npm run test:models` (which chains `scripts/test_models.py` and `scripts/visual_inspection_pipeline.py --check-only`) to verify bounding volume ($dx, dy, dz \ge 1.0\text{ mm}$), manifold edge consistency, outward normal orientation, and normal consistency across all 162 catalog models (130 parts, 4 compound subparts, 28 machines).
+   * Run `npm run test:visual` to re-generate the standalone interactive visual inspection dashboard at `public/inspection/index.html` with full 72-view multi-tier projections (Side 0°, Above +30°, Below -30° every 15° azimuth).
 9. **Prism & Cylinder Endcap Winding Invariant (RFC-018):**
    * When closing cylindrical, polygonal, or hexagonal shafts and pinions:
      - Bottom endcap disks ($Z_0$, normal $-Z$): Must wind `(c_bot, v_next, v_curr)` where vertices advance counter-clockwise in angle.

@@ -9,7 +9,8 @@
     "preview": "astro preview",
     "astro": "astro",
     "audit:crops": "python3 biosphere-ops/scripts/validate_candidates.py src/data/crops",
-    "test:models": "python3 scripts/test_models.py"
+    "test:models": "python3 scripts/test_models.py && python3 scripts/visual_inspection_pipeline.py --check-only",
+    "test:visual": "python3 scripts/visual_inspection_pipeline.py"
   },
   "dependencies": {
     "@astrojs/react": "^4.2.0",
