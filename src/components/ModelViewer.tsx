@@ -1064,7 +1064,7 @@ export default function ModelViewer({
         // Initial centroid depth sort (back to front)
         renderFaces.sort((a, b) => a.depth - b.depth);
 
-        // Overlap-aware Newell depth refinement pass (RFC-017 / RFC-019)
+        // Overlap-aware Newell depth refinement pass (RFC-017 / RFC-019 / RFC-020)
         // Resolves screen-space overlaps so background faces never paint over foreground mechanisms
         const numRF = renderFaces.length;
         if (!wireframe && numRF > 1) {
@@ -1073,6 +1073,19 @@ export default function ModelViewer({
             const s2 = (p1.px - p0.px) * (py - p0.py) - (p1.py - p0.py) * (px - p0.px);
             const s3 = (p2.px - p1.px) * (py - p1.py) - (p2.py - p1.py) * (px - p1.px);
             return !(((s1 < 0) || (s2 < 0) || (s3 < 0)) && ((s1 > 0) || (s2 > 0) || (s3 > 0)));
+          };
+
+          const segIntersect = (p1: any, p2: any, p3: any, p4: any) => {
+            const ccw = (a: any, b: any, c: any) =>
+              (c.py - a.py) * (b.px - a.px) > (b.py - a.py) * (c.px - a.px);
+            return (ccw(p1, p3, p4) !== ccw(p2, p3, p4)) && (ccw(p1, p2, p3) !== ccw(p1, p2, p4));
+          };
+
+          const lineIntersectionPoint = (p1: any, p2: any, p3: any, p4: any) => {
+            const d = (p1.px - p2.px) * (p3.py - p4.py) - (p1.py - p2.py) * (p3.px - p4.px);
+            if (Math.abs(d) < 1e-5) return null;
+            const t = ((p1.px - p3.px) * (p3.py - p4.py) - (p1.py - p3.py) * (p3.px - p4.px)) / d;
+            return { px: p1.px + t * (p2.px - p1.px), py: p1.py + t * (p2.py - p1.py) };
           };
 
           const zAtXY = (px: number, py: number, f: RenderFace) => {
@@ -1084,46 +1097,58 @@ export default function ModelViewer({
             return w0 * p0.pz + w1 * p1.pz + (1.0 - w0 - w1) * p2.pz;
           };
 
-          for (let iter = 0; iter < 5; iter++) {
-            let swapped = false;
-            for (let i = 0; i < numRF; i++) {
-              const fA = renderFaces[i];
-              const maxCheck = Math.min(i + 45, numRF);
-              for (let j = i + 1; j < maxCheck; j++) {
-                const fB = renderFaces[j];
-                if (fA.maxX < fB.minX || fA.minX > fB.maxX || fA.maxY < fB.minY || fA.minY > fB.maxY) {
-                  continue;
-                }
-                let isFaInFront = false;
-                for (const vA of [fA.p0, fA.p1, fA.p2]) {
-                  if (triContainsPoint(vA.px, vA.py, fB.p0, fB.p1, fB.p2)) {
-                    const zB = zAtXY(vA.px, vA.py, fB);
-                    if (zB !== null && vA.pz > zB + 0.1) {
-                      isFaInFront = true;
-                      break;
-                    }
+          const compareDepth = (fA: RenderFace, fB: RenderFace): boolean | null => {
+            if (fA.maxX < fB.minX || fA.minX > fB.maxX || fA.maxY < fB.minY || fA.minY > fB.maxY) {
+              return null;
+            }
+            const pts: { px: number; py: number }[] = [];
+            for (const v of [fA.p0, fA.p1, fA.p2]) {
+              if (triContainsPoint(v.px, v.py, fB.p0, fB.p1, fB.p2)) pts.push(v);
+            }
+            for (const v of [fB.p0, fB.p1, fB.p2]) {
+              if (triContainsPoint(v.px, v.py, fA.p0, fA.p1, fA.p2)) pts.push(v);
+            }
+            if (pts.length === 0) {
+              const eA = [[fA.p0, fA.p1], [fA.p1, fA.p2], [fA.p2, fA.p0]];
+              const eB = [[fB.p0, fB.p1], [fB.p1, fB.p2], [fB.p2, fB.p0]];
+              for (const [a1, a2] of eA) {
+                for (const [b1, b2] of eB) {
+                  if (segIntersect(a1, a2, b1, b2)) {
+                    const pt = lineIntersectionPoint(a1, a2, b1, b2);
+                    if (pt) pts.push(pt);
                   }
-                }
-                if (!isFaInFront) {
-                  for (const vB of [fB.p0, fB.p1, fB.p2]) {
-                    if (triContainsPoint(vB.px, vB.py, fA.p0, fA.p1, fA.p2)) {
-                      const zA = zAtXY(vB.px, vB.py, fA);
-                      if (zA !== null && zA > vB.pz + 0.1) {
-                        isFaInFront = true;
-                        break;
-                      }
-                    }
-                  }
-                }
-                if (isFaInFront) {
-                  renderFaces[i] = fB;
-                  renderFaces[j] = fA;
-                  swapped = true;
-                  break;
                 }
               }
             }
-            if (!swapped) break;
+            if (pts.length === 0) return null;
+
+            for (const pt of pts) {
+              const zA = zAtXY(pt.px, pt.py, fA);
+              const zB = zAtXY(pt.px, pt.py, fB);
+              if (zA !== null && zB !== null) {
+                if (zA > zB + 0.1) return true;  // fA is in front of fB
+                if (zB > zA + 0.1) return false; // fB is in front of fA
+              }
+            }
+            return null;
+          };
+
+          for (let iter = 0; iter < 30; iter++) {
+            let anySwap = false;
+            for (let i = 0; i < numRF; i++) {
+              for (let j = i + 1; j < numRF; j++) {
+                const cmp = compareDepth(renderFaces[i], renderFaces[j]);
+                if (cmp === true) {
+                  // renderFaces[i] is in front of renderFaces[j], so move it after renderFaces[j]
+                  const [item] = renderFaces.splice(i, 1);
+                  renderFaces.splice(j, 0, item);
+                  anySwap = true;
+                  break;
+                }
+              }
+              if (anySwap) break;
+            }
+            if (!anySwap) break;
           }
         }
 
